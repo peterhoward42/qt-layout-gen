@@ -1,0 +1,200 @@
+Introduction
+------------
+Most complex Qt GUIs are build from a topological hierarchy dominated by these:
+    o  Layouts
+        o  QHBoxLayout          HBOX
+        o  QVBoxLayout          VBOX
+        o  QStackedLayout       STACK
+    o  Widgets
+        o  QSplitter            SPLIT
+        o  QTabWidget           TAB
+
+All of these are parent-child containers in essence that take QWidgets as their 
+children. But the layout classes, also allow sub layouts as children too.
+
+So we can sensibly think of an arbitrarily deep nested parent-child
+containership hierarchy. It might be quite feasible for the entire app GUI
+topological hierarchy to be defined in this way.
+
+It would be very useful if the desired trees or sub trees could be expressed
+in a very simple and terse text format because this would be very much less
+verbose and easier to write than the corresponding code, and it would be very
+much more amenable to change.  We hypothesise a runtime builder system that
+is capable of building and instantiating the tree thus defined. We prefer a
+runtime solution over a code-generator because it preserves a single source of
+truth for the intent, and avoids bugs arising from stale generated code lying
+around.
+
+Just a Taster about the Text Input
+---------------------------------------
+(To make subsequent explanations a bit easier)
+
+This shows two example "elements" - which are the things that we put into the
+text input.
+
+    VBOX:my_page          header_row    body            footer_row
+
+    HBOX:header_row       left_bit      middle_bit      right_bit
+
+You can read the first one as instantiate for me a QVBoxLayout, and give it
+the name 'my_page'. Then resolve the names: 'header_row', 'body' and
+'footer_row' into objects (somehow), and add them as the children of the
+QVBoxLayout.
+
+You can likely guess from the second element, that in case the child name
+'header_row' should probably be resolved as the QHBoxLayout created by the
+second element. This illustrates the first of child name resolution
+mechanisms.
+
+The keywords available for the LHS are: HBOX, VBOX, STACK, SPLIT and TAB.
+
+Nomenclature:
+
+    VBOX:my_page          header_row    body            footer_row
+    
+        Is an element
+    
+    VBOX:my_page
+
+        Is a 'lhs', comprising a keyword and a parent name.
+
+    header_row    body  footer_row
+
+        Is a 'rhs', comprising child names.
+
+    The thing produced by an element is a parent.
+    The things added to the parent are children.
+
+
+Citizenship Requirements
+------------------------ 
+To be valuable, the builder must be suitable for introducing piecemeal to
+existing code bases as well as for new apps.  It must not be necessary for
+existing code that has already been written that produces layouts and widgets
+to be changed in order for those widgets and layouts to be used inside our new
+hierarchies.  Of course much of the existing code that produces layouts should
+become redundant.  The builder must produce parent child hierarchies just as
+if they had been created traditionally, so that arbitrary subsequent changes
+can be made programmatically, just as they could with a manually generated
+approach.
+
+
+Desired Features and Requirements
+---------------------------------
+The input text will contain an arbitrary number of elements, which when taken
+together must resolve themselves into coherent trees. It may often be just a
+single tree, but the generalisation is that the elements must resolve into a
+set of trees, each with a single root, for their to be nothing left over, and
+for nothing to have been used more than once.
+
+The elements can
+appear in any order in the input.  This releases the author of the input text
+from defining things in dependency order.  Child names are just 
+strings that the system will somehow resolve to widget or layout instances.
+(how is defined later). The builder will provide a build(fromThisText) method,
+which will create and return the built trees, plus whatever metadata and error
+handling data is found to be necessary.  Wrappers will allow the input text to
+be fetched from a file.  Or from all the files in a directory. The latter is
+the canonical anticipated use case, and anticipates people preferring to break
+down the definitions into small pieces.  The resolution of child names
+to the required object instances is implemented using a set of rules
+documented below. But crucially these include both objects that the builder
+will decide to instantiate itself, but also objects that have already been
+instantiated in the running program externally.  It is the second of these
+that allows the inclusion of traditionally created objects to be included.
+
+Resolution Rules for Child Names, in Order of Precedence (Highest first)
+------------------------------------------------------------------------
+
+Reserved words
+
+    There is only one so far which is '<>'. It resolves to a new stretch item
+    child for QHBoxLayout or QVBoxLayout. A stretch is almost always wanted in
+    somewhere among the children of a box layout.
+
+    E.g.  VBOX:my_box   foo bar baz <>
+
+Resolve to a parent defined elsewhere in the text input
+
+    As per our earlier example. (header_row)
+
+Resolve to Qt Widget Type
+
+    E.g.  VBOX:my_box   foo bar QLabel QButton
+
+    If the name begins with 'Q' it shall be taken to be a request to
+    instantiate an object of that class using the default constructor. Which
+    it will attempt to import from the QtGui module.
+
+    These won't be much use unless you access them later and finish
+    configuring them, but will save some code. The metadata returned by the
+    builder provides easy lookup for all the items it created. The main point
+    of this rule, is that it lets you declare the GUI hierarchy right down to
+    the leaf level.
+
+Resolve to previously instantiated object
+
+    This is the final resolution method and is intended to let you reference
+    your existing QWidgets and QLayouts that have been created by the
+    execution earlier in the program's life. The builder will sniff around
+    among the QWidgets and QLayouts your program has already instantiated at
+    some earlier point in its execution and be satisfied by finding one that
+    is referenced by a variable name or attribute that exactly matches the
+    name you provided. If more than one viable candidate is found that is
+    treated as an error.
+        
+        // some time earlier
+        widget_i_want_the_builder_to_find = SomeMarvellousWidget()
+
+        // or could be
+
+        something.widget_i_want_the_builder_to_find = SomeMarvellousWidget()
+
+        // then in the builder input text
+
+        E.g.  VBOX:my_box   foo bar widget_i_want_the_builder_to_find
+
+        // This treats all names as being in a single unique namespace,
+        // which means existing programs will surely throw up duplicates and
+        // it won't work. :-(
+
+        // May be able to improve with hints passed into builder
+
+
+References
+
+http://code.activestate.com/recipes/457665-debug-runtime-objects-using-gcget_objects/
+
+
+import gc
+# Recursively expand slist's objects
+# into olist, using seen to track
+# already processed objects.
+def _getr(slist, olist, seen):
+  for e in slist:
+    if id(e) in seen:
+      continue
+    seen[id(e)] = None
+    olist.append(e)
+    tl = gc.get_referents(e)
+    if tl:
+      _getr(tl, olist, seen)
+
+# The public function.
+def get_all_objects():
+  """Return a list of all live Python
+  objects, not including the list itself."""
+  gcl = gc.get_objects()
+  olist = []
+  seen = {}
+  # Just in case:
+  seen[id(gcl)] = None
+  seen[id(olist)] = None
+  seen[id(seen)] = None
+  # _getr does the real work.
+  _getr(gcl, olist, seen)
+  return olist
+
+
+
+gc.get_referrers is what I want

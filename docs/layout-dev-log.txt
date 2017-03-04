@@ -1,0 +1,4 @@
+o  start repo
+o  clone locally
+o  make rough dir structure
+o  start tdd bottom up
