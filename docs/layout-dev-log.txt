@@ -4,8 +4,8 @@
 o  ditch vs code from project and switch to jebrains
     *  ditch vs metafile
     *  sync
-    o  rm vs code gitignore and resynch
-    o  try jetbrains
-    o  add jet brains to git ignore and resync
+    *  rm vs code gitignore and resynch
+    o  try pycharm
+    o  add pycharm to git ignore and resync
     o  onward
 o  start tdd bottom up
