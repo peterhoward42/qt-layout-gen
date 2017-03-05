@@ -3,7 +3,7 @@
 *  make rough dir structure
 o  ditch vs code from project and switch to jebrains
     *  ditch vs metafile
-    o  sync
+    *  sync
     o  rm vs code gitignore and resynch
     o  try jetbrains
     o  add jet brains to git ignore and resync
