@@ -6,4 +6,4 @@ class TestBuildError(TestCase):
         self.fail()
 
     def test_format_as_single_string(self):
-        self.pass()
+        self.faildoo()
