@@ -6,6 +6,23 @@ o  ditch vs code from project and switch to jebrains
     *  sync
     *  rm vs code gitignore and resynch
     *  try pycharm
-    o  add pycharm to git ignore and resync
-    o  onward
-o  start tdd bottom up
+    *  add pycharm to git ignore and resync
+*  start tdd bottom up
+    *  use pycharm auto generation of unittest stubs
+        *  how configure file name offered to that it lives next to source?
+
+*  start again with fresh pycharm project and if works completely ditch
+   copy across source and docs before
+    o  That doesn't work either!!!!!
+
+*  Uninstall python and vs code and pycharm
+*  Uninstall Qt (not there as such)
+
+*  Install 32 bit python
+*  Try pycharm from there
+*  Exactly same problem
+    *  Try the patch they suggest = works
+*  Bring in latest log to this project
+*  Ditch legacy tmp projects
+o  Get github sync working
+o  Resume
