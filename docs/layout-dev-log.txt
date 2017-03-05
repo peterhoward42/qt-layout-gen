@@ -1,4 +1,11 @@
-o  start repo
-o  clone locally
-o  make rough dir structure
+*  start repo
+*  clone locally
+*  make rough dir structure
+o  ditch vs code from project and switch to jebrains
+    *  ditch vs metafile
+    o  sync
+    o  rm vs code gitignore and resynch
+    o  try jetbrains
+    o  add jet brains to git ignore and resync
+    o  onward
 o  start tdd bottom up
