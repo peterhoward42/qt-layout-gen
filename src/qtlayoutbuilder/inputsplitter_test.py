@@ -1,7 +1,10 @@
 from unittest import TestCase
 
+import os.path
+
 # noinspection PyProtectedMember
-from inputsplitter import _check_validity_of_name, _check_names, _make_text_record_from_fragment, _FileLocation, \
+from inputsplitter import _check_validity_of_name, _check_name_list_from_record, _make_text_record_from_fragment, \
+    _FileLocation, \
     _split_text_into_records, _cleaned_up, _split_file_into_records
 
 
@@ -25,17 +28,17 @@ class TestInputSplitter(TestCase):
 
     def test_names(self):
         # Raises no objections to legitimate input
-        err = _check_names(['foo' 'bar'])
+        err = _check_name_list_from_record(['foo' 'bar'])
         self.assertIsNotNone(err)
 
         # Objects to fewer than two names in the list
-        err = _check_names(['foo'])
+        err = _check_name_list_from_record(['foo'])
         self.assertIsNotNone(err)
         msg = err.format_as_single_string()
         self.assertTrue('Expected at least two names' in msg)
 
         # Objects when one of the names is malformed
-        err = _check_names(['foo', '9illegal', 'bar'])
+        err = _check_name_list_from_record(['foo', '9illegal', 'bar'])
         self.assertIsNotNone(err)
         msg = err.format_as_single_string()
         self.assertTrue('Problem with one of the names' in msg)
@@ -117,13 +120,42 @@ class TestInputSplitter(TestCase):
         self.assertEqual(records[1].parent_name, 'd')
 
     def test_split_file_into_records(self):
-        # Properly reports os-level problem
-        records, err = _split_file_into_records('name of non existent file')
+        # Reports IO errors properly.
+        records, err = _split_file_into_records('sillyfilename')
         self.assertIsNotNone(err)
         msg = err.format_as_single_string()
-        self.assertTrue('Cannot split the file <name of non existent file> into records' in msg)
-        self.assertTrue("No such file or directory: 'name of non existent file'" in msg)
+        self.assertTrue('Cannot split the file <sillyfilename> into records' in msg)
+        self.assertTrue("No such file or directory: 'sillyfilename'" in msg)
 
-        # Properly reports parsing problem stimulated lower in call stack
+        # Objects to files that do not have a keyword on the first line properly
+        malformed_file = os.path.abspath(
+            os.path.join(
+                __file__, "../../..", 'testdata', 'file_with_illegal_first_line.txt'))
+        records, err = _split_file_into_records(malformed_file)
+        self.assertIsNotNone(err)
+        msg = err.format_as_single_string()
+        self.assertTrue('The first line of your file must start with a keyword:' in msg)
+        self.assertTrue('file_with_illegal_first_line.txt' in msg)
 
-        #  Assembles correctly assembled records when properly formed
+        # Bubbles error messages up from lower down with correct line number.
+        malformed_file = os.path.abspath(
+            os.path.join(
+                __file__, "../../..", 'testdata', 'file_to_stimulate_parse_error.txt'))
+        records, err = _split_file_into_records(malformed_file)
+        self.assertIsNotNone(err)
+        msg = err.format_as_single_string()
+        self.assertTrue('Problem with names in this input text fragment: <VBOX:my_vbox top body# right>' in msg)
+        self.assertTrue('at this file location:' in msg)
+        self.assertTrue('file_to_stimulate_parse_error.txt, at line 2' in msg)
+
+        # Assembles records in correct order and with correct content for properly formed
+        # input file.
+        properly_formed_file = os.path.abspath(
+            os.path.join(
+                __file__, "../../..", 'testdata', 'properly_formed_file.txt'))
+        records, err = _split_file_into_records(properly_formed_file)
+        self.assertIsNone(err)
+        self.assertIsNotNone(records)
+        self.assertEqual(len(records), 2)
+        self.assertEqual(records[0].parent_name, 'my_hbox')
+        self.assertEqual(records[1].parent_name, 'my_vbox')

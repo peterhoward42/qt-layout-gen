@@ -1,10 +1,11 @@
 """
-This module is responsible for splitting text input content into records
+This module is responsible for dividing text input content into records
 by splitting it into fragments like this: 'HBOX:my_box  leftpart middlepart rightpart'.
 Note that the whitespace separation can include newline characters so that when the
 fragment is written into a file, the list of children can span multiple lines.
-In what follows we use the word fragment to refer to this in its raw text form, and
-there is a class defined _InputTextRecord for the structured representation.
+In what follows we use the word fragment to refer to this in its raw text form
+as a single string, and there is a class defined _InputTextRecord for the structured
+representation.
 """
 
 import re
@@ -31,7 +32,7 @@ class _FileLocation(object):
 
 class _InputTextRecord(object):
     """
-    A container to hold the text fields from a input text fragment in a structured form.
+    A container to hold the text fields from an input text fragment in a structured form.
     Also its corresponding FileLocation object to aid error reporting.
     """
 
@@ -42,7 +43,7 @@ class _InputTextRecord(object):
         self.child_name_fields = child_name_fields
 
 
-_IDENTIFIER = r'^[^\d\W]\w*\Z'
+_IDENTIFIER = r'^[^\d\W]\w*\Z'  # Roughly speaking a legitimate variable name.
 _IDENTIFIER_REGEX = re.compile(_IDENTIFIER)
 
 
@@ -57,7 +58,7 @@ def _check_validity_of_name(name):
     return BuildError('Name: <%s> is not a valid identifier.' % name)
 
 
-def _check_names(names):
+def _check_name_list_from_record(names):
     """
     Checks the list of names given for plausibility. There must be at least 2,
     and they should like like identifiers.
@@ -98,7 +99,7 @@ def _make_text_record_from_fragment(input_text_fragment, file_location):
     # Sanity check the list of names that should make up the remainder.
     remainder = remainder[1:]
     names = remainder.split()
-    err = _check_names(names)
+    err = _check_name_list_from_record(names)
     if err:
         return None, err.extended_with(
             'Problem with names in this input text fragment: <%s>, at this file location: <%s>)' %
@@ -127,8 +128,8 @@ def _cleaned_up(list_of_strings):
 
 
 # These are used for some search and replace logic just below.
-_SENTINEL_STRING = r'z8g3b7h6n3'  # arbitrary and hopefully never encountered by fluke in real input.
-_SENTINEL_REGEX = re.compile(_SENTINEL_STRING)
+_MARKER_STRING = r'z8g3b7h6n3'  # arbitrary and hopefully never encountered by fluke in real input.
+_MARKER_REGEX = re.compile(_MARKER_STRING)
 
 
 def _split_text_into_records(input_text):
@@ -141,24 +142,24 @@ def _split_text_into_records(input_text):
     :return: (InputTextRecords, BuildError).
     """
 
-    # Stick a sentinel delimiter just before each recognized keyword (like HBOX).
+    # Stick a marker string just before each recognized keyword (like HBOX).
     # This uses a regex search and replace, that calls out to a replacer helper function.
-    # The replacer function leaves the keyword in situ, but tacks the sentinel string in
+    # The replacer function leaves the keyword in situ, but tacks the marker in
     # front of it.
     def replacement_maker_fn(match):
-        return _SENTINEL_STRING + match.group()
+        return _MARKER_STRING + match.group()
 
-    with_sentinels_added = KEYWORD_ALTERNATIVES_REGEX.sub(replacement_maker_fn, input_text)
+    with_markers_added = KEYWORD_ALTERNATIVES_REGEX.sub(replacement_maker_fn, input_text)
 
-    # Now if we split the result of that using the sentinel as the delimiter, each segment
+    # Now if we split the modified input text using the marker as a delimiter, each segment
     # will start with one of our keywords, and span up to the next one.
-    fragments = _SENTINEL_REGEX.split(with_sentinels_added)
+    fragments = _MARKER_REGEX.split(with_markers_added)
     fragments = _cleaned_up(fragments)  # get rid of trailing and leading whitespace and ditch empty fragments.
 
     if len(fragments) == 0:
         return [], BuildError('Failed to find any keywords in this text: %s' % input_text)
     records = []
-    # When all we are given is anonymous text, we have no file source information.
+    # We can't provide meaningful file locations in this context.
     unused_file_location = _FileLocation('unused filename', -1)
     for fragment in fragments:
         record, err = _make_text_record_from_fragment(fragment, unused_file_location)
@@ -200,9 +201,6 @@ def _split_file_into_records(file_path):
                 return None, BuildError('The first line of your file must start with a keyword: <%s>' % file_path)
             fragment_under_construction = fragments[len(fragments) - 1]
             fragments[len(fragments) - 1] = fragment_under_construction + ' ' + line
-
-    if len(fragments) == 0:
-        return None, BuildError('Could not find any lines starting with keywords in your file: <%s>' % file_path)
 
     # Now we can delegate out to get a record built from each fragment.
     records = []
