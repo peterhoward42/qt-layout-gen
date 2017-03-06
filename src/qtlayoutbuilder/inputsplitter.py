@@ -1,6 +1,8 @@
 """
 This module is responsible for splitting text input content into records
 by splitting it into fragments like this: 'HBOX:my_box  leftpart middlepart rightpart'.
+Note that the whitespace separation can include newline characters so that when the
+fragment is written into a file, the list of children can span multiple lines.
 In what follows we use the word fragment to refer to this in its raw text form, and
 there is a class defined _InputTextRecord for the structured representation.
 """
@@ -106,12 +108,13 @@ def _make_text_record_from_fragment(input_text_fragment, file_location):
     names_of_children = names[1:]
     return _InputTextRecord(file_location, keyword, name_of_parent, names_of_children), None
 
+
 def _cleaned_up(list_of_strings):
     """
     Cleans up the given list of strings by returning a copy in which the
     strings have had leading and trailing whitespace removed, and strings
     that end up empty are discarded.
-    :param strings: The list of strings to filter.
+    :param list_of_strings: The list of strings to filter.
     :return: The new list.
     """
     new_list = []
@@ -142,13 +145,15 @@ def _split_text_into_records(input_text):
     # This uses a regex search and replace, that calls out to a replacer helper function.
     # The replacer function leaves the keyword in situ, but tacks the sentinel string in
     # front of it.
-    def replacement_maker_fn(match): return _SENTINEL_STRING + match.group()
+    def replacement_maker_fn(match):
+        return _SENTINEL_STRING + match.group()
+
     with_sentinels_added = KEYWORD_ALTERNATIVES_REGEX.sub(replacement_maker_fn, input_text)
 
     # Now if we split the result of that using the sentinel as the delimiter, each segment
     # will start with one of our keywords, and span up to the next one.
     fragments = _SENTINEL_REGEX.split(with_sentinels_added)
-    fragments = _cleaned_up(fragments) # get rid of trailing and leading whitespace and ditch empty fragments.
+    fragments = _cleaned_up(fragments)  # get rid of trailing and leading whitespace and ditch empty fragments.
 
     if len(fragments) == 0:
         return [], BuildError('Failed to find any keywords in this text: %s' % input_text)
@@ -159,5 +164,53 @@ def _split_text_into_records(input_text):
         record, err = _make_text_record_from_fragment(fragment, unused_file_location)
         if err:
             return [], err.extended_with('Could not split this text: <%s>' % input_text)
+        records.append(record)
+    return records, None
+
+
+def _split_file_into_records(file_path):
+    """
+    Provides the sequence of InputTextRecords produced when the text in the given file is
+    consumed. This is a sister function to _split_text_into_records() - which is documented in
+    more detail.
+    :param file_path: The full path of the file to be split.
+    :return: (InputTextRecords, BuildError)
+    """
+
+    # Grab the lines from the file.
+    try:
+        with open(file_path, 'r') as my_file:
+            lines = my_file.readlines()
+    except Exception as e:
+        return None, BuildError(str(e)).extended_with('Cannot split the file <%s> into records' % file_path)
+
+    # Accumulate fragments by working through the lines and starting a new fragment each time
+    # a keyword line is encountered.
+    fragments = []
+    fragment_line_numbers = []
+    line_number = 0
+    for line in lines:
+        line_number += 1
+        stripped_line = line.strip()
+        if KEYWORD_ALTERNATIVES_REGEX.match(stripped_line):
+            fragments.append(stripped_line)
+            fragment_line_numbers.append(line_number)
+        else:
+            if len(fragments) == 0:
+                return None, BuildError('The first line of your file must start with a keyword: <%s>' % file_path)
+            fragment_under_construction = fragments[len(fragments) - 1]
+            fragments[len(fragments) - 1] = fragment_under_construction + ' ' + line
+
+    if len(fragments) == 0:
+        return None, BuildError('Could not find any lines starting with keywords in your file: <%s>' % file_path)
+
+    # Now we can delegate out to get a record built from each fragment.
+    records = []
+    for idx in range(len(fragments)):
+        fragment = fragments[idx]
+        file_location = _FileLocation(file_path, fragment_line_numbers[idx])
+        record, err = _make_text_record_from_fragment(fragment, file_location)
+        if err is not None:
+            return None, err.extended_with('Error splitting file into records.')
         records.append(record)
     return records, None

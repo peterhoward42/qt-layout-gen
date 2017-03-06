@@ -1,8 +1,8 @@
 from unittest import TestCase
 
 # noinspection PyProtectedMember
-from inputsplitter import _check_validity_of_name, _check_names, _make_text_record_from_fragment, _FileLocation,\
-    _split_text_into_records, _cleaned_up
+from inputsplitter import _check_validity_of_name, _check_names, _make_text_record_from_fragment, _FileLocation, \
+    _split_text_into_records, _cleaned_up, _split_file_into_records
 
 
 class TestInputSplitter(TestCase):
@@ -115,3 +115,15 @@ class TestInputSplitter(TestCase):
         # not overwritten each other.
         self.assertEqual(records[0].parent_name, 'a')
         self.assertEqual(records[1].parent_name, 'd')
+
+    def test_split_file_into_records(self):
+        # Properly reports os-level problem
+        records, err = _split_file_into_records('name of non existent file')
+        self.assertIsNotNone(err)
+        msg = err.format_as_single_string()
+        self.assertTrue('Cannot split the file <name of non existent file> into records' in msg)
+        self.assertTrue("No such file or directory: 'name of non existent file'" in msg)
+
+        # Properly reports parsing problem stimulated lower in call stack
+
+        #  Assembles correctly assembled records when properly formed

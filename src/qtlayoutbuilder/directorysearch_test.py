@@ -36,4 +36,5 @@ class TestDirectorySearch(TestCase):
         self.assertIsNotNone(err)
         msg = err.format_as_single_string()
         self.assertTrue('Something went wrong inside DirectorySearch for path: ridiculousdirname' in msg)
-        self.assertTrue("Because... [Error 3] The system cannot find the path specified: 'ridiculousdirname/*.*'" in msg)
+        self.assertTrue(
+            "Because... [Error 3] The system cannot find the path specified: 'ridiculousdirname/*.*'" in msg)
