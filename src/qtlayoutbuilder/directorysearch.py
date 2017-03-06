@@ -1,7 +1,6 @@
 """ Module defines the class DirectorySearch. """
 
 import os
-import sys
 
 from builderror import BuildError
 
@@ -27,6 +26,7 @@ class DirectorySearch(object):
         except Exception as e:
             err = BuildError(str(e))
             return None, err.extended_with('Something went wrong inside %s for path: %s' % (cls.__name__, path))
+
 
 def _handle_walk_error(e):
     raise e

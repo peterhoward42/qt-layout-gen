@@ -4,7 +4,8 @@ o  Build out utilities and tests as per plan
     *  pylint
     *  all files recursively
     o  extract fragment at string level
-        o  change text grament to  to say input text record
+        *  code
+        o  tests
     o  at file level
     o  at files level
     o  go back to make dir search private
