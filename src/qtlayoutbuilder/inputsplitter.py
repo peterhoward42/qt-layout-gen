@@ -11,7 +11,8 @@ representation.
 import re
 
 from builderror import BuildError
-from layoutkeywords import KEYWORD_ALTERNATIVES_REGEX  # HBOX or VBOX or TAB etc.
+from keywords import starts_with_keyword, mark_all_keywords_found
+from directorysearch import find_all_files
 
 
 # The module is laid out in a bottom-up fashion, starting with lower level
@@ -86,10 +87,9 @@ def _make_text_record_from_fragment(input_text_fragment, file_location):
     """
 
     # Deal with the keyword at the front
-    keyword_found = KEYWORD_ALTERNATIVES_REGEX.match(input_text_fragment)
-    if not keyword_found:
+    keyword = starts_with_keyword(input_text_fragment)
+    if keyword is None:
         return None, BuildError('Cannot find keyword at beginning of this string: <%s>' % input_text_fragment)
-    keyword = keyword_found.group()
 
     # Make sure a colon comes next
     remainder = input_text_fragment.replace(keyword, '')
@@ -149,7 +149,7 @@ def _split_text_into_records(input_text):
     def replacement_maker_fn(match):
         return _MARKER_STRING + match.group()
 
-    with_markers_added = KEYWORD_ALTERNATIVES_REGEX.sub(replacement_maker_fn, input_text)
+    with_markers_added = mark_all_keywords_found(input_text, replacement_maker_fn)
 
     # Now if we split the modified input text using the marker as a delimiter, each segment
     # will start with one of our keywords, and span up to the next one.
@@ -193,7 +193,8 @@ def _split_file_into_records(file_path):
     for line in lines:
         line_number += 1
         stripped_line = line.strip()
-        if KEYWORD_ALTERNATIVES_REGEX.match(stripped_line):
+        keyword = starts_with_keyword(stripped_line)
+        if keyword:
             fragments.append(stripped_line)
             fragment_line_numbers.append(line_number)
         else:
@@ -212,3 +213,24 @@ def _split_file_into_records(file_path):
             return None, err.extended_with('Error splitting file into records.')
         records.append(record)
     return records, None
+
+
+def _split_all_files_in_directory_into_records(directory_path):
+    """
+    This is a thin wrapper around _split_file_into_records(), which operates instead on
+    all the files that can be found in a directory (recursively).
+    :param directory_path: The full path of the directory of interest.
+    :return: (InputTextRecords, BuildError)
+    """
+    files, err = find_all_files(directory_path)
+    if err:
+        return None, err.extended_with(
+            'Error attempting split all files in your directory into records: <%s>' % directory_path)
+    all_records = []
+    for file_to_split in files:
+        records, err = _split_file_into_records(file_to_split)
+        if err:
+            return None, err.extended_with(
+                'Error attempting to split all files in your directory into records: <%s>' % directory_path)
+        all_records.extend(records)
+    return all_records, None

@@ -4,12 +4,9 @@ o  Build out utilities and tests as per plan
     *  pylint
     *  all files recursively
     *  extract fragment at string level
-    o  at file level
-        o  need to find common ground for split text vs split file into fragments,
-           bearing in mind line number needs for files
-            o  what is most convenient for file case?
-    o  forgot to check for only agreed keywords
-    o  shouldn't be using is not None
-    o  keyword alternatives regex lumpen
-    o  at files level
+    *  at file level
+    *  forgot to check for all agreed keywords
+    *  shouldn't be using is not None
+    *  keyword alternatives regex lumpen
+    *  at files level
     o  go back to make dir search private

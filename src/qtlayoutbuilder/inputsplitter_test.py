@@ -2,10 +2,12 @@ from unittest import TestCase
 
 import os.path
 
+import keywords
+
 # noinspection PyProtectedMember
 from inputsplitter import _check_validity_of_name, _check_name_list_from_record, _make_text_record_from_fragment, \
-    _FileLocation, \
-    _split_text_into_records, _cleaned_up, _split_file_into_records
+    _FileLocation, _split_text_into_records, _cleaned_up, _split_file_into_records, \
+    _split_all_files_in_directory_into_records
 
 
 class TestInputSplitter(TestCase):
@@ -81,6 +83,12 @@ class TestInputSplitter(TestCase):
         self.assertEqual(record.layout_keyword, 'HBOX')
         self.assertEqual(record.parent_name, 'fred')
         self.assertEqual(str(record.child_name_fields), "['jane', 'barry']")
+
+        # Copes with all allowed keywords
+        for keyword in keywords.WORDS:
+            fragment = '%s: fred jane barry' % keyword
+            record, err = _make_text_record_from_fragment(fragment, mock_file_location)
+            self.assertIsNone(err)
 
     def test_cleaned_up(self):
         # The space item should be removed, and the leading space on
@@ -159,3 +167,31 @@ class TestInputSplitter(TestCase):
         self.assertEqual(len(records), 2)
         self.assertEqual(records[0].parent_name, 'my_hbox')
         self.assertEqual(records[1].parent_name, 'my_vbox')
+
+    def test_split_all_files_in_directory_into_records(self):
+        # Reports os level problems properly.
+        records, err = _split_all_files_in_directory_into_records('sillydirname')
+        self.assertIsNotNone(err)
+        msg = err.format_as_single_string()
+        self.assertTrue('Error attempting split all files in your directory into records: <sillydirname>' in msg)
+
+        # Reports problems part way through properly
+        directory_with_a_problem_file_in = os.path.abspath(os.path.join(
+            __file__, "../../..", 'testdata', 'hierarchy_with_problem_inside'))
+        records, err = _split_all_files_in_directory_into_records(directory_with_a_problem_file_in)
+        self.assertIsNotNone(err)
+        msg = err.format_as_single_string()
+        self.assertTrue('Error attempting to split all files in your directory into records' in msg)
+        self.assertTrue('hierarchy_with_problem_inside' in msg)
+        self.assertTrue('Problem with names in this input text fragment: <HBOX:g h illegal#>' in msg)
+
+        # Assembles records properly when all is well
+        well_formed_directory = os.path.abspath(os.path.join(
+            __file__, "../../..", 'testdata', 'simple_hierarchy'))
+        records, err = _split_all_files_in_directory_into_records(well_formed_directory)
+        self.assertIsNone(err)
+        self.assertIsNotNone(records)
+        self.assertEqual(len(records), 6)
+        # abc def ghi jkl mno pqr
+        self.assertEqual(records[0].parent_name, 'g')
+        self.assertEqual(records[5].parent_name, 'd')
