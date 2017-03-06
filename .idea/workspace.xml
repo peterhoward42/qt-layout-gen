@@ -2,7 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1be52820-6c16-4b56-8ca7-cc83c5412022" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qtlayoutbuilder/directorysearch.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qtlayoutbuilder/directorysearch_test.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qtlayoutbuilder/inputsplitter.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qtlayoutbuilder/layoutkeywords.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/testdata/simple_hierarchy/dir_in_top_level/second_level_a.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/testdata/simple_hierarchy/top_level_a.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/testdata/simple_hierarchy/top_level_b.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/design.txt" afterPath="$PROJECT_DIR$/docs/design.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/layout-dev-log.txt" afterPath="$PROJECT_DIR$/docs/layout-dev-log.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/qtlayoutbuilder/builderror.py" afterPath="$PROJECT_DIR$/src/qtlayoutbuilder/builderror.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/qtlayoutbuilder/builderror_test.py" afterPath="$PROJECT_DIR$/src/qtlayoutbuilder/builderror_test.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -21,24 +31,75 @@
       <file leaf-file-name="builderror.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/builderror.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="24" lean-forward="false" selection-start-line="4" selection-start-column="24" selection-end-line="4" selection-end-column="24" />
+            <state relative-caret-position="272">
+              <caret line="16" column="21" lean-forward="false" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="21" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="builderror_test.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="builderror_test.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/builderror_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+            <state relative-caret-position="255">
+              <caret line="15" column="0" lean-forward="true" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#29#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="layout-dev-log.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs/layout-dev-log.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="6" column="59" lean-forward="false" selection-start-line="6" selection-start-column="59" selection-end-line="6" selection-end-column="59" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="design.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs/design.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-544">
+              <caret line="34" column="30" lean-forward="true" selection-start-line="34" selection-start-column="30" selection-end-line="34" selection-end-column="30" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="inputsplitter.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/inputsplitter.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="461">
+              <caret line="65" column="37" lean-forward="false" selection-start-line="65" selection-start-column="37" selection-end-line="65" selection-end-column="37" />
+              <folding>
+                <element signature="e#210#219#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="layoutkeywords.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/layoutkeywords.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="5" column="9" lean-forward="false" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -52,9 +113,15 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/docs/layout-dev-log.txt" />
         <option value="$PROJECT_DIR$/src/qtlayoutbuilder/test_buildError.py" />
+        <option value="$PROJECT_DIR$/src/qtlayoutbuilder/builderror.py" />
+        <option value="$PROJECT_DIR$/src/qtlayoutbuilder/directorysearch.py" />
+        <option value="$PROJECT_DIR$/src/qtlayoutbuilder/directorysearch_test.py" />
         <option value="$PROJECT_DIR$/src/qtlayoutbuilder/builderror_test.py" />
+        <option value="$PROJECT_DIR$/docs/design.txt" />
+        <option value="$PROJECT_DIR$/src/qtlayoutbuilder/layoutkeywords.py" />
+        <option value="$PROJECT_DIR$/docs/layout-dev-log.txt" />
+        <option value="$PROJECT_DIR$/src/qtlayoutbuilder/inputsplitter.py" />
       </list>
     </option>
   </component>
@@ -80,7 +147,9 @@
       </profile-state>
     </entry>
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectView">
     <navigator currentView="Scope" currentSubView="Project Files" proportions="" version="1">
       <flattenPackages />
@@ -178,11 +247,11 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$USER_HOME$/AppData/Local/GitHub/PortableGit_f02737a78695063deace08e96d5042710d3e32db/mingw32/bin/git.exe" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/qtlayoutbuilder" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
-  <component name="RunManager" selected="Python tests.Unittests in TestBuildError (1)">
-    <configuration default="false" name="Unittests in TestSayHello" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python tests.all unit tests in package">
+    <configuration default="false" name="Unittest TestDirectorySearch.test_find_all_files (3)" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs />
@@ -192,53 +261,9 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="pycharm-qt" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/qtlayoutbuilder/builderror_test.py" />
-      <option name="CLASS_NAME" value="TestSayHello" />
-      <option name="METHOD_NAME" value="" />
-      <option name="FOLDER_NAME" value="" />
-      <option name="TEST_TYPE" value="TEST_CLASS" />
-      <option name="PATTERN" value="" />
-      <option name="USE_PATTERN" value="false" />
-      <option name="PUREUNITTEST" value="true" />
-      <option name="PARAMS" value="" />
-      <option name="USE_PARAM" value="false" />
-      <method />
-    </configuration>
-    <configuration default="false" name="Unittests in builderror_test" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/qtlayoutbuilder" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="pycharm-qt" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/qtlayoutbuilder/builderror_test.py" />
-      <option name="CLASS_NAME" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="FOLDER_NAME" value="" />
-      <option name="TEST_TYPE" value="TEST_SCRIPT" />
-      <option name="PATTERN" value="" />
-      <option name="USE_PATTERN" value="false" />
-      <option name="PUREUNITTEST" value="true" />
-      <option name="PARAMS" value="" />
-      <option name="USE_PARAM" value="false" />
-      <method />
-    </configuration>
-    <configuration default="false" name="Unittest TestBuildError.test_format_as_single_string" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/qtlayoutbuilder" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="pycharm-qt" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/qtlayoutbuilder/test_buildError.py" />
-      <option name="CLASS_NAME" value="TestBuildError" />
-      <option name="METHOD_NAME" value="test_format_as_single_string" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/qtlayoutbuilder/directorysearch_test.py" />
+      <option name="CLASS_NAME" value="TestDirectorySearch" />
+      <option name="METHOD_NAME" value="test_find_all_files" />
       <option name="FOLDER_NAME" value="" />
       <option name="TEST_TYPE" value="TEST_METHOD" />
       <option name="PATTERN" value="" />
@@ -248,7 +273,7 @@
       <option name="USE_PARAM" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="Unittests in TestBuildError" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+    <configuration default="false" name="Unittest TestDirectorySearch.test_find_all_files_recurses_and_omits_directories_in_result" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs />
@@ -258,8 +283,30 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="pycharm-qt" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/qtlayoutbuilder/test_buildError.py" />
-      <option name="CLASS_NAME" value="TestBuildError" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/qtlayoutbuilder/directorysearch_test.py" />
+      <option name="CLASS_NAME" value="TestDirectorySearch" />
+      <option name="METHOD_NAME" value="test_find_all_files_recurses_and_omits_directories_in_result" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_METHOD" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="PUREUNITTEST" value="true" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="Unittests in TestDirectorySearch" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/qtlayoutbuilder" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="pycharm-qt" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/qtlayoutbuilder/directorysearch_test.py" />
+      <option name="CLASS_NAME" value="TestDirectorySearch" />
       <option name="METHOD_NAME" value="" />
       <option name="FOLDER_NAME" value="" />
       <option name="TEST_TYPE" value="TEST_CLASS" />
@@ -270,7 +317,7 @@
       <option name="USE_PARAM" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="Unittests in TestBuildError (1)" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+    <configuration default="false" name="Unittest TestDirectorySearch.test_find_all_files_finds_all_files_expected" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs />
@@ -280,11 +327,33 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="pycharm-qt" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/qtlayoutbuilder/builderror_test.py" />
-      <option name="CLASS_NAME" value="TestBuildError" />
-      <option name="METHOD_NAME" value="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/qtlayoutbuilder/directorysearch_test.py" />
+      <option name="CLASS_NAME" value="TestDirectorySearch" />
+      <option name="METHOD_NAME" value="test_find_all_files_finds_all_files_expected" />
       <option name="FOLDER_NAME" value="" />
-      <option name="TEST_TYPE" value="TEST_CLASS" />
+      <option name="TEST_TYPE" value="TEST_METHOD" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="PUREUNITTEST" value="true" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="Unittest TestDirectorySearch.test_treats_empty_result_as_error" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/qtlayoutbuilder" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="pycharm-qt" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/qtlayoutbuilder/directorysearch_test.py" />
+      <option name="CLASS_NAME" value="TestDirectorySearch" />
+      <option name="METHOD_NAME" value="test_treats_empty_result_as_error" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_METHOD" />
       <option name="PATTERN" value="" />
       <option name="USE_PATTERN" value="false" />
       <option name="PUREUNITTEST" value="true" />
@@ -426,20 +495,43 @@
       <option name="USE_KEYWORD" value="false" />
       <method />
     </configuration>
-    <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python tests.Unittests in TestSayHello" />
-      <item index="1" class="java.lang.String" itemvalue="Python tests.Unittests in builderror_test" />
-      <item index="2" class="java.lang.String" itemvalue="Python tests.Unittest TestBuildError.test_format_as_single_string" />
-      <item index="3" class="java.lang.String" itemvalue="Python tests.Unittests in TestBuildError" />
-      <item index="4" class="java.lang.String" itemvalue="Python tests.Unittests in TestBuildError (1)" />
+    <configuration default="false" name="all unit tests in package" type="tests" factoryName="Unittests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="C:\Python27\python.exe" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="pycharm-qt" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="$PROJECT_DIR$/src/qtlayoutbuilder" />
+      <option name="TEST_TYPE" value="TEST_FOLDER" />
+      <option name="PATTERN" value="*test*py" />
+      <option name="USE_PATTERN" value="true" />
+      <option name="PUREUNITTEST" value="true" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
+      <method />
+    </configuration>
+    <list size="6">
+      <item index="0" class="java.lang.String" itemvalue="Python tests.Unittest TestDirectorySearch.test_find_all_files (3)" />
+      <item index="1" class="java.lang.String" itemvalue="Python tests.Unittest TestDirectorySearch.test_find_all_files_recurses_and_omits_directories_in_result" />
+      <item index="2" class="java.lang.String" itemvalue="Python tests.Unittests in TestDirectorySearch" />
+      <item index="3" class="java.lang.String" itemvalue="Python tests.Unittest TestDirectorySearch.test_find_all_files_finds_all_files_expected" />
+      <item index="4" class="java.lang.String" itemvalue="Python tests.Unittest TestDirectorySearch.test_treats_empty_result_as_error" />
+      <item index="5" class="java.lang.String" itemvalue="Python tests.all unit tests in package" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python tests.Unittests in TestBuildError (1)" />
-        <item index="1" class="java.lang.String" itemvalue="Python tests.Unittests in TestBuildError" />
-        <item index="2" class="java.lang.String" itemvalue="Python tests.Unittest TestBuildError.test_format_as_single_string" />
-        <item index="3" class="java.lang.String" itemvalue="Python tests.Unittests in builderror_test" />
-        <item index="4" class="java.lang.String" itemvalue="Python tests.Unittests in TestSayHello" />
+        <item index="0" class="java.lang.String" itemvalue="Python tests.Unittests in TestDirectorySearch" />
+        <item index="1" class="java.lang.String" itemvalue="Python tests.Unittest TestDirectorySearch.test_treats_empty_result_as_error" />
+        <item index="2" class="java.lang.String" itemvalue="Python tests.Unittest TestDirectorySearch.test_find_all_files_finds_all_files_expected" />
+        <item index="3" class="java.lang.String" itemvalue="Python tests.Unittest TestDirectorySearch.test_find_all_files_recurses_and_omits_directories_in_result" />
+        <item index="4" class="java.lang.String" itemvalue="Python tests.Unittest TestDirectorySearch.test_find_all_files (3)" />
       </list>
     </recent_temporary>
   </component>
@@ -454,60 +546,89 @@
       <option name="presentableId" value="Default" />
       <updated>1488707416711</updated>
     </task>
+    <task id="LOCAL-00001" summary="Still trying to get PyCharm to recognize github integration.">
+      <created>1488716825431</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1488716825431</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Put in first proper tiny package class and unit test.">
+      <created>1488718131470</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1488718131470</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Unittest_TestBuildError_test_format_as_single_string - 2017.03.05 at 10h 17m 40s.xml">
-      <configuration name="Unittest TestBuildError.test_format_as_single_string" configurationId="tests" />
+    <history-entry file="Unittests_in_TestDirectorySearch - 2017.03.05 at 21h 28m 45s.xml">
+      <configuration name="Unittests in TestDirectorySearch" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_TestBuildError - 2017.03.05 at 10h 18m 07s.xml">
-      <configuration name="Unittests in TestBuildError" configurationId="tests" />
+    <history-entry file="Unittests_in_TestDirectorySearch - 2017.03.05 at 21h 32m 06s.xml">
+      <configuration name="Unittests in TestDirectorySearch" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_TestBuildError_(1) - 2017.03.05 at 10h 31m 05s.xml">
-      <configuration name="Unittests in TestBuildError (1)" configurationId="tests" />
+    <history-entry file="Unittests_in_TestDirectorySearch - 2017.03.05 at 21h 33m 00s.xml">
+      <configuration name="Unittests in TestDirectorySearch" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_TestBuildError_(1) - 2017.03.05 at 12h 11m 27s.xml">
-      <configuration name="Unittests in TestBuildError (1)" configurationId="tests" />
+    <history-entry file="Unittests_in_TestDirectorySearch - 2017.03.05 at 21h 34m 55s.xml">
+      <configuration name="Unittests in TestDirectorySearch" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_TestSayHello - 2017.03.05 at 09h 58m 30s.xml">
-      <configuration name="Unittests in TestSayHello" configurationId="tests" />
+    <history-entry file="Unittests_in_TestDirectorySearch - 2017.03.05 at 21h 43m 28s.xml">
+      <configuration name="Unittests in TestDirectorySearch" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_builderror_test - 2017.03.05 at 09h 58m 49s.xml">
-      <configuration name="Unittests in builderror_test" configurationId="tests" />
+    <history-entry file="Unittests_in_TestDirectorySearch - 2017.03.05 at 21h 43m 38s.xml">
+      <configuration name="Unittests in TestDirectorySearch" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_builderror_test - 2017.03.05 at 09h 59m 14s.xml">
-      <configuration name="Unittests in builderror_test" configurationId="tests" />
+    <history-entry file="all_unit_tests_in_package - 2017.03.05 at 21h 43m 57s.xml">
+      <configuration name="all unit tests in package" configurationId="tests" />
+    </history-entry>
+    <history-entry file="all_unit_tests_in_package - 2017.03.05 at 21h 44m 37s.xml">
+      <configuration name="all unit tests in package" configurationId="tests" />
+    </history-entry>
+    <history-entry file="all_unit_tests_in_package - 2017.03.05 at 21h 45m 49s.xml">
+      <configuration name="all unit tests in package" configurationId="tests" />
+    </history-entry>
+    <history-entry file="all_unit_tests_in_package - 2017.03.05 at 21h 47m 15s.xml">
+      <configuration name="all unit tests in package" configurationId="tests" />
     </history-entry>
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18229716" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18020834" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980973" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980973" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32135308" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39957717" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980973" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39957717" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Still trying to get PyCharm to recognize github integration." />
+    <MESSAGE value="Put in first proper tiny package class and unit test." />
+    <option name="LAST_COMMIT_MESSAGE" value="Put in first proper tiny package class and unit test." />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <option name="time" value="5" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -591,21 +712,100 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docs/layout-dev-log.txt" />
     <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/test_buildError.py" />
+    <entry file="file://$PROJECT_DIR$/testdata/simple_hierarchy/dir_in_top_level/second_level_a.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testdata/simple_hierarchy/top_level_b.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testdata/simple_hierarchy/top_level_a.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/directorysearch_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="22" column="0" lean-forward="true" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/directorysearch.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="421">
+          <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+          <folding>
+            <element signature="e#51#60#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/design.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-544">
+          <caret line="34" column="30" lean-forward="true" selection-start-line="34" selection-start-column="30" selection-end-line="34" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/builderror.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="24" lean-forward="false" selection-start-line="4" selection-start-column="24" selection-end-line="4" selection-end-column="24" />
+        <state relative-caret-position="272">
+          <caret line="16" column="21" lean-forward="false" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/layoutkeywords.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="9" lean-forward="false" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/builderror_test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+        <state relative-caret-position="255">
+          <caret line="15" column="0" lean-forward="true" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/layout-dev-log.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="59" lean-forward="false" selection-start-line="6" selection-start-column="59" selection-end-line="6" selection-end-column="59" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/inputsplitter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="461">
+          <caret line="65" column="37" lean-forward="false" selection-start-line="65" selection-start-column="37" selection-end-line="65" selection-end-column="37" />
+          <folding>
+            <element signature="e#210#219#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

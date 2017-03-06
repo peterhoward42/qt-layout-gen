@@ -4,10 +4,12 @@ from builderror import BuildError
 
 class TestBuildError(TestCase):
 
-    def test_that_multiple_pushed_messages_are_formatted_properly_when_asked_for(self):
-        err = BuildError()
-        err.push_message('message about error details')
-        err.push_message('message about error context')
-        formatted_message = err.format_as_single_string()
-        self.assertEquals(formatted_message, 'message about error context\nmessage about error details')
+    def test_produces_correct_error_string_when_error_is_extended_twice(self):
+        err = BuildError('message about error details')
+        higher_level_err = err.extended_with('message about higher level error')
+        even_higher_level_err = higher_level_err.extended_with('message about even higher level error')
+        eventual_formatted_err = even_higher_level_err.format_as_single_string()
+        self.assertEquals(
+            eventual_formatted_err,
+            'message about even higher level error\nmessage about higher level error\nmessage about error details')
 

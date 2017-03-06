@@ -154,8 +154,10 @@ o  extract fragments files
         o  as would be found in typ file
         o  as would be found in typ string literal
         o  error handling
-        o  no frags found
-        o  frag with nil content
+        o  no keywords found
+        o  keyword not followed by colon
+        o  colon not followed by parent name
+        o  all that not followed by at least one name field
     o  from file works and errors
     o  from files works and errors
 
