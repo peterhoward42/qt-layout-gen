@@ -30,9 +30,13 @@ class BuildError(object):
         Provides a single string representation of the error stack.
         :return: The string representation.
         """
-        result = "Error stack:\n\n"
-        count = 0
-        for msg in self._messages:
-            count += 1
-            result += '%d: %s\n\n' % (count, msg)
+        result = self._messages[0]
+        # Just one message in the stack?
+        if len(self._messages) == 1:
+            return result
+        # We concatenate the messages with the word "because" in between.
+        for message in self._messages[1:]:
+            result += '\nBecause... '
+            result += message
+        result += '\n'
         return result

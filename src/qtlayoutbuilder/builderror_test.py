@@ -9,9 +9,8 @@ class TestBuildError(TestCase):
         higher_level_err = err.extended_with('message about higher level error')
         even_higher_level_err = higher_level_err.extended_with('message about even higher level error')
         eventual_formatted_err = even_higher_level_err.format_as_single_string()
-        expected = 'Error stack:\n\n1' + \
-                   ': message about even higher level error\n\n' + \
-                   '2: message about higher level error\n\n' + \
-                   '3: message about error details\n\n'
+        expected = 'message about even higher level error\n' + \
+                   'Because... message about higher level error\n' + \
+                   'Because... message about error details\n'
         self.assertEquals(
             eventual_formatted_err, expected)

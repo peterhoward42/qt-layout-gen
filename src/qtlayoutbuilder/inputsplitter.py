@@ -85,13 +85,13 @@ def _make_text_record_from_fragment(input_text_fragment, file_location):
     # Deal with the keyword at the front
     keyword_found = KEYWORD_ALTERNATIVES_REGEX.match(input_text_fragment)
     if not keyword_found:
-        return None, BuildError('Cannot find keyword at beginning of this string: %s' % input_text_fragment)
+        return None, BuildError('Cannot find keyword at beginning of this string: <%s>' % input_text_fragment)
     keyword = keyword_found.group()
 
     # Make sure a colon comes next
     remainder = input_text_fragment.replace(keyword, '')
     if not remainder.startswith(':'):
-        return None, BuildError('Expected colon (:) after keyword in this string: %s' % input_text_fragment)
+        return None, BuildError('Expected colon (:) after keyword in this string: <%s>' % input_text_fragment)
 
     # Sanity check the list of names that should make up the remainder.
     remainder = remainder[1:]
@@ -105,6 +105,22 @@ def _make_text_record_from_fragment(input_text_fragment, file_location):
     name_of_parent = names[0]
     names_of_children = names[1:]
     return _InputTextRecord(file_location, keyword, name_of_parent, names_of_children), None
+
+def _cleaned_up(list_of_strings):
+    """
+    Cleans up the given list of strings by returning a copy in which the
+    strings have had leading and trailing whitespace removed, and strings
+    that end up empty are discarded.
+    :param strings: The list of strings to filter.
+    :return: The new list.
+    """
+    new_list = []
+    for s in list_of_strings:
+        s = s.strip()
+        if len(s) == 0:
+            continue
+        new_list.append(s)
+    return new_list
 
 
 # These are used for some search and replace logic just below.
@@ -132,6 +148,7 @@ def _split_text_into_records(input_text):
     # Now if we split the result of that using the sentinel as the delimiter, each segment
     # will start with one of our keywords, and span up to the next one.
     fragments = _SENTINEL_REGEX.split(with_sentinels_added)
+    fragments = _cleaned_up(fragments) # get rid of trailing and leading whitespace and ditch empty fragments.
 
     if len(fragments) == 0:
         return [], BuildError('Failed to find any keywords in this text: %s' % input_text)
@@ -141,6 +158,6 @@ def _split_text_into_records(input_text):
     for fragment in fragments:
         record, err = _make_text_record_from_fragment(fragment, unused_file_location)
         if err:
-            return [], err.extended_with('Could not split this text: %s' % input_text)
+            return [], err.extended_with('Could not split this text: <%s>' % input_text)
         records.append(record)
     return records, None

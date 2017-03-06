@@ -26,18 +26,14 @@ class TestDirectorySearch(TestCase):
         files, err = DirectorySearch.find_all_files(_EMPTY_DIR)
         self.assertIsNone(files)
         self.assertIsNotNone(err)
-        message = err.format_as_single_string()
-        self.assertTrue(message.startswith('Error stack:\n\n1: No files found'),
-                        'Message: <%s>, does not start as it should' % message)
-        self.assertTrue('dir_in_second_level' in message, 'Message: <%s>, does not cite directory properly' % message)
+        msg = err.format_as_single_string()
+        self.assertTrue("No files found in" in msg)
+        self.assertTrue("testdata\simple_hierarchy\dir_in_top_level\dir_in_second_level" in msg)
 
     def test_reports_os_level_error_properly(self):
         files, err = DirectorySearch.find_all_files(_NO_SUCH_DIR)
         self.assertIsNone(files)
         self.assertIsNotNone(err)
-        message = err.format_as_single_string()
-        self.assertTrue(message.startswith('Error stack:\n\n1: Something went wrong'),
-                        'Message: <%s>, does not start as it should' % message)
-        self.assertTrue('ridiculous' in message, 'Message: <%s>, does not cite directory properly' % message)
-        self.assertTrue('The system cannot find the path specified' in message,
-                        'Message: <%s>, does not cite underlying system error' % message)
+        msg = err.format_as_single_string()
+        self.assertTrue('Something went wrong inside DirectorySearch for path: ridiculousdirname' in msg)
+        self.assertTrue("Because... [Error 3] The system cannot find the path specified: 'ridiculousdirname/*.*'" in msg)

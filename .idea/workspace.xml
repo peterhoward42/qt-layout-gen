@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1be52820-6c16-4b56-8ca7-cc83c5412022" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/qtlayoutbuilder/builderror.py" afterPath="$PROJECT_DIR$/src/qtlayoutbuilder/builderror.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/qtlayoutbuilder/builderror_test.py" afterPath="$PROJECT_DIR$/src/qtlayoutbuilder/builderror_test.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/qtlayoutbuilder/directorysearch_test.py" afterPath="$PROJECT_DIR$/src/qtlayoutbuilder/directorysearch_test.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/qtlayoutbuilder/inputsplitter.py" afterPath="$PROJECT_DIR$/src/qtlayoutbuilder/inputsplitter.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/qtlayoutbuilder/inputsplitter_test.py" afterPath="$PROJECT_DIR$/src/qtlayoutbuilder/inputsplitter_test.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -21,9 +24,33 @@
       <file leaf-file-name="inputsplitter_test.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/inputsplitter_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-718">
-              <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+            <state relative-caret-position="408">
+              <caret line="114" column="37" lean-forward="false" selection-start-line="114" selection-start-column="37" selection-end-line="114" selection-end-column="37" />
+              <folding>
+                <element signature="e#0#29#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="builderror_test.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/builderror_test.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="10" column="80" lean-forward="false" selection-start-line="10" selection-start-column="80" selection-end-line="10" selection-end-column="80" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="directorysearch_test.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/directorysearch_test.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="284">
+              <caret line="30" column="96" lean-forward="false" selection-start-line="30" selection-start-column="96" selection-end-line="30" selection-end-column="96" />
+              <folding>
+                <element signature="e#0#29#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -31,11 +58,21 @@
       <file leaf-file-name="inputsplitter.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/inputsplitter.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="39" column="50" lean-forward="true" selection-start-line="35" selection-start-column="86" selection-end-line="39" selection-end-column="50" />
+            <state relative-caret-position="2420">
+              <caret line="160" column="41" lean-forward="false" selection-start-line="160" selection-start-column="41" selection-end-line="160" selection-end-column="41" />
               <folding>
                 <element signature="e#331#340#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="builderror.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/builderror.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="386">
+              <caret line="41" column="21" lean-forward="true" selection-start-line="41" selection-start-column="21" selection-end-line="41" selection-end-column="21" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -53,6 +90,9 @@
     <findStrings>
       <find>---</find>
       <find>hbox</find>
+      <find>fart</find>
+      <find>could not</find>
+      <find>could not split</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -64,13 +104,13 @@
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/qtlayoutbuilder/test_buildError.py" />
         <option value="$PROJECT_DIR$/docs/design.txt" />
-        <option value="$PROJECT_DIR$/src/qtlayoutbuilder/builderror.py" />
-        <option value="$PROJECT_DIR$/src/qtlayoutbuilder/builderror_test.py" />
-        <option value="$PROJECT_DIR$/src/qtlayoutbuilder/inputsplitter.py" />
         <option value="$PROJECT_DIR$/src/qtlayoutbuilder/layoutkeywords.py" />
         <option value="$PROJECT_DIR$/src/qtlayoutbuilder/directorysearch.py" />
-        <option value="$PROJECT_DIR$/src/qtlayoutbuilder/directorysearch_test.py" />
         <option value="$PROJECT_DIR$/docs/layout-dev-log.txt" />
+        <option value="$PROJECT_DIR$/src/qtlayoutbuilder/builderror.py" />
+        <option value="$PROJECT_DIR$/src/qtlayoutbuilder/builderror_test.py" />
+        <option value="$PROJECT_DIR$/src/qtlayoutbuilder/directorysearch_test.py" />
+        <option value="$PROJECT_DIR$/src/qtlayoutbuilder/inputsplitter.py" />
         <option value="$PROJECT_DIR$/src/qtlayoutbuilder/inputsplitter_test.py" />
       </list>
     </option>
@@ -200,7 +240,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/qtlayoutbuilder" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
-  <component name="RunManager" selected="Python tests.Unittests in TestInputSplitter">
+  <component name="RunManager" selected="Python tests.all unit tests in package">
     <configuration default="false" name="Unittest TestInputSplitter.test_name_validity_checker" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -514,35 +554,35 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Unittests_in_TestInputSplitter - 2017.03.06 at 12h 53m 49s.xml">
-      <configuration name="Unittests in TestInputSplitter" configurationId="tests" />
+    <history-entry file="all_unit_tests_in_package - 2017.03.06 at 15h 05m 07s.xml">
+      <configuration name="all unit tests in package" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_TestInputSplitter - 2017.03.06 at 12h 54m 30s.xml">
-      <configuration name="Unittests in TestInputSplitter" configurationId="tests" />
+    <history-entry file="all_unit_tests_in_package - 2017.03.06 at 15h 05m 48s.xml">
+      <configuration name="all unit tests in package" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_TestInputSplitter - 2017.03.06 at 12h 55m 01s.xml">
-      <configuration name="Unittests in TestInputSplitter" configurationId="tests" />
+    <history-entry file="all_unit_tests_in_package - 2017.03.06 at 15h 06m 05s.xml">
+      <configuration name="all unit tests in package" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_TestInputSplitter - 2017.03.06 at 14h 02m 32s.xml">
-      <configuration name="Unittests in TestInputSplitter" configurationId="tests" />
+    <history-entry file="all_unit_tests_in_package - 2017.03.06 at 15h 07m 53s.xml">
+      <configuration name="all unit tests in package" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_TestInputSplitter - 2017.03.06 at 14h 05m 17s.xml">
-      <configuration name="Unittests in TestInputSplitter" configurationId="tests" />
+    <history-entry file="all_unit_tests_in_package - 2017.03.06 at 15h 09m 25s.xml">
+      <configuration name="all unit tests in package" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_TestInputSplitter - 2017.03.06 at 14h 06m 39s.xml">
-      <configuration name="Unittests in TestInputSplitter" configurationId="tests" />
+    <history-entry file="all_unit_tests_in_package - 2017.03.06 at 15h 09m 49s.xml">
+      <configuration name="all unit tests in package" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_TestInputSplitter - 2017.03.06 at 14h 10m 28s.xml">
-      <configuration name="Unittests in TestInputSplitter" configurationId="tests" />
+    <history-entry file="all_unit_tests_in_package - 2017.03.06 at 15h 11m 41s.xml">
+      <configuration name="all unit tests in package" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_TestInputSplitter - 2017.03.06 at 14h 10m 43s.xml">
-      <configuration name="Unittests in TestInputSplitter" configurationId="tests" />
+    <history-entry file="all_unit_tests_in_package - 2017.03.06 at 15h 11m 54s.xml">
+      <configuration name="all unit tests in package" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_TestInputSplitter - 2017.03.06 at 14h 11m 18s.xml">
-      <configuration name="Unittests in TestInputSplitter" configurationId="tests" />
+    <history-entry file="all_unit_tests_in_package - 2017.03.06 at 15h 12m 02s.xml">
+      <configuration name="all unit tests in package" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_TestInputSplitter - 2017.03.06 at 14h 11m 25s.xml">
-      <configuration name="Unittests in TestInputSplitter" configurationId="tests" />
+    <history-entry file="all_unit_tests_in_package - 2017.03.06 at 15h 12m 51s.xml">
+      <configuration name="all unit tests in package" configurationId="tests" />
     </history-entry>
   </component>
   <component name="TodoView">
@@ -556,16 +596,16 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18229716" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4225352" sideWeight="0.5021075" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Inspection Results" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4225352" sideWeight="0.49789253" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4225352" sideWeight="0.49789253" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -588,7 +628,19 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="5" />
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/qtlayoutbuilder/inputsplitter_test.py</url>
+          <line>98</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/qtlayoutbuilder/inputsplitter_test.py</url>
+          <line>84</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="7" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -597,7 +649,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -723,14 +777,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/builderror.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="455">
-          <caret line="36" column="21" lean-forward="false" selection-start-line="36" selection-start-column="21" selection-end-line="36" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/layoutkeywords.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -763,18 +809,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/builderror.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="386">
+          <caret line="41" column="21" lean-forward="true" selection-start-line="41" selection-start-column="21" selection-end-line="41" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/builderror_test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="136">
+          <caret line="10" column="80" lean-forward="false" selection-start-line="10" selection-start-column="80" selection-end-line="10" selection-end-column="80" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/directorysearch_test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-124">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="284">
+          <caret line="30" column="96" lean-forward="false" selection-start-line="30" selection-start-column="96" selection-end-line="30" selection-end-column="96" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
           </folding>
@@ -783,8 +837,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/inputsplitter.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="39" column="50" lean-forward="true" selection-start-line="35" selection-start-column="86" selection-end-line="39" selection-end-column="50" />
+        <state relative-caret-position="2420">
+          <caret line="160" column="41" lean-forward="false" selection-start-line="160" selection-start-column="41" selection-end-line="160" selection-end-column="41" />
           <folding>
             <element signature="e#331#340#0" expanded="true" />
           </folding>
@@ -793,9 +847,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/inputsplitter_test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-718">
-          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="408">
+          <caret line="114" column="37" lean-forward="false" selection-start-line="114" selection-start-column="37" selection-end-line="114" selection-end-column="37" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

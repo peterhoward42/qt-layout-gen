@@ -1,7 +1,8 @@
 from unittest import TestCase
 
 # noinspection PyProtectedMember
-from inputsplitter import _check_validity_of_name, _check_names, _make_text_record_from_fragment, _FileLocation
+from inputsplitter import _check_validity_of_name, _check_names, _make_text_record_from_fragment, _FileLocation,\
+    _split_text_into_records, _cleaned_up
 
 
 class TestInputSplitter(TestCase):
@@ -37,8 +38,8 @@ class TestInputSplitter(TestCase):
         err = _check_names(['foo', '9illegal', 'bar'])
         self.assertIsNotNone(err)
         msg = err.format_as_single_string()
-        self.assertTrue('1: Problem with one of the names' in msg)
-        self.assertTrue('2: Name: <9illegal> is not a valid identifier' in msg)
+        self.assertTrue('Problem with one of the names' in msg)
+        self.assertTrue('Name: <9illegal> is not a valid identifier' in msg)
 
     def test_make_text_record_from_fragment(self):
         mock_file_location = _FileLocation('unused filename', -1)
@@ -47,13 +48,13 @@ class TestInputSplitter(TestCase):
         record, err = _make_text_record_from_fragment('NOTKWD: fred jane barry', mock_file_location)
         self.assertIsNotNone(err)
         msg = err.format_as_single_string()
-        self.assertTrue('Cannot find keyword at beginning of this string: NOTKWD: fred jane barry' in msg)
+        self.assertTrue('Cannot find keyword at beginning of this string: <NOTKWD: fred jane barry>' in msg)
 
         # Objects when a colon doesn't come next
         record, err = _make_text_record_from_fragment('HBOX fred jane barry', mock_file_location)
         self.assertIsNotNone(err)
         msg = err.format_as_single_string()
-        self.assertTrue('Expected colon (:) after keyword in this string: HBOX fred jane barry' in msg)
+        self.assertTrue('Expected colon (:) after keyword in this string: <HBOX fred jane barry>' in msg)
 
         # Invokes name checker on all names present in remainder
 
@@ -77,3 +78,40 @@ class TestInputSplitter(TestCase):
         self.assertEqual(record.layout_keyword, 'HBOX')
         self.assertEqual(record.parent_name, 'fred')
         self.assertEqual(str(record.child_name_fields), "['jane', 'barry']")
+
+    def test_cleaned_up(self):
+        # The space item should be removed, and the leading space on
+        # the word 'bar' should be removed.
+        cleaned = _cleaned_up(['foo', ' ', ' bar'])
+        self.assertEqual(len(cleaned), 2)
+        self.assertEqual(cleaned[0], 'foo')
+        self.assertEqual(cleaned[1], 'bar')
+
+    def test_split_text_into_records(self):
+        # Failed to find any keywords to split on.
+        records, err = _split_text_into_records('ipsum doo dah')
+        self.assertIsNotNone(err)
+        msg = err.format_as_single_string()
+        self.assertTrue('ould not split this text: <ipsum doo dah>' in msg)
+        self.assertTrue('Cannot find keyword at beginning of this string: <ipsum doo dah>' in msg)
+
+        # Error if one of the fragments found is malformed
+        records, err = _split_text_into_records('HBOX:a b c HBOX:a b illegal#')
+        self.assertIsNotNone(err)
+        msg = err.format_as_single_string()
+        self.assertTrue('Could not split this text: <HBOX:a b c HBOX:a b illegal#>' in msg)
+        self.assertTrue('Problem with names in this input text fragment: <HBOX:a b illegal#>, at this fi' in msg)
+        self.assertTrue('Problem with one of the names' in msg)
+        self.assertTrue('Name: <illegal#> is not a valid identifier' in msg)
+
+        # Gets well formed set of records when works
+        records, err = _split_text_into_records('HBOX:a b c HBOX:d e f')
+        self.assertIsNone(err)
+        self.assertIsNotNone(records)
+
+        self.assertEqual(len(records), 2)
+
+        # Prove that the records have been assembled in the right order and have
+        # not overwritten each other.
+        self.assertEqual(records[0].parent_name, 'a')
+        self.assertEqual(records[1].parent_name, 'd')
