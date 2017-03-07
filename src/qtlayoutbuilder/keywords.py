@@ -5,6 +5,10 @@ layout builder recognizes, and providing utility functions concerned with keywor
 
 import re
 
+from PySide.QtGui import QHBoxLayout
+from builderror import BuildError
+
+
 WORDS = ['HBOX', 'VBOX', 'STACK', 'SPLIT', 'TAB']
 
 _keyword_regex = re.compile('|'.join(WORDS))
@@ -35,4 +39,23 @@ def mark_all_keywords_found(some_text, marking_callback):
     :return: The modified text.
     """
     return _keyword_regex.sub(marking_callback, some_text)
+
+_CONSTRUCTORS = {
+    'HBOX': QHBoxLayout,
+    'VBOX': QVBoxLayout,
+    'STACK': QStackedWidget,
+    'SPLIT': QSplitterWidget,
+    'TAB': QTabbedWidget,
+}
+
+def instantiate_qobject_for(keyword):
+    constructor = _CONSTRUCTORS.get(keyword, None)
+    if constructor is None:
+        return None, BuildError(
+            'Cannot instantiate your QObject because this keyword is not recognized: <%s>' % keyword)
+    try:
+        return constructor(), None
+    except Exception as e:
+        return None, BuildError(str(e)).extended_with('Failed to construct your: <%s>' % constructor)
+
 
