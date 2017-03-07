@@ -5,7 +5,8 @@ layout builder recognizes, and providing utility functions concerned with keywor
 
 import re
 
-from PySide.QtGui import QHBoxLayout
+from PySide.QtGui import QLabel, QHBoxLayout, QVBoxLayout, QStackedLayout, QTabWidget, QSplitter
+
 from builderror import BuildError
 
 
@@ -43,10 +44,11 @@ def mark_all_keywords_found(some_text, marking_callback):
 _CONSTRUCTORS = {
     'HBOX': QHBoxLayout,
     'VBOX': QVBoxLayout,
-    'STACK': QStackedWidget,
-    'SPLIT': QSplitterWidget,
-    'TAB': QTabbedWidget,
+    'STACK': QStackedLayout,
+    'SPLIT': QSplitter,
+    'TAB': QTabWidget,
 }
+
 
 def instantiate_qobject_for(keyword):
     constructor = _CONSTRUCTORS.get(keyword, None)

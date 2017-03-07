@@ -11,8 +11,7 @@
     *  at files level
     *  go back to make dir search private
     *  record lookup
-    o  instantiate parent from keyword
-        o  extend keyword class to suit
+    *  instantiate qobject from keyword
     o  name to resolved object register
     o  resolve a child name
         o  resolve a lookup
