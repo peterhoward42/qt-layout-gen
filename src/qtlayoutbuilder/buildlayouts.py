@@ -1,5 +1,7 @@
 from builderror import BuildError
 
+from keywords import instantiate_qobject_for
+
 
 def _build_layouts_from_records(records, input_source_for_error_handling):
     """
@@ -61,7 +63,7 @@ def _build_and_register_record(record, register):
         children[parent_name] = q_object
 
     # Instantiate the relevant parent type and register it
-    parent_qobject, err = instantiate_qobject_for(record.input_text_record.keyword)
+    parent_qobject, err = instantiate_qobject_for(record.layout_keyword)
     if err:
         return err.extended_with(
             'Problem building <%s> for: record which is defined here: <%s>' %
@@ -102,6 +104,7 @@ def _reconcile_child_to_object(child_name, record, register):
     # registered for the given child name.
     if child_name in register:
         return register[child_name], None
+
     # Temporarily regard everything else as an error
     return None, BuildError(
         ('Nothing found in register for this child name: <%s>, defined at: <%s>, ' + \

@@ -63,6 +63,44 @@ class TestBuildLayouts(TestCase):
         q_object, err = _reconcile_child_to_object('right_box', outer_box_record, register)
         self.assertEqual(q_object, mock_object)
 
+    def test_build_and_register_record_failures_with_children(self):
+        # Child cannot be reconciled.
+        dummy_file_location = {}
+        record = _InputTextRecord(dummy_file_location, 'HBOX', 'name_of_parent', ['child_a', 'child_b'])
+        dummy_q_object = {}
+        register = {} # Will trigger look up failure.
+        err = _build_and_register_record(record, register)
+        self.assertIsNotNone(err)
+        msg = err.format_as_single_string()
+        self.assertTrue(
+            'Problem building child: <child_a>, in record which is' in msg)
+        self.assertTrue(
+            'Nothing found in register for this child name: <child_a>, defi' in msg)
+
+    def test_build_and_register_record_failures_with_parent(self):
+        dummy_file_location = {}
+        record = _InputTextRecord(dummy_file_location, 'HBOX', 'name_of_parent', ['child_a', 'child_b'])
+        mock_child = {}
+        register = {'child_a': mock_child, 'child_b': mock_child}
+
+        no sure to be other more worth while failures
+
+        # We inject the error condition here by monkey patching the keywords module, so
+        # that it fails to instantiate a QHBoxLayout
+        fart do it
+        err = _build_and_register_record(record, register)
+        self.assertIsNotNone(err)
+        msg = err.format_as_single_string()
+        print msg
+        self.assertTrue(
+            'wont' in msg)
+        self.assertTrue(
+            'wont' in msg)
+        self.assertTrue(
+            'wont' in msg)
+        self.assertTrue(
+            'wont' in msg)
+
     def test_build_and_register_record_when_already_available(self):
         dummy_file_location = {}
         record = _InputTextRecord(dummy_file_location, 'HBOX', 'name_of_parent', ['child_a', 'child_b'])

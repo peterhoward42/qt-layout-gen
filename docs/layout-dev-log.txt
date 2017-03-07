@@ -1,35 +1,14 @@
-*  Build out utilities and tests as per plan
-    *  identifier? = no
-    *  auto format on save
-    *  pylint
-    *  all files recursively
-    *  extract fragment at string level
-    *  at file level
-    *  forgot to check for all agreed keywords
-    *  shouldn't be using is not None
-    *  keyword alternatives regex lumpen
-    *  at files level
-    *  go back to make dir search private
-    *  record lookup
-    *  instantiate qobject from keyword
-    o  has to be top down :-( too difficult otherwise
-        o  reconcile child
-        o  check comments in all modules
+o  Restart with new design
+    o  Reflect on which modules should remain so
+    o  Start on parallel stack
+        o
 
 
+    o  Housekeep redundant modules and tests
 
-
-
-    o  resolve a child name
-        o  start on entry point to provide directon
-        o  resolve a qtlabel type
-        o  resolve reserved word shorthand
-        o  resolve pre instantiated by discovery
-
-    o  is recordlookup redundant?
-    o  entry point from list of records
-    o  entry point from dir
-    o  entry point from text
-    o  queries and nav
 
 o  Remember to demand that children are not reused
+
+--------------------------------------------------------
+Module Changes Needed
+--------------------------------------------------------
