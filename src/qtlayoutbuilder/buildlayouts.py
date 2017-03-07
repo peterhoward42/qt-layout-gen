@@ -1,3 +1,6 @@
+from builderror import BuildError
+
+
 def _build_layouts_from_records(records, input_source_for_error_handling):
     layouts, err = _build_layouts_from_input_records(records)
     if err:
@@ -51,15 +54,16 @@ def _build_and_register_record(record, register):
         try:
             if isintance(child_q_object, QLayout):
                 parent_qobject.addLayout(child_q_object)
-            else if isintance(child_q_object, QWidget):
+            elif isintance(child_q_object, QWidget):
                 parent_qobject.addWidget(child_q_object)
-            else
-            raise Exception('Coding error, expected QWidget or QLayout and got <%s>' % child_q_object.__class__)
-    except Exception as e:
-    return None, BuildError(str(e)).extended_with(
-        'Could not add child: <%s> to parent: <%s>, defined here: <%s>' %
-        (child_name, parent_name, record.file_location))  # Return it
-return parent_qobject, None
+            else:
+                raise Exception('Coding error, expected QWidget or QLayout and got <%s>' % child_q_object.__class__)
+        except Exception as e:
+            return None, BuildError(str(e)).extended_with(
+                'Could not add child: <%s> to parent: <%s>, defined here: <%s>' %
+                (child_name, parent_name, record.file_location))  # Return it
+
+    return parent_qobject, None
 
 
 def _reconcile_child_to_object(child_name, record, register):
@@ -68,4 +72,6 @@ def _reconcile_child_to_object(child_name, record, register):
     if child_name in register:
         return register[child_name], None
     # Temporarily regard everything else as an error
-    return None, BuildError('Nothing found in register for this child name, and no other machinery supported yet')
+    return None, BuildError(
+        ('Nothing found in register for this child name: <%s>, defined at: <%s>, ' + \
+        'and no other machinery supported yet') % (child_name, record.file_location))

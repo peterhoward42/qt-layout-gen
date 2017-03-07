@@ -4,6 +4,11 @@ This module defines the _RecordLookup class.
 
 from builderror import BuildError
 
+# noinspection PyProtectedMember
+
+# noinspection PyProtectedMember
+from inputsplitter import _split_text_into_records
+
 
 class _RecordLookup(object):
     """

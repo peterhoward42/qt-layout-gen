@@ -14,6 +14,10 @@
     *  instantiate qobject from keyword
     o  has to be top down :-( too difficult otherwise
         o  reconcile child
+        o  check comments in all modules
+
+
+
 
 
     o  resolve a child name
@@ -21,6 +25,8 @@
         o  resolve a qtlabel type
         o  resolve reserved word shorthand
         o  resolve pre instantiated by discovery
+
+    o  is recordlookup redundant?
     o  entry point from list of records
     o  entry point from dir
     o  entry point from text
