@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1be52820-6c16-4b56-8ca7-cc83c5412022" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qtlayoutbuilder/buildlayouts-test.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/qtlayoutbuilder/childresolver.py" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/layout-dev-log.txt" afterPath="$PROJECT_DIR$/docs/layout-dev-log.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/qtlayoutbuilder/buildlayouts-test.py" afterPath="$PROJECT_DIR$/src/qtlayoutbuilder/buildlayouts-test.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/qtlayoutbuilder/buildlayouts.py" afterPath="$PROJECT_DIR$/src/qtlayoutbuilder/buildlayouts.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/qtlayoutbuilder/recordlookup.py" afterPath="$PROJECT_DIR$/src/qtlayoutbuilder/recordlookup.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -22,6 +18,18 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="inputsplitter_test.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/inputsplitter_test.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="19" column="23" lean-forward="false" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
+              <folding>
+                <element signature="e#0#29#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="layout-dev-log.txt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/docs/layout-dev-log.txt">
           <provider selected="true" editor-type-id="text-editor">
@@ -32,11 +40,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="buildlayouts-test.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="buildlayouts-test.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/buildlayouts-test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="544">
-              <caret line="32" column="29" lean-forward="true" selection-start-line="32" selection-start-column="29" selection-end-line="32" selection-end-column="29" />
+            <state relative-caret-position="449">
+              <caret line="71" column="16" lean-forward="true" selection-start-line="71" selection-start-column="16" selection-end-line="71" selection-end-column="16" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
               </folding>
@@ -44,12 +52,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="buildlayouts.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="buildlayouts.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/buildlayouts.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="612">
-              <caret line="36" column="33" lean-forward="false" selection-start-line="36" selection-start-column="33" selection-end-line="36" selection-end-column="33" />
+            <state relative-caret-position="432">
+              <caret line="101" column="41" lean-forward="false" selection-start-line="101" selection-start-column="41" selection-end-line="101" selection-end-column="41" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="inputsplitter.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/inputsplitter.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="408">
+              <caret line="33" column="22" lean-forward="false" selection-start-line="33" selection-start-column="6" selection-end-line="33" selection-end-column="22" />
+              <folding>
+                <element signature="e#512#521#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -660,15 +680,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="all_unit_tests_in_package - 2017.03.07 at 12h 24m 16s.xml">
-      <configuration name="all unit tests in package" configurationId="tests" />
-    </history-entry>
-    <history-entry file="all_unit_tests_in_package - 2017.03.07 at 12h 26m 14s.xml">
-      <configuration name="all unit tests in package" configurationId="tests" />
-    </history-entry>
-    <history-entry file="all_unit_tests_in_package - 2017.03.07 at 12h 26m 29s.xml">
-      <configuration name="all unit tests in package" configurationId="tests" />
-    </history-entry>
     <history-entry file="all_unit_tests_in_package - 2017.03.07 at 12h 26m 49s.xml">
       <configuration name="all unit tests in package" configurationId="tests" />
     </history-entry>
@@ -690,6 +701,15 @@
     <history-entry file="all_unit_tests_in_package - 2017.03.07 at 12h 43m 28s.xml">
       <configuration name="all unit tests in package" configurationId="tests" />
     </history-entry>
+    <history-entry file="all_unit_tests_in_package - 2017.03.07 at 12h 56m 00s.xml">
+      <configuration name="all unit tests in package" configurationId="tests" />
+    </history-entry>
+    <history-entry file="all_unit_tests_in_package - 2017.03.07 at 13h 15m 17s.xml">
+      <configuration name="all unit tests in package" configurationId="tests" />
+    </history-entry>
+    <history-entry file="all_unit_tests_in_package - 2017.03.07 at 13h 16m 25s.xml">
+      <configuration name="all unit tests in package" configurationId="tests" />
+    </history-entry>
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -709,7 +729,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4225352" sideWeight="0.5021075" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32875264" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33403805" sideWeight="0.49789253" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33403805" sideWeight="0.49789253" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -1019,26 +1039,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/inputsplitter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="134" column="28" lean-forward="false" selection-start-line="134" selection-start-column="4" selection-end-line="134" selection-end-column="28" />
-          <folding>
-            <element signature="e#512#521#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/inputsplitter_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="76" lean-forward="true" selection-start-line="19" selection-start-column="49" selection-end-line="22" selection-end-column="76" />
-          <folding>
-            <element signature="e#0#29#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/api.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -1099,6 +1099,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/inputsplitter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="33" column="22" lean-forward="false" selection-start-line="33" selection-start-column="6" selection-end-line="33" selection-end-column="22" />
+          <folding>
+            <element signature="e#512#521#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/docs/layout-dev-log.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -1107,10 +1117,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/buildlayouts-test.py">
+    <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/inputsplitter_test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="32" column="29" lean-forward="true" selection-start-line="32" selection-start-column="29" selection-end-line="32" selection-end-column="29" />
+        <state relative-caret-position="323">
+          <caret line="19" column="23" lean-forward="false" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
           </folding>
@@ -1119,9 +1129,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/buildlayouts.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="36" column="33" lean-forward="false" selection-start-line="36" selection-start-column="33" selection-end-line="36" selection-end-column="33" />
+        <state relative-caret-position="432">
+          <caret line="101" column="41" lean-forward="false" selection-start-line="101" selection-start-column="41" selection-end-line="101" selection-end-column="41" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/buildlayouts-test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="449">
+          <caret line="71" column="16" lean-forward="true" selection-start-line="71" selection-start-column="16" selection-end-line="71" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -2,6 +2,14 @@ from builderror import BuildError
 
 
 def _build_layouts_from_records(records, input_source_for_error_handling):
+    """
+    Builds the layout tree(s) comprising QLayouts and QWidgets, as mandated
+    by the InputTextRecords provided.
+    :param records: The text records from which the layout tree(s) should be produced.
+    :param input_source_for_error_handling:
+    :return: (layout_trees, BuildError). Where layout_trees is a dictionary keyed on the
+    names used in the InputTextRecords.
+    """
     layouts, err = _build_layouts_from_input_records(records)
     if err:
         return None, err.extended_with('Could not build your layouts from <%s>' % input_source_for_error_handling)
@@ -18,25 +26,36 @@ def _build_layouts_from_records(records, input_source_for_error_handling):
 
     register = {}
     for record in records:
-        q_object, err = _build_and_register_record(record, register)
-        if err:
-            return None, err.extended_with('Problem building one of your QObjects')
+       err = _build_and_register_record(record, register)
+    if err:
+        return None, err.extended_with('Problem building one of your QObjects')
 
-            # maybe should check nothing got left unconsumed here?
+    # maybe should check nothing got left unconsumed here?
 
 
 def _build_and_register_record(record, register):
+    """
+    Works out what q_objects are required to make the tree fragment implied by the
+    given InputTextRecord, instantiating them (recursively) if necessary. Finally,
+    registering the parent object from the input text record in the register
+    provided.
+    :param record: The InputTextRecord from which to build this sub tree.
+    :param register: A dictionary that provides the previously registered
+    q_objectes, keyed on their name. This method will update this dictionary
+    as it goes. AND IS THE ONLY METHOD THAT SHOULD ADD TO THE register.
+    :return: A BuildError or none.
+    """
     # Already been done?
     parent_name = record.parent_name
     if parent_name in register:
-        return register[parent_name]
+        return None
 
     # Build and access children required
     children = {}
     for child_name in record.child_name_fields:
         q_object, err = _reconcile_child_to_object(child_name, record, register)
         if err:
-            return None, err.extended_with(
+            return err.extended_with(
                 'Problem building child: <%s>, in record which is defined here: <%s>' %
                 (child_name, record.file_location))
         children[parent_name] = q_object
@@ -44,7 +63,7 @@ def _build_and_register_record(record, register):
     # Instantiate the relevant parent type and register it
     parent_qobject, err = instantiate_qobject_for(record.input_text_record.keyword)
     if err:
-        return None, err.extended_with(
+        return err.extended_with(
             'Problem building <%s> for: record which is defined here: <%s>' %
             (parent_name, record.file_location))
     register[parent_name] = parent_qobject
@@ -59,15 +78,27 @@ def _build_and_register_record(record, register):
             else:
                 raise Exception('Coding error, expected QWidget or QLayout and got <%s>' % child_q_object.__class__)
         except Exception as e:
-            return None, BuildError(str(e)).extended_with(
+            return BuildError(str(e)).extended_with(
                 'Could not add child: <%s> to parent: <%s>, defined here: <%s>' %
                 (child_name, parent_name, record.file_location))  # Return it
-
-    return parent_qobject, None
+    return None
 
 
 def _reconcile_child_to_object(child_name, record, register):
-    # Highest precedence is to find that an object is already
+    """
+    Will provide a q_object to reconcile the child_name given, using the
+    InputTextRecord and register of previously registered QObjects as
+    context.
+    :param child_name: The name of the child that must be reconciled.
+    :param record: The relevant InputTextRecord
+    :param register: A dictionary that provides the previously registered
+    q_objects, keyed on their name. This method DOES NOT update this dictionary
+    as it goes of itself, but when it finds that the child name refers to another
+    record, it will call _build_and_register_record() for that record recursively, -
+    which will update the register as necessary.
+    :return: (q_object, BuildError)
+    """
+    # Highest precedence is to find that a q_object is already
     # registered for the given child name.
     if child_name in register:
         return register[child_name], None

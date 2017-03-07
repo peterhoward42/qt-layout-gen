@@ -4,9 +4,11 @@ import os.path
 
 from PySide.QtGui import QLabel
 
-from buildlayouts import _reconcile_child_to_object
+from buildlayouts import _reconcile_child_to_object, _build_and_register_record
 # noinspection PyProtectedMember
-from inputsplitter import _split_text_into_records  # noinspection PyProtectedMember
+# noinspection PyProtectedMember
+from inputsplitter import _split_text_into_records, _InputTextRecord
+# noinspection PyProtectedMember
 from recordlookup import _RecordLookup
 
 
@@ -60,3 +62,14 @@ class TestBuildLayouts(TestCase):
         outer_box_record = record_lookup.records['outer_box']
         q_object, err = _reconcile_child_to_object('right_box', outer_box_record, register)
         self.assertEqual(q_object, mock_object)
+
+    def test_build_and_register_record_when_already_available(self):
+        dummy_file_location = {}
+        record = _InputTextRecord(dummy_file_location, 'HBOX', 'name_of_parent', ['child_a', 'child_b'])
+        dummy_q_object = {}
+        register = {'name_of_parent': dummy_q_object}
+        err = _build_and_register_record(record, register)
+        self.assertIsNone(err)
+        q_object = register['name_of_parent']
+        self.assertIsNotNone(q_object)
+        self.assertEqual(q_object, dummy_q_object)
