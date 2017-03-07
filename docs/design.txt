@@ -175,6 +175,7 @@ o  parse_node_specs
         o  harvests basics
 
 o  trace out tree
+    o
     o  error if less < 1 node provided
     o  can deal with v simple case of one tree 3 level
     o  can deal with v simple case of two tree 3 level

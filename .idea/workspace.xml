@@ -2,19 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1be52820-6c16-4b56-8ca7-cc83c5412022" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/testdata/hierarchy_with_problem_inside/dir_in_top_level/second_level_a.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/testdata/hierarchy_with_problem_inside/top_level_a.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/testdata/hierarchy_with_problem_inside/top_level_b.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/qtlayoutbuilder/layoutkeywords.py" afterPath="$PROJECT_DIR$/src/qtlayoutbuilder/keywords.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qtlayoutbuilder/recordlookup.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qtlayoutbuilder/recordlookup_test.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/design.txt" afterPath="$PROJECT_DIR$/docs/design.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/layout-dev-log.txt" afterPath="$PROJECT_DIR$/docs/layout-dev-log.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/qtlayoutbuilder/directorysearch.py" afterPath="$PROJECT_DIR$/src/qtlayoutbuilder/directorysearch.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/qtlayoutbuilder/directorysearch_test.py" afterPath="$PROJECT_DIR$/src/qtlayoutbuilder/directorysearch_test.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/qtlayoutbuilder/inputsplitter.py" afterPath="$PROJECT_DIR$/src/qtlayoutbuilder/inputsplitter.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/qtlayoutbuilder/inputsplitter_test.py" afterPath="$PROJECT_DIR$/src/qtlayoutbuilder/inputsplitter_test.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/testdata/simple_hierarchy/dir_in_top_level/second_level_a.txt" afterPath="$PROJECT_DIR$/testdata/simple_hierarchy/dir_in_top_level/second_level_a.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/testdata/simple_hierarchy/top_level_a.txt" afterPath="$PROJECT_DIR$/testdata/simple_hierarchy/top_level_a.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/testdata/simple_hierarchy/top_level_b.txt" afterPath="$PROJECT_DIR$/testdata/simple_hierarchy/top_level_b.txt" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -29,21 +21,33 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="inputsplitter_test.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/inputsplitter_test.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="9" column="46" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="9" selection-end-column="46" />
+              <folding>
+                <element signature="e#0#29#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="layout-dev-log.txt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/docs/layout-dev-log.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="5" lean-forward="false" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="5" />
+            <state relative-caret-position="306">
+              <caret line="18" column="50" lean-forward="false" selection-start-line="18" selection-start-column="50" selection-end-line="18" selection-end-column="50" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="inputsplitter.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="inputsplitter.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/inputsplitter.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="224" column="17" lean-forward="false" selection-start-line="224" selection-start-column="17" selection-end-line="224" selection-end-column="17" />
+            <state relative-caret-position="527">
+              <caret line="43" column="30" lean-forward="false" selection-start-line="43" selection-start-column="13" selection-end-line="43" selection-end-column="30" />
               <folding>
                 <element signature="e#512#521#0" expanded="true" />
               </folding>
@@ -51,23 +55,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="directorysearch.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/directorysearch.py">
+      <file leaf-file-name="design.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs/design.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="25" column="88" lean-forward="false" selection-start-line="25" selection-start-column="88" selection-end-line="25" selection-end-column="88" />
-              <folding>
-                <element signature="e#51#60#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="221">
+              <caret line="97" column="23" lean-forward="false" selection-start-line="97" selection-start-column="23" selection-end-line="97" selection-end-column="23" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="directorysearch_test.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/directorysearch_test.py">
+      <file leaf-file-name="recordlookup.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/recordlookup.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="477">
-              <caret line="36" column="43" lean-forward="false" selection-start-line="36" selection-start-column="43" selection-end-line="36" selection-end-column="43" />
+            <state relative-caret-position="86">
+              <caret line="7" column="19" lean-forward="false" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="19" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="recordlookup_test.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/recordlookup_test.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="493">
+              <caret line="29" column="87" lean-forward="false" selection-start-line="29" selection-start-column="87" selection-end-line="29" selection-end-column="87" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
               </folding>
@@ -104,7 +116,6 @@
       <list>
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/qtlayoutbuilder/test_buildError.py" />
-        <option value="$PROJECT_DIR$/docs/design.txt" />
         <option value="$PROJECT_DIR$/src/qtlayoutbuilder/layoutkeywords.py" />
         <option value="$PROJECT_DIR$/src/qtlayoutbuilder/builderror.py" />
         <option value="$PROJECT_DIR$/src/qtlayoutbuilder/builderror_test.py" />
@@ -120,10 +131,14 @@
         <option value="$PROJECT_DIR$/testdata/simple_hierarchy/top_level_b.txt" />
         <option value="$PROJECT_DIR$/src/qtlayoutbuilder/inputsplitter_test.py" />
         <option value="$PROJECT_DIR$/src/qtlayoutbuilder/keywords.py" />
-        <option value="$PROJECT_DIR$/docs/layout-dev-log.txt" />
         <option value="$PROJECT_DIR$/src/qtlayoutbuilder/directorysearch.py" />
         <option value="$PROJECT_DIR$/src/qtlayoutbuilder/directorysearch_test.py" />
         <option value="$PROJECT_DIR$/src/qtlayoutbuilder/inputsplitter.py" />
+        <option value="$PROJECT_DIR$/docs/design.txt" />
+        <option value="$PROJECT_DIR$/src/qtlayoutbuilder/topology.py" />
+        <option value="$PROJECT_DIR$/docs/layout-dev-log.txt" />
+        <option value="$PROJECT_DIR$/src/qtlayoutbuilder/recordlookup.py" />
+        <option value="$PROJECT_DIR$/src/qtlayoutbuilder/recordlookup_test.py" />
       </list>
     </option>
   </component>
@@ -221,6 +236,38 @@
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="testdata">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="qt-layout-gen">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="testdata">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="simple_hierarchy">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="qt-layout-gen">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
             <PATH_ELEMENT USER_OBJECT="src">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
@@ -269,6 +316,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\tmp\qt-layout-gen\src\qtlayoutbuilder" />
       <recent name="C:\tmp\qt-layout-gen\testdata" />
     </key>
   </component>
@@ -589,34 +637,34 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="all_unit_tests_in_package - 2017.03.06 at 21h 23m 28s.xml">
+    <history-entry file="all_unit_tests_in_package - 2017.03.07 at 08h 39m 31s.xml">
       <configuration name="all unit tests in package" configurationId="tests" />
     </history-entry>
-    <history-entry file="all_unit_tests_in_package - 2017.03.06 at 21h 25m 27s.xml">
+    <history-entry file="all_unit_tests_in_package - 2017.03.07 at 08h 40m 02s.xml">
       <configuration name="all unit tests in package" configurationId="tests" />
     </history-entry>
-    <history-entry file="all_unit_tests_in_package - 2017.03.06 at 21h 26m 02s.xml">
+    <history-entry file="all_unit_tests_in_package - 2017.03.07 at 08h 40m 51s.xml">
       <configuration name="all unit tests in package" configurationId="tests" />
     </history-entry>
-    <history-entry file="all_unit_tests_in_package - 2017.03.06 at 21h 26m 30s.xml">
+    <history-entry file="all_unit_tests_in_package - 2017.03.07 at 08h 42m 10s.xml">
       <configuration name="all unit tests in package" configurationId="tests" />
     </history-entry>
-    <history-entry file="all_unit_tests_in_package - 2017.03.06 at 21h 26m 43s.xml">
+    <history-entry file="all_unit_tests_in_package - 2017.03.07 at 08h 42m 17s.xml">
       <configuration name="all unit tests in package" configurationId="tests" />
     </history-entry>
-    <history-entry file="all_unit_tests_in_package - 2017.03.06 at 21h 28m 11s.xml">
+    <history-entry file="all_unit_tests_in_package - 2017.03.07 at 08h 45m 13s.xml">
       <configuration name="all unit tests in package" configurationId="tests" />
     </history-entry>
-    <history-entry file="all_unit_tests_in_package - 2017.03.06 at 21h 28m 24s.xml">
+    <history-entry file="all_unit_tests_in_package - 2017.03.07 at 08h 45m 20s.xml">
       <configuration name="all unit tests in package" configurationId="tests" />
     </history-entry>
-    <history-entry file="all_unit_tests_in_package - 2017.03.06 at 21h 28m 40s.xml">
+    <history-entry file="all_unit_tests_in_package - 2017.03.07 at 08h 45m 33s.xml">
       <configuration name="all unit tests in package" configurationId="tests" />
     </history-entry>
-    <history-entry file="all_unit_tests_in_package - 2017.03.06 at 21h 29m 27s.xml">
+    <history-entry file="all_unit_tests_in_package - 2017.03.07 at 08h 45m 58s.xml">
       <configuration name="all unit tests in package" configurationId="tests" />
     </history-entry>
-    <history-entry file="all_unit_tests_in_package - 2017.03.06 at 21h 29m 39s.xml">
+    <history-entry file="all_unit_tests_in_package - 2017.03.07 at 08h 46m 22s.xml">
       <configuration name="all unit tests in package" configurationId="tests" />
     </history-entry>
   </component>
@@ -773,14 +821,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/test_buildError.py" />
-    <entry file="file://$PROJECT_DIR$/docs/design.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-544">
-          <caret line="34" column="30" lean-forward="true" selection-start-line="34" selection-start-column="30" selection-end-line="34" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_HOME_DIR$/helpers/pycharm/utrunner.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1814">
@@ -893,28 +933,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/inputsplitter_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="747">
-          <caret line="196" column="51" lean-forward="false" selection-start-line="196" selection-start-column="51" selection-end-line="196" selection-end-column="51" />
-          <folding>
-            <element signature="e#0#29#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/keywords.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="442">
           <caret line="26" column="42" lean-forward="true" selection-start-line="26" selection-start-column="42" selection-end-line="26" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/layout-dev-log.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="5" lean-forward="false" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="5" />
           <folding />
         </state>
       </provider>
@@ -939,13 +961,57 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/docs/design.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="97" column="23" lean-forward="false" selection-start-line="97" selection-start-column="23" selection-end-line="97" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/inputsplitter_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="46" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="9" selection-end-column="46" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/layout-dev-log.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="50" lean-forward="false" selection-start-line="18" selection-start-column="50" selection-end-line="18" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/inputsplitter.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="224" column="17" lean-forward="false" selection-start-line="224" selection-start-column="17" selection-end-line="224" selection-end-column="17" />
+        <state relative-caret-position="527">
+          <caret line="43" column="30" lean-forward="false" selection-start-line="43" selection-start-column="13" selection-end-line="43" selection-end-column="30" />
           <folding>
             <element signature="e#512#521#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/recordlookup_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="29" column="87" lean-forward="false" selection-start-line="29" selection-start-column="87" selection-end-line="29" selection-end-column="87" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/recordlookup.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="86">
+          <caret line="7" column="19" lean-forward="false" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="19" />
+          <folding />
         </state>
       </provider>
     </entry>
