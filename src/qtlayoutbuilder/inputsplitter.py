@@ -1,11 +1,28 @@
 """
 This module is responsible for dividing text input content into records
 by splitting it into fragments like this: 'HBOX:my_box  leftpart middlepart rightpart'.
-Note that the whitespace separation can include newline characters so that when the
-fragment is written into a file, the list of children can span multiple lines.
-In what follows we use the word fragment to refer to this in its raw text form
-as a single string, and there is a class defined _InputTextRecord for the structured
-representation.
+
+A definition of the parsing 'contract' follows.
+
+This example illustrates all the parsing rules:
+
+    VBOX:                       my_page header_row  body            <>
+    VBOX:my_page                row_a               row_b           row_c
+                                row_d               row_e           row_f
+                                row_g
+    QVBoxLayout:my_page         row_a               row_b           row_c
+    Find:CustomLayout:my_page   header_row          body            footer_row
+
+
+We treat the text as a sequence of whitespace delimited words.
+
+Where a word is defined as a sequence of contiguous characters from the set
+'a-zA-Z_-:0123456789<>'.
+
+We define a record to start at a 'colon word'
+A colon word is a word that has one at least one colon in it.
+
+We define the record to finish just before the next colon word, or EOF.
 """
 
 import re
@@ -14,9 +31,50 @@ from builderror import BuildError
 from keywords import starts_with_keyword, mark_all_keywords_found
 from directorysearch import find_all_files
 
+class _InputTextRecord(object):
+    """
+    This is the data structure we use for each record found.
+    In addition to holding the constituent words, it also holds
+    a FileLocation - which remembers the source filename and
+    line number to help with error handling down the line.
+    """
 
-# The module is laid out in a bottom-up fashion, starting with lower level
-# utilities.
+    def __init__(self, file_location, words):
+        self.file_location = file_location
+        self.words = words
+
+def _split_file_into_records(file_path):
+    """
+    This function splits the contents of the given file into records if it can,
+    or returns a BuildError.
+    :param file_path: The full path of the file to be split.
+    :return: (InputTextRecords, BuildError)
+    """
+
+    # Get the text lines from the file.
+    try:
+        with open(file_path, 'r') as my_file:
+            lines = my_file.readlines()
+    except Exception as e:
+        return None, BuildError(str(e)).extended_with('Cannot split the file <%s> into records' % file_path)
+
+    # Work through the lines, and the words therein, starting a new record each time
+    # a colon word is encountered
+    records = []
+    line_number = 0
+    for line in lines:
+        line_number += 1
+        stripped_line = line.strip()
+        words = PARSE_WORD_REGEX.split(stripped_line)
+        for word in words:
+            if COLON_WORD_REGEX.match(word):
+                current_record = InputTextRecord(FileLocation(file_path, line_number), [word,])
+                records.append(current_record)
+            else:
+                if len(records) == 0:
+                    return None, BuildError('The first word in your file must have a colon in it: <%s>' % file_path)
+                current_record.words.append(word)
+    return records, None
 
 class _FileLocation(object):
     """
@@ -31,17 +89,7 @@ class _FileLocation(object):
         return '%s, at line %d' % (self.file_name, self.line_number)
 
 
-class _InputTextRecord(object):
-    """
-    A container to hold the text fields from an input text fragment in a structured form.
-    Also its corresponding FileLocation object to aid error reporting.
-    """
 
-    def __init__(self, file_location, layout_keyword, parent_name, child_name_fields):
-        self.file_location = file_location
-        self.layout_keyword = layout_keyword
-        self.parent_name = parent_name
-        self.child_name_fields = child_name_fields
 
 
 _IDENTIFIER = r'^[^\d\W]\w*\Z'  # Roughly speaking a legitimate variable name.
@@ -169,50 +217,7 @@ def _split_text_into_records(input_text):
     return records, None
 
 
-def _split_file_into_records(file_path):
-    """
-    Provides the sequence of InputTextRecords produced when the text in the given file is
-    consumed. This is a sister function to _split_text_into_records() - which is documented in
-    more detail.
-    :param file_path: The full path of the file to be split.
-    :return: (InputTextRecords, BuildError)
-    """
 
-    # Grab the lines from the file.
-    try:
-        with open(file_path, 'r') as my_file:
-            lines = my_file.readlines()
-    except Exception as e:
-        return None, BuildError(str(e)).extended_with('Cannot split the file <%s> into records' % file_path)
-
-    # Accumulate fragments by working through the lines and starting a new fragment each time
-    # a keyword line is encountered.
-    fragments = []
-    fragment_line_numbers = []
-    line_number = 0
-    for line in lines:
-        line_number += 1
-        stripped_line = line.strip()
-        keyword = starts_with_keyword(stripped_line)
-        if keyword:
-            fragments.append(stripped_line)
-            fragment_line_numbers.append(line_number)
-        else:
-            if len(fragments) == 0:
-                return None, BuildError('The first line of your file must start with a keyword: <%s>' % file_path)
-            fragment_under_construction = fragments[len(fragments) - 1]
-            fragments[len(fragments) - 1] = fragment_under_construction + ' ' + line
-
-    # Now we can delegate out to get a record built from each fragment.
-    records = []
-    for idx in range(len(fragments)):
-        fragment = fragments[idx]
-        file_location = _FileLocation(file_path, fragment_line_numbers[idx])
-        record, err = _make_text_record_from_fragment(fragment, file_location)
-        if err is not None:
-            return None, err.extended_with('Error splitting file into records.')
-        records.append(record)
-    return records, None
 
 
 def _split_all_files_in_directory_into_records(directory_path):
