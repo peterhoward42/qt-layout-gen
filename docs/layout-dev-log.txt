@@ -1,8 +1,13 @@
 o  Restart with new design
-    o  Reflect on which modules should remain so
-    o  Start on parallel stack
+    o  TDD on simple api case to drive out core code flows
+        *  Reconsider syntax to make it easier to just grab and go with less fussy parsing.
+           And accomodate find idiom.
+        *  Write up lexical parsing
+        o  Fix up and simplify lexical parsing with less error detection.
+            o  Survey
+        o  Code and test qobject maker
+        o  Resume main flow
         o
-
 
     o  Housekeep redundant modules and tests
 
@@ -10,5 +15,16 @@ o  Restart with new design
 o  Remember to demand that children are not reused
 
 --------------------------------------------------------
-Module Changes Needed
+Syntax
 --------------------------------------------------------
+
+VBOX:my_page          header_row    body            footer_row
+
+VBOX:my_page          row_a         row_b           row_c
+                          row_d         row_e           row_f
+                          row_g
+
+
+QVBoxLayout:my_page          row_a         row_b           row_c
+
+Find:CustomLayout:my_page          header_row    body            footer_row

@@ -2,12 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1be52820-6c16-4b56-8ca7-cc83c5412022" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qtlayoutbuilder/layoutsmade.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/architecture.txt" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qtlayoutbuilder/api_test.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qtlayoutbuilder/qobjectmaker.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/layout-dev-log.txt" afterPath="$PROJECT_DIR$/docs/layout-dev-log.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/vison.txt" afterPath="$PROJECT_DIR$/docs/vison.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/qtlayoutbuilder/api.py" afterPath="$PROJECT_DIR$/src/qtlayoutbuilder/api.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/qtlayoutbuilder/buildlayouts-test.py" afterPath="$PROJECT_DIR$/src/qtlayoutbuilder/buildlayouts-test.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/qtlayoutbuilder/buildlayouts.py" afterPath="$PROJECT_DIR$/src/qtlayoutbuilder/buildlayouts.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/qtlayoutbuilder/layoutsmade.py" afterPath="$PROJECT_DIR$/src/qtlayoutbuilder/layoutsmade.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -22,68 +23,32 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="layout-dev-log.txt" pinned="false" current-in-tab="false">
+      <file leaf-file-name="qobjectmaker.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/qobjectmaker.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="357">
+              <caret line="21" column="42" lean-forward="false" selection-start-line="21" selection-start-column="42" selection-end-line="21" selection-end-column="42" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="layout-dev-log.txt" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/docs/layout-dev-log.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="9" lean-forward="false" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
+            <state relative-caret-position="102">
+              <caret line="6" column="21" lean-forward="false" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="api.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/api.py">
+      <file leaf-file-name="vison.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs/vison.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="20" column="40" lean-forward="true" selection-start-line="20" selection-start-column="40" selection-end-line="20" selection-end-column="40" />
+            <state relative-caret-position="573">
+              <caret line="210" column="58" lean-forward="false" selection-start-line="210" selection-start-column="58" selection-end-line="210" selection-end-column="58" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="layoutsmade.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/layoutsmade.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="567">
-              <caret line="55" column="23" lean-forward="true" selection-start-line="55" selection-start-column="23" selection-end-line="55" selection-end-column="23" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="buildlayouts-test.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/buildlayouts-test.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="350">
-              <caret line="85" column="53" lean-forward="false" selection-start-line="85" selection-start-column="53" selection-end-line="85" selection-end-column="53" />
-              <folding>
-                <element signature="e#0#29#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="buildlayouts.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/buildlayouts.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#33#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="inputsplitter.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/inputsplitter.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="39" column="85" lean-forward="true" selection-start-line="39" selection-start-column="22" selection-end-line="39" selection-end-column="85" />
-              <folding>
-                <element signature="e#512#521#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -107,6 +72,7 @@
       <find>could not</find>
       <find>regex</find>
       <find>parent</find>
+      <find>create_p</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -145,9 +111,12 @@
         <option value="$PROJECT_DIR$/src/qtlayoutbuilder/buildlayouts.py" />
         <option value="$PROJECT_DIR$/src/qtlayoutbuilder/buildlayouts-test.py" />
         <option value="$PROJECT_DIR$/docs/architecture.txt" />
-        <option value="$PROJECT_DIR$/docs/layout-dev-log.txt" />
+        <option value="$PROJECT_DIR$/src/qtlayoutbuilder/api_test.py" />
         <option value="$PROJECT_DIR$/src/qtlayoutbuilder/api.py" />
         <option value="$PROJECT_DIR$/src/qtlayoutbuilder/layoutsmade.py" />
+        <option value="$PROJECT_DIR$/src/qtlayoutbuilder/qobjectmaker.py" />
+        <option value="$PROJECT_DIR$/docs/vison.txt" />
+        <option value="$PROJECT_DIR$/docs/layout-dev-log.txt" />
       </list>
     </option>
   </component>
@@ -367,29 +336,7 @@
       <recent name="C:\tmp\qt-layout-gen\testdata" />
     </key>
   </component>
-  <component name="RunManager" selected="Python tests.all unit tests in package">
-    <configuration default="false" name="Unittest TestInputSplitter.test_names" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/qtlayoutbuilder" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="pycharm-qt" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/qtlayoutbuilder/inputsplitter_test.py" />
-      <option name="CLASS_NAME" value="TestInputSplitter" />
-      <option name="METHOD_NAME" value="test_names" />
-      <option name="FOLDER_NAME" value="" />
-      <option name="TEST_TYPE" value="TEST_METHOD" />
-      <option name="PATTERN" value="" />
-      <option name="USE_PATTERN" value="false" />
-      <option name="PUREUNITTEST" value="true" />
-      <option name="PARAMS" value="" />
-      <option name="USE_PARAM" value="false" />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="Python tests.Unittest TestApi.test_just_a_runner">
     <configuration default="false" name="Unittests in TestDirectorySearch" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -469,6 +416,28 @@
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/qtlayoutbuilder/buildlayouts-test.py" />
       <option name="CLASS_NAME" value="TestBuildLayouts" />
       <option name="METHOD_NAME" value="test_reconcile_child_to_object" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_METHOD" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="PUREUNITTEST" value="true" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="Unittest TestApi.test_just_a_runner" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/qtlayoutbuilder" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="pycharm-qt" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/qtlayoutbuilder/api_test.py" />
+      <option name="CLASS_NAME" value="TestApi" />
+      <option name="METHOD_NAME" value="test_just_a_runner" />
       <option name="FOLDER_NAME" value="" />
       <option name="TEST_TYPE" value="TEST_METHOD" />
       <option name="PATTERN" value="" />
@@ -636,19 +605,19 @@
     </configuration>
     <list size="6">
       <item index="0" class="java.lang.String" itemvalue="Python tests.all unit tests in package" />
-      <item index="1" class="java.lang.String" itemvalue="Python tests.Unittest TestInputSplitter.test_names" />
-      <item index="2" class="java.lang.String" itemvalue="Python tests.Unittests in TestDirectorySearch" />
-      <item index="3" class="java.lang.String" itemvalue="Python tests.Unittests in TestBuildError" />
-      <item index="4" class="java.lang.String" itemvalue="Python tests.Unittests in TestInputSplitter" />
-      <item index="5" class="java.lang.String" itemvalue="Python tests.Unittest TestBuildLayouts.test_reconcile_child_to_object" />
+      <item index="1" class="java.lang.String" itemvalue="Python tests.Unittests in TestDirectorySearch" />
+      <item index="2" class="java.lang.String" itemvalue="Python tests.Unittests in TestBuildError" />
+      <item index="3" class="java.lang.String" itemvalue="Python tests.Unittests in TestInputSplitter" />
+      <item index="4" class="java.lang.String" itemvalue="Python tests.Unittest TestBuildLayouts.test_reconcile_child_to_object" />
+      <item index="5" class="java.lang.String" itemvalue="Python tests.Unittest TestApi.test_just_a_runner" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python tests.Unittest TestBuildLayouts.test_reconcile_child_to_object" />
-        <item index="1" class="java.lang.String" itemvalue="Python tests.Unittests in TestInputSplitter" />
-        <item index="2" class="java.lang.String" itemvalue="Python tests.Unittests in TestBuildError" />
-        <item index="3" class="java.lang.String" itemvalue="Python tests.Unittests in TestDirectorySearch" />
-        <item index="4" class="java.lang.String" itemvalue="Python tests.Unittest TestInputSplitter.test_names" />
+        <item index="0" class="java.lang.String" itemvalue="Python tests.Unittest TestApi.test_just_a_runner" />
+        <item index="1" class="java.lang.String" itemvalue="Python tests.Unittest TestBuildLayouts.test_reconcile_child_to_object" />
+        <item index="2" class="java.lang.String" itemvalue="Python tests.Unittests in TestInputSplitter" />
+        <item index="3" class="java.lang.String" itemvalue="Python tests.Unittests in TestBuildError" />
+        <item index="4" class="java.lang.String" itemvalue="Python tests.Unittests in TestDirectorySearch" />
       </list>
     </recent_temporary>
   </component>
@@ -684,29 +653,29 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="all_unit_tests_in_package - 2017.03.07 at 13h 23m 33s.xml">
-      <configuration name="all unit tests in package" configurationId="tests" />
+    <history-entry file="Unittest_TestApi_test_just_a_runner - 2017.03.07 at 23h 35m 55s.xml">
+      <configuration name="Unittest TestApi.test_just_a_runner" configurationId="tests" />
     </history-entry>
-    <history-entry file="all_unit_tests_in_package - 2017.03.07 at 13h 30m 32s.xml">
-      <configuration name="all unit tests in package" configurationId="tests" />
+    <history-entry file="Unittest_TestApi_test_just_a_runner - 2017.03.07 at 23h 36m 12s.xml">
+      <configuration name="Unittest TestApi.test_just_a_runner" configurationId="tests" />
     </history-entry>
-    <history-entry file="all_unit_tests_in_package - 2017.03.07 at 13h 30m 46s.xml">
-      <configuration name="all unit tests in package" configurationId="tests" />
+    <history-entry file="Unittest_TestApi_test_just_a_runner - 2017.03.07 at 23h 36m 42s.xml">
+      <configuration name="Unittest TestApi.test_just_a_runner" configurationId="tests" />
     </history-entry>
-    <history-entry file="all_unit_tests_in_package - 2017.03.07 at 13h 32m 06s.xml">
-      <configuration name="all unit tests in package" configurationId="tests" />
+    <history-entry file="Unittest_TestApi_test_just_a_runner - 2017.03.07 at 23h 38m 15s.xml">
+      <configuration name="Unittest TestApi.test_just_a_runner" configurationId="tests" />
     </history-entry>
-    <history-entry file="all_unit_tests_in_package - 2017.03.07 at 13h 34m 03s.xml">
-      <configuration name="all unit tests in package" configurationId="tests" />
+    <history-entry file="Unittest_TestApi_test_just_a_runner - 2017.03.07 at 23h 38m 30s.xml">
+      <configuration name="Unittest TestApi.test_just_a_runner" configurationId="tests" />
     </history-entry>
-    <history-entry file="all_unit_tests_in_package - 2017.03.07 at 13h 34m 14s.xml">
-      <configuration name="all unit tests in package" configurationId="tests" />
+    <history-entry file="Unittest_TestApi_test_just_a_runner - 2017.03.07 at 23h 39m 54s.xml">
+      <configuration name="Unittest TestApi.test_just_a_runner" configurationId="tests" />
     </history-entry>
-    <history-entry file="all_unit_tests_in_package - 2017.03.07 at 13h 34m 29s.xml">
-      <configuration name="all unit tests in package" configurationId="tests" />
+    <history-entry file="Unittest_TestApi_test_just_a_runner - 2017.03.07 at 23h 40m 06s.xml">
+      <configuration name="Unittest TestApi.test_just_a_runner" configurationId="tests" />
     </history-entry>
-    <history-entry file="all_unit_tests_in_package - 2017.03.07 at 13h 34m 47s.xml">
-      <configuration name="all unit tests in package" configurationId="tests" />
+    <history-entry file="Unittest_TestApi_test_just_a_runner - 2017.03.07 at 23h 40m 28s.xml">
+      <configuration name="Unittest TestApi.test_just_a_runner" configurationId="tests" />
     </history-entry>
     <history-entry file="all_unit_tests_in_package - 2017.03.07 at 13h 35m 28s.xml">
       <configuration name="all unit tests in package" configurationId="tests" />
@@ -732,12 +701,12 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4225352" sideWeight="0.5021075" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32875264" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32875264" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33403805" sideWeight="0.49789253" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24524313" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24524313" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -775,24 +744,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/inputsplitter_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="46" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="9" selection-end-column="46" />
-          <folding>
-            <element signature="e#0#29#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/layout-dev-log.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="39" lean-forward="false" selection-start-line="14" selection-start-column="39" selection-end-line="14" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/keywords.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -843,9 +794,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#29#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1067,16 +1016,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/inputsplitter_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="23" lean-forward="false" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#29#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/keywords_test.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -1133,14 +1072,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docs/layout-dev-log.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="9" lean-forward="false" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/builderror.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -1149,18 +1080,64 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/inputsplitter_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/api_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="15" lean-forward="true" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/api.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" column="40" lean-forward="true" selection-start-line="20" selection-start-column="40" selection-end-line="20" selection-end-column="40" />
-          <folding />
+        <state relative-caret-position="85">
+          <caret line="5" column="35" lean-forward="false" selection-start-line="5" selection-start-column="35" selection-end-line="5" selection-end-column="35" />
+          <folding>
+            <element signature="e#67#161#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/layoutsmade.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="567">
-          <caret line="55" column="23" lean-forward="true" selection-start-line="55" selection-start-column="23" selection-end-line="55" selection-end-column="23" />
+        <state relative-caret-position="17">
+          <caret line="1" column="33" lean-forward="false" selection-start-line="1" selection-start-column="33" selection-end-line="1" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/qtlayoutbuilder/qobjectmaker.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="21" column="42" lean-forward="false" selection-start-line="21" selection-start-column="42" selection-end-line="21" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/vison.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="573">
+          <caret line="210" column="58" lean-forward="false" selection-start-line="210" selection-start-column="58" selection-end-line="210" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/layout-dev-log.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="21" lean-forward="false" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
           <folding />
         </state>
       </provider>

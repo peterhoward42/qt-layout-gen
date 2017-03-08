@@ -3,6 +3,7 @@ This module exposes the public API to the layout builder.
 """
 
 from inputsplitter import _split_all_files_in_directory_into_records, _split_text_into_records
+from layoutsmade import LayoutsMade
 
 def build_layouts_from_dir(input_directory_path):
     """
@@ -13,7 +14,7 @@ def build_layouts_from_dir(input_directory_path):
     :param input_directory: The directly in which the layouts are defined.
     :return: (LayoutsMade, BuildError)
     """
-    records, err = _split_all_files_in_directory_into_records(input_directory)
+    records, err = _split_all_files_in_directory_into_records(input_directory_path)
     if err:
         return None, err.extended_with('Could not build your layouts from <%s>' % input_directory)
     return LayoutsMade.make_from(records)

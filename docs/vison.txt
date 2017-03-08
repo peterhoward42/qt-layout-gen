@@ -172,3 +172,40 @@ either at one end or the other, or somewhere in the middle of the children:
 
 The '<>' means put a stretch item here. If you use it on anything other than
 HBOX or VBOX, the builder will complain.
+
+How is input text parsed / what are the rules?
+----------------------------------------------
+
+Example fragment showing all variations:
+
+    VBOX:                       my_page header_row  body            <>
+
+    VBOX:my_page                row_a               row_b           row_c
+                                row_d               row_e           row_f
+                                row_g
+
+    QVBoxLayout:my_page         row_a               row_b           row_c
+
+    Find:CustomLayout:my_page   header_row          body            footer_row
+
+
+We define the input text in its entirety as a sequence of whitespace delimited words.
+
+We define a word in this context to mean a sequence of contiguous characters from the set
+'a-zA-Z_-:0123456789<>'.
+
+Note the inclusion of the colon and of <>.
+
+We define a record to start at a word that has a colon in it. (At least one colon), and to extend up until the
+next word that has a colon in it (exclusive). Or when EOF is reached.
+
+We call the first word in the record the left hand side (LHS).
+
+We discriminate between the intents of LHS variants as follows, and in this order of precedence:
+    o  Has two colons = go find an external instantiated object
+    o  Has one of our keywords before the colon.
+    o  The word before the colon starts with capital 'Q'
+    o  Error
+
+The other words present in the line are taken to be the names of children, except for the special case
+of <> which is taken to be a stretch item for a BoxLayout.
