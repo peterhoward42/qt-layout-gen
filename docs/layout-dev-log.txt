@@ -5,6 +5,15 @@ o  Restart with new design
         *  Write up lexical parsing
         o  Fix up and simplify lexical parsing with less error detection.
             o  Survey
+            o  Rewrite input splitter
+            o  Sort out input splitter tests
+                *  Survey
+                *  Add smoke tests about no records to splitter
+                o  Which needed / retain (all errors, loops, conditionals and correct)
+                    o  file based
+                    o  txt based
+                    o  dir based
+                o  Do it
         o  Code and test qobject maker
         o  Resume main flow
         o
