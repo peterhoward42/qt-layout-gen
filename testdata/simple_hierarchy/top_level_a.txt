@@ -1,2 +1,6 @@
-HBOX:g h i
-HBOX:j k l
+VBOX:                       my_page header_row  body            <>
+VBOX:my_page                row_a               row_b           row_c
+                            row_d               row_e           row_f
+                            row_g
+QVBoxLayout:my_page         row_a               row_b           row_c
+Find:CustomLayout:my_page   header_row          body            footer_row
