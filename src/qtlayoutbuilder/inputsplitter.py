@@ -20,8 +20,6 @@ And to end just before the next word encountered that has a colon,
 (or EOF).
 """
 
-import re
-
 from builderror import BuildError
 from directorysearch import find_all_files
 
@@ -37,6 +35,7 @@ class _InputTextRecord(object):
     def __init__(self, file_location, words):
         self.file_location = file_location
         self.words = words
+
 
 def _split_file_into_records(file_path):
     """
@@ -57,6 +56,7 @@ def _split_file_into_records(file_path):
     # a colon word is encountered
     records = []
     line_number = 0
+    current_record = None
     for line in lines:
         line_number += 1
         stripped_line = line.strip()
@@ -68,7 +68,8 @@ def _split_file_into_records(file_path):
                 records.append(current_record)
             else:
                 if len(records) == 0:
-                    return None, BuildError('Error: The first word in your file must have a colon in it: <%s>' % file_path)
+                    return None, BuildError(
+                        'Error: The first word in your file must have a colon in it: <%s>' % file_path)
                 current_record.words.append(word)
     # Nothing found?
     if len(records) == 0:
@@ -84,6 +85,7 @@ def _split_big_string_into_records(big_string):
     stripped_string = big_string.strip()
     words = stripped_string.split()
     records = []
+    current_record = None
     for word in words:
         if ':' in word:
             # Start new record.

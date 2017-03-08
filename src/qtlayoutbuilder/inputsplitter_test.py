@@ -2,10 +2,8 @@ from unittest import TestCase
 
 import os.path
 
-import keywords
-
 # noinspection PyProtectedMember
-from inputsplitter import _FileLocation, _split_big_string_into_records, \
+from inputsplitter import _split_big_string_into_records, \
     _split_file_into_records, _split_all_files_in_directory_into_records
 
 
@@ -81,8 +79,8 @@ class TestInputSplitter(TestCase):
         self.assertIsNone(err)
         self.assertIsNotNone(records)
         self.assertEqual(len(records), 2)
-        self.assertEqual(records[0].words,['HBOX:a', 'b', 'c'])
-        self.assertEqual(records[1].words,['HBOX:d', 'e', 'f'])
+        self.assertEqual(records[0].words, ['HBOX:a', 'b', 'c'])
+        self.assertEqual(records[1].words, ['HBOX:d', 'e', 'f'])
 
     def test_split_all_files_in_directory_into_records(self):
         # Reports os level problems properly.
@@ -100,16 +98,13 @@ class TestInputSplitter(TestCase):
         self.assertTrue('Error attempting to split all files in your directory into records' in msg)
         self.assertTrue('Because... Error: The first word in your file must have a colon in it' in msg)
         self.assertTrue(r'testdata\hierarchy_with_problem_inside\top_level_b.tx' in msg)
-        """
 
-        # Assembles records properly when all is well
-        well_formed_directory = os.path.abspath(os.path.join(
+        # Is aggregating the records from more than one file.
+        # Reports problems part way through properly
+        simple_hierarchy = os.path.abspath(os.path.join(
             __file__, "../../..", 'testdata', 'simple_hierarchy'))
-        records, err = _split_all_files_in_directory_into_records(well_formed_directory)
+        records, err = _split_all_files_in_directory_into_records(simple_hierarchy)
         self.assertIsNone(err)
-        self.assertIsNotNone(records)
-        self.assertEqual(len(records), 6)
-        # abc def ghi jkl mno pqr
-        self.assertEqual(records[0].parent_name, 'g')
-        self.assertEqual(records[5].parent_name, 'd')
-"""
+        self.assertEqual(len(records), 8)
+        self.assertEqual(records[0].words, ['VBOX:', 'my_page', 'header_row', 'body', '<>'])
+        self.assertEqual(records[7].words, ['HBOX:d', 'e', 'f'])
