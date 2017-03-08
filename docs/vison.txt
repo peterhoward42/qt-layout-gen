@@ -19,8 +19,9 @@ of it.
 
 It would be very useful if the desired trees or sub trees could be expressed
 in a very simple and terse text format because this would be very much less
-verbose and easier to write than the corresponding code, and it would be VERY
-much easier to change.
+verbose and easier to write than the corresponding code, and it would also make
+it VERY much easier to rearrange or extend a GUI with no side effects or knock-on
+work.
 
 We hypothesise a runtime builder system that is capable of building and
 instantiating the tree thus defined from text input provided at runtime. 
@@ -28,7 +29,9 @@ instantiating the tree thus defined from text input provided at runtime.
 We prefer a runtime solution over a code-generator for two reasons.
 Firstly, because it preserves a single source of truth for the intent, and 
 avoids bugs arising from stale generated code lying around. Secondly, it
-produces live object references that you can use in the rest of your program.
+produces live object references that you can use in the rest of your program, and
+are hence in no way locked-in to this method for generating the GUI - you can
+mix and match and introduce it incrementally to existing code.
 
 About the Input Text
 --------------------
@@ -84,7 +87,8 @@ But you are not limited to the keywords. You could have written this instead:
 
     QVBoxLayout:my_page          row_a         row_b           row_c
 
-We provided the shorthand keywords like HBOX just to save typing - because
+We provided the shorthand keywords like HBOX just to save typing, and to avoid
+fretting over correct camel-case names. And because
 these are by far the most commonly used Qt classes for building layouts. But
 you can use any Qt widget or layout class name. Just bear in mind with your
 choice, that the builder will call addWidget() or addLayout() on it if you
@@ -109,12 +113,12 @@ build.  So the builder exposes them like this:
 
 Note this implies all the names you use on the left hand side in your input 
 text must be globally unique. The builder will tell you politely when this
-is not so. This is a deliberate trade-off. We could have avoided the problem by
-exposing the components hierarchically:
+is not so. This is unfortunate, but a deliberate trade-off. We could have
+avoided the problem by exposing the components hierarchically:
 
     layouts_built.my_page.header_row
 
-But that creates more work if you decide to move things around in the hiearchy
+But that creates unecessary work later, if you decide to move things around in the hiearchy
 - and we wanted to keep this really easy to do.
 
 Not just one big layout
@@ -124,14 +128,15 @@ layouts that you'll combine manually later. Particlarly when you're
 introducing it incrementally to existing code.
 
 You don't have to do anything extra to achieve this - the number of layouts
-you want is defined by the connectivities you've specified in your input text.
+you get is defined by the connectivities you've specified in your input text.
 If it all resolves to one big tree then you get one layout. If it resolves to
 two seperate trees then you get two trees. You access them as described above:
 
     layouts_built.my_main_layout
     layouts_built.my_auxillary_layout
 
-If you intended to make one layout but find you've ended up with two, it's
+If you intended to make one layout but find you've missed something, and
+ended up with two, it's
 useful for debugging, to visualize the trees as the builder sees them. You can 
 ask the builder for a string representation like this:
 
@@ -153,7 +158,7 @@ else in your program.
 
 This behaviour kicks in when you use the double-colon construct shown. The
 builder will consider all the objects that are already instantiated in your
-program which have the CustomLayout class name. It will then look for one that
+program which are of the CustomLayout class. It will then look for one that
 you have referenced with a variable or attribute called 'my_page'. For example
 Somewhere else in your program you wrote:
 
@@ -164,8 +169,8 @@ If more than one object qualifies - the builder will object politely.
 
 Keywords for Children
 ----------------------
-These exist so far just ofr one special case that is so almost completely
-ubiquitous. Ie. you nearly always want to add a stretch item to a box layout
+These exist so far just for one special case that is so completely
+ubiquitous it merits it. Ie. you nearly always want to add a stretch item to a box layout
 either at one end or the other, or somewhere in the middle of the children:
 
     HBOX:my_box   foo bar <> baz
@@ -176,36 +181,4 @@ HBOX or VBOX, the builder will complain.
 How is input text parsed / what are the rules?
 ----------------------------------------------
 
-Example fragment showing all variations:
-
-    VBOX:                       my_page header_row  body            <>
-
-    VBOX:my_page                row_a               row_b           row_c
-                                row_d               row_e           row_f
-                                row_g
-
-    QVBoxLayout:my_page         row_a               row_b           row_c
-
-    Find:CustomLayout:my_page   header_row          body            footer_row
-
-
-We define the input text in its entirety as a sequence of whitespace delimited words.
-
-We define a word in this context to mean a sequence of contiguous characters from the set
-'a-zA-Z_-:0123456789<>'.
-
-Note the inclusion of the colon and of <>.
-
-We define a record to start at a word that has a colon in it. (At least one colon), and to extend up until the
-next word that has a colon in it (exclusive). Or when EOF is reached.
-
-We call the first word in the record the left hand side (LHS).
-
-We discriminate between the intents of LHS variants as follows, and in this order of precedence:
-    o  Has two colons = go find an external instantiated object
-    o  Has one of our keywords before the colon.
-    o  The word before the colon starts with capital 'Q'
-    o  Error
-
-The other words present in the line are taken to be the names of children, except for the special case
-of <> which is taken to be a stretch item for a BoxLayout.
+See inputsplitter comments.

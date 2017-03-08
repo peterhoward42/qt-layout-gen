@@ -3,18 +3,11 @@ o  Restart with new design
         *  Reconsider syntax to make it easier to just grab and go with less fussy parsing.
            And accomodate find idiom.
         *  Write up lexical parsing
-        o  Fix up and simplify lexical parsing with less error detection.
-            o  Survey
-            o  Rewrite input splitter
-            o  Sort out input splitter tests
-                *  Survey
-                *  Add smoke tests about no records to splitter
-                o  Which needed / retain (all errors, loops, conditionals and correct)
-                    o  file based
-                    o  txt based
-                    o  dir based
-                o  Do it
-        o  Code and test qobject maker
+        *  Fix up and simplify lexical parsing with less error detection.
+        o  Code and test parent maker
+            o  Q object type
+            o  discovery type
+            o  keyword type
         o  Resume main flow
         o
 
@@ -26,14 +19,3 @@ o  Remember to demand that children are not reused
 --------------------------------------------------------
 Syntax
 --------------------------------------------------------
-
-VBOX:my_page          header_row    body            footer_row
-
-VBOX:my_page          row_a         row_b           row_c
-                          row_d         row_e           row_f
-                          row_g
-
-
-QVBoxLayout:my_page          row_a         row_b           row_c
-
-Find:CustomLayout:my_page          header_row    body            footer_row
