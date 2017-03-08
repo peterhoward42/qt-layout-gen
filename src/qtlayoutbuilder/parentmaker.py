@@ -1,6 +1,6 @@
 """
 This class is responsible for interpreting the word from the LHS of an InputTextRecord,
-and instantiating (or finding) the QObject it is calling for.
+like 'HBOX:my_page' and instantiating (or finding) the QObject it is calling for.
 """
 
 class _ParentMaker(object):

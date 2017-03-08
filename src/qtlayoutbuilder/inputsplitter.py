@@ -6,7 +6,7 @@ A definition of the parsing 'contract' follows.
 
 This example illustrates all the parsing rules:
 
-    VBOX:                       my_page header_row  body            <>
+    VBOX:my_page                header_row          body            <>
     VBOX:my_page                row_a               row_b           row_c
                                 row_d               row_e           row_f
                                 row_g
