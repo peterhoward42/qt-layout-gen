@@ -6,8 +6,16 @@ o  Restart with new design
         *  Fix up and simplify lexical parsing with less error detection.
         o  Ditch error handling strategy
             o  Design exception based one
-                o  Requirements
-                    o  Define vernacular in vision doc
+                *  Requirements
+                *  Remove BuildError
+                *  Create LayoutException
+                o  Begin to feed in bottom up
+                    *  directory search
+                    o  input splitter
+                    o  parent maker
+                    o  api
+                    o  layout maker (ditch class method too nasty) - do real work in constructor!!!
+                o  Go back to test utils
         o  Code and test parent maker
             o  Q object type
             o  discovery type
@@ -30,5 +38,14 @@ Requirements
        what went wrong.
     o  Which is input file oriented - they don't care about internal concepts.
     o  So what concepts should we expose?
-        o  cf docs
-            o  a
+
+    o  A couple of example error messages,
+
+        Error: Cannot read this file filename
+
+        Error: The first thing in a file must be a word with a colon in it: (filename/no)
+
+        Error: Failed trying to import one of these <> from QtGui?. (filename/no)
+
+    o  Architecture - just one Exception type with str message fully formed at bottom level whereever poss
+       then need not catch!

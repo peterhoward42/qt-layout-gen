@@ -15,12 +15,12 @@ This example illustrates all the parsing rules:
 
 
 We simply split it at whitespace to get the constituent 'words'.
-A record is deemed to begin at any word that contains a colon.
+Then a record is deemed to begin at any word that contains a colon.
 And to end just before the next word encountered that has a colon,
 (or EOF).
 """
 
-from builderror import BuildError
+from layouterror import LayoutError
 from directorysearch import find_all_files
 
 
@@ -39,10 +39,10 @@ class _InputTextRecord(object):
 
 def _split_file_into_records(file_path):
     """
-    This function splits the contents of the given file into records if it can,
-    or returns a BuildError.
+    This function splits the contents of the given file into records.
     :param file_path: The full path of the file to be split.
-    :return: (InputTextRecords, BuildError)
+    :return: InputTextRecord(s)
+    :raises LayoutError
     """
 
     # Get the text lines from the file.
@@ -50,7 +50,7 @@ def _split_file_into_records(file_path):
         with open(file_path, 'r') as my_file:
             lines = my_file.readlines()
     except Exception as e:
-        return None, BuildError(str(e)).extended_with('Cannot split the file <%s> into records' % file_path)
+        raise LayoutError(str(e), None)
 
     # Work through the lines, and the words therein, starting a new record each time
     # a colon word is encountered
@@ -68,19 +68,22 @@ def _split_file_into_records(file_path):
                 records.append(current_record)
             else:
                 if len(records) == 0:
-                    return None, BuildError(
-                        'Error: The first word in your file must have a colon in it: <%s>' % file_path)
+                    raise LayoutError(
+                        'The first word in your file must have a colon in it: <%s>' % file_path, None)
                 current_record.words.append(word)
     # Nothing found?
     if len(records) == 0:
-        return None, BuildError('Error: No records found in this file: <%s>' % file_path)
-    return records, None
+        raise LayoutError(
+            'Nothing found in this file: <%s>' % file_path, None)
+    return records
 
 
 def _split_big_string_into_records(big_string):
     """
-    This is a minor variation on the _split_file_into_records() function above,
-    which takes the text to split as a directly injected input.
+    This function splits the contents of the given string into records.
+    :param big_string: The string to split
+    :return: InputTextRecord(s)
+    :raises LayoutError
     """
     stripped_string = big_string.strip()
     words = stripped_string.split()
@@ -93,29 +96,25 @@ def _split_big_string_into_records(big_string):
             records.append(current_record)
         else:
             if len(records) == 0:
-                return None, BuildError('Error: The first word in your text must have a colon in it: <%s>' % big_string)
+                raise LayoutError('Error: The first word in your text must have a colon in it: <%s>' % big_string, None)
             current_record.words.append(word)
     return records, None
 
 
 def _split_all_files_in_directory_into_records(directory_path):
     """
-    This is a minor variation on the _split_file_into_records() function above,
-    which deals with multiple files. It consumes all the files found in the
-    directory provided and the sub directories (recursively).
+    This function splits the contents of all the files in the given directory,
+    and sub directories (recursively).
+    :param directory_path: The full path of the directory to be split.
+    :return: InputTextRecord(s)
+    :raises LayoutError
     """
-    files, err = find_all_files(directory_path)
-    if err:
-        return None, err.extended_with(
-            'Error attempting split all files in your directory into records: <%s>' % directory_path)
+    files = find_all_files(directory_path)
     all_records = []
     for file_to_split in files:
-        records, err = _split_file_into_records(file_to_split)
-        if err:
-            return None, err.extended_with(
-                'Error attempting to split all files in your directory into records: <%s>' % directory_path)
+        records = _split_file_into_records(file_to_split)
         all_records.extend(records)
-    return all_records, None
+    return all_records
 
 
 class _FileLocation(object):

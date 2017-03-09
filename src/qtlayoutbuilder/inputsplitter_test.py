@@ -6,15 +6,19 @@ import os.path
 from inputsplitter import _split_big_string_into_records, \
     _split_file_into_records, _split_all_files_in_directory_into_records
 
+from layouterror import LayoutError
+
 
 class TestInputSplitter(TestCase):
     def test_split_file_into_records(self):
         # Reports IO errors properly.
-        records, err = _split_file_into_records('sillyfilename')
-        self.assertIsNotNone(err)
-        msg = err.format_as_single_string()
-        self.assertTrue('Cannot split the file <sillyfilename> into records' in msg)
-        self.assertTrue("No such file or directory: 'sillyfilename'" in msg)
+        try:
+            records = _split_file_into_records('sillyfilename')
+        except LayoutError as e:
+            msg = str(e)
+            self.assertTrue("No such file or directory: 'sillyfilename'" in msg)
+
+        """
 
         # Raises an error if the first word in the file is not
         # a colon-word
@@ -108,3 +112,4 @@ class TestInputSplitter(TestCase):
         self.assertEqual(len(records), 8)
         self.assertEqual(records[0].words, ['VBOX:', 'my_page', 'header_row', 'body', '<>'])
         self.assertEqual(records[7].words, ['HBOX:d', 'e', 'f'])
+"""

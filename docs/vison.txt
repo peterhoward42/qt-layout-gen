@@ -1,6 +1,12 @@
 Introduction
 ------------
-Most complex Qt GUIs are build from a topological hierarchy dominated by these:
+
+Qt GUIs are laid out using a (topological) hierarchy of QLayouts and QWidgets.
+Every widget has a layout. Every layout has children which can be
+sub layouts or widgets. So the tree is a set of nested parent-child relationships.
+
+The hierarchy structure is often dominated by these:
+
     o  Layouts
         o  QHBoxLayout
         o  QVBoxLayout
@@ -9,37 +15,35 @@ Most complex Qt GUIs are build from a topological hierarchy dominated by these:
         o  QSplitter    
         o  QTabWidget
 
-Plus Qt primitive widgets like QButton and QLabel at the leaf-level.
-And layout trees will of course contain custom QWidget subclasses, which each
-having their own QLayout assigned to them. There is no semantic distinction
-between the top level layout hierarchy and these sub layouts. This solution
-is interested in making it easy to build them for both contexts.
+And it takes quite a bit of code to build the entire layout hierarchy for an
+app, which can be seriously fiddly, time consuming, difficult and error prone.
+It's also not hugely easy to change later.
 
-All of these are parent-child containers in essence that take QWidgets, or
-subsidiary QLayouts as their children. In what follows we will simply refer
-to parents and children - and take those terms to mean the objects in
-QLayout/QWidget parent-child hierarchies.
+This project is about having a software library that lets you express arbitrarily complex
+hierarchies and/or sub hierarchies in plain text files, using an exceptionally simple and
+brief format. The library aims to consume the text files and build the layouts for
+you at RUNTIME automatically.
 
-So we can sensibly think of an arbitrarily deep nested parent-child
-containership hierarchy. It might be quite feasible for the entire app GUI
-topological hierarchy to be defined in this way, or maybe major chunks
-of it.
+It has some aims that endeavour to make it practical:
+    o  The least typing possible.
+    o  Very simple to learn and use.
+    o  Can be introduced incrementally and piecemeal to existing projects.
+    o  Can make complete layouts, or sub layouts that you can incorporate into your existing layout code.
+    o  Doesn't get in the way of any existing PyQt programming approaches
+    o  Can use your custom defined widgets (and layouts) in the auto-generated layouts as well as
+       auto generating the more common ones (like QHBoxLayout) for you.
+    o  Doesn't require you to alter (or tag) your existing widget code for them to take part.
+    o  Very clear error reporting and diagnostics.
+    o  Allows you to put all your layout definitions either in a single file, or to
+       modularise it into smaller chunks in multiple files. Maybe one file per GUI section,
+       or one per widget etc.
+    o  Must not require you to think about what order you specify things in, in order
+       to satisfy dependency relationships.
+    o  Is not dependent in any way on how you organise or name your input files or how you
+       divide the content up among them. (Also means you can change your mind easily without
+       creating extra work).
 
-It would be very useful if arbitrarily complex trees or sub trees could be
-expressed in a VERY simple and VERY terse text format, and have some software
-generate the layouts automatically.
-
-fart got to here
-
-because this would be very much less
-verbose and easier to write than the corresponding code, and it would also make
-it VERY much easier to rearrange or extend a GUI with no side effects or knock-on
-work.
-
-We hypothesise a runtime builder system that is capable of building and
-instantiating the tree thus defined from text input provided at runtime. 
-
-We prefer a runtime solution over a code-generator for two reasons.
+We are advocating a runtime solution over a code-generator for two reasons.
 Firstly, because it preserves a single source of truth for the intent, and 
 avoids bugs arising from stale generated code lying around. Secondly, it
 produces live object references that you can use in the rest of your program, and
@@ -55,24 +59,27 @@ Consider this fragment:
 It means - "make me a QVBoxLayout and call it 'my_page'. Then treat the things
 on the right as children that should be added to the layout.
 
-It demands that the things on the right can be resolved to things on the left
-somewhere else in the input. Like this one that defines what header_row means.
+It expects the things on the right can be resolved to things on the left
+somewhere else in the input. Like this fragment that defines what header_row means.
 
     HBOX:header_row       left_bit      middle_bit      right_bit
 
-The left hand part always creates something.
+The left hand part always creates a QLayout or QWidget.
 
 The right hand part mandates what should be added to it as children - and
-these things must be created by some other fragment in the input.
+comprises names of things which can be found (somewhere) on the left hand side.
+
+You don't have to specify any children, which is useful for generating widgets at the
+leaf-level (like QButtons, QLabel etc). You'll see how below.
 
 You can put lots of these lines into a file and have the builder consume the
 lot. The order of the lines doesn't matter. In fact you can split it over
 multiple files to modularise it however you think fit, and give the builder a
 whole directory to play with. The builder will consume all the files in the
-directory and sub directories.
+directory and sub directories recursively.
 
-The format appears to struggle with long lists of children, but it doesn't
-because the children can span multiple lines if required.
+The format can handle longer lists of children like this: (newlines are
+not significant).
 
     VBOX:my_page          row_a         row_b           row_c
                           row_d         row_e           row_f
@@ -88,28 +95,26 @@ conventient to build layouts for individual widgets.
         HBOX:header_row       left_bit      middle_bit      right_bit
         """
 
+The contract for the input is extremely simple - and is defined formally in the docs.
+(Actually in the inputsplitter comments today).
+
 What can it make automatically (apart from QBoxLayouts)
 -------------------------------------------------------
-The full set of keywords you can use in the left column is: 
+To complete the list of keywords you can use on the left, they are:
 
     VBOX, HBOX, STACK, TAB, SPLIT 
 
     (The last two of these are QWidgtet, not QLayouts.)
 
-But you are not limited to the keywords. You could have written this instead:
+These are just short forms for the really common ones. You could have written this instead:
 
     QVBoxLayout:my_page          row_a         row_b           row_c
 
-We provided the shorthand keywords like HBOX just to save typing, and to avoid
-fretting over correct camel-case names. And because
-these are by far the most commonly used Qt classes for building layouts. But
-you can use any Qt widget or layout class name. Just bear in mind with your
-choice, that the builder will call addWidget() or addLayout() on it if you
-have specified any children on the right.  (You don't have to specify any
-children).
+You can put the name of any Qt Widget or Layout - but it is up to you to
+make sure that either it supports addWidget() or addLayout(), or to make sure you don't give it
+any children. (You get nice error messages when you mess up).
 
-This makes it easy to add things like labels and buttons at the leaf-level of
-the layout hierarchy:
+This is how you add things like buttons and labels as suggested above:
 
         HBOX:header_row       left_bit      my_label      right_bit
         QLabel:my_label
@@ -132,7 +137,7 @@ avoided the problem by exposing the components hierarchically:
     layouts_built.my_page.header_row
 
 But that creates unecessary work later, if you decide to move things around in the hiearchy
-- and we wanted to keep this really easy to do.
+- and we wanted to make sure that was easy to do.
 
 Not just one big layout
 -----------------------
@@ -163,13 +168,14 @@ hand. And when you're introducing the builder to existing code bases
 incrementatlly, your program will likely want to instantiate many outside of
 the builder, but then have the builder use them.
 
-When the builder goes about making the things on the left hand side, it can
-pick up instead a pre-existing object that you've pre-instantiated somewhere
+There is a way to specify on the left hand side, that the builder should go off and find
+a pre-existing object that you've pre-instantiated somewhere
 else in your program.
 
     Find:CustomLayout:my_page          header_row    body            footer_row
 
-This behaviour kicks in when you use the double-colon construct shown. The
+This behaviour kicks in when your left hand side looks like the example - i.e.
+has two colons in it. The
 builder will consider all the objects that are already instantiated in your
 program which are of the CustomLayout class. It will then look for one that
 you have referenced with a variable or attribute called 'my_page'. For example
