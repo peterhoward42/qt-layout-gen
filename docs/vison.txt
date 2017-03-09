@@ -7,18 +7,31 @@ Most complex Qt GUIs are build from a topological hierarchy dominated by these:
         o  QStackedLayout
     o  Widgets
         o  QSplitter    
-        o  QTabWidget  
+        o  QTabWidget
+
+Plus Qt primitive widgets like QButton and QLabel at the leaf-level.
+And layout trees will of course contain custom QWidget subclasses, which each
+having their own QLayout assigned to them. There is no semantic distinction
+between the top level layout hierarchy and these sub layouts. This solution
+is interested in making it easy to build them for both contexts.
 
 All of these are parent-child containers in essence that take QWidgets, or
-subsidiary QLayouts as their children.
+subsidiary QLayouts as their children. In what follows we will simply refer
+to parents and children - and take those terms to mean the objects in
+QLayout/QWidget parent-child hierarchies.
 
 So we can sensibly think of an arbitrarily deep nested parent-child
 containership hierarchy. It might be quite feasible for the entire app GUI
 topological hierarchy to be defined in this way, or maybe major chunks
 of it.
 
-It would be very useful if the desired trees or sub trees could be expressed
-in a very simple and terse text format because this would be very much less
+It would be very useful if arbitrarily complex trees or sub trees could be
+expressed in a VERY simple and VERY terse text format, and have some software
+generate the layouts automatically.
+
+fart got to here
+
+because this would be very much less
 verbose and easier to write than the corresponding code, and it would also make
 it VERY much easier to rearrange or extend a GUI with no side effects or knock-on
 work.

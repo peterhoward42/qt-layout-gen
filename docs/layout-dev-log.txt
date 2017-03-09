@@ -4,6 +4,10 @@ o  Restart with new design
            And accomodate find idiom.
         *  Write up lexical parsing
         *  Fix up and simplify lexical parsing with less error detection.
+        o  Ditch error handling strategy
+            o  Design exception based one
+                o  Requirements
+                    o  Define vernacular in vision doc
         o  Code and test parent maker
             o  Q object type
             o  discovery type
@@ -17,5 +21,14 @@ o  Restart with new design
 o  Remember to demand that children are not reused
 
 --------------------------------------------------------
-Syntax
+Exception handling
 --------------------------------------------------------
+Requirements
+    o  It is a lib so must leave freedom of presentation to client.
+    o  Nice if lib consumer only has to catch one type.
+    o  Nice if exception gives narrative from developers pov about
+       what went wrong.
+    o  Which is input file oriented - they don't care about internal concepts.
+    o  So what concepts should we expose?
+        o  cf docs
+            o  a
