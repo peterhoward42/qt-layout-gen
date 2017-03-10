@@ -22,6 +22,6 @@ class LayoutError(Exception):
 
     def __str__(self):
         if self._file_location:
-            return self.message + ', (%s) % self._file_location'
+            return self.message + ', (%s)' % self._file_location
         else:
             return self.message

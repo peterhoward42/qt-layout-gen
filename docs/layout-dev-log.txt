@@ -13,9 +13,12 @@ o  Restart with new design
                     *  directory search
                     *  input splitter
                     o  parent maker
+                        *  recognizer
+                        o  qword type
                     o  api
                     o  layout maker (ditch class method too nasty) - do real work in constructor!!!
                 o  Go back to test utils
+        o  module exports should not be _
         o  Code and test parent maker
             o  Q object type
             o  discovery type

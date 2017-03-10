@@ -35,6 +35,19 @@ class _InputTextRecord(object):
         self.file_location = file_location
         self.words = words
 
+    def lhs(self):
+        """
+        Convenience function to make accessing the left-had-side
+        more readable and obvious when it is called.
+        :return: The left hand side of the record, i.e. the first word.
+        :raises: LayoutError
+        """
+        if (self.words is None) or len(self.words) == 0:
+            raise LayoutError(
+                'Cannot isolate left hand side word because there are none',
+                self.file_location)
+        return self.words[0]
+
 
 def _split_file_into_records(file_path):
     """

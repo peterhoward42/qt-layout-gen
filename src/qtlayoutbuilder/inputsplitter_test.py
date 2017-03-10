@@ -3,13 +3,35 @@ from unittest import TestCase
 import os.path
 
 # noinspection PyProtectedMember
-from inputsplitter import _split_big_string_into_records, \
+from inputsplitter import _InputTextRecord, _FileLocation, _split_big_string_into_records, \
     _split_file_into_records, _split_all_files_in_directory_into_records
 
 from layouterror import LayoutError
 
 
 class TestInputSplitter(TestCase):
+
+    FILE_LOCATION = _FileLocation('dummy filename', 1)
+
+
+    def test_text_input_record_utilities(self):
+        # Proper error messages from left-hand-side convenience function,
+        # when the record has no words in.
+        try:
+            record = _InputTextRecord(self.FILE_LOCATION, [])
+            lhs = record.lhs()
+        except LayoutError as e:
+            msg = str(e)
+            self.assertTrue(
+                'Cannot isolate left hand side word because there are none, (dummy filename, at line 1)'
+                in msg)
+
+        # Proper answer when the record is well formed
+        record = _InputTextRecord(self.FILE_LOCATION, ['foo', 'bar'])
+        lhs = record.lhs()
+        self.assertEqual('foo', lhs)
+
+
     def test_split_file_into_records(self):
         # Reports IO errors properly.
         try:
