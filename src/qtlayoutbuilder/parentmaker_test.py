@@ -3,7 +3,7 @@ from unittest import TestCase
 import os.path
 
 # noinspection PyProtectedMember
-from parentmaker import _deduce_lhs_producer_function
+from parentmaker import _deduce_lhs_producer_function, _make_qtype
 from layouterror import LayoutError
 from inputsplitter import _InputTextRecord, _FileLocation
 import keywords
@@ -26,7 +26,14 @@ class TestParentMaker(TestCase):
 
         # Can spot the keyword format
         for keyword in keywords.WORDS:
-            record = _InputTextRecord(self.DUMMY_FILE_LOC, [keyword, 'foo'])
+            record = _InputTextRecord(self.DUMMY_FILE_LOC, ['%s:some_name' % keyword, 'foo'])
             fn_returned = _deduce_lhs_producer_function(record)
             produce_fn_as_string = str(fn_returned)
             self.assertTrue('function _make_keyword_type' in produce_fn_as_string)
+
+    def test_make_qtype(self):
+        words = ['str:my_label', 'foo']
+        record = _InputTextRecord(self.DUMMY_FILE_LOC, words)
+        q_object = _make_qtype(record)
+        cls = q_object.__class__
+        print cls

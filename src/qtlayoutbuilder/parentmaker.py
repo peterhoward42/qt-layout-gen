@@ -74,7 +74,27 @@ def _find_existing_qobject(record):
 
 
 def _make_qtype(record):
-    return 42
+    # Isolate the QType being asked for and the name.
+    # Attempt to instantiate an object of that type
+    # Is QtGui available to import from at this point?
+    # Object if the instantiation fails
+    # Object if the type produced is not instance of QLayout or QWidget
+    # Return object and name
+
+    lhs = record.lhs()
+    segments = _colon_delimited_segments(lhs)
+    if len(segments) != 2:
+        raise LayoutError(
+            'Cannot split this left hand side into two pieces at a colon.',
+            record.file_location)
+    qword, name = segments
+
+    in_scope = globals()
+    """
+    id = "1234asdf"
+    constructor = globals()[id]
+    instance = constructor()
+    """
 
 
 def _make_keyword_type(record):

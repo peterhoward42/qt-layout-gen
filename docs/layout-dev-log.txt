@@ -15,6 +15,9 @@ o  Restart with new design
                     o  parent maker
                         *  recognizer
                         o  qword type
+                            o  basics
+                            o  tests
+                            o  docco
                     o  api
                     o  layout maker (ditch class method too nasty) - do real work in constructor!!!
                 o  Go back to test utils
