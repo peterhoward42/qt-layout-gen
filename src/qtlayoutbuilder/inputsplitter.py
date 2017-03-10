@@ -97,7 +97,7 @@ def _split_big_string_into_records(big_string):
             if len(records) == 0:
                 raise LayoutError('Error: The first word in your text must have a colon in it: <%s>' % big_string, None)
             current_record.words.append(word)
-    return records, None
+    return records
 
 
 def _split_all_files_in_directory_into_records(directory_path):

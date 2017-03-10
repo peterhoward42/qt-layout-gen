@@ -11,7 +11,7 @@ o  Restart with new design
                 *  Create LayoutException
                 o  Begin to feed in bottom up
                     *  directory search
-                    o  input splitter
+                    *  input splitter
                     o  parent maker
                     o  api
                     o  layout maker (ditch class method too nasty) - do real work in constructor!!!
