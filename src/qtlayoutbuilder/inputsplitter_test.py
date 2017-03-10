@@ -18,7 +18,6 @@ class TestInputSplitter(TestCase):
             msg = str(e)
             self.assertTrue("No such file or directory: 'sillyfilename'" in msg)
 
-        """
 
         # Raises an error if the first word in the file is not
         # a colon-word
@@ -29,12 +28,13 @@ class TestInputSplitter(TestCase):
                 'testdata',
                 'file_with_illegal_first_word.txt'))
 
-        records, err = _split_file_into_records(malformed_file)
-        self.assertIsNotNone(err)
-        msg = err.format_as_single_string()
-        self.assertTrue('Error: The first word in your file must have a colon in it:' in msg)
-        self.assertTrue('file_with_illegal_first_word.txt' in msg)
-
+        try:
+            records = _split_file_into_records(malformed_file)
+        except LayoutError as e:
+            msg = str(e)
+            self.assertTrue("The first word in your file must have a colon in it:" in msg)
+            self.assertTrue(r"testdata\file_with_illegal_first_word.txt" in msg)
+"""
         # Raises an error if no records found
         malformed_file = os.path.abspath(
             os.path.join(

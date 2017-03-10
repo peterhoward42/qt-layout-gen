@@ -13,7 +13,6 @@ This example illustrates all the parsing rules:
     QVBoxLayout:my_page         row_a               row_b           row_c
     Find:CustomLayout:my_page   header_row          body            footer_row
 
-
 We simply split it at whitespace to get the constituent 'words'.
 Then a record is deemed to begin at any word that contains a colon.
 And to end just before the next word encountered that has a colon,
