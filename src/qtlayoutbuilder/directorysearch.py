@@ -24,10 +24,6 @@ def find_all_files(path):
         raise LayoutError('No files found in %s' % path, None)
     return file_list
 
-
-
-
-
 def _handle_walk_error(e):
     raise e
 
