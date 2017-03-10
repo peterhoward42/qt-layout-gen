@@ -153,10 +153,9 @@ two seperate trees then you get two trees. You access them as described above:
     layouts_built.my_main_layout
     layouts_built.my_auxillary_layout
 
-If you intended to make one layout but find you've missed something, and
-ended up with two, it's
-useful for debugging, to visualize the trees as the builder sees them. You can 
-ask the builder for a string representation like this:
+If you don't get what you expect, you can ask the builder to show you how it
+traced out everything. This produced a string representation of the tree(s) it
+deduced.
 
     layouts_built.get_layout_hierarchy_map()
 
@@ -165,7 +164,7 @@ Using widgets you made earlier (or layouts)
 -------------------------------------------
 Many custom widgets and layouts need to be constructed and instantiated by
 hand. And when you're introducing the builder to existing code bases
-incrementatlly, your program will likely want to instantiate many outside of
+incrementatlly, your program will likely want to instantiate some you created outside of
 the builder, but then have the builder use them.
 
 There is a way to specify on the left hand side, that the builder should go off and find
@@ -174,9 +173,9 @@ else in your program.
 
     Find:CustomLayout:my_page          header_row    body            footer_row
 
-This behaviour kicks in when your left hand side looks like the example - i.e.
-has two colons in it. The
-builder will consider all the objects that are already instantiated in your
+This behaviour kicks in when your left hand side starts with 'Find' and has
+two colons in.
+The builder will consider all the objects that are already instantiated in your
 program which are of the CustomLayout class. It will then look for one that
 you have referenced with a variable or attribute called 'my_page'. For example
 Somewhere else in your program you wrote:
@@ -200,4 +199,4 @@ HBOX or VBOX, the builder will complain.
 How is input text parsed / what are the rules?
 ----------------------------------------------
 
-See inputsplitter comments.
+See inputsplitter comments until they are more certain.
