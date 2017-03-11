@@ -15,8 +15,9 @@ o  Restart with new design
                     o  parent maker
                         *  recognizer
                         o  qword type
-                            o  basics
+                            *  basics
                             o  tests
+                                o  nearly done, just need to start qapp before instantiating qwidget
                             o  docco
                     o  api
                     o  layout maker (ditch class method too nasty) - do real work in constructor!!!

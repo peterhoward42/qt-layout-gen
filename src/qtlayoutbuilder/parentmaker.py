@@ -3,6 +3,8 @@ This module is responsible for interpreting the word from the LHS of an InputTex
 like 'HBOX:my_page' and instantiating (or finding) the QObject it is calling for.
 """
 
+from PySide.QtGui import * # for the benefit of _make_qtype():
+
 import keywords
 from layouterror import LayoutError
 
@@ -82,19 +84,33 @@ def _make_qtype(record):
     # Return object and name
 
     lhs = record.lhs()
+    # Fish out the alleged QObject type and the name.
+    # All we can rely on, is that the lhs has a colon in it and starts with a Q.
     segments = _colon_delimited_segments(lhs)
-    if len(segments) != 2:
+    qword, name = [s.strip() for s in segments]
+    if (len(qword) == 0) or (len(name) == 0):
         raise LayoutError(
-            'Cannot split this left hand side into two pieces at a colon.',
+            'When we split this left hand side at the colon, we end up with one part that is of zero length.',
             record.file_location)
-    qword, name = segments
-
-    in_scope = globals()
-    """
-    id = "1234asdf"
-    constructor = globals()[id]
-    instance = constructor()
-    """
+    # See if Python can resolve the name as something it knows about.
+    try:
+        look_up_in_python_namespace = globals()[qword]
+    except KeyError as e:
+        raise LayoutError(
+            "Python can't make any sense of this word. (it doesn't exist in the global namespace) <%s>" % qword,
+            record.file_location)
+    # Have a go at constructing it, and then make sure it is a class derived from QLayout or QWidget.
+    try:
+        instance = look_up_in_python_namespace()
+    except Exception as e:
+        raise LayoutError(('Cannot instantiate one of these: <%s>\n' +
+            'It is supposed to be a QtGui class name like QString or QLabel that can be used as a constructor.\n' + \
+            'When the code tried to instantiate one...\n' + \
+            'the underlying error message was: <%s>') % (qword, str(e)), record.file_location)
+    # Make sure it is a QWidget or QLayout
+    if (isinstance(instance, QWidget) == False) or (isinstance(instance, QLayout) == False):
+        raise LayoutError('This left hand side instantiates, but is neither ' + \
+            'a QLayout or QWidget', record.file_location)
 
 
 def _make_keyword_type(record):

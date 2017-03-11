@@ -7,7 +7,7 @@ import re
 
 from PySide.QtGui import QLabel, QHBoxLayout, QVBoxLayout, QStackedLayout, QTabWidget, QSplitter
 
-from builderror import BuildError
+from layouterror import LayoutError
 
 
 WORDS = ['HBOX', 'VBOX', 'STACK', 'SPLIT', 'TAB']
