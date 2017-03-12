@@ -10,13 +10,11 @@ import keywords
 
 class InputTextRecord(object):
     """
-    This class encapsulates a record like this 'HBOX:my_box child_a child_b'
-    in a structured form.
+    This class is able to parse a string like this: 'HBOX:my_box child_a child_b'
+    and build a structured model from it that isolates the field and captures
+    the intent.
     It also holds a FileLocation - which remembers the source filename and
     line number to help with error handling later on.
-    It includes factory functions to build itself from a string.
-    The factory functions get all the error handling over with.
-    They raise BuildError.
     """
 
     # Should the QObject for the LHS be created, or an existing one found?
@@ -28,7 +26,7 @@ class InputTextRecord(object):
         self.make_or_find = None  # INSTANTIATE | FIND
         self.class_required = None  # A string. E.g. 'QString', 'MyCustomClass'
         self.parent_name = None
-        self.child_names = None
+        self.child_names = []
 
     @classmethod
     def make_from_lhs_word(cls, lhs_word, file_location):
@@ -99,7 +97,7 @@ class InputTextRecord(object):
         type_field = segments[0]  # E.g. HBOX or QLabel or Find
 
         if keywords.is_a_keyword(type_field):
-            self.make_or_find = self.MAKE
+            self.make_or_find = self.INSTANTIATE
             self.class_required = keywords.class_required_for(type_field)
             self.parent_name = segments[1]
             return
@@ -110,14 +108,14 @@ class InputTextRecord(object):
             self.parent_name = segments[2]
             return
 
-        if segments[0].starts_with('Q'):
-            self.make_or_find = self.MAKE
+        if segments[0].startswith('Q'):
+            self.make_or_find = self.INSTANTIATE
             self.class_required = segments[0]
             self.parent_name = segments[1]
             return
 
         raise LayoutError(
-            'Cannot detect any of the allowed forms on the left hand side',
+            'Cannot detect any of the allowed forms in this left hand side: <%s>' % lhs_word,
             self.file_location)
 
     _WHITESPACE_REGEX = re.compile('\s')
@@ -132,11 +130,18 @@ class InputTextRecord(object):
         """
         if cls._WHITESPACE_REGEX.search(lhs_word):
             raise LayoutError(
-                'Left hand side word must not contain whitespace', file_location)
+                'Left hand side word: <%s>, must not contain whitespace' % lhs_word,
+                file_location)
         segments = lhs_word.split(':')
+        # Produced any empty segments?
+        if len([seg for seg in segments if len(seg) == 0]) != 0:
+            raise LayoutError(
+                ('One of the segments produced by splitting this word: <%s> using colons ' + \
+                 'is empty') % lhs_word,
+                file_location)
         if (len(segments) < 2) or (len(segments) > 3):
             raise LayoutError(
-                ('Splitting this word: <%s> using colons' + \
+                ('Splitting this word: <%s> using colons ' + \
                  'does not produce 2 or 3 segments as required.') % lhs_word,
                 file_location)
         return segments
