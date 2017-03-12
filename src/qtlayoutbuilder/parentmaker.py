@@ -10,16 +10,21 @@ from layouterror import LayoutError
 
 def make(record):
     """
-    Entry point for the parent-making operation. It returns the
-    QObject and the parent name that has been extracted from the record.
+    Entry point for the QObject-making operation. It returns the
+    QObject and parent name that has been extracted from the record.
     E.g. a QHBoxLayout object, and 'my_page' for the case above.
     :param record: The InputTextRecord to make the QObject parent for.
-    :return: The QObject
+    :return: (QObject, name)
     :raises LayoutError
     """
+    # Check the record has fit for purpose LHS first. (Don't depend on
+    # the earlier parsing - to avoid fragility and dependency coupling).
+    _assertRecordHasWellFormedLHS(record)
 
-    # What method should we choose to make the LHS. E.g. keyword, QType, or Find?
-    # Organised thus to aid unit testing.
+    # Decide which method we should choose to make the LHS based on
+    # the syntax variant used. I.e. one from: (HBOX, QLabel, Find:CustomWidget:fred)
+    # We made it a function so it can be unit tested easily.
+    # It returns one of the functions below, like for example '_make_qtype'.
     factory_function = _deduce_lhs_producer_function(record)
     # Use the producer to make or obtain the Qobject and the name.
     return factory_function(record)
@@ -32,8 +37,6 @@ def _deduce_lhs_producer_function(record):
     :param record: The record to examine.
     :return: The choice of producer function that should be used.
     """
-    # We can assume here (from the input splitting) that the record has a
-    # left hand side, and this has at least one colon in.
     if _lhs_has_two_colons(record):
         return _find_existing_qobject
     elif _lhs_starts_with_letter_q(record):
@@ -43,6 +46,47 @@ def _deduce_lhs_producer_function(record):
     raise LayoutError(
             ('The left hand side: <%s> of your record does not ' + \
              'conform to any of the legal forms') % record.lhs(), record.file_location)
+
+def _make_qtype(record):
+    # Isolate the QType being asked for and the name.
+    # Attempt to instantiate an object of that type
+    # Is QtGui available to import from at this point?
+    # Object if the instantiation fails
+    # Object if the type produced is not instance of QLayout or QWidget
+    # Return object and name
+
+    lhs = record.lhs()
+    # Fish out the alleged QObject type and the name.
+    # All we can rely on, is that the lhs has a colon in it and starts with a Q.
+    segments = _colon_delimited_segments(lhs)
+    qword, name = [s.strip() for s in segments]
+    if (len(qword) == 0) or (len(name) == 0):
+        raise LayoutError(
+            'When we split this left hand side at the colon: <%s>, we end up with one part that is of zero length.' %
+            record.lhs(), record.file_location)
+    # See if Python can resolve the name as something it knows about.
+    try:
+        look_up_in_python_namespace = globals()[qword]
+    except KeyError as e:
+        raise LayoutError(
+            "Python can't make any sense of this word. (it doesn't exist in the global namespace) <%s>" % qword,
+            record.file_location)
+    # Have a go at constructing it, and then make sure it is a class derived from QLayout or QWidget.
+    try:
+        instance = look_up_in_python_namespace()
+    except Exception as e:
+        raise LayoutError(('Cannot instantiate one of these: <%s>\n' +
+            'It is supposed to be a QtGui class name like QString or QLabel that can be used as a constructor.\n' + \
+            'When the code tried to instantiate one...\n' + \
+            'the underlying error message was: <%s>') % (qword, str(e)), record.file_location)
+    # Make sure it is a QWidget or QLayout
+    if (isinstance(instance, QWidget) is False) and (isinstance(instance, QLayout) is False):
+        raise LayoutError(('This QWord: <%s> instantiates, but is neither ' + \
+            'a QLayout or QWidget') % qword, record.file_location)
+
+def _assertRecordHasWellFormedLHS(record):
+    lhs = record.lhs()
+
 
 
 def _lhs_has_two_colons(record):
@@ -75,42 +119,6 @@ def _find_existing_qobject(record):
     return 42
 
 
-def _make_qtype(record):
-    # Isolate the QType being asked for and the name.
-    # Attempt to instantiate an object of that type
-    # Is QtGui available to import from at this point?
-    # Object if the instantiation fails
-    # Object if the type produced is not instance of QLayout or QWidget
-    # Return object and name
-
-    lhs = record.lhs()
-    # Fish out the alleged QObject type and the name.
-    # All we can rely on, is that the lhs has a colon in it and starts with a Q.
-    segments = _colon_delimited_segments(lhs)
-    qword, name = [s.strip() for s in segments]
-    if (len(qword) == 0) or (len(name) == 0):
-        raise LayoutError(
-            'When we split this left hand side at the colon, we end up with one part that is of zero length.',
-            record.file_location)
-    # See if Python can resolve the name as something it knows about.
-    try:
-        look_up_in_python_namespace = globals()[qword]
-    except KeyError as e:
-        raise LayoutError(
-            "Python can't make any sense of this word. (it doesn't exist in the global namespace) <%s>" % qword,
-            record.file_location)
-    # Have a go at constructing it, and then make sure it is a class derived from QLayout or QWidget.
-    try:
-        instance = look_up_in_python_namespace()
-    except Exception as e:
-        raise LayoutError(('Cannot instantiate one of these: <%s>\n' +
-            'It is supposed to be a QtGui class name like QString or QLabel that can be used as a constructor.\n' + \
-            'When the code tried to instantiate one...\n' + \
-            'the underlying error message was: <%s>') % (qword, str(e)), record.file_location)
-    # Make sure it is a QWidget or QLayout
-    if (isinstance(instance, QWidget) == False) or (isinstance(instance, QLayout) == False):
-        raise LayoutError('This left hand side instantiates, but is neither ' + \
-            'a QLayout or QWidget', record.file_location)
 
 
 def _make_keyword_type(record):

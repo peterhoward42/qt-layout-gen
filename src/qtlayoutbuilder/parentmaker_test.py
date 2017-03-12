@@ -1,4 +1,8 @@
+"""
+This module provides unit tests for the parentmaker module.
+"""
 from unittest import TestCase
+from PySide.QtGui import QLabel
 
 import os.path
 
@@ -14,7 +18,12 @@ class TestParentMaker(TestCase):
     DUMMY_FILE_LOC = _FileLocation('pretend filename', 1)
 
     def test_deduce_lhs_producer_function(self):
-        # Gives sensible error when the input is malformed.
+        # The _deduce_lhs_producer_function takes a look at the
+        # the LHS of an InputTextRecord, and works out which of constructor
+        # it is asking for. It returns a factory function.
+
+        # Check the error reporting when the LHS is malformed.
+        # Instead of something like "HBOX:my_box fred", we provide garbage.
         try:
             words = ['banana', 'apple']
             fn = _deduce_lhs_producer_function(_InputTextRecord(self.DUMMY_FILE_LOC, words))
@@ -24,7 +33,9 @@ class TestParentMaker(TestCase):
             self.assertTrue("does not conform to any of the legal forms" in msg)
             self.assertTrue("(pretend filename, at line 1)" in msg)
 
-        # Can spot the keyword format
+        # Check that each syntactical variant is recognized properly.
+        # Feed it all the legal keywords (like HBOX) and make sure it
+        # chooses the make_keyword producer function.
         for keyword in keywords.WORDS:
             record = _InputTextRecord(self.DUMMY_FILE_LOC, ['%s:some_name' % keyword, 'foo'])
             fn_returned = _deduce_lhs_producer_function(record)
@@ -32,16 +43,18 @@ class TestParentMaker(TestCase):
             self.assertTrue('function _make_keyword_type' in produce_fn_as_string)
 
     def test_make_qtype(self):
-        # Raises suitable error when the record LHS doesn't have two meaningful words,
-        # when split on colon.
+        # Prove out the operation of this syntax variant 'HBOX:my_box a b c'.
+
+        # First test the error handling when there is nothing after
+        # the colon on the LHS.
         words = ['ipsum:', 'foo']
         record = _InputTextRecord(self.DUMMY_FILE_LOC, words)
         try:
             q_object = _make_qtype(record)
         except LayoutError as e:
             msg = str(e)
-            self.assertTrue("When we split this left hand side at the colon, we end up with one part " in msg)
-            self.assertTrue("that is of zero length." in msg)
+            self.assertTrue("When we split this left hand side at the colon: <ipsum:>, we end up with one " in msg)
+            self.assertTrue("that is of zero length" in msg)
 
         # Suitable error when the class type is not recognized by python.
         words = ['QThisWillNotExist:my_label', 'foo']
@@ -54,7 +67,8 @@ class TestParentMaker(TestCase):
             self.assertTrue("(it doesn't exist in the global namespace)" in msg)
             self.assertTrue("QThisWillNotExist" in msg)
 
-        # Suitable error when python cannot instantiate the thing.
+        # Suitable error when python recognizes the word in the global namespace,
+        # but cannot instantiate it.
         # We use the string __doc__ because we know that Python will be
         # able to resolve that name in the namespace the called function has,
         # but it is not instantiable, because it is a string and a string is not
@@ -70,15 +84,15 @@ class TestParentMaker(TestCase):
             self.assertTrue("When the code tried to instantiate one." in msg)
             self.assertTrue("the underlying error message was: <'str' object is not callable>," in msg)
 
-        # Suitable error when the thing once instantiated turns out not to be a QWidget or
-        # QLayout
+        # Suitable error when the thing gets instantiated, but turns out not to be
+        # a QWidget or QLayout
         words = ['QColor:my_label', 'foo']
         record = _InputTextRecord(self.DUMMY_FILE_LOC, words)
         try:
             q_object = _make_qtype(record)
         except LayoutError as e:
             msg = str(e)
-            self.assertTrue("This left hand side instantiates, but is neither a QLayout or QWidget," in msg)
+            self.assertTrue("This QWord: <QColor> instantiates, but is neither a QLayout or QWidget" in msg)
 
         # Works properly on well formed input
         words = ['QLabel:my_label', 'foo']
@@ -86,3 +100,4 @@ class TestParentMaker(TestCase):
         q_object = _make_qtype(record)
         class_name = q_object.__class__.__name__
         print class_name
+        self.assertTrue(isinstance(q_object, QLabel))

@@ -16,9 +16,18 @@ o  Restart with new design
                         *  recognizer
                         o  qword type
                             *  basics
-                            o  tests
-                                o  nearly done, just need to start qapp before instantiating qwidget
+                            *  tests
+                            o  split out input text record and give it more functions
+                                o  write it
+                                o  test it
+                            o  fix back up everything
+                            o  separate fileloc
+                            o  document parentmaker better
                             o  docco
+                        o  more use of assert?
+                        o  ditch _ classes convention
+                        o  keyword type
+                        o  discovery type
                     o  api
                     o  layout maker (ditch class method too nasty) - do real work in constructor!!!
                 o  Go back to test utils

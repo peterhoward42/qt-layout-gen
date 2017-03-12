@@ -38,7 +38,8 @@ class _InputTextRecord(object):
     def lhs(self):
         """
         Convenience function to make accessing the left-had-side
-        more readable and obvious when it is called.
+        more readable and obvious when it is called. And to provide
+        a single point for some of the error handling.
         :return: The left hand side of the record, i.e. the first word.
         :raises: LayoutError
         """
