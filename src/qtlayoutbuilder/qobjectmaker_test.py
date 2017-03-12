@@ -7,7 +7,7 @@ from PySide.QtGui import QLabel
 import os.path
 
 # noinspection PyProtectedMember
-from parentmaker import make
+from qobjectmaker import make
 from layouterror import LayoutError
 from filelocation import FileLocation
 from inputtextrecord import InputTextRecord
@@ -27,9 +27,9 @@ class TestParentMaker(TestCase):
             q_object = make(record)
         except LayoutError as e:
             msg = str(e)
-            self.assertTrue("Python can't make any sense of this word." in msg)
-            self.assertTrue("(it doesn't exist in the global namespace)" in msg)
-            self.assertTrue("QThisWillNotExist" in msg)
+            self.assertTrue("Python cannot make any sense of this word" in msg)
+            self.assertTrue("(it does not exist in the global namespace)" in msg)
+            self.assertTrue("<QThisWillNotExist>" in msg)
 
         # Suitable error when python recognizes the word in the global namespace,
         # but cannot instantiate it.
@@ -50,9 +50,12 @@ class TestParentMaker(TestCase):
         except LayoutError as e:
             msg = str(e)
             self.assertTrue("Cannot instantiate one of these: <__doc__>" in msg)
-            self.assertTrue("It is supposed to be a QtGui class name like QString or QLabel that can be used as a constructor." in msg)
-            self.assertTrue("When the code tried to instantiate one." in msg)
-            self.assertTrue("the underlying error message was: <'str' object is not callable>," in msg)
+            self.assertTrue("It is supposed to be a QtQui class" in msg)
+            self.assertTrue("like QString or" in msg)
+            self.assertTrue("QLabel that can be used as a constructor." in msg)
+            self.assertTrue("When the code tried to instantiate one..." in msg)
+            self.assertTrue("the underlying error message was:" in msg)
+            self.assertTrue("<'str' object is not callable>" in msg)
 
         # Suitable error when the thing gets instantiated, but turns out not to be
         # a QWidget or QLayout

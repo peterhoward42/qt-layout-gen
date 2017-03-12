@@ -1,24 +1,81 @@
 """
-This module provides functions that work out what type of QObject is being
-asked for in an InputTextRecord, and attempts to instantiate one and return it.
+This module is responsible for instantiating (or finding) QObjects, like
+QHBoxLayout, or QLabel - taking its instructions from an InputTextRecord.
 """
 
-def _create_parent_qobj(input_text_record):
+from exceptions import NotImplementedError
+
+from PySide.QtGui import *  # for the benefit of _make_qtype():
+
+import keywords
+from layouterror import LayoutError
+from inputsplitter import InputTextRecord
+
+
+def make(record):
     """
-    Tries to work out what type of QObject is being
-    asked for in an InputTextRecord, and attempts to instantiate one and return it.
-    :param input_text_record: The InputTextRecord that specifies what type of parent object
-    should be made.
-    :return: (QObject, BuildError) # Only one of them will be non-None
+    Entry point for the QObject-making operation. It returns the QObject and
+    parent name that has been extracted from the record. E.g. a QHBoxLayout
+    object, and 'my_page'.
+    :param record: The InputTextRecord to make the QObject parent for.
+    :return: (QObject, name)
+    :raises LayoutError
     """
 
-    # Is keyword being used to specify the type?
+    if record.instantiate_or_find_existing == InputTextRecord.INSTANTIATE:
+        q_object = _instantiate_q_object(record)
+        return q_object, record.parent_name
+    elif record.make_or_find == InputTextRecord.FIND:
+        q_object = _find_q_object(record)
+        return q_object, record.parent_name
+    else:
+        raise NotImplementedError('should never be reached.')
 
-    # Is the syntax being used that means - go off and find a QObject that is already
-    # instantiated?
 
-    # Does the type field look like a QSomething?
+def _instantiate_q_object(record):
+    """
+    Instantiates a QObject of the type specified in the record.
+    Raises LayoutError if the instantiation fails, or if the object thus
+    created in not a QWidget or QLayout.
+    :param record: The InputTextRecord defining what is required.
+    :return: (QObject, parent_name)
+    """
 
-    # Otherwise we have an error condition
+    # Does python recognize this name at runtime?
+    try:
+        class_name = record.class_required
+        constructor = globals()[class_name]
+    except KeyError as e:
+        raise LayoutError(
+            ' '.join([
+                'Python cannot make any sense of this word. (it does not exist',
+                'in the global namespace) <%s>']) %
+            class_name, record.file_location)
 
-    return None, None
+    # Have a go at constructing it, and then make sure it is a class derived
+    # from QLayout or QWidget.
+    try:
+        instance = constructor()
+    except Exception as e:
+        raise LayoutError(
+            '\n'.join([
+                'Cannot instantiate one of these: <%s>.',
+                'It is supposed to be a QtQui class name like QString or',
+                'QLabel that can be used as a constructor.',
+                'When the code tried to instantiate one...',
+                'the underlying error message was: <%s>']) %
+            (class_name, str(e)), record.file_location)
+        # Make sure it is a QWidget or QLayout
+        if isinstance(instance, QWidget):
+            return instance, record.parent_name
+        if isinstance(instance, QLayout):
+            return instance, record.parent_name
+        raise LayoutError(
+            '\n'.join([
+                'This class name: <%s> instantiates successfully,',
+                'but is neither a QLayout, nor a QWidget']) %
+            (class_name), record.file_location)
+
+
+def _find_q_object(record):
+    return 42
