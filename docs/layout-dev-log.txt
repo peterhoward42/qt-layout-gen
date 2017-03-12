@@ -4,30 +4,23 @@ o  Restart with new design
            And accomodate find idiom.
         *  Write up lexical parsing
         *  Fix up and simplify lexical parsing with less error detection.
-        o  Ditch error handling strategy
-            o  Design exception based one
-                *  Requirements
-                *  Remove BuildError
-                *  Create LayoutException
-                o  Begin to feed in bottom up
-                    *  directory search
-                    *  input splitter
+        *  Ditch error handling strategy
+        *  Separate InputTextRecord
+        *  Separate filelocation
+        *  Repair input splitter
+        o  Fix up all utils
+            o  what?
+        o  Resume parent maker
                     o  parent maker
                         *  recognizer
                         o  qword type
-                            *  basics
-                            *  tests
-                            o  split out input text record and give it more functions
-                                o  write it
-                                o  test it
-                            o  fix back up everything
                             o  separate fileloc
                             o  document parentmaker better
                             o  docco
-                        o  more use of assert?
-                        o  ditch _ classes convention
                         o  keyword type
                         o  discovery type
+                        o  more use of assert?
+                        o  ditch _ classes convention
                     o  api
                     o  layout maker (ditch class method too nasty) - do real work in constructor!!!
                 o  Go back to test utils

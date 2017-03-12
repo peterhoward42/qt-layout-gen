@@ -1,6 +1,6 @@
-VBOX:                       my_page header_row  body            <>
-VBOX:my_page                row_a               row_b           row_c
+VBOX:my_page                header_row          body            <>
+VBOX:header_row             row_a               row_b           row_c
                             row_d               row_e           row_f
                             row_g
-QVBoxLayout:my_page         row_a               row_b           row_c
-Find:CustomLayout:my_page   header_row          body            footer_row
+QVBoxLayout:body            topic_a             topic_b         topic_c
+Find:CustomLayout:custom_a  foo                 bar             baz

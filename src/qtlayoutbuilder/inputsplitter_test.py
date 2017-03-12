@@ -3,34 +3,15 @@ from unittest import TestCase
 import os.path
 
 # noinspection PyProtectedMember
-from inputsplitter import _InputTextRecord, _FileLocation, _split_big_string_into_records, \
+from inputsplitter import _split_big_string_into_records, \
     _split_file_into_records, _split_all_files_in_directory_into_records
-
+from filelocation import FileLocation
 from layouterror import LayoutError
 
 
 class TestInputSplitter(TestCase):
 
-    FILE_LOCATION = _FileLocation('dummy filename', 1)
-
-
-    def test_text_input_record_utilities(self):
-        # Proper error messages from left-hand-side convenience function,
-        # when the record has no words in.
-        try:
-            record = _InputTextRecord(self.FILE_LOCATION, [])
-            lhs = record.lhs()
-        except LayoutError as e:
-            msg = str(e)
-            self.assertTrue(
-                'Cannot isolate left hand side word because there are none, (dummy filename, at line 1)'
-                in msg)
-
-        # Proper answer when the record is well formed
-        record = _InputTextRecord(self.FILE_LOCATION, ['foo', 'bar'])
-        lhs = record.lhs()
-        self.assertEqual('foo', lhs)
-
+    FILE_LOCATION = FileLocation('dummy filename', 1)
 
     def test_split_file_into_records(self):
         # Reports IO errors properly.
@@ -39,7 +20,6 @@ class TestInputSplitter(TestCase):
         except LayoutError as e:
             msg = str(e)
             self.assertTrue("No such file or directory: 'sillyfilename'" in msg)
-
 
         # Raises an error if the first word in the file is not
         # a colon-word
@@ -71,7 +51,7 @@ class TestInputSplitter(TestCase):
             self.assertTrue("Nothing found in this file:" in msg)
             self.assertTrue(r"testdata\file_with_nothing_in.txt" in msg)
 
-        # Harvests correct words when input is properly formed
+        # Harvests correct records when input is properly formed
         properly_formed_file = os.path.abspath(
             os.path.join(
                 __file__,
@@ -83,14 +63,12 @@ class TestInputSplitter(TestCase):
         records = _split_file_into_records(properly_formed_file)
         self.assertIsNotNone(records)
         self.assertEqual(len(records), 4)
-        self.assertEqual(records[0].words,
-                         ['VBOX:', 'my_page', 'header_row', 'body', '<>'])
-        self.assertEqual(records[1].words,
-                         ['VBOX:my_page', 'row_a', 'row_b', 'row_c', 'row_d', 'row_e', 'row_f', 'row_g'])
-        self.assertEqual(records[2].words,
-                         ['QVBoxLayout:my_page', 'row_a', 'row_b', 'row_c'])
-        self.assertEqual(records[3].words,
-                         ['Find:CustomLayout:my_page', 'header_row', 'body', 'footer_row'])
+        # We need only test the record aggregation, not the
+        # parsing of each one.
+        self.assertEqual(records[0].parent_name, 'my_page')
+        self.assertEqual(records[1].parent_name, 'header_row')
+        self.assertEqual(records[2].parent_name, 'body')
+        self.assertEqual(records[3].parent_name, 'custom_a')
 
     def test_split_text_into_records(self):
         # Raises error when first word is not a colon-word
@@ -105,8 +83,10 @@ class TestInputSplitter(TestCase):
         records = _split_big_string_into_records('HBOX:a b c HBOX:d e f')
         self.assertIsNotNone(records)
         self.assertEqual(len(records), 2)
-        self.assertEqual(records[0].words, ['HBOX:a', 'b', 'c'])
-        self.assertEqual(records[1].words, ['HBOX:d', 'e', 'f'])
+        # We need only test the record aggregation, not the
+        # parsing of each one.
+        self.assertEqual(records[0].parent_name, 'a')
+        self.assertEqual(records[1].parent_name, 'd')
 
     def test_split_all_files_in_directory_into_records(self):
         # Reports os level problems properly.
@@ -135,5 +115,5 @@ class TestInputSplitter(TestCase):
             __file__, "../../..", 'testdata', 'simple_hierarchy'))
         records = _split_all_files_in_directory_into_records(simple_hierarchy)
         self.assertEqual(len(records), 8)
-        self.assertEqual(records[0].words, ['VBOX:', 'my_page', 'header_row', 'body', '<>'])
-        self.assertEqual(records[7].words, ['HBOX:d', 'e', 'f'])
+        self.assertEqual(records[0].parent_name, 'my_page')
+        self.assertEqual(records[7].parent_name, 'd')

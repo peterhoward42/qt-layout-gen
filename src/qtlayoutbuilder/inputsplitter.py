@@ -19,36 +19,11 @@ And to end just before the next word encountered that has a colon,
 (or EOF).
 """
 
+from inputtextrecord import InputTextRecord
+from filelocation import FileLocation
+
 from layouterror import LayoutError
 from directorysearch import find_all_files
-
-
-class _InputTextRecord(object):
-    """
-    This is the data structure we use for each record found.
-    In addition to holding the constituent words, it also holds
-    a FileLocation - which remembers the source filename and
-    line number to help with error handling later on.
-    """
-
-    def __init__(self, file_location, words):
-        self.file_location = file_location
-        self.words = words
-
-    def lhs(self):
-        """
-        Convenience function to make accessing the left-had-side
-        more readable and obvious when it is called. And to provide
-        a single point for some of the error handling.
-        :return: The left hand side of the record, i.e. the first word.
-        :raises: LayoutError
-        """
-        if (self.words is None) or len(self.words) == 0:
-            raise LayoutError(
-                'Cannot isolate left hand side word because there are none',
-                self.file_location)
-        return self.words[0]
-
 
 def _split_file_into_records(file_path):
     """
@@ -77,13 +52,14 @@ def _split_file_into_records(file_path):
         for word in words:
             if ':' in word:
                 # Start new record.
-                current_record = _InputTextRecord(_FileLocation(file_path, line_number), [word, ])
+                current_record = InputTextRecord.make_from_lhs_word(
+                    word, FileLocation(file_path, line_number))
                 records.append(current_record)
             else:
                 if len(records) == 0:
                     raise LayoutError(
                         'The first word in your file must have a colon in it: <%s>' % file_path, None)
-                current_record.words.append(word)
+                current_record.add_child_name(word)
     # Nothing found?
     if len(records) == 0:
         raise LayoutError(
@@ -105,12 +81,13 @@ def _split_big_string_into_records(big_string):
     for word in words:
         if ':' in word:
             # Start new record.
-            current_record = _InputTextRecord(_FileLocation('direct text provided', 0), [word, ])
+            current_record = InputTextRecord.make_from_lhs_word(
+                word, FileLocation('direct text provided', 0))
             records.append(current_record)
         else:
             if len(records) == 0:
                 raise LayoutError('Error: The first word in your text must have a colon in it: <%s>' % big_string, None)
-            current_record.words.append(word)
+            current_record.add_child_name(word)
     return records
 
 
@@ -128,16 +105,3 @@ def _split_all_files_in_directory_into_records(directory_path):
         records = _split_file_into_records(file_to_split)
         all_records.extend(records)
     return all_records
-
-
-class _FileLocation(object):
-    """
-    A simple container to hold the name of a file and a line number with it.
-    """
-
-    def __init__(self, file_name, line_number):
-        self.file_name = file_name
-        self.line_number = line_number
-
-    def __str__(self):
-        return '%s, at line %d' % (self.file_name, self.line_number)
