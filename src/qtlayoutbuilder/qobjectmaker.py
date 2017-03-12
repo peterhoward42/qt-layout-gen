@@ -12,7 +12,7 @@ from layouterror import LayoutError
 from inputsplitter import InputTextRecord
 
 
-def make(record):
+def make_from_record(record):
     """
     Entry point for the QObject-making operation. It returns the QObject and
     parent name that has been extracted from the record. E.g. a QHBoxLayout
@@ -38,7 +38,7 @@ def _instantiate_q_object(record):
     Raises LayoutError if the instantiation fails, or if the object thus
     created in not a QWidget or QLayout.
     :param record: The InputTextRecord defining what is required.
-    :return: (QObject, parent_name)
+    :return: QObject
     """
 
     # Does python recognize this name at runtime?
@@ -65,17 +65,22 @@ def _instantiate_q_object(record):
                 'When the code tried to instantiate one...',
                 'the underlying error message was: <%s>']) %
             (class_name, str(e)), record.file_location)
-        # Make sure it is a QWidget or QLayout
-        if isinstance(instance, QWidget):
-            return instance, record.parent_name
-        if isinstance(instance, QLayout):
-            return instance, record.parent_name
-        raise LayoutError(
-            '\n'.join([
-                'This class name: <%s> instantiates successfully,',
-                'but is neither a QLayout, nor a QWidget']) %
-            (class_name), record.file_location)
+    # Make sure it is a QWidget or QLayout
+    if isinstance(instance, QWidget):
+        return instance
+    if isinstance(instance, QLayout):
+        return instance
+    raise LayoutError(
+        '\n'.join([
+            'This class name: <%s> instantiates successfully,',
+            'but is neither a QLayout, nor a QWidget']) %
+        (class_name), record.file_location)
 
 
 def _find_q_object(record):
-    return 42
+    # isolate class and name to look for
+    # ask introspection utility how many references there are to an object
+    # of the given type and with the given name
+    # if one use that object
+    # if zero complain about not found
+    # if > 1 complain about ambiguity

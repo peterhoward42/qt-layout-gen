@@ -11,11 +11,12 @@ o  Restart with new design
         o  Resume parent maker
                     o  parent maker
                         *  recognizer
-                        o  qword type
+                        *  qword type
                             *  basics
-                            o  needs a qapplication to prevent warnings
-                        o  keyword type
+                            *  needs a qapplication to prevent warnings
+                        *  keyword type
                         o  discovery type
+                            o  digress util to search and test
                         o  document parentmaker better
         o  more use of assert?
         o  80 columns and triple q strings?
