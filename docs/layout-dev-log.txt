@@ -8,27 +8,19 @@ o  Restart with new design
         *  Separate InputTextRecord
         *  Separate filelocation
         *  Repair input splitter
-        o  Fix up all utils
-            o  what?
         o  Resume parent maker
                     o  parent maker
                         *  recognizer
                         o  qword type
-                            o  separate fileloc
-                            o  document parentmaker better
-                            o  docco
+                            *  basics
+                            o  needs a qapplication to prevent warnings
                         o  keyword type
                         o  discovery type
-                        o  more use of assert?
-                        o  ditch _ classes convention
-                    o  api
-                    o  layout maker (ditch class method too nasty) - do real work in constructor!!!
-                o  Go back to test utils
-        o  module exports should not be _
-        o  Code and test parent maker
-            o  Q object type
-            o  discovery type
-            o  keyword type
+                        o  document parentmaker better
+        o  more use of assert?
+        o  ditch _ classes convention
+        o  api
+        o  layout maker (ditch class method too nasty) - do real work in constructor!!!
         o  Resume main flow
         o
 
