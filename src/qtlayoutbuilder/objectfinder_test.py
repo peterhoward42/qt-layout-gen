@@ -26,7 +26,7 @@ class TestObjectFinder(TestCase):
         my_other_thing = OtherThing()
         base_class_filters = [QWidget, QLayout]
         finder = ObjectFinder(base_class_filters)
-        found = finder.find_objects('QLabel', 'my_label')
+        found = finder.find_objects('my_label')
 
         self.assertEquals(len(found), 1)
         found_object = found[0]

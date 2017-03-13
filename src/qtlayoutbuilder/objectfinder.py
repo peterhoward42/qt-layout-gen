@@ -2,22 +2,28 @@ import gc
 
 class ObjectFinder(object):
     """
-    This class helps you find objects that are already instantiated in your
-    program. For example, if anywhere in your program you have said:
+    This class helps you find objects that are
+    already instantiated in your program - by searching for them on the basis
+    of what you called them when you instantiated them.
+
+    For example, if anywhere in your program you have said:
 
         my_label = QLabel(), or
         some_thing.my_label = QLabel()
 
-    You can find the QLabel object instantiated by specifying the required
-    class and the name by which you have referenced it. (Both strings).
+    You can find the QLabel object instantiated by specifying the
+    the name by which you have referenced it. Like this:
 
-        find_objects('QLabel', 'my_label').
+        find_objects('my_label')
+
+    The search space is deliberately, severely constrained by requiring you
+    to specify allowed base classes at construction time.
     """
 
     def __init__(self, base_class_filters):
         """
         You are required to specify base class constraints to the constructor,
-        like [QLayout, QWidget]. It helps performance by reducing the search
+        like this [QLayout, QWidget]. It helps performance by reducing the search
         space, and allows the first 3 levels in a 5-deep nested loop to be run
         just once - i.e. at construction time.
         :param base_class_filters: The base classes you stipulate.
@@ -26,18 +32,18 @@ class ObjectFinder(object):
             raise RuntimeError('You must provide at least one base class')
         self._objects = self._assemble_available_objects(base_class_filters)
 
-    def find_objects(self, class_name, reference_name):
+    def find_objects(self, reference_name):
         """
-        Finds any objects that were instantiated when the constructor was
+        See example in class doc string.
+
+        Finds any objects that were instantiated at the time the constructor was
         called, that passed the constructor's base class filter criteria, and
-        which are of the class you have specified in the <class_name> parameter,
-        and which are referenced (somewhere in your program) by a variable
+        which are referenced (somewhere in your program) by a variable
         (or attribute) name of the name you have specified.
-        :param class_name: Class to search for.
         :param reference_name: Name of variable or attribute to search for.
         :return: A list of objects that qualify.
         """
-        found = self._reduce_to_those_referenced_by_given_name(reference_name)
+        found = self._filtered_on_reference_name(reference_name)
         return found
 
     def _assemble_available_objects(self, base_class_filters):
@@ -74,7 +80,7 @@ class ObjectFinder(object):
                 return True
         return False
 
-    def _reduce_to_those_referenced_by_given_name(self, name):
+    def _filtered_on_reference_name(self, name):
         return [obj for obj in self._objects if self._is_referenced_by_name(obj, name)]
 
     def _is_referenced_by_name(self, obj, name):
