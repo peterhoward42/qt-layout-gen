@@ -109,6 +109,7 @@ PyCharm
 .idea/dictionaries
 .idea/misc.xml
 .idea/pycharm-q.iml
+.idea/**/*.iml
 
 # Sensitive or high-churn files:
 .idea/**/dataSources/
