@@ -16,12 +16,11 @@ o  Restart with new design
                             *  needs a qapplication to prevent warnings
                         *  keyword type
                         o  discovery type
-                            o  experiment to get search that works
-                                o  finding local vars as refs:
-                                    o  we can get local vars from referrers that are frames.
-                                       has a f_locals attribute that is a dict keyed
-                                       on variable names.
-                                o  finding attribs on instantiated objects as refs
+                            *  experiment to get search that works
+                                *  finding local vars as refs:
+                            o  inject base classes for filter
+                            o  refactor as constructor that keeps table
+                            o  finding attribs on instantiated objects as refs
 
 
                             o  design how to take hit only once

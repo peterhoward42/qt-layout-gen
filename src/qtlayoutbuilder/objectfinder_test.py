@@ -1,7 +1,8 @@
 from unittest import TestCase
-from PySide.QtGui import QLabel, QPushButton, qApp, QApplication
+from PySide.QtGui import QLabel, QPushButton, QWidget, \
+    QLayout, qApp, QApplication
 
-from objectfinder import find_qobject_instances
+from objectfinder import ObjectFinder
 
 class OtherThing(object):
     pass
@@ -23,9 +24,11 @@ class TestObjectFinder(TestCase):
         my_label = QLabel()
         my_button = QPushButton()
         my_other_thing = OtherThing()
-        found_objects = find_qobject_instances('QLabel', 'my_label')
+        base_class_filters = [QWidget, QLayout]
+        finder = ObjectFinder(base_class_filters)
+        found = finder.find_objects('QLabel', 'my_label')
 
-        self.assertEquals(len(found_objects), 1)
-        found_object = found_objects[0]
-        self.assertEquals(found_object.__class__, FindMe)
+        self.assertEquals(len(found), 1)
+        found_object = found[0]
+        self.assertEquals(found_object.__class__, QLabel)
 
