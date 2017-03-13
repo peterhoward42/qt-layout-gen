@@ -2,106 +2,161 @@ import gc
 
 class ObjectFinder(object):
     """
-    This class helps you find objects that are
-    already instantiated in your program - by searching for them on the basis
-    of what you called them when you instantiated them.
+    This class helps you find an object that is already instantiated in your
+    program - by searching for the name you assigned it to when you
+    instantiated it.
 
     For example, if anywhere in your program you have said:
 
         my_label = QLabel(), or
         some_thing.my_label = QLabel()
 
-    You can find the QLabel object instantiated by specifying the
-    the name by which you have referenced it. Like this:
+    You can find the QLabel object by specifying like this:
 
         find_objects('my_label')
 
-    The search space is deliberately, severely constrained by requiring you
-    to specify allowed base classes at construction time.
+    The search namespace is not as large as it seems on first sight. Please
+    refer to this class' constructor.
     """
 
-    def __init__(self, base_class_filters):
+    def __init__(self, class_filters):
         """
-        You are required to specify base class constraints to the constructor,
-        like this [QLayout, QWidget]. It helps performance by reducing the search
+        You are obliged to specify the classes of object the search should be
+        limited to. This helps performance by reducing the search
         space, and allows the first 3 levels in a 5-deep nested loop to be run
         just once - i.e. at construction time.
-        :param base_class_filters: The base classes you stipulate.
+        :param class_filters: A list of classes. E.g. (QWidget, QLayout)
         """
-        if len(base_class_filters) == 0:
-            raise RuntimeError('You must provide at least one base class')
-        self._objects = self._assemble_available_objects(base_class_filters)
+        if len(class_filters) == 0:
+            raise RuntimeError('You must provide at least one class')
+        self._available_objects = self._assemble_available_objects(
+            class_filters)
 
     def find_objects(self, reference_name):
         """
-        See example in class doc string.
+        The main API search function. See example in class doc string.
 
-        Finds any objects that were instantiated at the time the constructor was
-        called, that passed the constructor's base class filter criteria, and
-        which are referenced (somewhere in your program) by a variable
+        Finds the objects that were instantiated at the time the constructor
+        was called, and which passed the constructor's class filter criteria,
+        and which are referenced (somewhere in your program) by a variable
         (or attribute) name of the name you have specified.
         :param reference_name: Name of variable or attribute to search for.
-        :return: A list of objects that qualify.
+        :return: A list of objects that satisfy the search.
         """
-        found = self._filtered_on_reference_name(reference_name)
-        return found
+        return [obj for obj in self._available_objects if
+                self._is_referenced_by_name(obj, reference_name)]
 
-    def _assemble_available_objects(self, base_class_filters):
-        objects = self._get_all_objects_that_have_an_id()
-        objects = self._filtered_on_base_class(objects, base_class_filters)
-        return objects
+    #-------------------------------------------------------------------------
+    # Private below
+    #-------------------------------------------------------------------------
 
-    def _get_all_objects_that_have_an_id(self):
-        # we only harvest those with id so that we can detect duplicates thus.
-        gc.collect()
-        first_tier_objs = gc.get_objects()
-        all_objects_by_id = {}
+    def _assemble_available_objects(self, class_filters):
+        """
+        Provides a list of all objects known to the garbage collector that
+        belong to the classes cited. (Or their subclasses).
+        :param class_filters: The classes you wish to qualify.
+        (QWidget, QLayout).
+        :return: A sequence of objects.
+        """
+        all = self._get_all_objects()
+        filtered = [obj for obj in all if \
+                    self._belongs_to_one_of_these_classes(obj, class_filters)]
+        return filtered
+
+    def _get_all_objects(self):
+        """
+        Provides a sequence of all the objects being tracked by the garbage
+        collector at this time.
+        :return: The objects.
+        """
+        gc.collect() # Refreshes
+        first_tier_objs = gc.get_objects()# These are always container objects.
+
+        # Now add in the objects referred to inside the containers.
+        all_objects_by_id = {} # Avoid duplicates.
         for first_tier_obj in first_tier_objs:
             obj_id = id(first_tier_obj)
-            if obj_id is not None:
-                all_objects_by_id[obj_id] = first_tier_obj
+            all_objects_by_id[obj_id] = first_tier_obj
             self._add_second_tier_objects(first_tier_obj, all_objects_by_id)
         return all_objects_by_id.values()
 
     def _add_second_tier_objects(self, first_tier_obj, all_objects_by_id):
+        """
+        Augments the all_objects_by_id dictionary provided, with entries for
+        the objects referred to by the given first tier object.
+        :param first_tier_obj:
+        :param all_objects_by_id: The dictionary to update.
+        :return:
+        """
         second_tier_objs = gc.get_referents(first_tier_obj)
         for second_tier_obj in second_tier_objs:
             obj_id = id(second_tier_obj)
-            if obj_id is None:
-                continue
             all_objects_by_id[obj_id] = second_tier_obj
 
-    def _filtered_on_base_class(self, objects, base_class_filters):
-        return [obj for obj in objects if self._is_correct_base_class(obj, base_class_filters)]
+    def _filtered_on_class(self, objects, class_filters):
+        """
+        Returns a copy of the list of objects provided, from which have
+        been removed, all objects that do not belong to one of the classes
+        cited by the class filters. (Or their subclasses).
+        :param objects: Input objects.
+        :param class_filters: Qualifying classes.
+        :return: Output objects.
+        """
+        return [obj for obj in objects if
+                self._belongs_to_one_of_these_classes(obj, class_filters)]
 
-    def _is_correct_base_class(self, obj, qtypes):
-        for qtype in qtypes:
-            if isinstance(obj, qtype):
+    def _belongs_to_one_of_these_classes(self, obj, classes):
+        """
+        Returns true if the given object belongs to one of the classes cited
+        in the list of classes provided.
+        :param obj: The object to test.
+        :param classes: The qualifying classes.
+        :return: Boolean.
+        """
+        for cls in classes:
+            if isinstance(obj, cls):
                 return True
         return False
 
-    def _filtered_on_reference_name(self, name):
-        return [obj for obj in self._objects if self._is_referenced_by_name(obj, name)]
-
     def _is_referenced_by_name(self, obj, name):
+        """
+        Does a reference exist in the program that has the given name, and that
+        points to the given object of interest?
+        :param obj: The object of interest.
+        :param name: The name the reference must have.
+        :return: Boolean.
+        """
         referrers = gc.get_referrers(obj)
-        # for local vars we look only in referrers that are frames
+
+        # Is there a local variable called <name> that refers to the object?
+        # We answer by looking at referrers to the object that are of type
+        # frame.
+        if self._is_referenced_by_a_stack_frame_name(referrers, obj, name):
+            return True
+        return False
+
+    def _is_referenced_by_a_stack_frame_name(self, referrers, obj, name):
+        """
+        Is there a reference among the given referrers, that is a stack frame,
+        which contains a local variable of the given name, which points to
+        the object of interest?
+        :param referrers: The references to scan.
+        :param obj: The object of interest.
+        :param name: The name the reference must have.
+        :return: Boolean.
+        """
         frame_referrers = [ref for ref in referrers if self._is_a_frame(ref)]
         for frame in frame_referrers:
-            if self._frame_has_local_var_of_this_name(frame, name):
-                points_to = self._fetch_local(frame, name)
-                if points_to == obj:
+            if name in frame.f_locals:
+                object_referred_to = frame.f_locals[name]
+                if object_referred_to == obj:
                     return True
         return False
 
-    def _frame_has_local_var_of_this_name(self, frame, name):
-        local_variable_names = frame.f_locals.keys()
-        return name in local_variable_names
-
-    def _fetch_local(self, frame, name):
-        return frame.f_locals[name]
-
     def _is_a_frame(self, obj):
-        cls = obj.__class__
-        class_name = obj.__class__.__name__
-        return class_name == 'frame'
+        """
+        Does the given object have the type 'frame'?
+        :param obj: The object of interest.
+        :return: Boolean.
+        """
+        return  obj.__class__.__name__ == 'frame'

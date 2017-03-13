@@ -9,25 +9,15 @@ o  Restart with new design
         *  Separate filelocation
         *  Repair input splitter
         o  Resume parent maker
-                    o  parent maker
-                        *  recognizer
-                        *  qword type
-                            *  basics
-                            *  needs a qapplication to prevent warnings
-                        *  keyword type
-                        o  discovery type
-                            *  experiment to get search that works
-                                *  finding local vars as refs:
-                            o  inject base classes for filter
-                            o  refactor as constructor that keeps table
-                            o  finding attribs on instantiated objects as refs
-
-
-                            o  design how to take hit only once
-                        o  how not break python interpreter on git lifecycle
-                        o  document parentmaker better
+            o  parent maker
+                o  object finder
+                    o  local vars
+                    o  work out what other types to find
+                    o  work out how to tdd
+                    o  tdd other types
+                o  better doc in parent maker
         o  more use of assert?
-        o  80 columns and triple q strings?
+        o  80 columns and '\n'.join... idiom
         o  example formats to error messages
         o  ditch _ classes convention
         o  add strings to labels, buttons and group boxes
