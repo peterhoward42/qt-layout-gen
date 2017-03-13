@@ -4,82 +4,58 @@ from collections import defaultdict
 from PySide.QtGui import QWidget, QLayout
 
 def find_qobject_instances(class_name, reference_name):
+    objects = _get_all_objects_that_have_an_id()
+    objects = _reduce_to_qwidgets_or_qlayouts(objects)
+    objects = _reduce_to_those_referenced_by_given_name(objects, reference_name)
+    return objects
+
+def _get_all_objects_that_have_an_id():
+    # we only harvest those with id so that we can detect duplicates thus.
     gc.collect()
-    objects = gc.get_objects()
-    matching = []
-    for obj in objects:
-        class_name = _get_class_name_if_possible(obj)
-        if class_name is None:
+    first_tier_objs = gc.get_objects()
+    all_objects_by_id = {}
+    for first_tier_obj in first_tier_objs:
+        obj_id = id(first_tier_obj)
+        if obj_id is not None:
+            all_objects_by_id[obj_id] = first_tier_obj
+        _add_second_tier_objects(first_tier_obj, all_objects_by_id)
+    return all_objects_by_id.values()
+
+def _add_second_tier_objects(first_tier_obj, all_objects_by_id):
+    second_tier_objs = gc.get_referents(first_tier_obj)
+    for second_tier_obj in second_tier_objs:
+        obj_id = id(second_tier_obj)
+        if obj_id is None:
             continue
-        if class_name.startswith('Q'):
-            if class_name in  ['QMetaObject', 'Queue', 'Quitter', 'QApplication']:
-                continue
-        if not isinstance(obj, QWidget) and not isinstance(obj, QLayout):
-            continue
-        referrers = gc.get_referrers(obj)
-        for referrer in referrers:
-            if referrer.__name__ == reference_name:
-                matching.append(object)
-    return matching
+        all_objects_by_id[obj_id] = second_tier_obj
 
+def _reduce_to_qwidgets_or_qlayouts(objects):
+    return [obj for obj in objects if _is_qtype(obj, [QWidget, QLayout])]
 
+def _is_qtype(obj, qtypes):
+    for qtype in qtypes:
+        if isinstance(obj, qtype):
+            return True
+    return False
 
-class ObjectFinder(object):
+def _reduce_to_those_referenced_by_given_name(objects, name):
+    return [obj for obj in objects if _is_referenced_by_name(obj, name)]
 
-    def __init__(self):
-        self.objects_by_class = defaultdict(list)
+def _is_referenced_by_name(obj, name):
+    referrers = gc.get_referrers(obj)
+    names = _names_of(referrers)
+    return name in names
 
-        gc.collect()
-        objects = gc.get_objects()
-        for obj in objects:
-            class_name = self._get_class_name_if_possible(obj)
-            if class_name is None:
-                continue
-            self.objects_by_class[class_name].append(obj)
+def _names_of(objects):
+    names = [_get_name_of(obj) for obj in objects]
+    names = [name for name in names if name is not None]
+    return names
 
-    def find(self, class_name, reference_name):
-        # returns info hat contains the objects that satisfy the conditions,
-        objects = self.objects_by_class.get(class_name, [])
-        objects = self._filter_on_reference_names(objects, reference_name)
-        return objects
-
-    def _filter_on_reference_names(self, objects, reference_name):
-        found = []
-        for obj in objects:
-            # beware our look up table will show up as a referrer.
-            referrers = gc.get_referrers(obj)
-            for referrer in referrers:
-                # lists seem to be the happy hunting ground
-                class_name = self._get_class_name_if_possible(referrer)
-                """
-                if class_name != 'list':
-                    continue
-                    """
-                try:
-                    if reference_name in referrer:
-                        found.append(obj)
-                        break # from referrer loop, we have a sufficient condition to return this outer loop obj, and don't want to double include it in the returned list
-                except TypeError as e: # not iterable like frame
-                    continue
-        return found
-
-    def _get_class_name_if_possible(self, obj):
-        cls = getattr(obj, '__class__', None)
-        if cls is None:
-            return None
-        name = getattr(cls, '__name__', None)
-        if name is None:
-            return None
-        return name
-
-def _get_class_name_if_possible(obj):
-    cls = getattr(obj, '__class__', None)
-    if cls is None:
-        return None
-    name = getattr(cls, '__name__', None)
-    if name is None:
-        return None
+def _get_name_of(obj):
+    name = getattr(obj, '__name__', None)
     return name
+
+
 
 
 # say in comments - hit in constructor

@@ -1,7 +1,10 @@
 from unittest import TestCase
-from PySide.QtGui import QLabel, QHBoxLayout, qApp, QApplication
+from PySide.QtGui import QLabel, QPushButton, qApp, QApplication
 
-from objectfinder import ObjectFinder, find_qobject_instances
+from objectfinder import find_qobject_instances
+
+class OtherThing(object):
+    pass
 
 class TestObjectFinder(TestCase):
 
@@ -18,6 +21,8 @@ class TestObjectFinder(TestCase):
 
     def test_search_for_objects(self):
         my_label = QLabel()
+        my_button = QPushButton()
+        my_other_thing = OtherThing()
         found_objects = find_qobject_instances('QLabel', 'my_label')
 
         self.assertEquals(len(found_objects), 1)
