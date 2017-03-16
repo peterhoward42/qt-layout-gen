@@ -84,3 +84,4 @@ def _find_q_object(record):
     # if one use that object
     # if zero complain about not found
     # if > 1 complain about ambiguity
+    pass

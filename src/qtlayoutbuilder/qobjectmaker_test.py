@@ -17,8 +17,7 @@ class TestParentMaker(TestCase):
     @classmethod
     def setUpClass(cls):
         """
-        We need to create (or reuse) a QApplication before we instantiate
-        any QWidget objects - or Qt emits warnings to the console.
+        Needs QApplication context.
         :return: None
         """
         super(TestParentMaker, cls).setUpClass()
