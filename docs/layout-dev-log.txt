@@ -10,11 +10,8 @@ o  Restart with new design
         *  Repair input splitter
         o  Resume parent maker
             o  parent maker
-                o  object finder
-                    o  local vars
-                    o  work out what other types to find
-                    o  work out how to tdd
-                    o  tdd other types
+                *  object finder
+                o  what next
                 o  better doc in parent maker
         o  more use of assert?
         o  80 columns and '\n'.join... idiom
