@@ -16,7 +16,8 @@ o  Restart with new design
                         *  misc.xml
                         *  pycharm-qt.xml
                     *  delete them and sync
-                    o  now modify .ignore and sync
+                    *  now modify .ignore and sync
+                    *  prove gone in remote web look
                     o  now can reinstate
                 o  what next
                 o  better doc in parent maker

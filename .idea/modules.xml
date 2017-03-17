@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/pycharm-qt.iml" filepath="$PROJECT_DIR$/.idea/pycharm-qt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/qt-layout-gen.iml" filepath="$PROJECT_DIR$/.idea/qt-layout-gen.iml" />
     </modules>
   </component>
 </project>
