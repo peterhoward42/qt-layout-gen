@@ -15,7 +15,7 @@ o  Restart with new design
                     *  note files that are causing problem
                         *  misc.xml
                         *  pycharm-qt.xml
-                    o  delete them and sync
+                    *  delete them and sync
                     o  now modify .ignore and sync
                     o  now can reinstate
                 o  what next

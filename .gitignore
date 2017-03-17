@@ -108,7 +108,7 @@ PyCharm
 .idea/**/tasks.xml
 .idea/dictionaries
 .idea/misc.xml
-.idea/pycharm-q.iml
+.idea/pycharm-qt.iml
 .idea/**/*.iml
 
 # Sensitive or high-churn files:
