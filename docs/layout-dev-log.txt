@@ -11,6 +11,13 @@ o  Restart with new design
         o  Resume parent maker
             o  parent maker
                 *  object finder
+                o  clear up env being blatted
+                    *  note files that are causing problem
+                        *  misc.xml
+                        *  pycharm-qt.xml
+                    o  delete them and sync
+                    o  now modify .ignore and sync
+                    o  now can reinstate
                 o  what next
                 o  better doc in parent maker
         o  more use of assert?
