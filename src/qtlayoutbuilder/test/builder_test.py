@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from qtlayoutbuilder.lib.buildlayouts import _reconcile_child_to_object, _build_and_register_record
+from qtlayoutbuilder.lib.builder import _reconcile_child_to_object, _build_and_register_record
 from qtlayoutbuilder.lib.inputsplitter import _split_text_into_records, _InputTextRecord
 from qtlayoutbuilder.lib.recordlookup import _RecordLookup
 
