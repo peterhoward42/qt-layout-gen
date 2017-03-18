@@ -13,9 +13,12 @@ o  Restart with new design
             *  Decide how to factor into api and engine
             *  Create skel from existing
             *  Rewrite
-                o  Digress onto childadder
-            o  TDD builder made up
-            o  Shorten var names
+                *  Digress onto childadder
+            *  Builder code complete
+            o  Check in
+            o  Builder TDD
+                o  Can we do tests for utilities in builder?
+            o  Tidy up code
 
             o  Make sure objects not reused when shouldn't be
         o  more use of assert?
