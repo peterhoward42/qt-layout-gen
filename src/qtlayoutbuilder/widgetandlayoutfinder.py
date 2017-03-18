@@ -30,16 +30,17 @@ class WidgetAndLayoutFinder(object):
         The query function.
         :param particular_class: The specific class you want to find
         instances of. E.g. MyAmazingLayoutClass
-        :param reference_name: The required variable or attribute name.
+        :param reference_name: The required variable or attribute name. E.g.
+        'my_amazing_layout'
         :return: A sequence of matching objects.
         """
 
         # First find all the QLayouts and QWidgets that are referenced by
         # that name.
-        found_objects = self._object_finder.find_objects(reference_name)
+        found = self._object_finder.find_objects(reference_name)
 
         # Now reduce to only those of the specified particular class.
-        filtered = [obj for obj in found_objects if
-                    isinstance(obj, particular_class)]
+        filtered = [obj for obj in found if
+                    obj.__class__.__name__ ==  particular_class]
 
         return filtered

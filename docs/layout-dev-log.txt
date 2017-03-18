@@ -11,21 +11,14 @@ o  Restart with new design
         o  Resume parent maker
             o  parent maker
                 *  object maker
-                o  object finder
-                    o  tdd
-                        *  digress to refactor object finder
-                            *  should be generic object finder and qobject finder
-                                *  consider generalising object finder first
-                                *  change comments first in object finder
-                                *  redo tests
-                            *  now write layout/widget finders
-                        o  resume tdd in qobjectmaker for find case
-                o  better doc in parent maker
+                *  object finder
+                o  resume parent maker
         o  more use of assert?
         o  80 columns and '\n'.join... idiom
         o  example formats to error messages
         o  ditch _ classes convention
         o  add strings to labels, buttons and group boxes
+        o  push most stuff into lib and lib test or similar
         o  api
         o  layout maker (ditch class method too nasty) - do real work in constructor!!!
         o  Resume main flow

@@ -78,33 +78,36 @@ def _instantiate_q_object(record):
         (class_name), record.file_location)
 
 
-def _find_q_object(record, object_finder):
+def _find_q_object(record, widget_and_layout_finder):
     """
-    Tries to find an already-instantiated object that is derived from
-    QWidget or QLayout, and that has
-    Raises LayoutError if the instantiation fails, or if the object thus
-    created in not a QWidget or QLayout.
-    :param record: The InputTextRecord defining what is required.
+    Tries to find an already-instantiated QWidget or QLayout that is of
+    the class specified in record.class_required, and which is referenced by a
+    variable or attribute having the name specified in record.parent_name.
+    :param record: The InputTextRecord providing the search mandate.
+    :param widget_and_layout_finder: A pre-initialised WidgetAndLayoutFinder.
     :return: QObject
     """
 
-    fart come back to here once object finder is rationalised
+    cls_name = record.class_required
+    ref_name = record.parent_name
 
+    found = widget_and_layout_finder.find(cls_name, ref_name)
 
-    found_objects = object_finder.find_objects(record.parent_name)
-    if len(found_objects) == 0:
+    # Object to nothing found, or duplicates found.
+    if len(found) == 0:
         raise LayoutError(
             '\n'.join([
                 'Cannot find any objects of class: <%s>,',
                 'that are referenced by a variable called: <%s>.',
                 ]) %
-            (record.class_required, record.parent_name), record.file_location)
-    if len(found_objects) > 1:
+            (cls_name, ref_name), record.file_location)
+    if len(found) > 1:
         raise LayoutError(
             '\n'.join([
                 'Ambiguity Problem: Found more than one objects of class: <%s>,',
                 'that is referenced by a variable called: <%s>.',
             ]) %
-            (record.class_required, record.parent_name), record.file_location)
-    # When it works...
-    return found_objects[0]
+            (cls_name, ref_name), record.file_location)
+
+    # All is well
+    return found[0]
