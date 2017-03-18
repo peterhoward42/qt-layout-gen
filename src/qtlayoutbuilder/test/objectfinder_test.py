@@ -1,8 +1,6 @@
 from unittest import TestCase
-from PySide.QtGui import QLabel, QPushButton, QWidget, \
-    QLayout, qApp, QApplication, QHBoxLayout
 
-from objectfinder import ObjectFinder
+from qtlayoutbuilder.lib.objectfinder import ObjectFinder
 
 class Banana(object):
     """We look for instances of Bananas."""

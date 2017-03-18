@@ -1,7 +1,9 @@
 from unittest import TestCase
+
 from PySide.QtGui import QLabel, QHBoxLayout, qApp, QApplication
 
-from widgetandlayoutfinder import WidgetAndLayoutFinder
+from qtlayoutbuilder.lib.widgetandlayoutfinder import WidgetAndLayoutFinder
+
 
 class HasBox(object):
     """ The tests search for the QHBoxLayout inside instances of these. """

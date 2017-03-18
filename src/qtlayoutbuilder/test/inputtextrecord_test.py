@@ -1,9 +1,9 @@
 from unittest import TestCase
 
-from inputtextrecord import InputTextRecord
-from filelocation import FileLocation
-from layouterror import LayoutError
-import keywords
+import qtlayoutbuilder.lib.keywords
+from qtlayoutbuilder.lib.filelocation import FileLocation
+from qtlayoutbuilder.lib.inputtextrecord import InputTextRecord
+from qtlayoutbuilder.lib.layouterror import LayoutError
 
 class TestInputTextRecord(TestCase):
 
@@ -64,12 +64,12 @@ class TestInputTextRecord(TestCase):
                 'this left hand side: <DUFF_KEYWORD:my_box>' in msg)
 
         # Correctly recognizes keyword forms
-        for keyword in keywords.WORDS:
+        for keyword in qtlayoutbuilder.lib.keywords.WORDS:
             record = InputTextRecord(self.FILE_LOCATION)
             lhs = '%s:my_thing' % keyword
             record._populate_from_lhs_word(lhs)
             self.assertEquals(record.make_or_find, record.INSTANTIATE)
-            self.assertEquals(record.class_required, keywords.class_required_for(keyword))
+            self.assertEquals(record.class_required, qtlayoutbuilder.lib.keywords.class_required_for(keyword))
             self.assertEquals(record.parent_name, 'my_thing')
 
         # Correctly recognizes Find form

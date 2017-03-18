@@ -2,15 +2,14 @@
 This module provides unit tests for the parentmaker module.
 """
 from unittest import TestCase
+
 from PySide.QtGui import QLabel, QHBoxLayout, qApp, QApplication, QLayout
 
-import os.path
-
-from widgetandlayoutfinder import WidgetAndLayoutFinder
-import qobjectmaker
-from layouterror import LayoutError
-from filelocation import FileLocation
-from inputtextrecord import InputTextRecord
+from qtlayoutbuilder.lib import qobjectmaker
+from qtlayoutbuilder.lib.filelocation import FileLocation
+from qtlayoutbuilder.lib.inputtextrecord import InputTextRecord
+from qtlayoutbuilder.lib.layouterror import LayoutError
+from qtlayoutbuilder.lib.widgetandlayoutfinder import WidgetAndLayoutFinder
 
 
 class TestQObjectMaker(TestCase):

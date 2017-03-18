@@ -8,11 +8,12 @@ o  Restart with new design
         *  Separate InputTextRecord
         *  Separate filelocation
         *  Repair input splitter
-        o  Resume parent maker
-            o  parent maker
-                *  object maker
-                *  object finder
-                o  resume parent maker
+        *  Finish parent maker
+        o  Layouts made
+            o  Decide how to factor into api and engine
+            o  Create skel from existing
+            o  Convert to use exceptions not error codes
+            o  TDD up
         o  more use of assert?
         o  80 columns and '\n'.join... idiom
         o  example formats to error messages

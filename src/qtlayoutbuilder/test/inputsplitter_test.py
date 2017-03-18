@@ -1,12 +1,10 @@
+import os.path
 from unittest import TestCase
 
-import os.path
-
-# noinspection PyProtectedMember
-from inputsplitter import _split_big_string_into_records, \
+from qtlayoutbuilder.lib.filelocation import FileLocation
+from qtlayoutbuilder.lib.inputsplitter import _split_big_string_into_records, \
     _split_file_into_records, _split_all_files_in_directory_into_records
-from filelocation import FileLocation
-from layouterror import LayoutError
+from qtlayoutbuilder.lib.layouterror import LayoutError
 
 
 class TestInputSplitter(TestCase):

@@ -1,13 +1,7 @@
 from unittest import TestCase
 
-import os.path
-
-# noinspection PyProtectedMember
-from recordlookup import _RecordLookup
-
-
-# noinspection PyProtectedMember
-from inputsplitter import _split_text_into_records
+from qtlayoutbuilder.lib.inputsplitter import _split_text_into_records
+from qtlayoutbuilder.lib.recordlookup import _RecordLookup
 
 
 class TestRecordLookup(TestCase):

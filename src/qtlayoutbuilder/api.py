@@ -2,8 +2,9 @@
 This module exposes the public API to the layout builder.
 """
 
-from inputsplitter import _split_all_files_in_directory_into_records, _split_text_into_records
-from layoutsmade import LayoutsMade
+from qtlayoutbuilder.lib.inputsplitter import _split_all_files_in_directory_into_records, _split_text_into_records
+from qtlayoutbuilder.lib.layoutsmade import LayoutsMade
+
 
 def build_layouts_from_dir(input_directory_path):
     """

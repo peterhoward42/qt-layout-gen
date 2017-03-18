@@ -2,7 +2,7 @@ from unittest import TestCase
 
 import os.path
 
-from api import build_layouts_from_dir
+from qtlayoutbuilder.api import build_layouts_from_dir
 
 
 class TestApi(TestCase):

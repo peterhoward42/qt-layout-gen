@@ -1,15 +1,8 @@
 from unittest import TestCase
 
-import os.path
-
-from PySide.QtGui import QLabel
-
-from buildlayouts import _reconcile_child_to_object, _build_and_register_record
-# noinspection PyProtectedMember
-# noinspection PyProtectedMember
-from inputsplitter import _split_text_into_records, _InputTextRecord
-# noinspection PyProtectedMember
-from recordlookup import _RecordLookup
+from qtlayoutbuilder.lib.buildlayouts import _reconcile_child_to_object, _build_and_register_record
+from qtlayoutbuilder.lib.inputsplitter import _split_text_into_records, _InputTextRecord
+from qtlayoutbuilder.lib.recordlookup import _RecordLookup
 
 
 class TestBuildLayouts(TestCase):

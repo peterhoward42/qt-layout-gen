@@ -2,7 +2,7 @@ from unittest import TestCase
 
 from PySide.QtGui import QHBoxLayout
 
-from keywords import starts_with_keyword, mark_all_keywords_found, instantiate_qobject_for
+from qtlayoutbuilder.lib.keywords import starts_with_keyword, mark_all_keywords_found, instantiate_qobject_for
 
 
 class TestKeywords(TestCase):

@@ -1,10 +1,9 @@
-from unittest import TestCase
-
 import os.path
 from tempfile import mkdtemp
+from unittest import TestCase
 
-from directorysearch import find_all_files
-from layouterror import LayoutError
+from qtlayoutbuilder.lib.directorysearch import find_all_files
+from qtlayoutbuilder.lib.layouterror import LayoutError
 
 _TOP_LEVEL_DIR = os.path.abspath(
     os.path.join(__file__,
