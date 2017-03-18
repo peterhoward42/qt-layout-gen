@@ -2,10 +2,11 @@
 This module provides unit tests for the parentmaker module.
 """
 from unittest import TestCase
-from PySide.QtGui import QLabel, QHBoxLayout, qApp, QApplication
+from PySide.QtGui import QLabel, QHBoxLayout, qApp, QApplication, QWidget, QLayout
 
 import os.path
 
+from objectfinder import ObjectFinder
 from qobjectmaker import make_from_record
 from layouterror import LayoutError
 from filelocation import FileLocation
@@ -16,10 +17,7 @@ class TestParentMaker(TestCase):
 
     @classmethod
     def setUpClass(cls):
-        """
-        Needs QApplication context.
-        :return: None
-        """
+        # Needs QApplication context.
         super(TestParentMaker, cls).setUpClass()
         if qApp is None:
             QApplication([])
@@ -27,14 +25,17 @@ class TestParentMaker(TestCase):
     DUMMY_FILE_LOC = FileLocation('pretend filename', 1)
 
     def test_instantiate_q_object(self):
-        # Prove out the operation of this syntax variant 'HBOX:my_box a b c'.
+        # Prove out the operation of these syntax variants:
+        #   'QHBoxLayout:my_box a b c'.
+        #   'HBOX:my_box a b c'.
 
         # Suitable error when the class type is not recognized by python.
         words = ['QThisWillNotExist:my_label', 'foo']
         record = InputTextRecord.make_from_all_words(
             words, self.DUMMY_FILE_LOC)
+        object_finder = None
         try:
-            q_object, parent_name = make_from_record(record)
+            q_object, parent_name = make_from_record(record, object_finder)
         except LayoutError as e:
             msg = str(e)
             self.assertTrue("Python cannot make any sense of this word" in msg)
@@ -57,7 +58,8 @@ class TestParentMaker(TestCase):
         # Then overwrite the class name inside the record.
         record.class_required = '__doc__'
         try:
-            q_object, parent_name = make_from_record(record)
+            object_finder = None
+            q_object, parent_name = make_from_record(record, object_finder)
         except LayoutError as e:
             msg = str(e)
             self.assertTrue("Cannot instantiate one of these: <__doc__>" in msg)
@@ -74,7 +76,8 @@ class TestParentMaker(TestCase):
         record = InputTextRecord.make_from_all_words(
             words, self.DUMMY_FILE_LOC)
         try:
-            q_object, parent_name = make_from_record(record)
+            object_finder = None
+            q_object, parent_name = make_from_record(record, object_finder)
         except LayoutError as e:
             msg = str(e)
             self.assertTrue("This class name: <QColor>" in msg)
@@ -85,7 +88,8 @@ class TestParentMaker(TestCase):
         words = ['QLabel:my_label', 'foo']
         record = InputTextRecord.make_from_all_words\
             (words, self.DUMMY_FILE_LOC)
-        q_object, parent_name = make_from_record(record)
+        object_finder = None
+        q_object, parent_name = make_from_record(record, object_finder)
         class_name = q_object.__class__.__name__
         self.assertTrue(isinstance(q_object, QLabel))
         self.assertEquals(parent_name, 'my_label')
@@ -94,7 +98,66 @@ class TestParentMaker(TestCase):
         words = ['HBOX:my_box', 'foo']
         record = InputTextRecord.make_from_all_words \
             (words, self.DUMMY_FILE_LOC)
-        q_object, parent_name = make_from_record(record)
+        object_finder = None
+        q_object, parent_name = make_from_record(record, object_finder)
         class_name = q_object.__class__.__name__
         self.assertTrue(isinstance(q_object, QHBoxLayout))
         self.assertEquals(parent_name, 'my_box')
+
+    def test_find_q_object(self):
+        # Prove out the operation of this syntax variant:
+        #   'Find:CustomLayout:my_page a b c'.
+
+        # Correct error handling when nothing found.
+        words = ['Find:CustomLayout:my_page', 'a', 'b', 'c']
+        record = InputTextRecord.make_from_all_words(
+            words, self.DUMMY_FILE_LOC)
+        object_finder = ObjectFinder([QWidget, QLayout])
+        try:
+            q_object, parent_name = make_from_record(record, object_finder)
+        except LayoutError as e:
+            msg = str(e)
+            self.assertTrue(
+                'Cannot find any objects of class: <CustomLayout>'
+                in msg)
+            self.assertTrue(
+                'that are referenced by a variable called: <my_page>'
+                in msg)
+
+        # Correct error handling when duplicates found.
+        words = ['Find:CustomLayout:my_page', 'a', 'b', 'c']
+        record = InputTextRecord.make_from_all_words(
+            words, self.DUMMY_FILE_LOC)
+        has_target_object_in_a = HasTargetIn()
+        has_target_object_in_b = HasTargetIn()
+        object_finder = ObjectFinder([QWidget, QLayout])
+        try:
+            q_object, parent_name = make_from_record(record, object_finder)
+        except LayoutError as e:
+            msg = str(e)
+            self.assertTrue(
+                'Ambiguity Problem: Found more than one objects of class: <CustomLayout>'
+                in msg)
+            self.assertTrue(
+                'that is referenced by a variable called: <my_page>'
+                in msg)
+
+        # Finds the target QObject when it should.
+        words = ['Find:CustomLayout:my_solitary_page', 'a', 'b', 'c']
+        record = InputTextRecord.make_from_all_words(
+            words, self.DUMMY_FILE_LOC)
+        my_solitary_page = CustomLayout()
+        object_finder = ObjectFinder([QWidget, QLayout])
+        q_object, parent_name = make_from_record(record, object_finder)
+        self.assertEquals(parent_name, 'my_solitary_page')
+        self.assertEquals(q_object.__class__.__name__, 'CustomLayout')
+
+class CustomLayout(QLayout):
+    # A custom QLayout-derived class we can search for instances of.
+    pass
+
+class HasTargetIn(QLayout):
+    # A thing we can instantiate that has a member attribute, of our custom
+    # QLayout class, pointed to by our target attribute name.
+    def __init__(self):
+        self.my_page = CustomLayout()

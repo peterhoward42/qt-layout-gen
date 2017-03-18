@@ -1,13 +1,13 @@
 from unittest import TestCase
 
 from inputtextrecord import InputTextRecord
-from inputsplitter import _FileLocation
+from filelocation import FileLocation
 from layouterror import LayoutError
 import keywords
 
 class TestInputTextRecord(TestCase):
 
-    FILE_LOCATION = _FileLocation('dummy filename', 1)
+    FILE_LOCATION = FileLocation('dummy filename', 1)
 
     def test_get_segments_of_lhs_word(self):
 
@@ -68,7 +68,7 @@ class TestInputTextRecord(TestCase):
             record = InputTextRecord(self.FILE_LOCATION)
             lhs = '%s:my_thing' % keyword
             record._populate_from_lhs_word(lhs)
-            self.assertEquals(record.instantiate_or_find_existing, record.INSTANTIATE)
+            self.assertEquals(record.make_or_find, record.INSTANTIATE)
             self.assertEquals(record.class_required, keywords.class_required_for(keyword))
             self.assertEquals(record.parent_name, 'my_thing')
 
@@ -76,7 +76,7 @@ class TestInputTextRecord(TestCase):
         record = InputTextRecord(self.FILE_LOCATION)
         lhs = 'Find:MyCustomClass:custom_a'
         record._populate_from_lhs_word(lhs)
-        self.assertEquals(record.instantiate_or_find_existing, record.FIND)
+        self.assertEquals(record.make_or_find, record.FIND)
         self.assertEquals(record.class_required, 'MyCustomClass')
         self.assertEquals(record.parent_name, 'custom_a')
 
@@ -84,7 +84,7 @@ class TestInputTextRecord(TestCase):
         record = InputTextRecord(self.FILE_LOCATION)
         lhs = 'QLabel:my_label'
         record._populate_from_lhs_word(lhs)
-        self.assertEquals(record.instantiate_or_find_existing, record.INSTANTIATE)
+        self.assertEquals(record.make_or_find, record.INSTANTIATE)
         self.assertEquals(record.class_required, 'QLabel')
         self.assertEquals(record.parent_name, 'my_label')
 

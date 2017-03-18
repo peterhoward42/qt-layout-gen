@@ -10,16 +10,16 @@ o  Restart with new design
         *  Repair input splitter
         o  Resume parent maker
             o  parent maker
-                *  object finder
-                o  clear up env being blatted
-                    *  note files that are causing problem
-                        *  misc.xml
-                        *  pycharm-qt.xml
-                    *  delete them and sync
-                    *  now modify .ignore and sync
-                    *  prove gone in remote web look
-                    o  now can reinstate
-                o  what next
+                *  object maker
+                o  object finder
+                    o  tdd
+                        *  digress to refactor object finder
+                            *  should be generic object finder and qobject finder
+                                *  consider generalising object finder first
+                                *  change comments first in object finder
+                                *  redo tests
+                            *  now write layout/widget finders
+                        o  resume tdd in qobjectmaker for find case
                 o  better doc in parent maker
         o  more use of assert?
         o  80 columns and '\n'.join... idiom

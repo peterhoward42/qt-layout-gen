@@ -1,36 +1,37 @@
 """
-This module is responsible for instantiating (or finding) QObjects, like
-QHBoxLayout, or QLabel - taking its instructions from an InputTextRecord.
+This module is responsible for instantiating (or finding previously
+instantiated) QObjects, like QHBoxLayout, or QLabel - taking its mandate from
+an InputTextRecord.
 """
 
 from exceptions import NotImplementedError
 
 from PySide.QtGui import *  # for the benefit of _make_qtype():
 
-import keywords
 from layouterror import LayoutError
 from inputsplitter import InputTextRecord
 
 
-def make_from_record(record):
+def make_from_record(record, object_finder):
     """
     Entry point for the QObject-making operation. It returns the QObject and
     parent name that has been extracted from the record. E.g. a QHBoxLayout
     object, and 'my_page'.
     :param record: The InputTextRecord to make the QObject parent for.
+    :param object_finder: You must provide an initialised ObjectFinder.
     :return: (QObject, name)
     :raises LayoutError
     """
 
-    if record.instantiate_or_find_existing == InputTextRecord.INSTANTIATE:
-        q_object = _instantiate_q_object(record)
-        return q_object, record.parent_name
+    if record.make_or_find == InputTextRecord.INSTANTIATE:
+        return _instantiate_q_object(record), record.parent_name
     elif record.make_or_find == InputTextRecord.FIND:
-        q_object = _find_q_object(record)
-        return q_object, record.parent_name
+        return _find_q_object(record, object_finder), record.parent_name
     else:
         raise NotImplementedError('should never be reached.')
 
+#----------------------------------------------------------------------------
+# Private below
 
 def _instantiate_q_object(record):
     """
@@ -77,11 +78,33 @@ def _instantiate_q_object(record):
         (class_name), record.file_location)
 
 
-def _find_q_object(record):
-    # isolate class and name to look for
-    # ask introspection utility how many references there are to an object
-    # of the given type and with the given name
-    # if one use that object
-    # if zero complain about not found
-    # if > 1 complain about ambiguity
-    pass
+def _find_q_object(record, object_finder):
+    """
+    Tries to find an already-instantiated object that is derived from
+    QWidget or QLayout, and that has
+    Raises LayoutError if the instantiation fails, or if the object thus
+    created in not a QWidget or QLayout.
+    :param record: The InputTextRecord defining what is required.
+    :return: QObject
+    """
+
+    fart come back to here once object finder is rationalised
+
+
+    found_objects = object_finder.find_objects(record.parent_name)
+    if len(found_objects) == 0:
+        raise LayoutError(
+            '\n'.join([
+                'Cannot find any objects of class: <%s>,',
+                'that are referenced by a variable called: <%s>.',
+                ]) %
+            (record.class_required, record.parent_name), record.file_location)
+    if len(found_objects) > 1:
+        raise LayoutError(
+            '\n'.join([
+                'Ambiguity Problem: Found more than one objects of class: <%s>,',
+                'that is referenced by a variable called: <%s>.',
+            ]) %
+            (record.class_required, record.parent_name), record.file_location)
+    # When it works...
+    return found_objects[0]

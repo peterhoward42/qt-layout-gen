@@ -23,7 +23,7 @@ class InputTextRecord(object):
 
     def __init__(self, file_location):
         self.file_location = file_location  # a FileLocation
-        self.instantiate_or_find_existing = None  # INSTANTIATE | FIND
+        self.make_or_find = None  # INSTANTIATE | FIND
         self.class_required = None  # A string. E.g. 'QString', 'MyCustomClass'
         self.parent_name = None
         self.child_names = []
@@ -97,19 +97,19 @@ class InputTextRecord(object):
         type_field = segments[0]  # E.g. HBOX or QLabel or Find
 
         if keywords.is_a_keyword(type_field):
-            self.instantiate_or_find_existing = self.INSTANTIATE
+            self.make_or_find = self.INSTANTIATE
             self.class_required = keywords.class_required_for(type_field)
             self.parent_name = segments[1]
             return
 
         if (segments[0] == 'Find') and (len(segments) == 3):
-            self.instantiate_or_find_existing = self.FIND
+            self.make_or_find = self.FIND
             self.class_required = segments[1]
             self.parent_name = segments[2]
             return
 
         if segments[0].startswith('Q'):
-            self.instantiate_or_find_existing = self.INSTANTIATE
+            self.make_or_find = self.INSTANTIATE
             self.class_required = segments[0]
             self.parent_name = segments[1]
             return
