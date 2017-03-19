@@ -1,106 +1,117 @@
 from unittest import TestCase
 
-from qtlayoutbuilder.lib.builder import _reconcile_child_to_object, _build_and_register_record
-from qtlayoutbuilder.lib.inputsplitter import _split_text_into_records, _InputTextRecord
-from qtlayoutbuilder.lib.recordlookup import _RecordLookup
+from PySide.QtGui import QLabel, QPushButton, qApp, QApplication
+
+from qtlayoutbuilder.api.filelocation import MOCK_FILELOCATION
+from qtlayoutbuilder.api.layouterror import LayoutError
+from qtlayoutbuilder.api.layoutscreated import LayoutsCreated
+
+from qtlayoutbuilder.lib.builder import Builder
+from qtlayoutbuilder.lib.inputtextrecord import InputTextRecord
+from qtlayoutbuilder.lib.inputsplitter import _split_big_string_into_records
 
 
-class TestBuildLayouts(TestCase):
-    def test_reconcile_child_to_object_error_handling(self):
-        # Note that 'outer_box' calls for 'right_box' as a child.
-        records, err = _split_text_into_records(
+class TestBuilder(TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        # Needs QApplication context.
+        super(TestBuilder, cls).setUpClass()
+        if qApp is None:
+            QApplication([])
+
+    # Start with tests for the lower level utilities inside the module -
+    # providing a mocked environment.
+
+    def test_add_child_to_parent_error_handling(self):
+        # Add an unsupported combination.
+        builder = Builder(NO_RECORDS)
+        try:
+            builder._add_child_to_parent(
+                QLabel(), QPushButton(), _arbitrary_record())
+        except LayoutError as e:
+            msg = str(e)
+            self.assertTrue(
+                'The builder does not know how to add a: <QLabel>, to a:'
+                in msg)
+            self.assertTrue(
+                '<QLabel> as a child.'
+                in msg)
+            self.assertTrue(
+                'This combination is not supported.'
+                in msg)
+
+    def test_register_method_error_handling(self):
+        # Try to register a name that is already known.
+        builder = Builder(NO_RECORDS)
+        try:
+            mock_qobject = None
+            layouts_created = LayoutsCreated()
+            # Manually patch the LayoutsCreated to know about 'my_layout'.
+            layouts_created.layout_element_from_name['my_layout'] = None
+            layouts_created.source_file_location_from_name['my_layout'] = MOCK_FILELOCATION
+            builder._register('my_layout', mock_qobject, _arbitrary_record(), layouts_created)
+        except LayoutError as e:
+            msg = str(e)
+            self.assertTrue(
+                'You cannot use this name: <my_layout> again, because it'
+                in msg)
+            self.assertTrue(
+                'has already been used here: <no-such-file, at line -1>,'
+                in msg)
+
+    def test_register_method_does_register(self):
+        builder = Builder(NO_RECORDS)
+        qobject = QLabel()
+        layouts_created = LayoutsCreated()
+        builder._register('my_label', qobject, _arbitrary_record(), layouts_created)
+        self.assertEqual(
+            layouts_created.layout_element_from_name['my_label'], qobject)
+        self.assertEqual(
+            layouts_created.source_file_location_from_name['my_label'],
+            MOCK_FILELOCATION)
+
+    def test_assert_name_is_registered_error_handling(self):
+        builder = Builder(NO_RECORDS)
+        try:
+            mock_qobject = None
+            layouts_created = LayoutsCreated()
+            builder._assert_name_is_registered(
+                'my_layout', _arbitrary_record(), layouts_created)
+        except LayoutError as e:
+            msg = str(e)
+            self.assertTrue(
+                'You cannot use this name: <my_layout>, because it'
+                in msg)
+            self.assertTrue(
+                'is not defined anywhere in your input., (no-such-file, at line -1)'
+                in msg)
+
+    def test_assert_name_is_registered_when_the_name_is(self):
+        builder = Builder(NO_RECORDS)
+        layouts_created = LayoutsCreated()
+        # Manually patch the LayoutsCreated to know about 'my_layout'.
+        layouts_created.layout_element_from_name['my_layout'] = None
+        layouts_created.source_file_location_from_name['my_layout'] = MOCK_FILELOCATION
+        builder._assert_name_is_registered(
+                'my_layout', _arbitrary_record(), layouts_created)
+
+    def test_at_api_level(self):
+        my_button = QPushButton()
+        records = _split_big_string_into_records(
             """
-                HBOX:outer_box  left_box    right_box
-                VBOX:left_box   left_a      left_b
-                VBOX:right_box  right_a     right_b
+                HBOX:my_box my_label my_button
+                QLabel:my_label
+                Find:QButton:my_button
             """)
-        self.assertIsNone(err)
+        builder = Builder(records)
+        layouts_created = builder.build()
+        self.assertEqual(len(layouts_created.layout_element_from_name), 3)
 
-        # Provide a register that doesn't know about 'right_box'
-        register = {}
 
-        # Ask the reconciler to reconcile 'right_box' in the context of the
-        # appropriate text input record.
-        record_lookup = _RecordLookup()
-        err = record_lookup._populate(records)
-        self.assertIsNone(err)
-        outer_box_record = record_lookup.records['outer_box']
-        q_object, err = _reconcile_child_to_object('right_box', outer_box_record, register)
-        self.assertIsNotNone(err)
-        msg = err.format_as_single_string()
-        self.assertTrue('Nothing found in register for this child name: <right_box>' in msg)
-        self.assertTrue('defined at: <unused filename, at line -1>' in msg)
+NO_RECORDS = []
 
-    def test_reconcile_child_to_object_succeeding(self):
-        # Note that 'outer_box' calls for 'right_box' as a child.
-        records, err = _split_text_into_records(
-            """
-                HBOX:outer_box  left_box    right_box
-                VBOX:left_box   left_a      left_b
-                VBOX:right_box  right_a     right_b
-            """)
-        self.assertIsNone(err)
-
-        # Make a mock register that knows how to resolve 'outer_box', and assert that
-        # the child in the record that calls for it is satisfied thus.
-        mock_object = {}
-        register = {'right_box': mock_object}
-
-        # Ask the reconciler to reconcile 'right_box' in the context of the
-        # appropriate text input record.
-
-        record_lookup = _RecordLookup()
-        err = record_lookup._populate(records)
-        self.assertIsNone(err)
-        outer_box_record = record_lookup.records['outer_box']
-        q_object, err = _reconcile_child_to_object('right_box', outer_box_record, register)
-        self.assertEqual(q_object, mock_object)
-
-    def test_build_and_register_record_failures_with_children(self):
-        # Child cannot be reconciled.
-        dummy_file_location = {}
-        record = _InputTextRecord(dummy_file_location, 'HBOX', 'name_of_parent', ['child_a', 'child_b'])
-        dummy_q_object = {}
-        register = {} # Will trigger look up failure.
-        err = _build_and_register_record(record, register)
-        self.assertIsNotNone(err)
-        msg = err.format_as_single_string()
-        self.assertTrue(
-            'Problem building child: <child_a>, in record which is' in msg)
-        self.assertTrue(
-            'Nothing found in register for this child name: <child_a>, defi' in msg)
-
-    def test_build_and_register_record_failures_with_parent(self):
-        dummy_file_location = {}
-        record = _InputTextRecord(dummy_file_location, 'HBOX', 'name_of_parent', ['child_a', 'child_b'])
-        mock_child = {}
-        register = {'child_a': mock_child, 'child_b': mock_child}
-
-        no sure to be other more worth while failures
-
-        # We inject the error condition here by monkey patching the keywords module, so
-        # that it fails to instantiate a QHBoxLayout
-        fart do it
-        err = _build_and_register_record(record, register)
-        self.assertIsNotNone(err)
-        msg = err.format_as_single_string()
-        print msg
-        self.assertTrue(
-            'wont' in msg)
-        self.assertTrue(
-            'wont' in msg)
-        self.assertTrue(
-            'wont' in msg)
-        self.assertTrue(
-            'wont' in msg)
-
-    def test_build_and_register_record_when_already_available(self):
-        dummy_file_location = {}
-        record = _InputTextRecord(dummy_file_location, 'HBOX', 'name_of_parent', ['child_a', 'child_b'])
-        dummy_q_object = {}
-        register = {'name_of_parent': dummy_q_object}
-        err = _build_and_register_record(record, register)
-        self.assertIsNone(err)
-        q_object = register['name_of_parent']
-        self.assertIsNotNone(q_object)
-        self.assertEqual(q_object, dummy_q_object)
+def _arbitrary_record():
+    words = ['QLabel:my_label', 'a', 'b']
+    record = InputTextRecord.make_from_all_words(words, MOCK_FILELOCATION)
+    return record
