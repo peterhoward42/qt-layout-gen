@@ -10,7 +10,17 @@ o  Restart with new design
         *  Repair input splitter
         *  Finish parent maker
         *  Builder
+        *  If parent has no children, try set text with name on
+            *  consider where = in build itself
+            *  augment build and tdd augmented bit
+            *  add to contract
         o  What tdd next?
+            o  Examples tests modules from txt
+                o  v simple from txt
+                o  v simple from dir
+                o  simple incl find
+                o  example diagnostics
+                o  big one
         o  more use of assert?
         o  tests that test errors by catching exceptions should throw exception if not thrown
         o  80 columns and '\n'.join... idiom

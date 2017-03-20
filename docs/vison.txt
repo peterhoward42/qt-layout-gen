@@ -19,10 +19,14 @@ And it takes quite a bit of code to build the entire layout hierarchy for an
 app, which can be seriously fiddly, time consuming, difficult and error prone.
 It's also not hugely easy to change later.
 
-This project is about having a software library that lets you express arbitrarily complex
-hierarchies and/or sub hierarchies in plain text files, using an exceptionally simple and
-brief format. The library aims to consume the text files and build the layouts for
-you at RUNTIME automatically.
+Of course you can use QtDesigner to make it easier. But this library offers a
+more programmatic approach, with characteristics that are importantly
+different from the QtDesigner approach.
+
+This project is about having a software library that lets you express
+arbitrarily complex hierarchies and/or sub hierarchies in plain text files,
+using an exceptionally simple and brief format. The library aims to consume
+the text files and build the layouts for you at RUNTIME automatically.
 
 It has some aims that endeavour to make it practical:
     o  The least typing possible.
@@ -37,11 +41,11 @@ It has some aims that endeavour to make it practical:
     o  Allows you to put all your layout definitions either in a single file, or to
        modularise it into smaller chunks in multiple files. Maybe one file per GUI section,
        or one per widget etc.
-    o  Must not require you to think about what order you specify things in, in order
+    o  Does not require you to think about what order you specify things in, in order
        to satisfy dependency relationships.
     o  Is not dependent in any way on how you organise or name your input files or how you
-       divide the content up among them. (Also means you can change your mind easily without
-       creating extra work).
+       divide the content up among them. (Also means you can change your mind and shuffle
+       stuff around easily without creating extra work).
 
 We are advocating a runtime solution over a code-generator for two reasons.
 Firstly, because it preserves a single source of truth for the intent, and 
@@ -87,7 +91,7 @@ not significant).
     HBOX:row_a ... 
 
 You can also pass it string literals from Python like this (below), which is
-conventient to build layouts for individual widgets.
+conventient to build layouts for simple widgets.
 
     layout = build_layout(
         """
@@ -98,7 +102,7 @@ conventient to build layouts for individual widgets.
 The contract for the input is extremely simple - and is defined formally in the docs.
 (Actually in the inputsplitter comments today).
 
-What can it make automatically (apart from QBoxLayouts)
+What can it make (apart from QBoxLayouts)
 -------------------------------------------------------
 To complete the list of keywords you can use on the left, they are:
 
@@ -119,7 +123,10 @@ This is how you add things like buttons and labels as suggested above:
         HBOX:header_row       left_bit      my_label      right_bit
         QLabel:my_label
 
-See next section for accessing the label afterwards to put some text on it.
+The builder will have set the text for the QLabel in this case to 'my_label'.
+It tries to do this for any parents that you haven't specified any children for.
+It does it by calling setText() on the parent if the parent supports it; so it
+will work for example on QLabel and QPushButton.
 
 Accessing the components put into the layout
 --------------------------------------------

@@ -15,7 +15,7 @@ _NO_SUCH_DIR = 'ridiculousdirname'
 
 class TestDirectorySearch(TestCase):
     """
-    We use a very small, rigged, directory hierarchy as our test data.
+    We use a very small, rigged, directory hierarchy as our lib_test data.
     """
 
     def setUp(self):

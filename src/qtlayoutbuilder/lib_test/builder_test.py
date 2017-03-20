@@ -42,7 +42,7 @@ class TestBuilder(TestCase):
                 in msg)
 
     def test_register_method_error_handling(self):
-        # Use the same name for more than one parent in the input to test
+        # Use the same name for more than one parent in the input to lib_test
         # the error reporting about the clash.
         builder = Builder(NO_RECORDS)
         try:
@@ -79,7 +79,7 @@ class TestBuilder(TestCase):
     def test_child_name_not_recognized(self):
         # Use a child name in the input which the builder won't be able to
         # reconcile to a parent that has been created by another record, to
-        # test the error handling in this case.
+        # lib_test the error handling in this case.
         builder = Builder(NO_RECORDS)
         try:
             layouts_created = LayoutsCreated()
@@ -104,6 +104,15 @@ class TestBuilder(TestCase):
         builder._assert_name_is_registered(
             'my_layout', _arbitrary_record(), layouts_created)
 
+    def test_that_attempt_to_settext_on_childless_parents_does_not_crash_if_fails(self):
+        # noinspection PyUnusedLocal
+        records = _split_big_string_into_records(
+            """
+                QVBoxLayout:some_text
+            """)
+        builder = Builder(records)
+        layouts_created = builder.build()
+
     def test_at_api_level(self):
         # Exercise the top level api function with mixed content input. And
         # ensure the expected elements show up in the LayoutsCreated.
@@ -118,7 +127,20 @@ class TestBuilder(TestCase):
             """)
         builder = Builder(records)
         layouts_created = builder.build()
+
+        # Produced the right number of layout elements?
         self.assertEqual(len(layouts_created.layout_element), 3)
+
+        elements = layouts_created.layout_element
+
+        # Of the right types
+        self.assertEqual(elements['my_box'].__class__.__name__, 'QHBoxLayout')
+        self.assertEqual(elements['my_label'].__class__.__name__, 'QLabel')
+        self.assertEqual(elements['my_button'].__class__.__name__, 'QPushButton')
+
+        # And the text got set on the QLabels and QButtons
+        self.assertEqual(elements['my_label'].text(), 'my_label')
+        self.assertEqual(elements['my_button'].text(), 'my_button')
 
 
 NO_RECORDS = []

@@ -1,7 +1,3 @@
-"""
-This module exposes the public API to the Qt layout builder.
-"""
-
 from qtlayoutbuilder.lib import inputsplitter
 from qtlayoutbuilder.lib import builder
 
@@ -15,7 +11,8 @@ class LayoutBuilder(object):
     def build_layouts_from_dir(input_directory_path):
         """
         Builds and returns a LayoutsCreated object based on the files found
-        in the directory provided. The LayoutsCreated class is defined below.
+        in the directory provided. The LayoutsCreated class is defined in a
+        sister module.
 
         All the files in the given directory are consumed (recursively).
 
@@ -31,7 +28,7 @@ class LayoutBuilder(object):
     def build_layouts_from_text(one_big_string):
         """
         Builds and returns a LayoutsCreated object based on the input text
-        provided. The LayoutsCreated class is defined below.
+        provided. The LayoutsCreated class is defined in a sister module.
 
         :param one_big_string: Your textual specification.
         :return: A LayoutsCreated object.
