@@ -9,21 +9,8 @@ o  Restart with new design
         *  Separate filelocation
         *  Repair input splitter
         *  Finish parent maker
-        o  Builder
-            *  Decide how to factor into api and engine
-            *  Create skel from existing
-            *  Rewrite
-                *  Digress onto childadder
-            *  Builder code complete
-            *  Check in
-            o  Builder TDD
-                o  working through realistic tests
-                    o  not creating found parent
-                        o  particular class in widget and layout finder is QButton
-                           , whereas the available object is a QPushButton
-            o  Tidy up code
-
-            o  Make sure objects not reused when shouldn't be
+        *  Builder
+        o  What tdd next?
         o  more use of assert?
         o  tests that test errors by catching exceptions should throw exception if not thrown
         o  80 columns and '\n'.join... idiom

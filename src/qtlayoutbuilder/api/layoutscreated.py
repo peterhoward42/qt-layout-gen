@@ -9,10 +9,14 @@ class LayoutsCreated(object):
     """
 
     def __init__(self):
-        # Every QLayout/QWidget incorporated into a layout.
-        self.layout_element_from_name = {}
+        # The layouts created are stored in the dictionaries below.
+        # They are keyed on the names you used for things in your input
+        # text.
 
-        # Whereabouts in the input text each element was defined.
-        # Values are FileLocation(s) - defined below.
-        self.source_file_location_from_name = {}
+        # Every widget or layout the builder created is registered here.
+        self.layout_element = {}
+
+        # The file name and line number that provided the definition for every
+        # element used.
+        self.provenance = {} # Values are FileLocation(s)
 
