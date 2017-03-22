@@ -5,10 +5,11 @@ from unittest import TestCase
 
 from PySide.QtGui import QLabel, QHBoxLayout, qApp, QApplication, QLayout
 
+from qtlayoutbuilder.api.filelocation import FileLocation
+from qtlayoutbuilder.api.layouterror import LayoutError
+
 from qtlayoutbuilder.lib import qobjectmaker
-from qtlayoutbuilder.lib.filelocation import FileLocation
 from qtlayoutbuilder.lib.inputtextrecord import InputTextRecord
-from qtlayoutbuilder.lib.layouterror import LayoutError
 from qtlayoutbuilder.lib.widgetandlayoutfinder import WidgetAndLayoutFinder
 
 
@@ -17,8 +18,10 @@ class TestQObjectMaker(TestCase):
     def setUpClass(cls):
         # Needs QApplication context.
         super(TestQObjectMaker, cls).setUpClass()
-        if qApp is None:
+        try:
             QApplication([])
+        except RuntimeError:
+            pass # Singleton already exists
 
     DUMMY_FILE_LOC = FileLocation('pretend filename', 1)
 

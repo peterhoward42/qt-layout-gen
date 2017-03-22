@@ -1,10 +1,10 @@
 import os.path
 from unittest import TestCase
 
-from qtlayoutbuilder.lib.filelocation import FileLocation
+from qtlayoutbuilder.api.filelocation import FileLocation
 from qtlayoutbuilder.lib.inputsplitter import _split_big_string_into_records, \
     _split_file_into_records, _split_all_files_in_directory_into_records
-from qtlayoutbuilder.lib.layouterror import LayoutError
+from qtlayoutbuilder.api.layouterror import LayoutError
 
 
 class TestInputSplitter(TestCase):
@@ -24,7 +24,7 @@ class TestInputSplitter(TestCase):
         malformed_file = os.path.abspath(
             os.path.join(
                 __file__,
-                "../../..",
+                "../../../..",
                 'testdata',
                 'file_with_illegal_first_word.txt'))
 
@@ -39,7 +39,7 @@ class TestInputSplitter(TestCase):
         malformed_file = os.path.abspath(
             os.path.join(
                 __file__,
-                "../../..",
+                "../../../..",
                 'testdata',
                 'file_with_nothing_in.txt'))
         try:
@@ -53,7 +53,7 @@ class TestInputSplitter(TestCase):
         properly_formed_file = os.path.abspath(
             os.path.join(
                 __file__,
-                "../../..",
+                "../../../..",
                 'testdata',
                 'simple_hierarchy',
                 'top_level_a.txt'))
@@ -97,7 +97,7 @@ class TestInputSplitter(TestCase):
 
         # Reports problems part way through properly
         directory_with_a_problem_file_in = os.path.abspath(os.path.join(
-                __file__, "../../..", 'testdata', 'hierarchy_with_problem_inside'))
+                __file__, "../../../..", 'testdata', 'hierarchy_with_problem_inside'))
         try:
             records = _split_all_files_in_directory_into_records(directory_with_a_problem_file_in)
         except LayoutError as e:
@@ -110,7 +110,7 @@ class TestInputSplitter(TestCase):
         # Is aggregating the records from more than one file.
         # Reports problems part way through properly
         simple_hierarchy = os.path.abspath(os.path.join(
-            __file__, "../../..", 'testdata', 'simple_hierarchy'))
+            __file__, "../../../..", 'testdata', 'simple_hierarchy'))
         records = _split_all_files_in_directory_into_records(simple_hierarchy)
         self.assertEqual(len(records), 8)
         self.assertEqual(records[0].parent_name, 'my_page')

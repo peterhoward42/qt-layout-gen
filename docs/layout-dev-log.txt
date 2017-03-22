@@ -14,9 +14,17 @@ o  Restart with new design
             *  consider where = in build itself
             *  augment build and tdd augmented bit
             *  add to contract
-        o  What tdd next?
+        *  Timeout for all tests pass
+        o  Make examples as proper tests incl name and folder
             o  Examples tests modules from txt
                 o  v simple from txt
+                    o  digress to support <>, incl tests
+                        o  input text record including more than one <> present
+                        o  child adder
+                            o  works
+                            o  op failed on parent
+                        o  builder
+                        o  include in api example
                 o  v simple from dir
                 o  simple incl find
                 o  example diagnostics
@@ -26,35 +34,19 @@ o  Restart with new design
         o  80 columns and '\n'.join... idiom
         o  example formats to error messages
         o  ditch _ classes convention
+        o  cope with group boxes
+            o  first class
+            o  examples
+            o  add text to
         o  add strings to labels, buttons and group boxes
-        o  push most stuff into lib and lib test or similar
         o  api
-        o  layout maker (ditch class method too nasty) - do real work in constructor!!!
-        o  Resume main flow
+        o  all tests pass
+        o  beautify
+        o  no warnings
+        o  real world try
 
-    o  Housekeep redundant modules and tests
-
-
-o  Remember to demand that children are not reused
-
---------------------------------------------------------
-Exception handling
---------------------------------------------------------
-Requirements
-    o  It is a lib so must leave freedom of presentation to client.
-    o  Nice if lib consumer only has to catch one type.
-    o  Nice if exception gives narrative from developers pov about
-       what went wrong.
-    o  Which is input file oriented - they don't care about internal concepts.
-    o  So what concepts should we expose?
-
-    o  A couple of example error messages,
-
-        Error: Cannot read this file filename
-
-        Error: The first thing in a file must be a word with a colon in it: (filename/no)
-
-        Error: Failed trying to import one of these <> from QtGui?. (filename/no)
-
-    o  Architecture - just one Exception type with str message fully formed at bottom level whereever poss
-       then need not catch!
+                try:
+            app = QApplication([])
+            kk
+        except RuntimeError:
+            pass # Singleton already existso  docco

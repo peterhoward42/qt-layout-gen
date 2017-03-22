@@ -1,9 +1,9 @@
 from unittest import TestCase
 
 import qtlayoutbuilder.lib.keywords
-from qtlayoutbuilder.lib.filelocation import FileLocation
+from qtlayoutbuilder.api.filelocation import FileLocation
 from qtlayoutbuilder.lib.inputtextrecord import InputTextRecord
-from qtlayoutbuilder.lib.layouterror import LayoutError
+from qtlayoutbuilder.api.layouterror import LayoutError
 
 class TestInputTextRecord(TestCase):
 

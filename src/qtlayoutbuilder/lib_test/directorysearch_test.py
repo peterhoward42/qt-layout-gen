@@ -3,11 +3,11 @@ from tempfile import mkdtemp
 from unittest import TestCase
 
 from qtlayoutbuilder.lib.directorysearch import find_all_files
-from qtlayoutbuilder.lib.layouterror import LayoutError
+from qtlayoutbuilder.api.layouterror import LayoutError
 
 _TOP_LEVEL_DIR = os.path.abspath(
     os.path.join(__file__,
-                 "../../..",
+                 "../../../..",
                  'testdata',
                  'simple_hierarchy'))
 

@@ -19,8 +19,10 @@ class TestWidgetAndLayoutFinder(TestCase):
 
     def setUp(self):
         super(TestWidgetAndLayoutFinder, self).setUp()
-        if qApp is None:
-            QApplication([])
+        try:
+            app = QApplication([])
+        except RuntimeError:
+            pass # Singleton already exists
 
     def test_search_for_widget(self):
 
@@ -34,7 +36,7 @@ class TestWidgetAndLayoutFinder(TestCase):
         target_b = HasLabel()
 
         finder = WidgetAndLayoutFinder()
-        found = finder.find(QLabel, 'fibble')
+        found = finder.find('QLabel', 'fibble')
         self.assertEquals(len(found), 1)
         found_object = found[0]
         self.assertEquals(found_object, target_b.fibble)

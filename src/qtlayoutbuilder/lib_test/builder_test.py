@@ -12,13 +12,16 @@ from qtlayoutbuilder.lib.inputtextrecord import InputTextRecord
 from qtlayoutbuilder.lib.inputsplitter import _split_big_string_into_records
 
 
+
 class TestBuilder(TestCase):
     @classmethod
     def setUpClass(cls):
         # Needs QApplication context.
         super(TestBuilder, cls).setUpClass()
-        if qApp is None:
+        try:
             QApplication([])
+        except RuntimeError:
+            pass # Singleton already exists.
 
     # Start with tests for the lower level utilities inside the module.
 

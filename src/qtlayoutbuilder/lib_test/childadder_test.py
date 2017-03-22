@@ -11,8 +11,10 @@ class TestChildAdder(TestCase):
     def setUpClass(cls):
         # Needs QApplication context.
         super(TestChildAdder, cls).setUpClass()
-        if qApp is None:
+        try:
             QApplication([])
+        except RuntimeError:
+            pass # Singleton already exists
 
     def test_unsupported_type_combo_error_handling(self):
         self.assertRaises(
