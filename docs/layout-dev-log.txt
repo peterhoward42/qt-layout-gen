@@ -17,18 +17,14 @@ o  Restart with new design
         *  Timeout for all tests pass
         o  Make examples as proper tests incl name and folder
             o  Examples tests modules from txt
-                o  v simple from txt
-                    o  digress to support <>, incl tests
-                        o  input text record including more than one <> present
-                        o  child adder
-                            o  works
-                            o  op failed on parent
-                        o  builder
-                        o  include in api example
+                *  v simple from txt
                 o  v simple from dir
-                o  simple incl find
-                o  example diagnostics
-                o  big one
+                o  using q widgets that have children
+                o  using your own widgets
+                o  using the query api
+                o  using the debugging tools
+                o  a nice big complex one
+                o  check doc what missed
         o  more use of assert?
         o  tests that test errors by catching exceptions should throw exception if not thrown
         o  80 columns and '\n'.join... idiom

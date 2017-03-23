@@ -25,7 +25,7 @@ class TestBuilder(TestCase):
 
     # Start with tests for the lower level utilities inside the module.
 
-    def test_add_child_to_parent_error_handling(self):
+    def test_add_child_to_parent_error_handling_for_general_case(self):
         # Try to add a QLabel to a QPushButton - which is not a legitimate
         # combination.
         builder = Builder(NO_RECORDS)
@@ -116,15 +116,32 @@ class TestBuilder(TestCase):
         builder = Builder(records)
         layouts_created = builder.build()
 
+    def test_error_handling_for_adding_stretch_to_something_illegal(self):
+        # noinspection PyUnusedLocal
+        records = _split_big_string_into_records(
+            """
+                QLabel:my_label <>
+            """)
+        builder = Builder(records)
+        try:
+            builder.build()
+        except LayoutError as e:
+            msg = str(e)
+            self.assertTrue(
+                'You cannot add a stretch to a parent that is not a'
+                in msg)
+            self.assertTrue(
+                'QHBoxLayout, or a QVBoxLayout,'
+                in msg)
+
     def test_at_api_level(self):
         # Exercise the top level api function with mixed content input. And
         # ensure the expected elements show up in the LayoutsCreated.
 
-        # noinspection PyUnusedLocal
         my_button = QPushButton()
         records = _split_big_string_into_records(
             """
-                HBOX:my_box my_label my_button
+                HBOX:my_box my_label <> my_button
                 QLabel:my_label
                 Find:QPushButton:my_button
             """)
@@ -144,6 +161,12 @@ class TestBuilder(TestCase):
         # And the text got set on the QLabels and QButtons
         self.assertEqual(elements['my_label'].text(), 'my_label')
         self.assertEqual(elements['my_button'].text(), 'my_button')
+
+        # And the QHBoxLayout got its stretch in the right place
+        box_layout = elements['my_box']
+        item = box_layout.itemAt(1)
+        self.assertEquals(item.__class__.__name__, 'QSpacerItem')
+
 
 
 NO_RECORDS = []
