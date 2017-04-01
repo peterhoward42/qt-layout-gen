@@ -8,7 +8,7 @@ class LayoutBuilder(object):
     """
 
     @staticmethod
-    def build_layouts_from_dir(input_directory_path):
+    def build_layouts_from_dir(dir):
         """
         Builds and returns a LayoutsCreated object based on the files found
         in the directory provided. The LayoutsCreated class is defined in a
@@ -21,7 +21,7 @@ class LayoutBuilder(object):
         :raises: LayoutError (defined below)
         """
 
-        records = inputsplitter._split_all_files_in_directory_into_records('sillydirname')
+        records = inputsplitter._split_all_files_in_directory_into_records(dir)
         return builder.Builder(records).build()
 
     @staticmethod

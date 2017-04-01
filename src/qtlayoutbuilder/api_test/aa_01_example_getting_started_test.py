@@ -47,4 +47,4 @@ class TestExampleGettingStarted(TestCase):
         widget.setLayout(top_level_layout)
         widget.show()
 
-        qApp.exec_()
+        #qApp.exec_()

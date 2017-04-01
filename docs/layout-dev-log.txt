@@ -1,24 +1,25 @@
-o  Restart with new design
-    o  TDD on simple api case to drive out core code flows
-        *  Reconsider syntax to make it easier to just grab and go with less fussy parsing.
-           And accomodate find idiom.
-        *  Write up lexical parsing
-        *  Fix up and simplify lexical parsing with less error detection.
-        *  Ditch error handling strategy
-        *  Separate InputTextRecord
-        *  Separate filelocation
-        *  Repair input splitter
-        *  Finish parent maker
-        *  Builder
-        *  If parent has no children, try set text with name on
-            *  consider where = in build itself
-            *  augment build and tdd augmented bit
-            *  add to contract
-        *  Timeout for all tests pass
-        o  Make examples as proper tests incl name and folder
-            o  Examples tests modules from txt
-                *  v simple from txt
-                o  v simple from dir
+o  Make examples as proper tests incl name and folder
+o  Examples tests modules from txt
+    *  v simple from txt
+    o  big realistic to shake out and mabye use as exemplars
+        *  capture desired scope
+        *  make mockup
+        o  just start with a test
+            *  timeout two children of same name when <>
+            o  change set text to use sole child
+            o  parse quoted strings
+
+
+    o  lessons learned and fixes
+        o  QLabel setText needs to be independtend of what you call it
+        o  Allow quoted strings in record
+
+
+
+    o  v simple from dir
+
+
+
                 o  using q widgets that have children
                 o  using your own widgets
                 o  using the query api
@@ -46,3 +47,15 @@ o  Restart with new design
             kk
         except RuntimeError:
             pass # Singleton already existso  docco
+
+-----------------------------------------------------------------------------
+Scope
+-----------------------------------------------------------------------------
+Sim to add on
+Incl font icon buttons
+Group boxes
+Construct custom classes
+Frames
+Labels
+Tabs
+Grids

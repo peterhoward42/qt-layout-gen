@@ -77,6 +77,19 @@ class TestInputSplitter(TestCase):
             self.assertTrue(
                 "Error: The first word in your text must have a colon in it: <ipsum doo dah>" in msg)
 
+        # Raises error when two children of the same name cited in the record
+        try:
+            records = _split_big_string_into_records('HBOX:foo a a')
+        except LayoutError as e:
+            msg = str(e)
+            print msg
+            self.assertTrue(
+                'Cannot specify two children of the same name' in msg)
+
+        # But tolerates two usages of '<>' as child names in same record.
+        records = _split_big_string_into_records('HBOX:foo <> a <>')
+        self.assertIsNotNone(records)
+
         # Harvests correct words when input is properly formed
         records = _split_big_string_into_records('HBOX:a b c HBOX:d e f')
         self.assertIsNotNone(records)

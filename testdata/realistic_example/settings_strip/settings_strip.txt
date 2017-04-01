@@ -1,0 +1,12 @@
+VBOX:settings_strip source_row display_row
+HBOX:source_row source_grouping source_rhs_buttons
+VBOX:source_grouping source_settings progress_slider
+HBOX:source_settings
+    source_summary
+    source_refresh_btns
+QLabel:source_summary
+QLabel:refresh_and_menu_btns
+QLabel:display_row
+QLabel:source_rhs_buttons
+QLabel:progress_slider
+QLabel:source_refresh_btns

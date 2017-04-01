@@ -1,0 +1,7 @@
+VBOX:top_level app_title settings_strip app_main_panel app_footer
+
+HBOX:app_title <> Nonsense-GUI <>
+QLabel:Nonsense-GUI
+
+QLabel:app_main_panel
+QLabel:app_footer
