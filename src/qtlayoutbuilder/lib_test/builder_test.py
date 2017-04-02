@@ -21,7 +21,7 @@ class TestBuilder(TestCase):
         try:
             QApplication([])
         except RuntimeError:
-            pass # Singleton already exists.
+            pass  # Singleton already exists.
 
     # Start with tests for the lower level utilities inside the module.
 
@@ -32,7 +32,7 @@ class TestBuilder(TestCase):
         try:
             dict = {'my_label': QLabel()}
             builder._add_child_to_parent(
-                'my_label', QPushButton(), _arbitrary_record(), dict)
+                'my_label', QPushButton(), InputTextRecord.mock_record(), dict)
         except LayoutError as e:
             msg = str(e)
             self.assertTrue(test_utils.fragments_are_present("""
@@ -52,7 +52,8 @@ class TestBuilder(TestCase):
             layouts_created.layout_element['my_layout'] = None
             layouts_created.provenance['my_layout'] = MOCK_FILELOCATION
             builder._register(
-                'my_layout', mock_qobject, _arbitrary_record(), layouts_created)
+                'my_layout', mock_qobject, InputTextRecord.mock_record(),
+                layouts_created)
         except LayoutError as e:
             msg = str(e)
             self.assertTrue(
@@ -69,14 +70,15 @@ class TestBuilder(TestCase):
         qobject = QLabel()
         layouts_created = LayoutsCreated()
         builder._register(
-            'my_label', qobject, _arbitrary_record(), layouts_created)
+            'my_label', qobject, InputTextRecord.mock_record(), layouts_created)
         self.assertEqual(
             layouts_created.layout_element['my_label'], qobject)
         self.assertEqual(
             layouts_created.provenance['my_label'],
-            MOCK_FILELOCATION)
+            InputTextRecord.mock_file_location())
 
-    def test_that_attempt_to_settext_on_childless_parents_does_not_crash_if_fails(self):
+    def test_that_attempt_to_settext_on_childless_parents_does_not_crash_if_fails(
+            self):
         # noinspection PyUnusedLocal
         records = _split_big_string_into_records(
             """
@@ -125,7 +127,8 @@ class TestBuilder(TestCase):
         # Of the right types
         self.assertEqual(elements['my_box'].__class__.__name__, 'QHBoxLayout')
         self.assertEqual(elements['my_label'].__class__.__name__, 'QLabel')
-        self.assertEqual(elements['my_button'].__class__.__name__, 'QPushButton')
+        self.assertEqual(elements['my_button'].__class__.__name__,
+                         'QPushButton')
 
         # And the text got set on the QLabel
         self.assertEqual(elements['my_label'].text(), 'this-text')
@@ -136,11 +139,4 @@ class TestBuilder(TestCase):
         self.assertEquals(item.__class__.__name__, 'QSpacerItem')
 
 
-
 NO_RECORDS = []
-
-
-def _arbitrary_record():
-    words = ['QLabel:my_label', 'a', 'b']
-    record = InputTextRecord.make_from_all_words(words, MOCK_FILELOCATION)
-    return record

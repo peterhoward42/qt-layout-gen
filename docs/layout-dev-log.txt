@@ -32,7 +32,6 @@ o  Examples tests modules from txt
 
 
     o  lessons learned and fixes
-        o  QLabel setText needs to be independtend of what you call it
         o  Allow quoted strings in record?
         o  AddTab
     o  did i need to instantiate non qt classes or should I like clickablewidget?

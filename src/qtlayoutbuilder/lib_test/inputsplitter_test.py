@@ -9,8 +9,6 @@ from qtlayoutbuilder.api.layouterror import LayoutError
 
 class TestInputSplitter(TestCase):
 
-    FILE_LOCATION = FileLocation('dummy filename', 1)
-
     def test_split_file_into_records(self):
         # Reports IO errors properly.
         try:
