@@ -82,7 +82,6 @@ class TestInputSplitter(TestCase):
             records = _split_big_string_into_records('HBOX:foo a a')
         except LayoutError as e:
             msg = str(e)
-            print msg
             self.assertTrue(
                 'Cannot specify two children of the same name' in msg)
 

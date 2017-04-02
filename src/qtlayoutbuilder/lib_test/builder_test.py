@@ -10,7 +10,7 @@ from qtlayoutbuilder.lib.builder import Builder
 from qtlayoutbuilder.lib.inputtextrecord import InputTextRecord
 # noinspection PyProtectedMember
 from qtlayoutbuilder.lib.inputsplitter import _split_big_string_into_records
-
+from qtlayoutbuilder.test_utils import test_utils
 
 
 class TestBuilder(TestCase):
@@ -30,19 +30,16 @@ class TestBuilder(TestCase):
         # combination.
         builder = Builder(NO_RECORDS)
         try:
+            dict = {'my_label': QLabel()}
             builder._add_child_to_parent(
-                QLabel(), QPushButton(), _arbitrary_record())
+                'my_label', QPushButton(), _arbitrary_record(), dict)
         except LayoutError as e:
             msg = str(e)
-            self.assertTrue(
-                'The builder does not know how to add a: <QLabel>, to a:'
-                in msg)
-            self.assertTrue(
-                '<QLabel> as a child.'
-                in msg)
-            self.assertTrue(
-                'This combination is not supported.'
-                in msg)
+            self.assertTrue(test_utils.fragments_are_present("""
+                This child name: <my_label>, is a QWidget
+                but neither addWidget(), nor addTab() worked
+                on the parent object.
+            """, msg))
 
     def test_register_method_error_handling(self):
         # Use the same name for more than one parent in the input to lib_test
@@ -79,34 +76,6 @@ class TestBuilder(TestCase):
             layouts_created.provenance['my_label'],
             MOCK_FILELOCATION)
 
-    def test_child_name_not_recognized(self):
-        # Use a child name in the input which the builder won't be able to
-        # reconcile to a parent that has been created by another record, to
-        # lib_test the error handling in this case.
-        builder = Builder(NO_RECORDS)
-        try:
-            layouts_created = LayoutsCreated()
-            builder._assert_name_is_registered(
-                'my_layout', _arbitrary_record(), layouts_created)
-        except LayoutError as e:
-            msg = str(e)
-            self.assertTrue(
-                'You cannot use this name: <my_layout>, because it'
-                in msg)
-            self.assertTrue(
-                'is not defined anywhere in your input' in msg)
-
-    def test_assert_name_is_registered_when_the_name_is(self):
-        # Make sure that when a child name can be properly reconciled
-        # to a parent that has been made by another record, it is.
-        builder = Builder(NO_RECORDS)
-        layouts_created = LayoutsCreated()
-        # Manually patch the LayoutsCreated to know about 'my_layout'.
-        layouts_created.layout_element['my_layout'] = None
-        layouts_created.provenance['my_layout'] = MOCK_FILELOCATION
-        builder._assert_name_is_registered(
-            'my_layout', _arbitrary_record(), layouts_created)
-
     def test_that_attempt_to_settext_on_childless_parents_does_not_crash_if_fails(self):
         # noinspection PyUnusedLocal
         records = _split_big_string_into_records(
@@ -142,7 +111,7 @@ class TestBuilder(TestCase):
         records = _split_big_string_into_records(
             """
                 HBOX:my_box my_label <> my_button
-                QLabel:my_label
+                QLabel:my_label this-text
                 Find:QPushButton:my_button
             """)
         builder = Builder(records)
@@ -158,9 +127,8 @@ class TestBuilder(TestCase):
         self.assertEqual(elements['my_label'].__class__.__name__, 'QLabel')
         self.assertEqual(elements['my_button'].__class__.__name__, 'QPushButton')
 
-        # And the text got set on the QLabels and QButtons
-        self.assertEqual(elements['my_label'].text(), 'my_label')
-        self.assertEqual(elements['my_button'].text(), 'my_button')
+        # And the text got set on the QLabel
+        self.assertEqual(elements['my_label'].text(), 'this-text')
 
         # And the QHBoxLayout got its stretch in the right place
         box_layout = elements['my_box']

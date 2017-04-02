@@ -1,0 +1,164 @@
+Contract
+--------
+
+Consider this fragment:
+
+    VBOX:my_page header_row body footer_row
+
+It means - "make me a QVBoxLayout and call it 'my_page'. Then treat the things
+on the right as children that should be added to the layout.
+
+It tries to resolve the things on the right to things on the
+left somewhere else in the input. Like this fragment that defines what
+header_row means.
+
+    HBOX:header_row left_bit middle_bit right_bit
+
+The left hand part always creates a QLayout or QWidget.
+
+The right hand part mandates what should be added to it as children - and
+usually comprises names of things which can be found (somewhere) on the left
+hand side.
+
+If a child name resolves to something that is a QWidget, the system will
+speculatively try calling addWidget(widget) and also addTab(widget) on the
+parent.
+
+If the child name resolves to something that is a QLayout, the system will
+speculatively try calling addLayout() on the parent.
+
+If the there is only one child specified, and its name does NOT resolve to
+anything that can be found (somewhere) on the left hand side, the system will
+speculatively try calling setText() on the parent, using the name of the child
+as the text. This is useful for including things like QPushButtons and QLabels
+in your layouts, and specifying their text at the same time.
+
+You can put lots of these lines into a file and have the builder consume the
+lot. The order of the lines doesn't matter. In fact you can split it over
+multiple files to modularise it however you think fit, and give the builder a
+whole directory to play with. The builder will consume all the files in the
+directory and sub directories recursively.
+
+The format can handle longer lists of children like this: (newlines are
+not significant).
+
+    VBOX:my_page          row_a         row_b           row_c
+                          row_d         row_e           row_f
+                          row_g         
+    HBOX:row_a ... 
+
+You can also pass it string literals from Python like this (below), which is
+conventient to build layouts for simple widgets.
+
+    layout = build_layout(
+        """
+        VBOX:my_page          header_row    body            footer_row
+        HBOX:header_row       left_bit      middle_bit      right_bit
+        """
+
+The contract for the input is extremely simple - and is defined formally in the docs.
+(Actually in the inputsplitter comments today).
+
+What can it make (apart from QBoxLayouts)
+-----------------------------------------
+To complete the list of keywords you can use on the left, they are:
+
+    VBOX, HBOX, STACK, TAB, SPLIT 
+
+    (The last two of these are QWidgtet, not QLayouts.)
+
+These are just short forms for the really common ones.
+You could have written this instead:
+
+    QVBoxLayout:my_page          row_a         row_b           row_c
+
+You can put the name of any Qt Widget or Layout - but it is up to you to
+make sure that it supports addWidget(), addLayout(), addTab() or setText().
+
+This is how you add things like buttons and labels as suggested above:
+
+        HBOX:header_row left_bit my_label right_bit
+        QLabel:my_label with-this-text
+
+Accessing the components put into the layout
+--------------------------------------------
+You will invariably want to access the components incorporated into the layouts
+once they have been created, to do things like connecting signals and setting
+styles for example.
+
+So the builder exposes them like this:
+
+    layouts_built how did I do it?
+
+Note this implies all the names you use on the left hand side in your input 
+text must be globally unique. The builder will tell you politely when this
+is not so. This is unfortunate, but a deliberate trade-off. We could have
+avoided the problem by exposing the components hierarchically:
+
+    layouts_built.my_page.header_row
+
+But that creates unecessary work later, if you decide to move things around in
+the hiearchy - and we wanted to make sure that was easy to do.
+
+Not just one big layout
+-----------------------
+Sometimes you'll want to get the builder to make a set of layouts and sub
+layouts that you'll combine manually later. Particlarly when you're
+introducing it incrementally to existing code.
+
+You don't have to do anything extra to achieve this - the number of layouts
+you get is defined by the connectivities you've implied in your input text.
+If it all resolves to one big tree then you get one layout. If it resolves to
+two seperate trees then you get two trees. You access them as described above:
+
+    layouts_built.my_main_layout
+    layouts_built.my_auxillary_layout
+
+If you don't get what you expect, you can ask the builder to show you how it
+traced out everything. This produced a string representation of the tree(s) it
+deduced.
+
+    layouts_built.get_layout_hierarchy_map()
+
+
+Using widgets you made earlier (or layouts)
+-------------------------------------------
+Many custom widgets and layouts need to be constructed and instantiated by
+hand. And when you're introducing the builder to existing code bases
+incrementatlly, your program will likely want to instantiate some you created
+outside of the builder, but then have the builder use them.
+
+There is a way to specify on the left hand side, that the builder should go
+off and find a pre-existing object that you've pre-instantiated somewhere
+else in your program.
+
+    Find:CustomLayout:my_page header_row body footer_row
+
+This behaviour kicks in when your left hand side starts with 'Find' and has
+two colons in.
+
+The builder will consider all the objects that are already instantiated in your
+program which are of the CustomLayout class. It will then look for one that
+you have referenced with a variable or attribute called 'my_page'. For example
+Somewhere else in your program you wrote:
+
+    my_page = CustomLayout(arg1, arg2, etc), or
+    some_object.my_page = CustomLayout(arg1, arg2, etc), or
+
+If more than one object qualifies - the builder will object politely.
+
+Miscellany
+----------
+These exist so far just for one special case that is so completely
+ubiquitous it merits it. Ie. you nearly always want to add a stretch item to a box layout
+either at one end or the other, or somewhere in the middle of the children:
+
+    HBOX:my_box   foo bar <> baz
+
+The '<>' means put a stretch item here. If you use it on anything other than
+HBOX or VBOX, the builder will complain.
+
+How is input text parsed / what are the rules?
+----------------------------------------------
+
+See inputsplitter comments until they are more certain.
