@@ -31,8 +31,8 @@ class TestBuilder(TestCase):
         builder = Builder(NO_RECORDS)
         try:
             dict = {'my_label': QLabel()}
-            builder._add_child_to_parent(
-                'my_label', QPushButton(), InputTextRecord.mock_record(), dict)
+            builder._add_child_to_parent('my_label', QPushButton(),
+                    InputTextRecord.mock_record(), dict)
         except LayoutError as e:
             msg = str(e)
             self.assertTrue(test_utils.fragments_are_present("""
@@ -51,17 +51,15 @@ class TestBuilder(TestCase):
             # Manually patch the LayoutsCreated to know about 'my_layout'.
             layouts_created.layout_element['my_layout'] = None
             layouts_created.provenance['my_layout'] = MOCK_FILELOCATION
-            builder._register(
-                'my_layout', mock_qobject, InputTextRecord.mock_record(),
-                layouts_created)
+            builder._register('my_layout', mock_qobject,
+                    InputTextRecord.mock_record(), layouts_created)
         except LayoutError as e:
             msg = str(e)
-            self.assertTrue(
-                'You cannot use this name: <my_layout> again, because it'
-                in msg)
-            self.assertTrue(
-                'has already been used here: <no-such-file, at line -1>,'
-                in msg)
+            print msg
+            self.assertTrue(test_utils.fragments_are_present("""
+                    You cannot use this name: <my_layout> again, because it
+                    has already been used here:
+                    """, msg))
 
     def test_register_method_does_register(self):
         # Make sure that when no errors are encountered, the parents end up
@@ -69,19 +67,16 @@ class TestBuilder(TestCase):
         builder = Builder(NO_RECORDS)
         qobject = QLabel()
         layouts_created = LayoutsCreated()
-        builder._register(
-            'my_label', qobject, InputTextRecord.mock_record(), layouts_created)
-        self.assertEqual(
-            layouts_created.layout_element['my_label'], qobject)
-        self.assertEqual(
-            layouts_created.provenance['my_label'],
-            InputTextRecord.mock_file_location())
+        builder._register('my_label', qobject, InputTextRecord.mock_record(),
+                layouts_created)
+        self.assertEqual(layouts_created.layout_element['my_label'], qobject)
+        self.assertEqual(layouts_created.provenance['my_label'],
+                InputTextRecord.mock_file_location())
 
     def test_that_attempt_to_settext_on_childless_parents_does_not_crash_if_fails(
             self):
         # noinspection PyUnusedLocal
-        records = _split_big_string_into_records(
-            """
+        records = _split_big_string_into_records("""
                 QVBoxLayout:some_text
             """)
         builder = Builder(records)
@@ -89,8 +84,7 @@ class TestBuilder(TestCase):
 
     def test_error_handling_for_adding_stretch_to_something_illegal(self):
         # noinspection PyUnusedLocal
-        records = _split_big_string_into_records(
-            """
+        records = _split_big_string_into_records("""
                 QLabel:my_label <>
             """)
         builder = Builder(records)
@@ -98,20 +92,17 @@ class TestBuilder(TestCase):
             builder.build()
         except LayoutError as e:
             msg = str(e)
-            self.assertTrue(
-                'You cannot add a stretch to a parent that is not a'
-                in msg)
-            self.assertTrue(
-                'QHBoxLayout, or a QVBoxLayout,'
-                in msg)
+            self.assertTrue(test_utils.fragments_are_present("""
+                    You cannot add a stretch to a parent that is not a
+                    QHBoxLayout, or a QVBoxLayout,
+                    """, msg))
 
     def test_at_api_level(self):
         # Exercise the top level api function with mixed content input. And
         # ensure the expected elements show up in the LayoutsCreated.
 
         my_button = QPushButton()
-        records = _split_big_string_into_records(
-            """
+        records = _split_big_string_into_records("""
                 HBOX:my_box my_label <> my_button
                 QLabel:my_label this-text
                 Find:QPushButton:my_button
@@ -128,7 +119,7 @@ class TestBuilder(TestCase):
         self.assertEqual(elements['my_box'].__class__.__name__, 'QHBoxLayout')
         self.assertEqual(elements['my_label'].__class__.__name__, 'QLabel')
         self.assertEqual(elements['my_button'].__class__.__name__,
-                         'QPushButton')
+                'QPushButton')
 
         # And the text got set on the QLabel
         self.assertEqual(elements['my_label'].text(), 'this-text')

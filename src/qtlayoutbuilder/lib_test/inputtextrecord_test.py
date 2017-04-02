@@ -4,6 +4,7 @@ import qtlayoutbuilder.lib.keywords
 from qtlayoutbuilder.api.filelocation import FileLocation
 from qtlayoutbuilder.lib.inputtextrecord import InputTextRecord
 from qtlayoutbuilder.api.layouterror import LayoutError
+from qtlayoutbuilder.test_utils import test_utils
 
 
 class TestInputTextRecord(TestCase):
@@ -15,9 +16,9 @@ class TestInputTextRecord(TestCase):
                     InputTextRecord.mock_file_location())
         except LayoutError as e:
             msg = str(e)
-            self.assertTrue(
-                    'Left hand side word: <HBOX: my_box>, must not contain '
-                    'whitespace,' in msg)
+            self.assertTrue(test_utils.fragments_are_present("""
+               Left hand side word: <HBOX: my_box>, must not contain whitespace,
+            """, msg))
 
         # Proper error handling if splitting produces empty segment.
         try:
@@ -25,10 +26,10 @@ class TestInputTextRecord(TestCase):
                     InputTextRecord.mock_file_location())
         except LayoutError as e:
             msg = str(e)
-            self.assertTrue(
-                    'One of the segments produced by splitting this word: '
-                    '<HBOX:> '
-                    'using colons is empty,' in msg)
+            self.assertTrue(test_utils.fragments_are_present("""
+               One of the segments produced by splitting this word: <HBOX:>
+               using colons is empty,
+            """, msg))
 
         # Proper error handling when splitting on colons produces
         # too few segments.
@@ -37,10 +38,10 @@ class TestInputTextRecord(TestCase):
                     InputTextRecord.mock_file_location())
         except LayoutError as e:
             msg = str(e)
-            self.assertTrue(
-                    'Splitting this word: <aaaaa> using colons does not '
-                    'produce 2 '
-                    'or 3 segments as required.' in msg)
+            self.assertTrue(test_utils.fragments_are_present("""
+               Splitting this word: <aaaaa> using colons does not produce
+               2 or 3 segments as required.
+            """, msg))
 
         # Proper error handling when splitting on colons produces
         # too many segments.
@@ -49,9 +50,10 @@ class TestInputTextRecord(TestCase):
                     InputTextRecord.mock_file_location())
         except LayoutError as e:
             msg = str(e)
-            self.assertTrue(
-                    'Splitting this word: <HBOX:a:b:c> using colons does not '
-                    'produce 2 or 3 segments as required.' in msg)
+            self.assertTrue(test_utils.fragments_are_present("""
+               Splitting this word: <HBOX:a:b:c> using colons does not
+               produce 2 or 3 segments as required.
+            """, msg))
 
     def test_populate_from_lhs_word(self):
 
@@ -62,8 +64,10 @@ class TestInputTextRecord(TestCase):
             record._populate_from_lhs_word('DUFF_KEYWORD:my_box')
         except LayoutError as e:
             msg = str(e)
-            self.assertTrue('Cannot detect any of the allowed forms in ' in msg)
-            self.assertTrue('this left hand side: <DUFF_KEYWORD:my_box>' in msg)
+            self.assertTrue(test_utils.fragments_are_present("""
+               Cannot detect any of the allowed forms in this left
+               hand side: <DUFF_KEYWORD:my_box>,
+            """, msg))
 
         # Correctly recognizes keyword forms
         for keyword in qtlayoutbuilder.lib.keywords.WORDS:

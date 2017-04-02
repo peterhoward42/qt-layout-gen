@@ -5,6 +5,7 @@ from qtlayoutbuilder.api.filelocation import FileLocation
 from qtlayoutbuilder.lib.inputsplitter import _split_big_string_into_records, \
     _split_file_into_records, _split_all_files_in_directory_into_records
 from qtlayoutbuilder.api.layouterror import LayoutError
+from qtlayoutbuilder.test_utils import test_utils
 
 
 class TestInputSplitter(TestCase):
@@ -15,7 +16,9 @@ class TestInputSplitter(TestCase):
             records = _split_file_into_records('sillyfilename')
         except LayoutError as e:
             msg = str(e)
-            self.assertTrue("No such file or directory: 'sillyfilename'" in msg)
+            self.assertTrue(test_utils.fragments_are_present("""
+               [Errno 2] No such file or directory: 'sillyfilename',
+            """, msg))
 
         # Raises an error if the first word in the file is not
         # a colon-word
@@ -30,8 +33,9 @@ class TestInputSplitter(TestCase):
             records = _split_file_into_records(malformed_file)
         except LayoutError as e:
             msg = str(e)
-            self.assertTrue("The first word in your file must have a colon in it:" in msg)
-            self.assertTrue(r"testdata\file_with_illegal_first_word.txt" in msg)
+            self.assertTrue(test_utils.fragments_are_present("""
+               The first word in your file must have a colon in it:
+            """, msg))
 
         # Raises an error if no records found
         malformed_file = os.path.abspath(
@@ -44,8 +48,9 @@ class TestInputSplitter(TestCase):
             records, err = _split_file_into_records(malformed_file)
         except LayoutError as e:
             msg = str(e)
-            self.assertTrue("Nothing found in this file:" in msg)
-            self.assertTrue(r"testdata\file_with_nothing_in.txt" in msg)
+            self.assertTrue(test_utils.fragments_are_present("""
+               Nothing found in this file:
+            """, msg))
 
         # Harvests correct records when input is properly formed
         properly_formed_file = os.path.abspath(
@@ -80,8 +85,9 @@ class TestInputSplitter(TestCase):
             records = _split_big_string_into_records('HBOX:foo a a')
         except LayoutError as e:
             msg = str(e)
-            self.assertTrue(
-                'Cannot specify two children of the same name' in msg)
+            self.assertTrue(test_utils.fragments_are_present("""
+               Cannot specify two children of the same name.
+            """, msg))
 
         # But tolerates two usages of '<>' as child names in same record.
         records = _split_big_string_into_records('HBOX:foo <> a <>')
@@ -112,10 +118,9 @@ class TestInputSplitter(TestCase):
             records = _split_all_files_in_directory_into_records(directory_with_a_problem_file_in)
         except LayoutError as e:
             msg = str(e)
-            self.assertTrue(
-                "The first word in your file must have a colon in it" in msg)
-            self.assertTrue(
-                r"hierarchy_with_problem_inside\top_level_b.txt" in msg)
+            self.assertTrue(test_utils.fragments_are_present("""
+               The first word in your file must have a colon in it:
+            """, msg))
 
         # Is aggregating the records from more than one file.
         # Reports problems part way through properly

@@ -11,6 +11,7 @@ from qtlayoutbuilder.api.layouterror import LayoutError
 from qtlayoutbuilder.lib import qobjectmaker
 from qtlayoutbuilder.lib.inputtextrecord import InputTextRecord
 from qtlayoutbuilder.lib.widgetandlayoutfinder import WidgetAndLayoutFinder
+from qtlayoutbuilder.test_utils import test_utils
 
 
 class TestQObjectMaker(TestCase):
@@ -41,10 +42,10 @@ class TestQObjectMaker(TestCase):
                 record, widget_or_layout_finder)
         except LayoutError as e:
             msg = str(e)
-            self.assertTrue("Python cannot make any sense of this word" in msg)
-            self.assertTrue(
-                "(it does not exist in the global namespace)" in msg)
-            self.assertTrue("<QThisWillNotExist>" in msg)
+            self.assertTrue(test_utils.fragments_are_present("""
+               Python cannot make any sense of this word. (it does not
+               exist in the global namespace) <QThisWillNotExist>,
+            """, msg))
 
         # Suitable error when python recognizes the word in the global namespace,
         # but cannot instantiate it.
@@ -67,13 +68,13 @@ class TestQObjectMaker(TestCase):
                 record, widget_or_layout_finder)
         except LayoutError as e:
             msg = str(e)
-            self.assertTrue("Cannot instantiate one of these: <__doc__>" in msg)
-            self.assertTrue("It is supposed to be a QtQui class" in msg)
-            self.assertTrue("like QString or" in msg)
-            self.assertTrue("QLabel that can be used as a constructor." in msg)
-            self.assertTrue("When the code tried to instantiate one..." in msg)
-            self.assertTrue("the underlying error message was:" in msg)
-            self.assertTrue("<'str' object is not callable>" in msg)
+            self.assertTrue(test_utils.fragments_are_present("""
+                Cannot instantiate one of these: <__doc__>.
+                It is supposed to be a QtQui class name like QString or
+                QLabel that can be used as a constructor.
+                When the code tried to instantiate one...
+                the underlying error message was: <'str' object is not callable>,
+            """, msg))
 
         # Suitable error when the thing gets instantiated, but turns out not to be
         # a QWidget or QLayout
@@ -86,9 +87,10 @@ class TestQObjectMaker(TestCase):
                 record, widget_or_layout_finder)
         except LayoutError as e:
             msg = str(e)
-            self.assertTrue("This class name: <QColor>" in msg)
-            self.assertTrue("instantiates successfully," in msg)
-            self.assertTrue("but is neither a QLayout, nor a QWidget," in msg)
+            self.assertTrue(test_utils.fragments_are_present("""
+               This class name: <QColor> instantiates successfully,
+                but is neither a QLayout, nor a QWidget,
+            """, msg))
 
         # Works properly when the QWord is explicit.
         words = ['QLabel:my_label', 'foo']
@@ -127,12 +129,10 @@ class TestQObjectMaker(TestCase):
                 record, widget_or_layout_finder)
         except LayoutError as e:
             msg = str(e)
-            self.assertTrue(
-                'Cannot find any objects of class: <CustomLayout>'
-                in msg)
-            self.assertTrue(
-                'that are referenced by a variable called: <my_page>'
-                in msg)
+            self.assertTrue(test_utils.fragments_are_present("""
+                Cannot find any objects of class: <CustomLayout>,
+                that are referenced by a variable called: <my_page>.
+            """, msg))
 
         # Correct error handling when duplicates found.
         words = ['Find:CustomLayout:my_page', 'a', 'b', 'c']
@@ -146,12 +146,11 @@ class TestQObjectMaker(TestCase):
                 record, widget_or_layout_finder)
         except LayoutError as e:
             msg = str(e)
-            self.assertTrue(
-                'Ambiguity Problem: Found more than one objects of class: <CustomLayout>'
-                in msg)
-            self.assertTrue(
-                'that is referenced by a variable called: <my_page>'
-                in msg)
+            self.assertTrue(test_utils.fragments_are_present("""
+               Ambiguity Problem: Found more than one objects of class:
+               <CustomLayout>,
+               that is referenced by a variable called: <my_page>.
+            """, msg))
 
         # Finds the target QObject when it should.
         words = ['Find:CustomLayout:my_solitary_page', 'a', 'b', 'c']

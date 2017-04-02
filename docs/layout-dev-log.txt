@@ -24,7 +24,7 @@ o  Examples tests modules from txt
                        new contract
                        *  builder test api does but looks wrong
                     *  satisfy all tests and regression
-                o  digress arbit record and file loc into test utils
+                *  digress arbit record and file loc into test utils
                 o  digress better test than lots of in
                 o  upgrade realist text to exploit set text on label
             o  addTab
@@ -81,3 +81,8 @@ Frames
 Labels
 Tabs
 Grids
+
+self.assertTrue(test_utils.fragments_are_present(
+        """
+        wont
+        """, msg))
