@@ -1,5 +1,6 @@
 from unittest import TestCase
 
+from PySide.QtGui import QFrame
 from PySide.QtGui import QVBoxLayout
 from PySide.QtGui import QWidget
 from PySide.QtGui import qApp, QApplication, QPushButton, QLabel, QGridLayout, \
@@ -36,8 +37,14 @@ class TestChildAdder(TestCase):
             QLabel(), 'tab_label', QStackedWidget()))
 
         # Try adding layouts - in true and false cases.
+
+        # Adding a QVBoxLayout to a QHBoxLayout should work.
         self.assertTrue(ChildAdder._try_using_addLayout(
             QVBoxLayout(), QHBoxLayout()))
+        # Adding a QVBoxLayout to a QFrame should work.
+        self.assertTrue(ChildAdder._try_using_setLayout(
+                QVBoxLayout(), QFrame()))
+        # Adding a QLabel to a QHBoxLayout (as if it were a layout) should fail.
         self.assertFalse(
             ChildAdder._try_using_addLayout(QLabel(), QHBoxLayout()))
 
@@ -63,7 +70,7 @@ class TestChildAdder(TestCase):
             msg = str(e)
             self.assertTrue(test_utils.fragments_are_present("""
                 This child name: <arbitrary name>, is a QLayout
-                but addLayout() did not work
+                but neither addLayout(), nor setLayout() worked
                 on the parent object.
             """, msg))
 

@@ -25,7 +25,7 @@ speculatively try calling addWidget(widget) and also addTab(widget) on the
 parent.
 
 If the child name resolves to something that is a QLayout, the system will
-speculatively try calling addLayout() on the parent.
+speculatively try calling addLayout(), and setLayout() on the parent.
 
 If the there is only one child specified, and its name does NOT resolve to
 anything that can be found (somewhere) on the left hand side, the system will

@@ -4,29 +4,10 @@ o  Examples tests modules from txt
     o  big realistic to shake out and mabye use as exemplars
         *  capture desired scope
         *  make mockup
-        o  just start with a test
-            *  timeout two children of same name when <>
-            o  change set text to use sole child
-                *  consider how expressed in contract
-                    *  says don't have to specify children
-                    *  says child comprise things that can be resolved on lhs
-                    *  says have to make sure supports addwid or addlay
-                    *  'this is  how you add things like labels'
-                *  update contract
-                *  tdd to make it so
-                    *  refactor existing so that pass only child name to
-                       child adder, moving attempt to resolve it down a level
-                    *  regression up
-                        *  child adder tests
-                        *  builder tests
-                        *  all tests
-                    *  make a test that expects setText on a button using
-                       new contract
-                       *  builder test api does but looks wrong
-                    *  satisfy all tests and regression
-                *  digress arbit record and file loc into test utils
-                o  digress better test than lots of in
-                o  upgrade realist text to exploit set text on label
+        o  just develop by experimentation and addition
+            *  need to support setlayout for QFrame
+                o  revert to using in title for realistic app
+                    o  can't see it :-(
             o  addTab
             o  parse quoted strings
 
@@ -81,8 +62,3 @@ Frames
 Labels
 Tabs
 Grids
-
-self.assertTrue(test_utils.fragments_are_present(
-        """
-        wont
-        """, msg))

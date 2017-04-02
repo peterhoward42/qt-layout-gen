@@ -4,9 +4,9 @@ VBOX:source_grouping source_settings progress_slider
 HBOX:source_settings
     source_summary
     source_refresh_btns
-QLabel:source_summary
-QLabel:refresh_and_menu_btns
-QLabel:display_row
-QLabel:source_rhs_buttons
-QLabel:progress_slider
-QLabel:source_refresh_btns
+QLabel:source_summary source-summary
+QLabel:refresh_and_menu_btns refresh-etc
+QLabel:display_row disp-row
+QLabel:source_rhs_buttons source-rhs-buttons
+QLabel:progress_slider prog-slider
+QLabel:source_refresh_btns srce-refresh-btns
