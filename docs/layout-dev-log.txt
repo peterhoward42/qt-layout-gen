@@ -6,11 +6,18 @@ o  Examples tests modules from txt
         *  make mockup
         o  just develop by experimentation and addition
             *  need to support setlayout for QFrame
-                o  revert to using in title for realistic app
-                    o  can't see it :-(
+            *  try using groupbox instead of frame cos can see it
+            o  allow comments somehow for big example?
+                *  syntax design - cf contract
+                    *  add parsing contract to contract
+                o  test up comments feature
+                    o  design where and what affects - input splitter
+                    o  try coding it after line in the sand checking
+            o  consider simple try catch sequence of add operations
             o  addTab
             o  parse quoted strings
 
+    o  merit of splitting into separate files?
 
     o  lessons learned and fixes
         o  Allow quoted strings in record?

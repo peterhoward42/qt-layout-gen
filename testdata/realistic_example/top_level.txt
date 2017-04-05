@@ -1,9 +1,23 @@
 VBOX:top_level app_title_frame settings_strip app_main_panel app_footer
 
-QFrame:app_title_frame app_title_layout
+QGroupBox:app_title_frame app_title_layout
 HBOX:app_title_layout <> gui-title <>
 
 QLabel:gui-title Nonsense-GUI
 
 QLabel:app_main_panel main-panel
 QLabel:app_footer app-footer
+
+
+VBOX:settings_strip source_row display_row
+HBOX:source_row source_grouping source_rhs_buttons
+VBOX:source_grouping source_settings progress_slider
+HBOX:source_settings
+    source_summary
+    source_refresh_btns
+QLabel:source_summary source-summary
+QLabel:refresh_and_menu_btns refresh-etc
+QLabel:display_row disp-row
+QLabel:source_rhs_buttons source-rhs-buttons
+QLabel:progress_slider prog-slider
+QLabel:source_refresh_btns srce-refresh-btns

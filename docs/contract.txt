@@ -1,63 +1,91 @@
 Contract
 --------
 
-Consider this fragment:
+Overview
+--------
+
+Input comprises a set of input records like this:
 
     VBOX:my_page header_row body footer_row
 
-It means - "make me a QVBoxLayout and call it 'my_page'. Then treat the things
-on the right as children that should be added to the layout.
+This one means - "make me a QVBoxLayout and call it 'my_page'. Then treat the
+things on the right as children that should be added to the layout.
 
-It tries to resolve the things on the right to things on the
-left somewhere else in the input. Like this fragment that defines what
-header_row means.
+It tries to resolve the things on the right to things on the left somewhere
+else in the input. Like this fragment that provides a definition for
+'header_row' in the first example:
 
     HBOX:header_row left_bit middle_bit right_bit
 
-The left hand part always creates a QLayout or QWidget.
+The left hand part ALWAYS creates a QLayout or QWidget. (Or subclass)
 
-The right hand part mandates what should be added to it as children - and
-usually comprises names of things which can be found (somewhere) on the left
-hand side.
+The right hand part comprises words that define what should be added to the
+thing on the left as its children.
+
+These are usually names of things which have been created by a left hand part
+in one of the other input records.
 
 If a child name resolves to something that is a QWidget, the system will
 speculatively try calling addWidget(widget) and also addTab(widget) on the
-parent.
+parent. (Parent is usually a QLayout in this case, but TabbedWidget also works
+as a parent).
 
 If the child name resolves to something that is a QLayout, the system will
-speculatively try calling addLayout(), and setLayout() on the parent.
+speculatively try calling addLayout(), and setLayout() on the parent. This
+caters for adding child layouts to parent layouts, and also setting the layout
+for a parent that is a widget.
 
-If the there is only one child specified, and its name does NOT resolve to
-anything that can be found (somewhere) on the left hand side, the system will
-speculatively try calling setText() on the parent, using the name of the child
-as the text. This is useful for including things like QPushButtons and QLabels
-in your layouts, and specifying their text at the same time.
+If there is only one child name specified, and it does not resolve to a
+QLayout/QWidget, it is taken to be text that can be used in a call to setText()
+on the parent. Useful for QPushButtons and QLabels etc.
 
-You can put lots of these lines into a file and have the builder consume the
-lot. The order of the lines doesn't matter. In fact you can split it over
-multiple files to modularise it however you think fit, and give the builder a
-whole directory to play with. The builder will consume all the files in the
-directory and sub directories recursively.
+Input Record - Sources
+----------------------
 
-The format can handle longer lists of children like this: (newlines are
-not significant).
+The system consumes records at run time, and these can be provided by:
+1) A multi-line string.
+2) A file.
+3) A directory.
 
-    VBOX:my_page          row_a         row_b           row_c
-                          row_d         row_e           row_f
-                          row_g         
-    HBOX:row_a ... 
+The first case is useful for small dynamically created layouts and layout
+fragments.
 
-You can also pass it string literals from Python like this (below), which is
-conventient to build layouts for simple widgets.
+In the third case, all the files in the directly and sub directories are
+consumed recursively. This is intended for large complex layouts where it is
+valuable to use multiple files and a hiearchy to tame complexity and to make
+it easier to change small parts in isolation.
 
-    layout = build_layout(
-        """
-        VBOX:my_page          header_row    body            footer_row
-        HBOX:header_row       left_bit      middle_bit      right_bit
-        """
+The second case is a half-way house between the two.
 
-The contract for the input is extremely simple - and is defined formally in the docs.
-(Actually in the inputsplitter comments today).
+The order in which the system encounters the records does not matter in any of
+these cases. It amalgamates all the input records together internally, before
+trying to resolve the cross references.
+
+Parsing Contract
+----------------
+
+Newline characters are not significant in the parsing other than just another
+form of whitespace. The parsing specification is listed below - but note that
+it means that records can span multiple lines - which is useful for long lists
+of children.
+
+The parsing begins by splitting the input text into 'words', simply by treating
+whitespace as the delimiters. So this will include child names, but also the
+compound words that include a colon like 'VBOX:my_page'. A record is then defined
+to start at a colon-word, and to include all the words that follow up to the next
+colono-word (or end of file).
+
+Using Comments in the Input
+---------------------------
+
+You can incorporate comments into the input with parenthesis.
+
+    ( I am a comment )
+
+They can go anwhere, and are conceptually removed completely from the input
+before the parsing described above sets to work. Very simple implementation,
+no nesting or escaping is required.
+
 
 What can it make (apart from QBoxLayouts)
 -----------------------------------------
@@ -67,22 +95,23 @@ To complete the list of keywords you can use on the left, they are:
 
     (The last two of these are QWidgtet, not QLayouts.)
 
-These are just short forms for the really common ones.
-You could have written this instead:
+These are just short forms for the really common Qt classes.
+You could have written it longhand instead:
 
     QVBoxLayout:my_page          row_a         row_b           row_c
 
 You can put the name of any Qt Widget or Layout - but it is up to you to
-make sure that it supports addWidget(), addLayout(), addTab() or setText().
+make sure that it supports addWidget(), addLayout(), setLayout(), addTab()
+or setText().
 
-This is how you add things like buttons and labels as suggested above:
+This is how you add text to labels and buttons:
 
         HBOX:header_row left_bit my_label right_bit
         QLabel:my_label with-this-text
 
-Accessing the components put into the layout
---------------------------------------------
-You will invariably want to access the components incorporated into the layouts
+Accessing the layouts and widgets created
+------------------------------------------
+You will invariably need to access the components incorporated into the layouts
 once they have been created, to do things like connecting signals and setting
 styles for example.
 
@@ -135,7 +164,7 @@ else in your program.
     Find:CustomLayout:my_page header_row body footer_row
 
 This behaviour kicks in when your left hand side starts with 'Find' and has
-two colons in.
+TWO colons in.
 
 The builder will consider all the objects that are already instantiated in your
 program which are of the CustomLayout class. It will then look for one that
@@ -147,18 +176,23 @@ Somewhere else in your program you wrote:
 
 If more than one object qualifies - the builder will object politely.
 
-Miscellany
-----------
-These exist so far just for one special case that is so completely
-ubiquitous it merits it. Ie. you nearly always want to add a stretch item to a box layout
-either at one end or the other, or somewhere in the middle of the children:
+Reserved Child Names
+--------------------
+The system reserves (some) names for children to have a special meaning.
+
+You can get stretch added to a QBoxLayout (layout.addStretch()), but using
+the reserved child name: '<>'.
 
     HBOX:my_box   foo bar <> baz
 
-The '<>' means put a stretch item here. If you use it on anything other than
-HBOX or VBOX, the builder will complain.
+I want spaces in my label strings
+---------------------------------
+The parsing contract means that you cannot directly include spaces in the text
+you provide for QLabels / Buttons etc.
 
-How is input text parsed / what are the rules?
-----------------------------------------------
+But if you include double underscores in these strings, then the
+system will automatically substitute a space:
 
-See inputsplitter comments until they are more certain.
+    QLabel:my_label this__has__spaces__in
+
+
