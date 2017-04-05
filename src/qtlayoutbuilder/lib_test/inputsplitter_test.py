@@ -3,12 +3,34 @@ from unittest import TestCase
 
 from qtlayoutbuilder.api.filelocation import FileLocation
 from qtlayoutbuilder.lib.inputsplitter import _split_big_string_into_records, \
-    _split_file_into_records, _split_all_files_in_directory_into_records
+    _split_file_into_records, _split_all_files_in_directory_into_records, \
+    _remove_whole_comments_from
 from qtlayoutbuilder.api.layouterror import LayoutError
 from qtlayoutbuilder.test_utils import test_utils
 
 
 class TestInputSplitter(TestCase):
+
+    def test_utilities(self):
+        # Basic
+        result = _remove_whole_comments_from('foo{bar}baz')
+        self.assertEquals(result, 'foobaz')
+
+        # No-op
+        result = _remove_whole_comments_from('foobarbaz')
+        self.assertEquals(result, 'foobarbaz')
+
+        # Whitespace involved
+        result = _remove_whole_comments_from('foo{ bar} baz')
+        self.assertEquals(result, 'foo baz')
+
+        # Multiple
+        result = _remove_whole_comments_from('a{b}c{d}e')
+        self.assertEquals(result, 'ace')
+
+        # Mismatched braces
+        result = _remove_whole_comments_from('hello{fred{how are you} today')
+        self.assertEquals(result, 'hello today')
 
     def test_split_file_into_records(self):
         # Reports IO errors properly.
@@ -101,6 +123,19 @@ class TestInputSplitter(TestCase):
         # parsing of each one.
         self.assertEqual(records[0].parent_name, 'a')
         self.assertEqual(records[1].parent_name, 'd')
+
+        # Harvests correct words when comments are present.
+        records = _split_big_string_into_records("""
+
+                HBOX:my_box left right
+
+                { explain something }
+
+                QLabel:left hello
+                QLabel:right fred
+            """)
+        self.assertIsNotNone(records)
+        self.assertEqual(len(records), 3)
 
     def test_split_all_files_in_directory_into_records(self):
         # Reports os level problems properly.

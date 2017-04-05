@@ -13,6 +13,8 @@ o  Examples tests modules from txt
                 o  test up comments feature
                     o  design where and what affects - input splitter
                     o  try coding it after line in the sand checking
+                        *  first for string
+                        o  now for tougher case of file
             o  consider simple try catch sequence of add operations
             o  addTab
             o  parse quoted strings
