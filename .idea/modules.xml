@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/qt-layout-gen.iml" filepath="$PROJECT_DIR$/.idea/qt-layout-gen.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/qt-layout-gen.iml" filepath="$PROJECT_DIR$/.idea/qt-layout-gen.iml" />
     </modules>
   </component>
 </project>
