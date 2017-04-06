@@ -15,6 +15,8 @@ o  Examples tests modules from txt
                     o  try coding it after line in the sand checking
                         *  first for string
                         o  now for tougher case of file
+                            o  strip down existing code into tiny bits
+                            o  introduce line consumer that Is-A FSM?
             o  consider simple try catch sequence of add operations
             o  addTab
             o  parse quoted strings
