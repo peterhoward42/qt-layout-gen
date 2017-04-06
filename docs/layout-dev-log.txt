@@ -8,18 +8,8 @@ o  Examples tests modules from txt
             *  need to support setlayout for QFrame
             *  try using groupbox instead of frame cos can see it
             o  allow comments somehow for big example?
-                *  syntax design - cf contract
-                    *  add parsing contract to contract
-                o  test up comments feature
-                    o  design where and what affects - input splitter
-                    o  try coding it after line in the sand checking
-                        *  first for string
-                        o  now for tougher case of file
-                            o  strip down existing code into tiny bits and make into a class
-                                *  code
-                                o  test
-                            o  introduce line consumer that Is-A FSM?
-                    o  consider moving split from text similarly
+                o  just need to add file based tests
+                o  now add comments to big example
             o  consider simple try catch sequence of add operations
             o  addTab
             o  parse quoted strings

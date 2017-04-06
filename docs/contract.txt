@@ -82,7 +82,8 @@ You can incorporate comments into the input with parenthesis.
 
     ( I am a comment )
 
-They can go anwhere, and are conceptually removed completely from the input
+These must start and end on the same line, but apart from that, they can
+go anwhere, and are conceptually removed completely from the input
 before the parsing described above sets to work. Very simple implementation,
 no nesting or escaping is required.
 

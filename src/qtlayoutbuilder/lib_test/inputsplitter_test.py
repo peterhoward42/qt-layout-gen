@@ -3,8 +3,8 @@ from unittest import TestCase
 
 from qtlayoutbuilder.api.layouterror import LayoutError
 from qtlayoutbuilder.lib.inputsplitter import _remove_whole_comments_from, \
-    FileSplitIntoRecords, _split_big_string_into_records, \
-    _split_all_files_in_directory_into_records
+    _split_big_string_into_records, \
+    _split_all_files_in_directory_into_records, split_file_into_records
 from qtlayoutbuilder.test_utils import test_utils
 
 
@@ -34,7 +34,7 @@ class TestInputSplitter(TestCase):
     def test_split_file_into_records(self):
         # Reports IO errors properly.
         try:
-            records = FileSplitIntoRecords('sillyfilename').split()
+            records = split_file_into_records('sillyfilename')
         except LayoutError as e:
             msg = str(e)
             self.assertTrue(test_utils.fragments_are_present("""
@@ -51,7 +51,7 @@ class TestInputSplitter(TestCase):
                 'file_with_illegal_first_word.txt'))
 
         try:
-            records = FileSplitIntoRecords(malformed_file).split()
+            records = split_file_into_records(malformed_file)
         except LayoutError as e:
             msg = str(e)
             self.assertTrue(test_utils.fragments_are_present("""
@@ -66,7 +66,7 @@ class TestInputSplitter(TestCase):
                 'testdata',
                 'file_with_nothing_in.txt'))
         try:
-            records = FileSplitIntoRecords(malformed_file).split()
+            records = split_file_into_records(malformed_file)
         except LayoutError as e:
             msg = str(e)
             self.assertTrue(test_utils.fragments_are_present("""
@@ -82,7 +82,7 @@ class TestInputSplitter(TestCase):
                 'simple_hierarchy',
                 'top_level_a.txt'))
 
-        records = FileSplitIntoRecords(properly_formed_file).split()
+        records = split_file_into_records(properly_formed_file)
         self.assertIsNotNone(records)
         self.assertEqual(len(records), 4)
         # We need only test the record aggregation, not the
