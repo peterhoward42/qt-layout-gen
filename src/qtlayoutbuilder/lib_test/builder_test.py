@@ -9,7 +9,7 @@ from qtlayoutbuilder.api.layoutscreated import LayoutsCreated
 from qtlayoutbuilder.lib.builder import Builder
 from qtlayoutbuilder.lib.inputtextrecord import InputTextRecord
 # noinspection PyProtectedMember
-from qtlayoutbuilder.lib.inputsplitter import _split_big_string_into_records
+from qtlayoutbuilder.lib.inputsplitter import split_big_string_into_records
 from qtlayoutbuilder.test_utils import test_utils
 
 
@@ -76,7 +76,7 @@ class TestBuilder(TestCase):
     def test_that_attempt_to_settext_on_childless_parents_does_not_crash_if_fails(
             self):
         # noinspection PyUnusedLocal
-        records = _split_big_string_into_records("""
+        records = split_big_string_into_records("""
                 QVBoxLayout:some_text
             """)
         builder = Builder(records)
@@ -84,7 +84,7 @@ class TestBuilder(TestCase):
 
     def test_error_handling_for_adding_stretch_to_something_illegal(self):
         # noinspection PyUnusedLocal
-        records = _split_big_string_into_records("""
+        records = split_big_string_into_records("""
                 QLabel:my_label <>
             """)
         builder = Builder(records)
@@ -102,7 +102,7 @@ class TestBuilder(TestCase):
         # ensure the expected elements show up in the LayoutsCreated.
 
         my_button = QPushButton()
-        records = _split_big_string_into_records("""
+        records = split_big_string_into_records("""
                 HBOX:my_box my_label <> my_button
                 QLabel:my_label this-text
                 Find:QPushButton:my_button

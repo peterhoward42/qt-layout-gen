@@ -10,7 +10,7 @@ from qtlayoutbuilder.api.layouterror import LayoutError
 
 class InputTextRecord(object):
     """
-    This class is able to parse a string like this: 'HBOX:my_box child_a child_b'
+    This class is able to parse a string like this: 'my_box:HBOX child_a child_b'
     and build a structured model from it that isolates the field and captures
     the intent.
     It also holds a FileLocation - which remembers the source filename and
@@ -108,27 +108,28 @@ class InputTextRecord(object):
         :return: None
         :raises: LayoutError
         """
-        # First get the segments of the LHS isolated. (Which also makes sure
-        # the indexing operations below are safe.)
+
+        # my_label:QLabel
+        # my_label:VBOX
+        # my_thing:Find:MyClass
+
         segments = self._get_segments_of_lhs_word(lhs_word, self.file_location)
-        type_field = segments[0]  # E.g. HBOX or QLabel or Find
+        type_field = segments[1]  # QLabel | VBOX | Find
+        self.parent_name = segments[0]
 
         if qtlayoutbuilder.lib.keywords.is_a_keyword(type_field):
             self.make_or_find = self.INSTANTIATE
             self.class_required = qtlayoutbuilder.lib.keywords.class_required_for(type_field)
-            self.parent_name = segments[1]
             return
 
-        if (segments[0] == 'Find') and (len(segments) == 3):
+        if (type_field == 'Find') and (len(segments) == 3):
             self.make_or_find = self.FIND
-            self.class_required = segments[1]
-            self.parent_name = segments[2]
+            self.class_required = segments[2]
             return
 
-        if segments[0].startswith('Q'):
+        if type_field.startswith('Q'):
             self.make_or_find = self.INSTANTIATE
-            self.class_required = segments[0]
-            self.parent_name = segments[1]
+            self.class_required = type_field
             return
 
         raise LayoutError(

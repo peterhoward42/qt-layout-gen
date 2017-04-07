@@ -1,6 +1,8 @@
 VBOX:my_page                header_row          body            <>
+
+( a comment line )
 VBOX:header_row             row_a               row_b           row_c
-                            row_d               row_e           row_f
+                            row_d  (comment)    row_e (comment) row_f
                             row_g
-QVBoxLayout:body            topic_a             topic_b         topic_c
+QVBoxLayout:body (comment)  topic_a             topic_b         topic_c
 Find:CustomLayout:custom_a  foo                 bar             baz

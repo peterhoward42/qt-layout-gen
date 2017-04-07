@@ -21,7 +21,7 @@ class LayoutBuilder(object):
         :raises: LayoutError (defined below)
         """
 
-        records = inputsplitter._split_all_files_in_directory_into_records(dir)
+        records = inputsplitter.split_all_files_in_directory_into_records(dir)
         return builder.Builder(records).build()
 
     @staticmethod
@@ -34,7 +34,7 @@ class LayoutBuilder(object):
         :return: A LayoutsCreated object.
         :raises: LayoutError (defined below)
         """
-        records = inputsplitter._split_big_string_into_records(one_big_string)
+        records = inputsplitter.split_big_string_into_records(one_big_string)
         return builder.Builder(records).build()
 
 

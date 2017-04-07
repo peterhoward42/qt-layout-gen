@@ -23,10 +23,13 @@ def split_file_into_records(file_path):
     :return: InputTextRecord(s)
     :raises LayoutError
     """
+    # We made this API entry point a plain function to keep it the same
+    # pattern as the others below. But the implementation is stateful, and
+    # so we use a class to encapsulate that state.
     splitter = _FileSplitIntoRecords(file_path)
     return splitter.split()
 
-def _split_big_string_into_records(big_string):
+def split_big_string_into_records(big_string):
     """
     This function splits the contents of the given string into records.
     :param big_string: The string to split
@@ -58,7 +61,7 @@ def _split_big_string_into_records(big_string):
     return records
 
 
-def _split_all_files_in_directory_into_records(directory_path):
+def split_all_files_in_directory_into_records(directory_path):
     """
     This function splits the contents of all the files in the given directory,
     and sub directories (recursively).
@@ -73,6 +76,8 @@ def _split_all_files_in_directory_into_records(directory_path):
         all_records.extend(records)
     return all_records
 
+#----------------------------------------------------------------------------
+# Private below.
 
 def _remove_whole_comments_from(big_string):
     return _COMMENT_REGEX.sub('', big_string)
@@ -117,9 +122,9 @@ class _FileSplitIntoRecords(object):
                 self._records.append(
                     InputTextRecord.make_from_lhs_word(
                         word, FileLocation(self._file_path, self._line_number)))
-        else:
-            self._assert_first_word_encountered_is_colon_word()
-            self._get_current_record().add_child_name(word)
+            else:
+                self._assert_first_word_encountered_is_colon_word()
+                self._get_current_record().add_child_name(word)
 
     def _assert_some_records_found(self):
         if len(self._records) == 0:

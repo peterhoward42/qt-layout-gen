@@ -6,7 +6,7 @@ Overview
 
 Input comprises a set of input records like this:
 
-    VBOX:my_page header_row body footer_row
+    my_page:VBOX header_row body footer_row
 
 This one means - "make me a QVBoxLayout and call it 'my_page'. Then treat the
 things on the right as children that should be added to the layout.
@@ -15,7 +15,7 @@ It tries to resolve the things on the right to things on the left somewhere
 else in the input. Like this fragment that provides a definition for
 'header_row' in the first example:
 
-    HBOX:header_row left_bit middle_bit right_bit
+    header_row:HBOX left_bit middle_bit right_bit
 
 The left hand part ALWAYS creates a QLayout or QWidget. (Or subclass)
 
@@ -47,8 +47,8 @@ The system consumes records at run time, and these can be provided by:
 2) A file.
 3) A directory.
 
-The first case is useful for small dynamically created layouts and layout
-fragments.
+The first case is useful for simple layouts and layout fragments and lets
+you have the input text right next to the code that uses it.
 
 In the third case, all the files in the directly and sub directories are
 consumed recursively. This is intended for large complex layouts where it is
@@ -71,7 +71,7 @@ of children.
 
 The parsing begins by splitting the input text into 'words', simply by treating
 whitespace as the delimiters. So this will include child names, but also the
-compound words that include a colon like 'VBOX:my_page'. A record is then defined
+compound words that include a colon like 'my_page:VBOX'. A record is then defined
 to start at a colon-word, and to include all the words that follow up to the next
 colono-word (or end of file).
 
@@ -85,7 +85,7 @@ You can incorporate comments into the input with parenthesis.
 These must start and end on the same line, but apart from that, they can
 go anwhere, and are conceptually removed completely from the input
 before the parsing described above sets to work. Very simple implementation,
-no nesting or escaping is required.
+no nesting or escaping is provided / allowed.
 
 
 What can it make (apart from QBoxLayouts)
@@ -99,7 +99,7 @@ To complete the list of keywords you can use on the left, they are:
 These are just short forms for the really common Qt classes.
 You could have written it longhand instead:
 
-    QVBoxLayout:my_page          row_a         row_b           row_c
+    my_page:QVBoxLayout          row_a         row_b           row_c
 
 You can put the name of any Qt Widget or Layout - but it is up to you to
 make sure that it supports addWidget(), addLayout(), setLayout(), addTab()
@@ -107,8 +107,8 @@ or setText().
 
 This is how you add text to labels and buttons:
 
-        HBOX:header_row left_bit my_label right_bit
-        QLabel:my_label with-this-text
+        header_rows:HBOX left_bit my_label right_bit
+        my_label:QLabel with-this-text
 
 Accessing the layouts and widgets created
 ------------------------------------------
@@ -162,10 +162,10 @@ There is a way to specify on the left hand side, that the builder should go
 off and find a pre-existing object that you've pre-instantiated somewhere
 else in your program.
 
-    Find:CustomLayout:my_page header_row body footer_row
+    my_page:Find:CustomLayout header_row body footer_row
 
-This behaviour kicks in when your left hand side starts with 'Find' and has
-TWO colons in.
+This behaviour kicks in when your left hand side has two colons in and the
+middle word is 'Find'.
 
 The builder will consider all the objects that are already instantiated in your
 program which are of the CustomLayout class. It will then look for one that
@@ -184,7 +184,7 @@ The system reserves (some) names for children to have a special meaning.
 You can get stretch added to a QBoxLayout (layout.addStretch()), but using
 the reserved child name: '<>'.
 
-    HBOX:my_box   foo bar <> baz
+    my_box:HBOX foo bar <> baz
 
 I want spaces in my label strings
 ---------------------------------

@@ -3,8 +3,8 @@ from unittest import TestCase
 
 from qtlayoutbuilder.api.layouterror import LayoutError
 from qtlayoutbuilder.lib.inputsplitter import _remove_whole_comments_from, \
-    _split_big_string_into_records, \
-    _split_all_files_in_directory_into_records, split_file_into_records
+    split_big_string_into_records, \
+    split_all_files_in_directory_into_records, split_file_into_records
 from qtlayoutbuilder.test_utils import test_utils
 
 
@@ -73,7 +73,8 @@ class TestInputSplitter(TestCase):
                Nothing found in this file:
             """, msg))
 
-        # Harvests correct records when input is properly formed
+        # Harvests correct records when input is properly formed.
+        # (The input file includes comments)
         properly_formed_file = os.path.abspath(
             os.path.join(
                 __file__,
@@ -95,7 +96,7 @@ class TestInputSplitter(TestCase):
     def test_split_text_into_records(self):
         # Raises error when first word is not a colon-word
         try:
-            records = _split_big_string_into_records('ipsum doo dah')
+            records = split_big_string_into_records('ipsum doo dah')
         except LayoutError as e:
             msg = str(e)
             self.assertTrue(
@@ -103,7 +104,7 @@ class TestInputSplitter(TestCase):
 
         # Raises error when two children of the same name cited in the record
         try:
-            records = _split_big_string_into_records('HBOX:foo a a')
+            records = split_big_string_into_records('HBOX:foo a a')
         except LayoutError as e:
             msg = str(e)
             self.assertTrue(test_utils.fragments_are_present("""
@@ -111,11 +112,11 @@ class TestInputSplitter(TestCase):
             """, msg))
 
         # But tolerates two usages of '<>' as child names in same record.
-        records = _split_big_string_into_records('HBOX:foo <> a <>')
+        records = split_big_string_into_records('HBOX:foo <> a <>')
         self.assertIsNotNone(records)
 
         # Harvests correct words when input is properly formed
-        records = _split_big_string_into_records('HBOX:a b c HBOX:d e f')
+        records = split_big_string_into_records('HBOX:a b c HBOX:d e f')
         self.assertIsNotNone(records)
         self.assertEqual(len(records), 2)
         # We need only test the record aggregation, not the
@@ -124,22 +125,28 @@ class TestInputSplitter(TestCase):
         self.assertEqual(records[1].parent_name, 'd')
 
         # Harvests correct words when comments are present.
-        records = _split_big_string_into_records("""
+        records = split_big_string_into_records("""
 
                 HBOX:my_box left right
 
-                { explain something }
+                ( explain something )
 
                 QLabel:left hello
                 QLabel:right fred
             """)
         self.assertIsNotNone(records)
         self.assertEqual(len(records), 3)
+        self.assertEqual(records[0].parent_name, 'my_box')
+        self.assertEqual(records[0].child_names, ['left', 'right'])
+        self.assertEqual(records[1].parent_name, 'left')
+        self.assertEqual(records[1].child_names, ['hello'] )
+        self.assertEqual(records[2].parent_name, 'right')
+        self.assertEqual(records[2].child_names, ['fred'])
 
     def test_split_all_files_in_directory_into_records(self):
         # Reports os level problems properly.
         try:
-            records = _split_all_files_in_directory_into_records('sillydirname')
+            records = split_all_files_in_directory_into_records('sillydirname')
         except LayoutError as e:
             msg = str(e)
             self.assertTrue(
@@ -149,7 +156,7 @@ class TestInputSplitter(TestCase):
         directory_with_a_problem_file_in = os.path.abspath(os.path.join(
                 __file__, "../../../..", 'testdata', 'hierarchy_with_problem_inside'))
         try:
-            records = _split_all_files_in_directory_into_records(directory_with_a_problem_file_in)
+            records = split_all_files_in_directory_into_records(directory_with_a_problem_file_in)
         except LayoutError as e:
             msg = str(e)
             self.assertTrue(test_utils.fragments_are_present("""
@@ -160,7 +167,7 @@ class TestInputSplitter(TestCase):
         # Reports problems part way through properly
         simple_hierarchy = os.path.abspath(os.path.join(
             __file__, "../../../..", 'testdata', 'simple_hierarchy'))
-        records = _split_all_files_in_directory_into_records(simple_hierarchy)
+        records = split_all_files_in_directory_into_records(simple_hierarchy)
         self.assertEqual(len(records), 8)
         self.assertEqual(records[0].parent_name, 'my_page')
         self.assertEqual(records[7].parent_name, 'd')

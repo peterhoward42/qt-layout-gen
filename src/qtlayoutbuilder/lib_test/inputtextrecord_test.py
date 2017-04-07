@@ -12,23 +12,24 @@ class TestInputTextRecord(TestCase):
 
         # Proper error handling if contains a space.
         try:
-            InputTextRecord._get_segments_of_lhs_word('HBOX: my_box',
+            InputTextRecord._get_segments_of_lhs_word('my_box: HBOX',
                     InputTextRecord.mock_file_location())
         except LayoutError as e:
             msg = str(e)
             self.assertTrue(test_utils.fragments_are_present("""
-               Left hand side word: <HBOX: my_box>, must not contain whitespace,
+               Left hand side word: <my_box: HBOX>, must
+               not contain whitespace,
             """, msg))
 
         # Proper error handling if splitting produces empty segment.
         try:
-            InputTextRecord._get_segments_of_lhs_word('HBOX:',
+            InputTextRecord._get_segments_of_lhs_word('my_label:',
                     InputTextRecord.mock_file_location())
         except LayoutError as e:
             msg = str(e)
             self.assertTrue(test_utils.fragments_are_present("""
-               One of the segments produced by splitting this word: <HBOX:>
-               using colons is empty,
+               One of the segments produced by splitting this word:
+               <my_label:> using colons is empty,
             """, msg))
 
         # Proper error handling when splitting on colons produces
@@ -46,13 +47,13 @@ class TestInputTextRecord(TestCase):
         # Proper error handling when splitting on colons produces
         # too many segments.
         try:
-            InputTextRecord._get_segments_of_lhs_word('HBOX:a:b:c',
+            InputTextRecord._get_segments_of_lhs_word('a:b:c:d:e',
                     InputTextRecord.mock_file_location())
         except LayoutError as e:
             msg = str(e)
             self.assertTrue(test_utils.fragments_are_present("""
-               Splitting this word: <HBOX:a:b:c> using colons does not
-               produce 2 or 3 segments as required.
+               Splitting this word: <a:b:c:d:e> using colons does not produce
+               2 or 3 segments as required.
             """, msg))
 
     def test_populate_from_lhs_word(self):
@@ -61,18 +62,18 @@ class TestInputTextRecord(TestCase):
         # are present.
         record = InputTextRecord(InputTextRecord.mock_file_location())
         try:
-            record._populate_from_lhs_word('DUFF_KEYWORD:my_box')
+            record._populate_from_lhs_word('my_box:DUFF_KEYWORD')
         except LayoutError as e:
             msg = str(e)
             self.assertTrue(test_utils.fragments_are_present("""
-               Cannot detect any of the allowed forms in this left
-               hand side: <DUFF_KEYWORD:my_box>,
+               Cannot detect any of the allowed forms in this left hand
+               side: <my_box:DUFF_KEYWORD>,
             """, msg))
 
         # Correctly recognizes keyword forms
         for keyword in qtlayoutbuilder.lib.keywords.WORDS:
             record = InputTextRecord(InputTextRecord.mock_file_location())
-            lhs = '%s:my_thing' % keyword
+            lhs = 'my_thing:%s' % keyword
             record._populate_from_lhs_word(lhs)
             self.assertEquals(record.make_or_find, record.INSTANTIATE)
             self.assertEquals(record.class_required,
@@ -81,7 +82,7 @@ class TestInputTextRecord(TestCase):
 
         # Correctly recognizes Find form
         record = InputTextRecord(InputTextRecord.mock_file_location())
-        lhs = 'Find:MyCustomClass:custom_a'
+        lhs = 'custom_a:Find:MyCustomClass'
         record._populate_from_lhs_word(lhs)
         self.assertEquals(record.make_or_find, record.FIND)
         self.assertEquals(record.class_required, 'MyCustomClass')
@@ -89,14 +90,14 @@ class TestInputTextRecord(TestCase):
 
         # Correctly recognizes QWord form
         record = InputTextRecord(InputTextRecord.mock_file_location())
-        lhs = 'QLabel:my_label'
+        lhs = 'my_label:QLabel'
         record._populate_from_lhs_word(lhs)
         self.assertEquals(record.make_or_find, record.INSTANTIATE)
         self.assertEquals(record.class_required, 'QLabel')
         self.assertEquals(record.parent_name, 'my_label')
 
     def test_make_from_lhs_word(self):
-        lhs = 'QLabel:my_label'
+        lhs = 'my_label:QLabel'
         record = InputTextRecord.make_from_lhs_word(lhs,
                 InputTextRecord.mock_file_location())
         self.assertEquals(record.file_location,
@@ -107,7 +108,7 @@ class TestInputTextRecord(TestCase):
         self.assertEquals(len(record.child_names), 0)
 
     def test_make_from_all_words(self):
-        words = ['QLabel:my_label', 'a', 'b']
+        words = ['my_label:QLabel', 'a', 'b']
         record = InputTextRecord.make_from_all_words(words,
                 InputTextRecord.mock_file_location())
         self.assertEquals(record.file_location,
