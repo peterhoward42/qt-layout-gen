@@ -3,10 +3,9 @@ from unittest import TestCase
 from PySide.QtGui import QFrame
 from PySide.QtGui import QVBoxLayout
 from PySide.QtGui import QWidget
-from PySide.QtGui import qApp, QApplication, QPushButton, QLabel, QGridLayout, \
-    QHBoxLayout, QStackedLayout, QStackedWidget, QTabWidget
+from PySide.QtGui import qApp, QApplication, QLabel, QHBoxLayout, \
+    QStackedWidget, QTabWidget
 
-from qtlayoutbuilder.api.filelocation import MOCK_FILELOCATION
 from qtlayoutbuilder.api.layouterror import LayoutError
 from qtlayoutbuilder.lib.childadder import ChildAdder
 from qtlayoutbuilder.lib.inputtextrecord import InputTextRecord
@@ -102,6 +101,12 @@ class TestChildAdder(TestCase):
         ChildAdder._add_child_text('child_name', label,
                                    InputTextRecord.mock_record())
         self.assertEqual(label.text(), 'child_name')
+
+    def test_add_child_text_substitutes_double_underscores(self):
+        label = QLabel()
+        ChildAdder._add_child_text('This__should__get__spaces', label,
+                InputTextRecord.mock_record())
+        self.assertEqual(label.text(), 'This should get spaces')
 
     def test_api_add_text_use_case_works(self):
         label = QLabel()

@@ -9,7 +9,7 @@ o  Examples tests modules from txt
             *  try using groupbox instead of frame cos can see it
             *  timeout - redefine contract as having name first!!!
             *  allow comments somehow for big example?
-            o  double underscore space subst
+            *  double underscore space subst
             o  consider simple try catch sequence of add operations
             o  addTab
             o  allow space after first word

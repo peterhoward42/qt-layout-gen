@@ -103,7 +103,7 @@ class TestBuilder(TestCase):
         my_button = QPushButton()
         records = split_big_string_into_records("""
                 my_box:HBOX my_label <> my_button
-                my_label:QLabel this-text
+                my_label:QLabel this__text
                 my_button:Find:QPushButton
             """)
         builder = Builder(records)
@@ -120,8 +120,8 @@ class TestBuilder(TestCase):
         self.assertEqual(elements['my_button'].__class__.__name__,
                 'QPushButton')
 
-        # And the text got set on the QLabel
-        self.assertEqual(elements['my_label'].text(), 'this-text')
+        # And the text got set on the QLabel (with double underscore subst.)
+        self.assertEqual(elements['my_label'].text(), 'this text')
 
         # And the QHBoxLayout got its stretch in the right place
         box_layout = elements['my_box']

@@ -3,18 +3,18 @@ top_level:VBOX app_title_group_box settings_strip app_main_panel app_footer
 app_title_group_box:QGroupBox app_title_layout
 app_title_layout:HBOX <> gui_title <>
 
-gui_title:QLabel Nonsense-GUI
+gui_title:QLabel Nonsense__GUI
 
-app_main_panel:QLabel main-panel
-app_footer:QLabel app-footer
+app_main_panel:QLabel Main__Panel
+app_footer:QLabel App__Footer
 
 settings_strip:VBOX source_row display_row
 source_row:HBOX source_grouping source_rhs_buttons
 source_grouping:VBOX source_settings progress_slider
 source_settings:HBOX source_summary source_refresh_btns
-source_summary:QLabel source-summary
-refresh_and_menu_btns:QLabel refresh-etc
-display_row:QLabel row
-source_rhs_buttons:QLabel source-rhs-buttons
-progress_slider:QLabel prog-slider
-source_refresh_btns:QLabel srce-refresh-btns
+source_summary:QLabel Source__Summary
+refresh_and_menu_btns:QLabel Refresh__Etc.
+display_row:QLabel Row
+source_rhs_buttons:QLabel Source__RHS__Buttons
+progress_slider:QLabel Progress__Slider
+source_refresh_btns:QLabel Source__Refresh__Buttons

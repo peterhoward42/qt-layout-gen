@@ -36,7 +36,7 @@ class Builder(object):
         layouts_created = LayoutsCreated()
 
         # First we create and register all the parent objects, because these
-        # provide the objects that child names must refer to.
+        # provide the objects that child names (usually) must refer to.
         self._create_and_register_parent_objects(layouts_created)
 
         # Now we can process the children.

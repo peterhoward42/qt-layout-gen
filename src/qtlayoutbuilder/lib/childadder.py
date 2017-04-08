@@ -50,8 +50,11 @@ class ChildAdder(object):
 
     @staticmethod
     def _add_child_text(child_name, parent_object, record):
+        # Our contract promises to replace double underscores with a space
+        # in this context.
+        with_spaces = child_name.replace('__', ' ')
         try:
-            parent_object.setText(child_name)
+            parent_object.setText(with_spaces)
         except AttributeError as e:
             raise LayoutError(
                 '\n'.join([
