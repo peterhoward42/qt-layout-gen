@@ -1,23 +1,20 @@
-VBOX:top_level app_title_frame settings_strip app_main_panel app_footer
+top_level:VBOX app_title_group_box settings_strip app_main_panel app_footer
 
-QGroupBox:app_title_frame app_title_layout
-HBOX:app_title_layout <> gui-title <>
+app_title_group_box:QGroupBox app_title_layout
+app_title_layout:HBOX <> gui_title <>
 
-QLabel:gui-title Nonsense-GUI
+gui_title:QLabel Nonsense-GUI
 
-QLabel:app_main_panel main-panel
-QLabel:app_footer app-footer
+app_main_panel:QLabel main-panel
+app_footer:QLabel app-footer
 
-
-VBOX:settings_strip source_row display_row
-HBOX:source_row source_grouping source_rhs_buttons
-VBOX:source_grouping source_settings progress_slider
-HBOX:source_settings
-    source_summary
-    source_refresh_btns
-QLabel:source_summary source-summary
-QLabel:refresh_and_menu_btns refresh-etc
-QLabel:display_row disp-row
-QLabel:source_rhs_buttons source-rhs-buttons
-QLabel:progress_slider prog-slider
-QLabel:source_refresh_btns srce-refresh-btns
+settings_strip:VBOX source_row display_row
+source_row:HBOX source_grouping source_rhs_buttons
+source_grouping:VBOX source_settings progress_slider
+source_settings:HBOX source_summary source_refresh_btns
+source_summary:QLabel source-summary
+refresh_and_menu_btns:QLabel refresh-etc
+display_row:QLabel row
+source_rhs_buttons:QLabel source-rhs-buttons
+progress_slider:QLabel prog-slider
+source_refresh_btns:QLabel srce-refresh-btns

@@ -104,7 +104,7 @@ class TestInputSplitter(TestCase):
 
         # Raises error when two children of the same name cited in the record
         try:
-            records = split_big_string_into_records('HBOX:foo a a')
+            records = split_big_string_into_records('foo:HBOX a a')
         except LayoutError as e:
             msg = str(e)
             self.assertTrue(test_utils.fragments_are_present("""
@@ -112,11 +112,11 @@ class TestInputSplitter(TestCase):
             """, msg))
 
         # But tolerates two usages of '<>' as child names in same record.
-        records = split_big_string_into_records('HBOX:foo <> a <>')
+        records = split_big_string_into_records('foo:HBOX <> a <>')
         self.assertIsNotNone(records)
 
         # Harvests correct words when input is properly formed
-        records = split_big_string_into_records('HBOX:a b c HBOX:d e f')
+        records = split_big_string_into_records('a:HBOX b c d:HBOX e f')
         self.assertIsNotNone(records)
         self.assertEqual(len(records), 2)
         # We need only test the record aggregation, not the
@@ -127,12 +127,12 @@ class TestInputSplitter(TestCase):
         # Harvests correct words when comments are present.
         records = split_big_string_into_records("""
 
-                HBOX:my_box left right
+                my_box:HBOX left right
 
                 ( explain something )
 
-                QLabel:left hello
-                QLabel:right fred
+                left:QLabel hello
+                right:QLabel fred
             """)
         self.assertIsNotNone(records)
         self.assertEqual(len(records), 3)

@@ -87,7 +87,7 @@ class InputTextRecord(object):
 
     @classmethod
     def mock_record(cls):
-        words = ['QLabel:my_label', 'a', 'b']
+        words = ['label:QLabel', 'a', 'b']
         record = InputTextRecord.make_from_all_words(
             words, cls.mock_file_location())
         return record

@@ -33,7 +33,7 @@ class TestQObjectMaker(TestCase):
         #   'HBOX:my_box a b c'.
 
         # Suitable error when the class type is not recognized by python.
-        words = ['QThisWillNotExist:my_label', 'foo']
+        words = ['my_label:QThisWillNotExist', 'foo']
         record = InputTextRecord.make_from_all_words(
             words, self.DUMMY_FILE_LOC)
         widget_or_layout_finder = None
@@ -57,7 +57,7 @@ class TestQObjectMaker(TestCase):
         # We have to monkey-patch the record to defeat the parser's
         # insistence that the word used for a QObject class begins with a Q.
         # So we start with QLabel...
-        words = ['QLabel:my_label', 'foo']
+        words = ['my_label:QLabel', 'foo']
         record = InputTextRecord.make_from_all_words(
             words, self.DUMMY_FILE_LOC)
         # Then overwrite the class name inside the record.
@@ -78,7 +78,7 @@ class TestQObjectMaker(TestCase):
 
         # Suitable error when the thing gets instantiated, but turns out not to be
         # a QWidget or QLayout
-        words = ['QColor:my_label', 'foo']
+        words = ['my_label:QColor', 'foo']
         record = InputTextRecord.make_from_all_words(
             words, self.DUMMY_FILE_LOC)
         try:
@@ -93,7 +93,7 @@ class TestQObjectMaker(TestCase):
             """, msg))
 
         # Works properly when the QWord is explicit.
-        words = ['QLabel:my_label', 'foo']
+        words = ['my_label:QLabel', 'foo']
         record = InputTextRecord.make_from_all_words \
             (words, self.DUMMY_FILE_LOC)
         widget_or_layout_finder = None
@@ -104,7 +104,7 @@ class TestQObjectMaker(TestCase):
         self.assertEquals(parent_name, 'my_label')
 
         # Works properly when the QWord is implicit (ie a keyword).
-        words = ['HBOX:my_box', 'foo']
+        words = ['my_box:HBOX', 'foo']
         record = InputTextRecord.make_from_all_words \
             (words, self.DUMMY_FILE_LOC)
         widget_or_layout_finder = None
@@ -120,7 +120,7 @@ class TestQObjectMaker(TestCase):
         #   'Find:CustomLayout:my_page a b c'.
 
         # Correct error handling when nothing found.
-        words = ['Find:CustomLayout:my_page', 'a', 'b', 'c']
+        words = ['my_page:Find:CustomLayout', 'a', 'b', 'c']
         record = InputTextRecord.make_from_all_words(
             words, self.DUMMY_FILE_LOC)
         widget_or_layout_finder = WidgetAndLayoutFinder()
@@ -135,7 +135,7 @@ class TestQObjectMaker(TestCase):
             """, msg))
 
         # Correct error handling when duplicates found.
-        words = ['Find:CustomLayout:my_page', 'a', 'b', 'c']
+        words = ['my_page:Find:CustomLayout', 'a', 'b', 'c']
         record = InputTextRecord.make_from_all_words(
             words, self.DUMMY_FILE_LOC)
         has_target_object_in_a = HasTargetIn()
@@ -153,7 +153,8 @@ class TestQObjectMaker(TestCase):
             """, msg))
 
         # Finds the target QObject when it should.
-        words = ['Find:CustomLayout:my_solitary_page', 'a', 'b', 'c']
+        words = ['my_solitary_page:Find:CustomLayout', 'a',
+                 'b', 'c']
         record = InputTextRecord.make_from_all_words(
             words, self.DUMMY_FILE_LOC)
         my_solitary_page = CustomLayout()

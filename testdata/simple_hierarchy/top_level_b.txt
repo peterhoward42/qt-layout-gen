@@ -1,2 +1,2 @@
-HBOX:m n o
-HBOX:p q r
+m:HBOX n o
+p:HBOX q r

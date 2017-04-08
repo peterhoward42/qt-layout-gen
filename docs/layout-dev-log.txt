@@ -7,22 +7,12 @@ o  Examples tests modules from txt
         o  just develop by experimentation and addition
             *  need to support setlayout for QFrame
             *  try using groupbox instead of frame cos can see it
-            o  timeout - redefine contract as having name first!!!
-                *  eg header:VBOX
-                *  eg header:Find:QLabel
-                *  rewrite contract
-                *  change and test InputTextRecord lower level functions first
-                o  change splitter
-                    o  might just work?
-                        o  need to correct sample input files
-                o  fixup all tests
-            o  allow comments somehow for big example?
-                *  just need to add file based tests
-                o  now add comments to big example
+            *  timeout - redefine contract as having name first!!!
+            *  allow comments somehow for big example?
             o  double underscore space subst
             o  consider simple try catch sequence of add operations
             o  addTab
-            o  parse quoted strings
+            o  allow space after first word
 
     o  add text to filelocaton?
     o  change syntax to put name first and be more relaxed about spacing on

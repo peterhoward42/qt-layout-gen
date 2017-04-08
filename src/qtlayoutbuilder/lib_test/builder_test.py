@@ -55,7 +55,6 @@ class TestBuilder(TestCase):
                     InputTextRecord.mock_record(), layouts_created)
         except LayoutError as e:
             msg = str(e)
-            print msg
             self.assertTrue(test_utils.fragments_are_present("""
                     You cannot use this name: <my_layout> again, because it
                     has already been used here:
@@ -77,7 +76,7 @@ class TestBuilder(TestCase):
             self):
         # noinspection PyUnusedLocal
         records = split_big_string_into_records("""
-                QVBoxLayout:some_text
+                some_text:QVBoxLayout
             """)
         builder = Builder(records)
         layouts_created = builder.build()
@@ -85,7 +84,7 @@ class TestBuilder(TestCase):
     def test_error_handling_for_adding_stretch_to_something_illegal(self):
         # noinspection PyUnusedLocal
         records = split_big_string_into_records("""
-                QLabel:my_label <>
+                my_label:QLabel <>
             """)
         builder = Builder(records)
         try:
@@ -103,9 +102,9 @@ class TestBuilder(TestCase):
 
         my_button = QPushButton()
         records = split_big_string_into_records("""
-                HBOX:my_box my_label <> my_button
-                QLabel:my_label this-text
-                Find:QPushButton:my_button
+                my_box:HBOX my_label <> my_button
+                my_label:QLabel this-text
+                my_button:Find:QPushButton
             """)
         builder = Builder(records)
         layouts_created = builder.build()

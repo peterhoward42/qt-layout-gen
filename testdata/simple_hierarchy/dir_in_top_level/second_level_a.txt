@@ -1,2 +1,2 @@
-HBOX:a b c
-HBOX:d e f
+a:HBOX b c
+d:HBOX e f
