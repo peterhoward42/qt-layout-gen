@@ -58,6 +58,7 @@ them works:
 This procedure allows:
 *  Layout children to be added to layout parents
 *  The layout to be set for a widget.
+*  Widgets to be added to a Layout
 *  Widgets to be added to a QStackedWidget
 *  Widgets to be added to a QTabbedWidget
 *  Arbitrary child addition to custom classes that implement one of the 
@@ -85,12 +86,12 @@ Produces a QLabel with the text 'Hello World'
 ## The LayoutsCreated Object
 The functions above all return a **LayoutsCreated** object. 
 Every named artefact defined by the input (and thus every node in 
-the layout tree(s)), is available as:
+the layout tree(s), is available as:
 
-    layout_created.layout_element(name)
+    layout_created.layout_element[name)]
     
-Which implies that the names used in the input must be unique to to 
-the scope of any one *build_layouts_from_xxx()* call.
+Which implies that the names used in the input must be unique within 
+the scope of any one call to *build_layouts_from_xxx()*.
     
 The layouts need not resolve to a single tree with a single root.
 I.e. they can include layout fragments.
@@ -109,3 +110,12 @@ of a stretch item to a QBoxLayout.
 In this case the *foo* and *bar* items will be pushed to the left, 
 of the QHBoxLayout, while the *baz* item will be pushed to the 
 right.
+
+## LayoutError
+All errors from the system are raised as a *LayoutError*, which
+provides an implemation of:
+
+    str(layout_error)
+    
+which provides a full description of the problem, including the root 
+cause input file and line number.
