@@ -11,8 +11,14 @@ o  Examples tests modules from txt
             *  allow comments somehow for big example?
             *  double underscore space subst
             o  consider simple try catch sequence of add operations
-            o  addTab
+                o  placeholder tag
+                o  rewrite contract to suit
+                o  implement fix up tests
+            o  addTab now work?
             o  allow space after first word
+            o  get diagnostic ready
+            o  would diagnostic view server better?
+                o  there's a thought?
 
     o  add text to filelocaton?
     o  change syntax to put name first and be more relaxed about spacing on
