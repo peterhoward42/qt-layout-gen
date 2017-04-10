@@ -23,64 +23,6 @@ class TestChildAdder(TestCase):
         except RuntimeError:
             pass  # Singleton already exists
 
-    def test_the_try_xxx_functions(self):
-        # Try adding widgets (addWidget() - in true and false cases.
-        self.assertTrue(
-            ChildAdder._try_using_addWidget(QLabel(), QHBoxLayout()))
-        self.assertFalse(ChildAdder._try_using_addWidget('foo', QHBoxLayout()))
-
-        # Try adding widgets (addTab() - in true and false cases.
-        self.assertTrue(ChildAdder._try_using_addTab(
-            QLabel(), 'tab_label', QTabWidget()))
-        self.assertFalse(ChildAdder._try_using_addTab(
-            QLabel(), 'tab_label', QStackedWidget()))
-
-        # Try adding layouts - in true and false cases.
-
-        # Adding a QVBoxLayout to a QHBoxLayout should work.
-        self.assertTrue(ChildAdder._try_using_addLayout(
-            QVBoxLayout(), QHBoxLayout()))
-        # Adding a QVBoxLayout to a QFrame should work.
-        self.assertTrue(ChildAdder._try_using_setLayout(
-                QVBoxLayout(), QFrame()))
-        # Adding a QLabel to a QHBoxLayout (as if it were a layout) should fail.
-        self.assertFalse(
-            ChildAdder._try_using_addLayout(QLabel(), QHBoxLayout()))
-
-    def test_add_widget_error_handling(self):
-        try:
-            ChildAdder._add_child_widget(
-                'not a widget', 'arbitrary name',
-                QHBoxLayout(), InputTextRecord.mock_record())
-        except LayoutError as e:
-            msg = str(e)
-            self.assertTrue(test_utils.fragments_are_present("""
-               This child name: <arbitrary name>, is a QWidget
-               but neither addWidget(), nor addTab() worked
-               on the parent object.,
-            """, msg))
-
-    def test_add_layout_error_handling(self):
-        try:
-            ChildAdder._add_child_layout(
-                'not a layout', 'arbitrary name',
-                QHBoxLayout(), InputTextRecord.mock_record())
-        except LayoutError as e:
-            msg = str(e)
-            self.assertTrue(test_utils.fragments_are_present("""
-                This child name: <arbitrary name>, is a QLayout
-                but neither addLayout(), nor setLayout() worked
-                on the parent object.
-            """, msg))
-
-    def test_add_widget_working_properly(self):
-        layout = QHBoxLayout()
-        ChildAdder._add_child_widget(
-            QLabel(), 'arbitrary name', layout, InputTextRecord.mock_record())
-        self.assertEqual(layout.count(), 1)
-        child = layout.itemAt(0)
-        self.assertEqual(child.__class__.__name__, 'QWidgetItem')
-
     def test_add_child_text_error_handling(self):
         # Cannot setText() on a QWidget.
         try:
@@ -115,20 +57,28 @@ class TestChildAdder(TestCase):
             'some_text', label, empty_dict, InputTextRecord.mock_record())
         self.assertEqual(label.text(), 'some_text')
 
-    def test_api_add_widget_use_case_works(self):
-        dict = {'my_label': QLabel()}
-        layout = QVBoxLayout()
+    def test_add_layout_succeeding(self):
+        parent = QVBoxLayout()
+        child_lookup = {'child_layout': QHBoxLayout()}
         ChildAdder.add_child_to_parent(
-            'my_label', layout, dict, InputTextRecord.mock_record())
-        self.assertEqual(layout.count(), 1)
-        child = layout.itemAt(0)
-        self.assertEqual(child.__class__.__name__, 'QWidgetItem')
+                'child_layout', parent, child_lookup,
+                InputTextRecord.mock_record())
+        self.assertEqual(parent.count(), 1)
+        self.assertTrue(isinstance(parent.itemAt(0), QHBoxLayout))
 
-    def test_api_add_layout_use_case_works(self):
-        dict = {'my_layout': QHBoxLayout()}
-        parent_layout = QVBoxLayout()
+    def test_set_layout_succeeding(self):
+        parent = QWidget()
+        child_lookup = {'child_layout': QHBoxLayout()}
         ChildAdder.add_child_to_parent(
-            'my_layout', parent_layout, dict, InputTextRecord.mock_record())
-        self.assertEqual(parent_layout.count(), 1)
-        child = parent_layout.itemAt(0)
-        self.assertEqual(child.__class__.__name__, 'QHBoxLayout')
+                'child_layout', parent, child_lookup,
+                InputTextRecord.mock_record())
+        self.assertTrue(isinstance(parent.layout(), QHBoxLayout))
+
+    def test_add_widget_succeeding(self):
+        parent = QStackedWidget()
+        child_lookup = {'child_widget': QLabel()}
+        ChildAdder.add_child_to_parent(
+                'child_widget', parent, child_lookup,
+                InputTextRecord.mock_record())
+        self.assertEqual(parent.count(), 1)
+        self.assertTrue(isinstance(parent.currentWidget(), QLabel))

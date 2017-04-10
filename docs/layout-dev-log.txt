@@ -14,6 +14,9 @@ o  Examples tests modules from txt
                 *  placeholder tag
                 *  rewrite contract to suit
                 *  timeout change comment interp to # to end of line
+                o  get basics working
+                o  check errors gen
+                o  check each use case gets visited and works (incl tab)
             o  addTab now work?
             o  allow space after first word
             o  get diagnostic ready
