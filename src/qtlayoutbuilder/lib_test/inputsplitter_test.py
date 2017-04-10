@@ -2,7 +2,7 @@ import os.path
 from unittest import TestCase
 
 from qtlayoutbuilder.api.layouterror import LayoutError
-from qtlayoutbuilder.lib.inputsplitter import _remove_whole_comments_from, \
+from qtlayoutbuilder.lib.inputsplitter import _remove_comments_from_line, \
     split_big_string_into_records, \
     split_all_files_in_directory_into_records, split_file_into_records
 from qtlayoutbuilder.test_utils import test_utils
@@ -12,24 +12,12 @@ class TestInputSplitter(TestCase):
 
     def test_utilities(self):
         # Basic
-        result = _remove_whole_comments_from('foo(bar)baz')
-        self.assertEquals(result, 'foobaz')
+        result = _remove_comments_from_line('foo#bar')
+        self.assertEquals(result, 'foo')
 
         # No-op
-        result = _remove_whole_comments_from('foobarbaz')
+        result = _remove_comments_from_line('foobarbaz')
         self.assertEquals(result, 'foobarbaz')
-
-        # Whitespace involved
-        result = _remove_whole_comments_from('foo( bar) baz')
-        self.assertEquals(result, 'foo baz')
-
-        # Multiple
-        result = _remove_whole_comments_from('a(b)c(d)e')
-        self.assertEquals(result, 'ace')
-
-        # Mismatched  parenthesis
-        result = _remove_whole_comments_from('hello(fred(how are you) today')
-        self.assertEquals(result, 'hello today')
 
     def test_split_file_into_records(self):
         # Reports IO errors properly.
@@ -55,7 +43,7 @@ class TestInputSplitter(TestCase):
         except LayoutError as e:
             msg = str(e)
             self.assertTrue(test_utils.fragments_are_present("""
-               The first word in your file must have a colon in it:
+               The first word of your input must have a colon in it:
             """, msg))
 
         # Raises an error if no records found
@@ -99,8 +87,9 @@ class TestInputSplitter(TestCase):
             records = split_big_string_into_records('ipsum doo dah')
         except LayoutError as e:
             msg = str(e)
-            self.assertTrue(
-                "Error: The first word in your text must have a colon in it: <ipsum doo dah>" in msg)
+            self.assertTrue(test_utils.fragments_are_present("""
+               The first word of your input must have a colon in it:
+            """, msg))
 
         # Raises error when two children of the same name cited in the record
         try:
@@ -129,7 +118,7 @@ class TestInputSplitter(TestCase):
 
                 my_box:HBOX left right
 
-                ( explain something )
+                # explain something
 
                 left:QLabel hello
                 right:QLabel fred
@@ -160,7 +149,7 @@ class TestInputSplitter(TestCase):
         except LayoutError as e:
             msg = str(e)
             self.assertTrue(test_utils.fragments_are_present("""
-               The first word in your file must have a colon in it:
+               The first word of your input must have a colon in it:
             """, msg))
 
         # Is aggregating the records from more than one file.

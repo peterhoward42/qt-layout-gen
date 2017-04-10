@@ -11,9 +11,9 @@ o  Examples tests modules from txt
             *  allow comments somehow for big example?
             *  double underscore space subst
             o  consider simple try catch sequence of add operations
-                o  placeholder tag
-                o  rewrite contract to suit
-                o  implement fix up tests
+                *  placeholder tag
+                *  rewrite contract to suit
+                *  timeout change comment interp to # to end of line
             o  addTab now work?
             o  allow space after first word
             o  get diagnostic ready
@@ -21,17 +21,10 @@ o  Examples tests modules from txt
                 o  there's a thought?
 
     o  add text to filelocaton?
-    o  change syntax to put name first and be more relaxed about spacing on
-       left side?
     o  merit of splitting into separate files?
 
     o  lessons learned and fixes
-        o  Allow quoted strings in record?
-        o  AddTab
     o  did i need to instantiate non qt classes or should I like clickablewidget?
-
-
-
     o  v simple from dir
 
 

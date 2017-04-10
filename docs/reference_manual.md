@@ -24,9 +24,9 @@ your running program to find an object of type *CustomClass* that you have
 
 ## Parsing Contract
 Spaces, tabs and newline characters are all treated equally - as whitespace.
-The input is split at whitespace into *words*. Words are bunched into 
-*records* which start at a word with one or two colons in and which end with 
-the word that precedes the next *colon word* (or EOF).
+The input is split at whitespace into *words*. Then the words are bunched into
+*records*. A record is a sequence of words that starts with a *colon word*, 
+i.e. word with a colon (or two) in it.
 
 A hash introduces a comment, which extends to the end of the line.
 
@@ -88,7 +88,7 @@ The functions above all return a **LayoutsCreated** object.
 Every named artefact defined by the input (and thus every node in 
 the layout tree(s), is available as:
 
-    layout_created.layout_element[name)]
+    layout_created.layout_element[name]
     
 Which implies that the names used in the input must be unique within 
 the scope of any one call to *build_layouts_from_xxx()*.
