@@ -10,14 +10,7 @@ o  Examples tests modules from txt
             *  timeout - redefine contract as having name first!!!
             *  allow comments somehow for big example?
             *  double underscore space subst
-            o  consider simple try catch sequence of add operations
-                *  placeholder tag
-                *  rewrite contract to suit
-                *  timeout change comment interp to # to end of line
-                o  get basics working
-                o  check errors gen
-                o  check each use case gets visited and works (incl tab)
-            o  addTab now work?
+            *  consider simple try catch sequence of add operations
             o  allow space after first word
             o  get diagnostic ready
             o  would diagnostic view server better?

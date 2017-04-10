@@ -36,9 +36,8 @@ class TestBuilder(TestCase):
         except LayoutError as e:
             msg = str(e)
             self.assertTrue(test_utils.fragments_are_present("""
-                This child name: <my_label>, is a QWidget
-                but neither addWidget(), nor addTab() worked
-                on the parent object.
+                None of the child addition methods worked
+                for this child name: <my_label>,
             """, msg))
 
     def test_register_method_error_handling(self):

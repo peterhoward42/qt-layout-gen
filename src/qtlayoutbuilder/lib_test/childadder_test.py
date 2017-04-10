@@ -57,6 +57,21 @@ class TestChildAdder(TestCase):
             'some_text', label, empty_dict, InputTextRecord.mock_record())
         self.assertEqual(label.text(), 'some_text')
 
+    def test_error_handling_when_speculative_methods_all_fail(self):
+        # There is no way to add a widget to a widget.
+        parent = QWidget()
+        child_lookup = {'child': QWidget()}
+        try:
+            ChildAdder.add_child_to_parent(
+                    'child', parent, child_lookup, InputTextRecord.mock_record())
+        except LayoutError as e:
+            msg = str(e)
+            print msg
+            self.assertTrue(test_utils.fragments_are_present("""
+                None of the child addition methods worked
+                for this child name: <child>,
+            """, msg))
+
     def test_add_layout_succeeding(self):
         parent = QVBoxLayout()
         child_lookup = {'child_layout': QHBoxLayout()}
@@ -76,6 +91,15 @@ class TestChildAdder(TestCase):
 
     def test_add_widget_succeeding(self):
         parent = QStackedWidget()
+        child_lookup = {'child_widget': QLabel()}
+        ChildAdder.add_child_to_parent(
+                'child_widget', parent, child_lookup,
+                InputTextRecord.mock_record())
+        self.assertEqual(parent.count(), 1)
+        self.assertTrue(isinstance(parent.currentWidget(), QLabel))
+
+    def test_add_tab_succeeding(self):
+        parent = QTabWidget()
         child_lookup = {'child_widget': QLabel()}
         ChildAdder.add_child_to_parent(
                 'child_widget', parent, child_lookup,
