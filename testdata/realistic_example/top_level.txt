@@ -1,20 +1,21 @@
-top_level:VBOX app_title_group_box settings_strip app_main_panel app_footer
-
-app_title_group_box:QGroupBox app_title_layout
-app_title_layout:HBOX <> gui_title <>
-
-gui_title:QLabel Nonsense__GUI
-
-app_main_panel:QLabel Main__Panel
-app_footer:QLabel App__Footer
-
-settings_strip:VBOX source_row display_row
-source_row:HBOX source_grouping source_rhs_buttons
-source_grouping:VBOX source_settings progress_slider
-source_settings:HBOX source_summary source_refresh_btns
-source_summary:QLabel Source__Summary
-refresh_and_menu_btns:QLabel Refresh__Etc.
-display_row:QLabel Row
-source_rhs_buttons:QLabel Source__RHS__Buttons
-progress_slider:QLabel Progress__Slider
-source_refresh_btns:QLabel Source__Refresh__Buttons
+top_level                           vbox        app_title_group_box settings_strip app_main_panel app_footer
+  app_title_group_box               group       app_title_layout
+    app_title_layout                hbox        <> gui_title <>
+      gui_title                     lbl         Nonsense__GUI
+  settings_strip                    vbox        source_row display_row
+    source_row                      hbox        source_grouping source_rhs_buttons
+      source_grouping               vbox        source_settings progress_slider
+        source_settings             hbox        source_summary source_refresh_btns
+          source_summary            label       Source__Summary
+          source_refresh_btns       label       Source__Refresh__Buttons
+        progress_slider             label       Progress__Slider
+      source_rhs_buttons            label       Source__RHS__Buttons
+    display_row                     label       Row
+  app_main_panel                    label       Main__Panel
+  app_footer                        label       img_1 img_1 img_3 img_4 img_5 img_6
+    img_1                           ?CustomImg
+    img_2                           ?CustomImg
+    img_3                           ?CustomImg
+    img_4                           ?CustomImg
+    img_5                           ?CustomImg
+    img_6                           ?CustomImg

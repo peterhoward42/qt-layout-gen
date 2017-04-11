@@ -1,0 +1,56 @@
+
+  get in qclass, find, stretch, sub tree, add layout, add widget, tab, comment
+
+
+
+  app_title_group_box               group
+    app_title_layout                hbox
+      push_right                    stretch
+      gui_title                     lbl         # example comment
+  settings_strip                    vbox
+    source_row                      hbox
+      source_grouping               vbox
+        source_settings             hbox
+          # example comment         -
+          source_summary            label(Source__Summary)
+          source_refresh_btns       label(Source__Refresh__Buttons)
+        progress_slider             label(Progress__Slider)
+      source_rhs_buttons            label(Source__RHS__Buttons)
+    display_row                     label(Row)
+  app_main_panel                    label(Main__Panel)
+  app_footer                        hbox
+    img_1                           ?CustomImg
+    img_2                           ?CustomImg
+    img_3                           ?CustomImg
+
+
+
+
+top_level                           vbox
+  app_title_group_box               group
+    app_title_layout                hbox
+      push_right                    stretch
+      gui_title                     lbl         # example comment
+  settings_strip                    vbox
+    source_row                      hbox
+      source_grouping               vbox
+        source_settings             hbox
+          # example comment         -
+          source_summary            label(Source__Summary)
+          source_refresh_btns       label(Source__Refresh__Buttons)
+        progress_slider             label(Progress__Slider)
+      source_rhs_buttons            label(Source__RHS__Buttons)
+    display_row                     label(Row)
+  app_main_panel                    label(Main__Panel)
+  app_footer                        hbox
+    img_1                           ?CustomImg
+    img_2                           ?CustomImg
+    img_3                           ?CustomImg
+
+another_tree                        tab
+  invoices                          widget
+    layout                          vbox
+      title                         label(Title)
+      etc
+  messages                          widget
+  todos                             widget

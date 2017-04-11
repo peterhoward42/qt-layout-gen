@@ -1,3 +1,10 @@
+o  Reboot with new contract
+    o  Write contract
+    o  Tag code base
+    o  Code most of it top down then test
+
+
+
 o  Make examples as proper tests incl name and folder
 o  Examples tests modules from txt
     *  v simple from txt
@@ -12,7 +19,21 @@ o  Examples tests modules from txt
             *  double underscore space subst
             *  consider simple try catch sequence of add operations
             o  allow space after first word
+                *  first see if indentation and comments look ok
+                *  would spaces help?
+                    *  play around
+                o  lessons learned?
+                    o  Tabular is nice, maybe first two words
+                    o  More keywords
+                    o  Case insen keywords
+                    o  USE LINES
+                    o  USE ORDER
+                    o  HAVE FORMATTER in situ
+                    o  HAVE SEARCH ACCESS TO TREE
+                    o  HAVE DEV MODE WHERE GIVES DIAGNOSTICS and more help
+                o  Merits a branch because of order dependent processing !!!
             o  get diagnostic ready
+            o  position diagnostics as formatter
             o  would diagnostic view server better?
                 o  there's a thought?
 
