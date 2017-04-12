@@ -1,16 +1,14 @@
 from unittest import TestCase
 
-from PySide.QtGui import QFrame
+from PySide.QtGui import QApplication, QLabel, QHBoxLayout, \
+    QStackedWidget, QTabWidget
 from PySide.QtGui import QVBoxLayout
 from PySide.QtGui import QWidget
-from PySide.QtGui import qApp, QApplication, QLabel, QHBoxLayout, \
-    QStackedWidget, QTabWidget
-
 from qtlayoutbuilder.api.layouterror import LayoutError
+
 from qtlayoutbuilder.lib.childadder import ChildAdder
 from qtlayoutbuilder.lib.inputtextrecord import InputTextRecord
-
-from qtlayoutbuilder.test_utils import test_utils
+from qtlayoutbuilder.lib_test import test_utils
 
 
 class TestChildAdder(TestCase):

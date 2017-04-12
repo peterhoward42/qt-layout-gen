@@ -1,7 +1,16 @@
 o  Reboot with new contract
-    o  Write contract
-    o  Tag code base
-    o  Code most of it top down then test
+    *  Write contract
+    *  Tag code base
+    *  Meta design of indentation consumption
+    *  Meta design of context in error handling
+    o  Code most of it top down
+        o  Unit test utilities
+            *  regex
+            *  builder helpers
+        o  Higher level tests
+            o  Work through builder behaviour, getting bits to work
+               and diverting into unit test bring up of dependencies.
+                o  failing before getting to rest of stuff :-(
 
 
 
@@ -75,13 +84,49 @@ o  Examples tests modules from txt
             pass # Singleton already existso  docco
 
 -----------------------------------------------------------------------------
-Scope
+Meta design of indentation consumption
 -----------------------------------------------------------------------------
-Sim to add on
-Incl font icon buttons
-Group boxes
-Construct custom classes
-Frames
-Labels
-Tabs
-Grids
+
+state
+    previous line's indent
+    current parent object per indentation level
+    path stack
+
+consume line
+  remove comments
+  if nothing remains noop otherwise the following must work
+  if whole line is comment ignore
+  measure indnet and assert multiple of 2 or zero
+  remove trailing comments
+  isolate and remove parenthesised args
+  isolate exactly two words - name and type
+
+  if indented by 2 wrt previous line's indent:
+    pop = 0
+    add child to parent defined by indent - 2
+
+  if indented same as previous line's indent:
+    pop = 1
+    add child to parent defined by or indent - 2
+
+  if indented by less than previous line's indent:
+    pop = calc
+    potential negative index error
+    parent to add to is 2 less than this indent
+
+  in all cases
+    pop pop number from path stack
+    push new name onto path stack
+    save current item at level
+
+  afterwards apply text
+
+  store item on ordered dict created at its path name
+
+-----------------------------------------------------------------------------
+    o  Meta design of context in error handling
+-----------------------------------------------------------------------------
+Line looper can catch lower exceptions and write contextual report. E.g.
+pre and post lines. With content.
+
+So lower exceptions should report only line objections.

@@ -1,5 +1,5 @@
 from qtlayoutbuilder.lib import inputsplitter
-from qtlayoutbuilder.lib import builder
+from qtlayoutbuilder.lib import builderold
 
 class LayoutBuilder(object):
     """
@@ -22,7 +22,7 @@ class LayoutBuilder(object):
         """
 
         records = inputsplitter.split_all_files_in_directory_into_records(dir)
-        return builder.Builder(records).build()
+        return builderold.BuilderOld(records).build()
 
     @staticmethod
     def build_layouts_from_text(one_big_string):
@@ -35,6 +35,6 @@ class LayoutBuilder(object):
         :raises: LayoutError (defined below)
         """
         records = inputsplitter.split_big_string_into_records(one_big_string)
-        return builder.Builder(records).build()
+        return builderold.BuilderOld(records).build()
 
 

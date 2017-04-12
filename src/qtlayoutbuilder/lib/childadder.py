@@ -4,7 +4,7 @@ to add a child to a Qt parent object. See the code below for the logical
 experiments it tries.
 """
 
-from qtlayoutbuilder.api.layouterror import LayoutError
+from qtlayoutbuilder.api import LayoutError
 
 
 class ChildAdder(object):

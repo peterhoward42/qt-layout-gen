@@ -1,10 +1,16 @@
-class QObjectMaker(object):
+"""
+This module is responsible for instantiating (or finding previously
+instantiated) QObjects, like QHBoxLayout, or QLabel - taking its mandate from
+an InputTextRecord.
+"""
 
-    def __init__(self, widgets_and_layout_finder):
-        self._widgets_and_layout_finder = widgets_and_layout_finder
+from exceptions import NotImplementedError
 
-    def make(self):
-        pass
+from PySide.QtGui import *  # for the benefit of _make_qtype():
+
+from qtlayoutbuilder.lib.inputsplitter import InputTextRecord
+from qtlayoutbuilder.api.layouterror import LayoutError
+
 
 def make_from_parent_info(record, widget_and_layout_finder):
     """

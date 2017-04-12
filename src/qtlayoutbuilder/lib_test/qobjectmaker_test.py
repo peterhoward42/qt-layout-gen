@@ -3,15 +3,14 @@ This module provides unit tests for the parentmaker module.
 """
 from unittest import TestCase
 
-from PySide.QtGui import QLabel, QHBoxLayout, qApp, QApplication, QLayout
-
+from PySide.QtGui import QLabel, QHBoxLayout, QApplication, QLayout
 from qtlayoutbuilder.api.filelocation import FileLocation
 from qtlayoutbuilder.api.layouterror import LayoutError
 
-from qtlayoutbuilder.lib import qobjectmaker
+from qtlayoutbuilder.lib import qobjectmaker_orig
 from qtlayoutbuilder.lib.inputtextrecord import InputTextRecord
 from qtlayoutbuilder.lib.widgetandlayoutfinder import WidgetAndLayoutFinder
-from qtlayoutbuilder.test_utils import test_utils
+from qtlayoutbuilder.lib_test import test_utils
 
 
 class TestQObjectMaker(TestCase):
@@ -38,7 +37,7 @@ class TestQObjectMaker(TestCase):
             words, self.DUMMY_FILE_LOC)
         widget_or_layout_finder = None
         try:
-            q_object, parent_name = qobjectmaker.make_from_parent_info(
+            q_object, parent_name = qobjectmaker_orig.make_from_parent_info(
                 record, widget_or_layout_finder)
         except LayoutError as e:
             msg = str(e)
@@ -64,7 +63,7 @@ class TestQObjectMaker(TestCase):
         record.class_required = '__doc__'
         try:
             widget_or_layout_finder = None
-            q_object, parent_name = qobjectmaker.make_from_parent_info(
+            q_object, parent_name = qobjectmaker_orig.make_from_parent_info(
                 record, widget_or_layout_finder)
         except LayoutError as e:
             msg = str(e)
@@ -83,7 +82,7 @@ class TestQObjectMaker(TestCase):
             words, self.DUMMY_FILE_LOC)
         try:
             widget_or_layout_finder = None
-            q_object, parent_name = qobjectmaker.make_from_parent_info(
+            q_object, parent_name = qobjectmaker_orig.make_from_parent_info(
                 record, widget_or_layout_finder)
         except LayoutError as e:
             msg = str(e)
@@ -97,7 +96,7 @@ class TestQObjectMaker(TestCase):
         record = InputTextRecord.make_from_all_words \
             (words, self.DUMMY_FILE_LOC)
         widget_or_layout_finder = None
-        q_object, parent_name = qobjectmaker.make_from_parent_info(
+        q_object, parent_name = qobjectmaker_orig.make_from_parent_info(
             record, widget_or_layout_finder)
         class_name = q_object.__class__.__name__
         self.assertTrue(isinstance(q_object, QLabel))
@@ -108,7 +107,7 @@ class TestQObjectMaker(TestCase):
         record = InputTextRecord.make_from_all_words \
             (words, self.DUMMY_FILE_LOC)
         widget_or_layout_finder = None
-        q_object, parent_name = qobjectmaker.make_from_parent_info(
+        q_object, parent_name = qobjectmaker_orig.make_from_parent_info(
             record, widget_or_layout_finder)
         class_name = q_object.__class__.__name__
         self.assertTrue(isinstance(q_object, QHBoxLayout))
@@ -125,7 +124,7 @@ class TestQObjectMaker(TestCase):
             words, self.DUMMY_FILE_LOC)
         widget_or_layout_finder = WidgetAndLayoutFinder()
         try:
-            q_object, parent_name = qobjectmaker.make_from_parent_info(
+            q_object, parent_name = qobjectmaker_orig.make_from_parent_info(
                 record, widget_or_layout_finder)
         except LayoutError as e:
             msg = str(e)
@@ -142,7 +141,7 @@ class TestQObjectMaker(TestCase):
         has_target_object_in_b = HasTargetIn()
         widget_or_layout_finder = WidgetAndLayoutFinder()
         try:
-            q_object, parent_name = qobjectmaker.make_from_parent_info(
+            q_object, parent_name = qobjectmaker_orig.make_from_parent_info(
                 record, widget_or_layout_finder)
         except LayoutError as e:
             msg = str(e)
@@ -159,7 +158,7 @@ class TestQObjectMaker(TestCase):
             words, self.DUMMY_FILE_LOC)
         my_solitary_page = CustomLayout()
         widget_or_layout_finder = WidgetAndLayoutFinder()
-        q_object, parent_name = qobjectmaker.make_from_parent_info(
+        q_object, parent_name = qobjectmaker_orig.make_from_parent_info(
             record, widget_or_layout_finder)
         self.assertEquals(parent_name, 'my_solitary_page')
         self.assertEquals(q_object.__class__.__name__, 'CustomLayout')

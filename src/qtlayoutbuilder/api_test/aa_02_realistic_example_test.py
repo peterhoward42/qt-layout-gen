@@ -10,7 +10,7 @@ from qtlayoutbuilder.api.api import LayoutBuilder
 
 class TestRealisticExample(TestCase):
 
-    def test_realist_example(self):
+    def hidden_test_realist_example(self):
         """
         This test demonstrates a realistic - complex GUI case.
         """

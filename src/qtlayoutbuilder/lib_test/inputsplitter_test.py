@@ -2,10 +2,11 @@ import os.path
 from unittest import TestCase
 
 from qtlayoutbuilder.api.layouterror import LayoutError
+
 from qtlayoutbuilder.lib.inputsplitter import _remove_comments_from_line, \
     split_big_string_into_records, \
     split_all_files_in_directory_into_records, split_file_into_records
-from qtlayoutbuilder.test_utils import test_utils
+from qtlayoutbuilder.lib_test import test_utils
 
 
 class TestInputSplitter(TestCase):
