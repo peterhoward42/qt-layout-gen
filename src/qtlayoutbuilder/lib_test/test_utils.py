@@ -52,11 +52,7 @@ def raises_layout_error_with_this_message(
         error_msg = MultilineString.normalise(str(e))
         required_message = MultilineString.normalise(required_message)
         if error_msg == required_message:
-            print 'xxxx messages the same, returning true'
             return True
-        else:
-            print 'xxxx messages differ, returning False'
-            return False
     # If we reach here, the message produces does not match that required.
-    print 'xxxxx dont think will get here'
+    print 'Message produced was\n%s' % error_msg
     return False

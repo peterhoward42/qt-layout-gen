@@ -1,14 +1,16 @@
 from qtlayoutbuilder.api import LayoutsCreated, LayoutError
 from qtlayoutbuilder.lib import regex_helpers
 from qtlayoutbuilder.lib.childadder import ChildAdder
+from qtlayoutbuilder.lib.error_utils import raise_layout_error
 from qtlayoutbuilder.lib.qobjectmaker import QObjectMaker
+from qtlayoutbuilder.lib.string_utils import MultilineString
 from qtlayoutbuilder.lib.widgetandlayoutfinder import WidgetAndLayoutFinder
 
 class Builder(object):
 
 
     @classmethod
-    def build(self, lines, provenance):
+    def build(self, one_big_string, provenance):
 
         # Helpers.
         finder = WidgetAndLayoutFinder()  # (Expensive construction)
@@ -27,6 +29,9 @@ class Builder(object):
 
         # This is the object we will build and eventually, return.
         layouts_created = LayoutsCreated()
+
+        # Split input into an array of lines.
+        lines = MultilineString.get_as_left_shifted_lines(one_big_string)
 
         try:
             for original_line in lines:
@@ -82,11 +87,10 @@ class Builder(object):
         words = line.split()
         if len(words) == 2:
             return words
-        msg = '\n'.join((
-            'Cannot isolate two words from this line: <%s>,',
-            'after removing comments and parenthesised parts if present.',
-        )) % (line)
-        raise LayoutError(msg)
+        raise_layout_error("""
+            Cannot isolate two words from this line: <%s>,
+            (after removal of comments and parenthesis).
+        """, (line))
 
     @classmethod
     def _nothing_left(cls, line):
@@ -104,18 +108,16 @@ class Builder(object):
     def _assert_multiple_of_two(self, indent, line):
         if indent % 2 == 0:
             return
-        msg = '\n'.join((
-                'Indentation spaces must be a multiple of 2.',
-                'This line: <%s> is indented by %d spaces.',
-        )) % (line, indent)
-        raise LayoutError(msg)
+        raise_layout_error("""
+            Indentation spaces must be a multiple of 2.
+            This line: <%s> is indented by %d spaces.
+            """, (line, indent))
 
     @classmethod
     def _assert_no_tabs_present(self, line):
         if '\t' not in line:
             return
-        msg = '\n'.join((
-            'This line: <%s> contains a tab character -',
-            'which is not allowed.',
-        )) % (line)
-        raise LayoutError(msg)
+        raise_layout_error("""
+            This line: <%s> contains a tab character -
+            which is not allowed.
+            """, (line))
