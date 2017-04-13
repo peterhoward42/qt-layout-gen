@@ -5,6 +5,8 @@ from PySide.QtGui import QHBoxLayout
 from qtlayoutbuilder.api import LayoutError
 from qtlayoutbuilder.lib.builder import Builder
 from qtlayoutbuilder.lib_test import test_utils
+from qtlayoutbuilder.lib_test.test_utils import \
+    raises_layout_error_with_this_message
 
 
 class TestBuilder(TestCase):
@@ -15,17 +17,17 @@ class TestBuilder(TestCase):
     # Assertions and error reporting.
 
     def test_assert_multiple_of_two(self):
+        # This assertion should remain silent.
         self.assertIsNone(Builder._assert_multiple_of_two(4, 'mock line'))
-        self.assertRaises(
-                LayoutError, Builder._assert_multiple_of_two, 3, 'mock line')
-        try:
-            Builder._assert_multiple_of_two(3, 'mock_line')
-        except LayoutError as e:
-            msg = str(e)
-            self.assertTrue(test_utils.fragments_are_present("""
-                Indentation spaces must be a multiple of 2.
-                This line: <mock_line> is indented by 3 spaces.
-            """, msg))
+
+        # This assertion should raise an exception.
+        result = raises_layout_error_with_this_message("""
+            Indentation spaces must be a multiple of 2.
+            This line: <mock_line> is indented by 3 spaces.
+            """,
+            Builder._assert_multiple_of_two, 3, 'mock line')
+        if not result:
+            self.fail()
 
     def test_assert_no_tabs_present(self):
         self.assertIsNone(Builder._assert_no_tabs_present('no tabs here'))

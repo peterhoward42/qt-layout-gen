@@ -25,20 +25,22 @@ class StringUtilsTest(TestCase):
 
     # Now multiline string functions.
 
-    def test_remove_empty_first_line(self):
+    def test_remove_empty_first_and_last_lines(self):
         # Normal usage
-        result = MultilineString.remove_empty_first_line("""
+        result = MultilineString.remove_empty_first_and_last_lines("""
         foo
         bar
         """)
         self.assertTrue(result.startswith('        foo'))
+        self.assertTrue(result.endswith('bar'))
 
-        # When first line is not empty.
-        result = MultilineString.remove_empty_first_line("""x
+        # When neither first or last line is empty.
+        result = MultilineString.remove_empty_first_and_last_lines("""x
         foo
         bar
-        """)
+        x""")
         self.assertTrue(result.startswith('x\n'))
+        self.assertTrue(result.endswith('x'))
 
     def test_shift_left(self):
         # Normal usage
@@ -47,9 +49,20 @@ class StringUtilsTest(TestCase):
               bar
                 baz
         """
-        input = MultilineString.remove_empty_first_line(input)
         result = MultilineString.shift_left(input)
         lines = result.split('\n')
         self.assertEqual(lines[0], 'foo')
         self.assertEqual(lines[1], '  bar')
         self.assertEqual(lines[2], '    baz')
+
+    def test_normalise(self):
+        input = """
+            foo
+              bar
+                baz
+        """
+        result = MultilineString.normalise(input)
+        lines = result.split('\n')
+        self.assertEqual(lines[0], 'foo')
+        self.assertEqual(lines[1], 'bar')
+        self.assertEqual(lines[2], 'baz')

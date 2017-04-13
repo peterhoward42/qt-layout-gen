@@ -11,15 +11,26 @@ o  Reboot with new contract
             o  Work through builder behaviour, getting bits to work
                and diverting into unit test bring up of dependencies.
                o  Convert to only use single string
-                    o  util to clean multiline string
-                        o  need to remove solely-whitespace last line also.
+                    *  util to clean multiline string
+                        *  need to remove solely-whitespace last line also.
                     o  better way for error formation and comparison
+                        o  use test assert multiple of two as driver
+                            *  write raises_layout_error_with_this_message
+                                *  write and test mline string normalise
+                                o  test raises layout blah
+                                    o  stuck on string comparison
+                                        o  make normalise rm newlines?
+                        o  use new test regime in tests for builder, regex and string utils
+                        o  now normalise generation of errors
                     o  file utils
                o  Separate into a class the interp state
                o  Make builder more modular and file smaller
                o  Don't try to find parent for top level widgets or try
                   to add them thereto.
 
+o  Later
+    o  Unify use of multiline tests and generation.
+    o  Move all regex into module
 
 
 o  Make examples as proper tests incl name and folder
