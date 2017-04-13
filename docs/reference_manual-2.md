@@ -73,6 +73,8 @@ This procedure allows:
 The shortcut keywords aim to reduce typing and to prevent the need to 
 think about case-sensitivity of the Qt class names.
 
+todo - make sure these agree with code and list is complete.
+
     hbox, vbox, label, button, stack, tabbed, group, widget, stretch
     
 You can use the full Qt class names in their place. (Or any other Qt class).

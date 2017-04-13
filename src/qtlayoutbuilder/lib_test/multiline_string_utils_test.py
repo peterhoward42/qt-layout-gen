@@ -1,29 +1,9 @@
 from unittest import TestCase
 
-from qtlayoutbuilder.lib import string_utils
-from qtlayoutbuilder.lib.string_utils import MultilineString
+from qtlayoutbuilder.lib.multiline_string_utils import MultilineString
 
 
-class StringUtilsTest(TestCase):
-    # First 'plain' string functions.
-
-    def test_get_leading_spaces(self):
-        # Normal usage.
-        string, length = string_utils.get_leading_spaces('   foo')
-        self.assertEquals(string, '   ')
-        self.assertEquals(length, 3)
-
-        # When there are no leading spaces.
-        string, length = string_utils.get_leading_spaces('foo')
-        self.assertEquals(string, '')
-        self.assertEquals(length, 0)
-
-        # On empty string
-        string, length = string_utils.get_leading_spaces('')
-        self.assertEquals(string, '')
-        self.assertEquals(length, 0)
-
-    # Now multiline string functions.
+class MultilineStringUtilsTest(TestCase):
 
     def test_remove_empty_first_and_last_lines(self):
         # Normal usage

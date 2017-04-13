@@ -1,3 +1,6 @@
+from qtlayoutbuilder.lib.string_utils import get_leading_spaces
+
+
 class MultilineString(object):
     """
     Tools to work with multi-line, triple-quoted strings; mainly to make writing
@@ -74,16 +77,3 @@ class MultilineString(object):
         lines = topped_and_tailed.split('\n')
         lines = [line.strip() for line in lines]
         return '\n'.join(lines)
-
-#----------------------------------------------------------------------------
-# Ordinary string functions.
-
-def get_leading_spaces(input_string):
-    """
-    Returns the leading spaces from a string and the length of that string.
-    (string, length).
-    """
-    justified = input_string.lstrip()
-    length = len(input_string) - len(justified)
-    string = ' ' * length
-    return string, length

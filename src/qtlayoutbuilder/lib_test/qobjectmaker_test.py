@@ -3,14 +3,15 @@ This module provides unit tests for the parentmaker module.
 """
 from unittest import TestCase
 
-from PySide.QtGui import QLabel, QHBoxLayout, QApplication, QLayout
-from qtlayoutbuilder.api.filelocation import FileLocation
-from qtlayoutbuilder.api.layouterror import LayoutError
+from PySide.QtGui import QApplication
+from PySide.QtGui import QHBoxLayout
+from PySide.QtGui import QLayout
 
-from qtlayoutbuilder.lib import qobjectmaker_orig
-from qtlayoutbuilder.lib.inputtextrecord import InputTextRecord
+from qtlayoutbuilder.lib import keywords
+from qtlayoutbuilder.lib.qobjectmaker import QObjectMaker
 from qtlayoutbuilder.lib.widgetandlayoutfinder import WidgetAndLayoutFinder
-from qtlayoutbuilder.lib_test import test_utils
+from qtlayoutbuilder.lib_test.test_utils import \
+    raises_layout_error_with_this_message
 
 
 class TestQObjectMaker(TestCase):
@@ -23,13 +24,64 @@ class TestQObjectMaker(TestCase):
         except RuntimeError:
             pass # Singleton already exists
 
-    DUMMY_FILE_LOC = FileLocation('pretend filename', 1)
+    # First the instantiation behaviour.
+
+    # Use cases that should work.
+
+    def test_keyword_instantiation_for_example_keyword(self):
+        finder = None
+        maker = QObjectMaker(finder)
+        object_made = maker.make('fred', 'hbox')
+        self.assertTrue(isinstance(object_made, QHBoxLayout))
+
+    def test_keyword_instantiation_for_all_keywords(self):
+        finder = None
+        maker = QObjectMaker(finder)
+        for keyword in keywords.all_keywords():
+            object_made = maker.make('fred', keyword)
+
+    def test_explicit_qt_class_instantiation(self):
+        finder = None
+        maker = QObjectMaker(finder)
+        object_made = maker.make('fred', 'QHBoxLayout')
+        self.assertTrue(isinstance(object_made, QHBoxLayout))
+
+    # Error handling.
+
+    def test_unrecognized_class(self):
+        finder = None
+        maker = QObjectMaker(finder)
+        result = raises_layout_error_with_this_message("""
+            Python cannot make any sense of this word: <NoSuchClass>,
+            it does not exist in the global namespace.
+        """, maker.make, 'fred', 'NoSuchClass')
+        if not result:
+            self.fail()
+
+    def test_cannot_instantiate(self):
+        finder = None
+        maker = QObjectMaker(finder)
+        result = raises_layout_error_with_this_message("""
+            Cannot instantiate one of these: <__name__>.
+            It is supposed to be the name a a QLayout or QWidget
+            class, that can be used as a constructor.
+            The error coming back from Python is:
+            'str' object is not callable.
+        """, maker.make, 'fred', '__name__')
+        if not result:
+            self.fail()
+
+    def test_not_a_layout_or_widget(self):
+        finder = None
+        maker = QObjectMaker(finder)
+        result = raises_layout_error_with_this_message("""
+            This class name: <QColor>, instantiates successfully,
+            but is neither a QLayout nor a QWidget.
+        """, maker.make, 'fred', 'QColor')
+        if not result:
+            self.fail()
 
     def test_the_instantiation_behaviour(self):
-        # Prove out the operation of the syntax variants that require a new
-        # widget or layout to be instantiated:
-        #   'QHBoxLayout:my_box a b c'.
-        #   'HBOX:my_box a b c'.
 
         # Suitable error when the class type is not recognized by python.
         words = ['my_label:QThisWillNotExist', 'foo']

@@ -2,9 +2,7 @@ from unittest import TestCase
 
 from PySide.QtGui import QHBoxLayout
 
-from qtlayoutbuilder.api import LayoutError
 from qtlayoutbuilder.lib.builder import Builder
-from qtlayoutbuilder.lib_test import test_utils
 from qtlayoutbuilder.lib_test.test_utils import \
     raises_layout_error_with_this_message
 
@@ -42,60 +40,36 @@ class TestBuilder(TestCase):
         if not result:
             self.fail()
 
-    #-------------------------------------------------------------------------
-    # Minor functions
-
-    def test_measure_indent(self):
+    def test_assert_is_two_words(self):
         # Is silent when assertion succeeds.
-        self.assertEquals(Builder._measure_indent('    foo'), 4)
+        self.assertIsNone(Builder._assert_is_two_words(
+                ('foo', 'bar'), _MOCK_LINE))
 
         # Is vociferous when assertion fails.
         result = raises_layout_error_with_this_message("""
-            Indentation spaces must be a multiple of 2.
-            This line: <   foo> is indented by 3 spaces.
+            Cannot split this line: <mock line>,
+            into exactly two words,
+            (after comments and parenthesis have been removed.)
             """,
-            Builder._measure_indent, '   foo')
-        if not result:
-            self.fail()
-
-    def test_isolate_two_words(self):
-        # Is silent when assertion succeeds.
-        a,b = Builder._isolate_two_words('   foo   bar   ')
-        self.assertEquals(a, 'foo')
-        self.assertEquals(b, 'bar')
-
-        # Is vociferous when assertion fails.
-        result = raises_layout_error_with_this_message("""
-            Cannot isolate two words from this line: <foo bar baz>,
-            (after removal of comments and parenthesis).
-            """,
-            Builder._isolate_two_words, 'foo bar baz')
+            Builder._assert_is_two_words, ('foo'), _MOCK_LINE)
         if not result:
             self.fail()
 
     #-------------------------------------------------------------------------
-    # API Level - wraps error with context properly.
+    # Minor functions
 
-    def test_context_added_to_error_messages(self):
-        illegal_second_line = ('# a comment', '\t')
-
-        result = raises_layout_error_with_this_message("""
-            This line: <	> contains a tab character -
-            which is not allowed.
-            (Line number 2 of unit test)
-            """,
-            Builder.build, illegal_second_line, 'unit test')
-        if not result:
-            self.fail()
+    #-------------------------------------------------------------------------
+    # API Level
 
     #-------------------------------------------------------------------------
     # Trivial single child addition works.
 
-    def xtest_simplest_possible_child_addition(self):
-        lines = (('page widget'),('  layout hbox'))
-        layouts = Builder.build(lines, 'unit test')
-        target = layouts.page.layout
-        self.assertTrue(isinstance(target, QHBoxLayout))
+    def test_simplest_possible_input(self):
+        input = """
+            page        widget
+              layout    vbox
+        """
+        created = Builder.build(input, 'unit test provenenance')
 
 
 

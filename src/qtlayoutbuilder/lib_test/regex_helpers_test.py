@@ -22,27 +22,7 @@ class TestRegexHelpers(TestCase):
         removed = regex_helpers.with_hash_style_comment_removed(original)
         self.assertEquals(removed, '')
 
-    def test_isolate_parenthesised_bit(self):
-        # Canonical case.
-        original = 'foo(bar)baz'
-        paren, remainder = regex_helpers.isolate_parenthesised_bit(original)
-        self.assertEquals(paren, 'bar')
-        self.assertEquals(remainder, 'foobaz')
-
-        # Behaves when non paren present.
-        original = 'foobar'
-        paren, remainder = regex_helpers.isolate_parenthesised_bit(original)
-        self.assertEquals(paren, '')
-        self.assertEquals(remainder, 'foobar')
-
-        # Behaves when paren is everything.
-        original = '(foo)'
-        paren, remainder = regex_helpers.isolate_parenthesised_bit(original)
-        self.assertEquals(paren, 'foo')
-        self.assertEquals(remainder, '')
-
-        # Regex is greedy.
-        original = 'foo(bar)baz(billy)'
-        paren, remainder = regex_helpers.isolate_parenthesised_bit(original)
-        self.assertEquals(paren, 'bar)baz(billy')
-        self.assertEquals(remainder, 'foo')
+    def test_with_parenthesis_removed(self):
+        input = 'foo(bar)baz'
+        output = regex_helpers.with_parenthesis_removed(input)
+        self.assertEquals(output, 'foobaz')
