@@ -10,7 +10,15 @@ o  Reboot with new contract
         o  Higher level tests
             o  Work through builder behaviour, getting bits to work
                and diverting into unit test bring up of dependencies.
-                o  failing before getting to rest of stuff :-(
+               o  Convert to only use single string
+                    o  util to clean multiline string
+                        o  need to remove solely-whitespace last line also.
+                    o  better way for error formation and comparison
+                    o  file utils
+               o  Separate into a class the interp state
+               o  Make builder more modular and file smaller
+               o  Don't try to find parent for top level widgets or try
+                  to add them thereto.
 
 
 

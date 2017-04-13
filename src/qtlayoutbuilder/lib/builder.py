@@ -13,11 +13,19 @@ class Builder(object):
         # Helpers.
         finder = WidgetAndLayoutFinder()  # (Expensive construction)
 
-        # State used for interpretation.
+        # While our algorithm is stateful, we use a stateless class and solely
+        # class methods, so that the functions in the call stack get everything
+        # they need from injected parameters. Because this makes them easier
+        # to test independently, and makes the management of state less
+        # fragile.
+
+        # The state is held in these local variables, and are passed down
+        # the call chain as necessary.
         line_number = 0
         current_indent = 0  # Number of leading spaces.
         current_parent_at_level = {} # Keyed on indent.
 
+        # This is the object we will build and eventually, return.
         layouts_created = LayoutsCreated()
 
         try:
@@ -35,11 +43,14 @@ class Builder(object):
                 indent = self._measure_indent(remainder)
                 name, type_word = self._isolate_two_words(remainder)
 
-                # Create the parent child relationship for this line.
-                parent_indent = indent - 2
-                parent_object = current_parent_at_level[parent_indent]
+                # Create the child object.
                 child_object = QObjectMaker(finder).make(name)
-                ChildAdder.add(child_object, parent_object)
+
+                # Unless this is a top level object, add it to its parent.
+                if indent >= 2:
+                    parent_indent = indent - 2
+                    parent_object = current_parent_at_level[parent_indent]
+                    ChildAdder.add(child_object, parent_object)
 
                 # Register the new object in the LayoutsCreated object we will
                 # return.
@@ -47,8 +58,7 @@ class Builder(object):
                         self._generate_name_path_string())
 
                 # Do the interpretation state housekeeping.
-                self._update_most_recent_update_at_level_info(indent,
-                        child_object, current_parent_at_level)
+                self._update_interpretation_state()
 
                 return layouts_created
 

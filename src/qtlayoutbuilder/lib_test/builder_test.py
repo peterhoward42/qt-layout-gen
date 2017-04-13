@@ -85,10 +85,7 @@ class TestBuilder(TestCase):
     # Trivial single child addition works.
 
     def test_simplest_possible_child_addition(self):
-        lines = """
-            page        widget
-              layout    hbox
-        """
+        lines = (('page widget'),('  layout hbox'))
         layouts = Builder.build(lines, 'unit test')
         target = layouts.page.layout
         self.assertTrue(isinstance(target, QHBoxLayout))
