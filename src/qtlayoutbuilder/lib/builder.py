@@ -1,8 +1,9 @@
-from qtlayoutbuilder.api import LayoutsCreated, LayoutError
+from qtlayoutbuilder.api import LayoutError, LayoutsCreatedAccessor
 from qtlayoutbuilder.lib import regex_helpers
 from qtlayoutbuilder.lib import string_utils
 from qtlayoutbuilder.lib.childadder import ChildAdder
 from qtlayoutbuilder.lib.error_utils import raise_layout_error
+from qtlayoutbuilder.lib.layoutscreated import LayoutsCreated
 from qtlayoutbuilder.lib.multiline_string_utils import MultilineString
 from qtlayoutbuilder.lib.qobjectmaker import QObjectMaker
 from qtlayoutbuilder.lib.widgetandlayoutfinder import WidgetAndLayoutFinder
@@ -13,7 +14,7 @@ class Builder(object):
     def build(cls, one_big_string, provenance):
 
         finder = WidgetAndLayoutFinder() # A helper.
-        layouts_created = LayoutsCreated() # Will be populated and returned.
+        layouts_created = LayoutsCreated()
         line_number = 0
         lines = MultilineString.get_as_left_shifted_lines(one_big_string)
         for line in lines:
@@ -26,6 +27,7 @@ class Builder(object):
                 raise_layout_error("""
                     %s\n(Line number: %d, from %s)
                 """ % (str(e), line_number, provenance))
+        return LayoutsCreatedAccessor(layouts_created)
 
     # --------------------------------------------------------
     # Private below
@@ -48,7 +50,7 @@ class Builder(object):
             parent_level = level -1
             parent_object, parent_path = \
                 layouts_created.most_recently_added_at_level(parent_level)
-            ChildAdder.add(created, parent_object)
+            ChildAdder.add(created, name, parent_object)
             layouts_created.register_child(created, parent_path, name)
         else: # A top-level object.
             layouts_created.register_top_level_object(created, name)

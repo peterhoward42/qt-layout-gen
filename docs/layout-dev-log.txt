@@ -20,13 +20,27 @@ o  Reboot with new contract
                o  Revert to builder
                 *  Assert tests
                 o  Works as should
-                    o  Trivial input case with diversions as necessary
+                    *  Trivial input case with diversions as necessary
                         *  Diversion refactor and test qobject maker
                         *  LayoutsCreated.most_recent_at_level(level)
                         *  layouts_created.register_object(child_object, child_name, parent_level)
+                        *  child adder
+                        *  addressing
                 o  Exercise all logic present
+                    * sibling child addn works
+                    o  descending two levels
+                    o  coming back up again
+                    o  repeated top level
+                    o  chehc code again
+                    o  skip level indent error handling
+                    o  all tests in module pass
+    o  consider remainder of contract
+
 
 o  Later
+    o  Publish dumped layouts created api?
+    o  Spread use of fuzzy equality of multiline strings
+    o  Note synth of tab name for addTab
     o  Unify use of multiline tests and generation.
     o  Move all regex into module
     o  Revisit addStretch - had to drop

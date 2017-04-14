@@ -1,9 +1,11 @@
 from unittest import TestCase
 
 from PySide.QtGui import QApplication
-from PySide.QtGui import QHBoxLayout
+from PySide.QtGui import QVBoxLayout
+from PySide.QtGui import QWidget
 
 from qtlayoutbuilder.lib.builder import Builder
+from qtlayoutbuilder.lib.multiline_string_utils import MultilineString
 from qtlayoutbuilder.lib_test.test_utils import \
     raises_layout_error_with_this_message
 
@@ -19,6 +21,7 @@ class TestBuilder(TestCase):
         except RuntimeError:
             pass # Singleton already exists
 
+    #-------------------------------------------------------------------------
     # Test utilities and helpers, bottom up.
 
     #-------------------------------------------------------------------------
@@ -66,30 +69,89 @@ class TestBuilder(TestCase):
             self.fail()
 
     #-------------------------------------------------------------------------
-    # Minor functions
-
-    #-------------------------------------------------------------------------
     # API Level
 
     #-------------------------------------------------------------------------
-    # Trivial single child addition works.
+    # Simplest possible input.
 
-    def test_simplest_possible_input(self):
+    def test_simplest_possible_runs_without_crashing(self):
         input = """
             page        widget
               layout    vbox
         """
-        created = Builder.build(input, 'unit test provenenance')
+        layouts_created = Builder.build(input, 'unit test provenenance')
+
+    def test_simplest_possible_dump_of_contents_is_correct(self):
+        input = """
+            page        widget
+              layout    vbox
+        """
+        layouts_created = Builder.build(input, 'unit test provenenance')
+        dumped = MultilineString.normalise(layouts_created.dump())
+        expected = MultilineString.normalise("""
+            page           QWidget
+            page.layout    QVBoxLayout
+        """)
+        self.assertEqual(dumped, expected)
+
+    def test_simplest_possible_querying_accessor_works(self):
+        input = """
+            page        widget
+              layout    vbox
+        """
+        layouts_created = Builder.build(input, 'unit test provenenance')
+        page = layouts_created.get_element('page')
+        self.assertTrue(isinstance(page, QWidget))
+
+    def test_simplest_possible_creates_parent_child_relations(self):
+        input = """
+            page        widget
+              layout    vbox
+        """
+        layouts_created = Builder.build(input, 'unit test provenenance')
+        page = layouts_created.get_element('page')
+        self.assertTrue(isinstance(page.layout(), QVBoxLayout))
+
+    def test_sibling_child_additions_work(self):
+        input = """
+            layout      vbox
+              a         label
+              b         label
+              c         label
+        """
+        layouts_created = Builder.build(input, 'unit test provenenance')
+        dumped = MultilineString.normalise(layouts_created.dump())
+        expected = MultilineString.normalise("""
+            layout      QVBoxLayout
+            layout.a    QLabel
+            layout.b    QLabel
+            layout.c    QLabel
+        """)
+        layout = layouts_created.get_element('layout')
+        self.assertEqual(layout.count(), 3)
+
+    def test_multi_level_descent_works(self):
+        input = """
+            page          widget
+              layout      vbox
+                a         label
+                b         label
+                c         label
+        """
+        layouts_created = Builder.build(input, 'unit test provenenance')
+        dumped = MultilineString.normalise(layouts_created.dump())
+        expected = MultilineString.normalise("""
+            page             QWidget
+            page.layout      QVBoxLayout
+            page.layout.a    QLabel
+            page.layout.b    QLabel
+            page.layout.c    QLabel
+        """)
+        self.assertEqual(dumped, expected)
 
 
 
 
-    # sibling child addn works
-    # higher child addn works
-    # pruning of levels ds right when go back up
-    # two top levels work
-    # layouts created returned
-    # addressing of obj works
 
 
 _MOCK_LINE = 'mock line'

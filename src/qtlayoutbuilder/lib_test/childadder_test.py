@@ -4,11 +4,10 @@ from PySide.QtGui import QApplication, QLabel, QHBoxLayout, \
     QStackedWidget, QTabWidget
 from PySide.QtGui import QVBoxLayout
 from PySide.QtGui import QWidget
-from qtlayoutbuilder.api.layouterror import LayoutError
 
 from qtlayoutbuilder.lib.childadder import ChildAdder
-from qtlayoutbuilder.lib.inputtextrecord import InputTextRecord
-from qtlayoutbuilder.lib_test import test_utils
+from qtlayoutbuilder.lib_test.test_utils import \
+    raises_layout_error_with_this_message
 
 
 class TestChildAdder(TestCase):
@@ -21,86 +20,35 @@ class TestChildAdder(TestCase):
         except RuntimeError:
             pass  # Singleton already exists
 
-    def test_add_child_text_error_handling(self):
-        # Cannot setText() on a QWidget.
-        try:
-            ChildAdder._add_child_text('child_name', QWidget(),
-                                       InputTextRecord.mock_record())
-        except LayoutError as e:
-            msg = str(e)
-            self.assertTrue(test_utils.fragments_are_present("""
-                Because this child name: <child_name>, is not defined
-                anywhere else in your input as a QObject, we tried
-                using it in a call to setText() on the parent.
-                But this type of parent does not support setText().
-            """, msg))
-
-    def test_add_child_text_working_properly(self):
-        # Can setText() on a QLabel
-        label = QLabel()
-        ChildAdder._add_child_text('child_name', label,
-                                   InputTextRecord.mock_record())
-        self.assertEqual(label.text(), 'child_name')
-
-    def test_add_child_text_substitutes_double_underscores(self):
-        label = QLabel()
-        ChildAdder._add_child_text('This__should__get__spaces', label,
-                InputTextRecord.mock_record())
-        self.assertEqual(label.text(), 'This should get spaces')
-
-    def test_api_add_text_use_case_works(self):
-        label = QLabel()
-        empty_dict = {}
-        ChildAdder.add_child_to_parent(
-            'some_text', label, empty_dict, InputTextRecord.mock_record())
-        self.assertEqual(label.text(), 'some_text')
 
     def test_error_handling_when_speculative_methods_all_fail(self):
         # There is no way to add a widget to a widget.
-        parent = QWidget()
-        child_lookup = {'child': QWidget()}
-        try:
-            ChildAdder.add_child_to_parent(
-                    'child', parent, child_lookup, InputTextRecord.mock_record())
-        except LayoutError as e:
-            msg = str(e)
-            print msg
-            self.assertTrue(test_utils.fragments_are_present("""
-                None of the child addition methods worked
-                for this child name: <child>,
-            """, msg))
+        result = raises_layout_error_with_this_message("""
+            None of the child addition methods worked, for
+            the child with this name: <fred>.
+        """, ChildAdder.add, QWidget(), 'fred', QWidget())
+        if not result:
+            self.fail()
 
     def test_add_layout_succeeding(self):
         parent = QVBoxLayout()
-        child_lookup = {'child_layout': QHBoxLayout()}
-        ChildAdder.add_child_to_parent(
-                'child_layout', parent, child_lookup,
-                InputTextRecord.mock_record())
+        ChildAdder.add(QHBoxLayout(), 'fred', parent)
         self.assertEqual(parent.count(), 1)
         self.assertTrue(isinstance(parent.itemAt(0), QHBoxLayout))
 
     def test_set_layout_succeeding(self):
         parent = QWidget()
-        child_lookup = {'child_layout': QHBoxLayout()}
-        ChildAdder.add_child_to_parent(
-                'child_layout', parent, child_lookup,
-                InputTextRecord.mock_record())
+        ChildAdder.add(QHBoxLayout(), 'fred', parent)
         self.assertTrue(isinstance(parent.layout(), QHBoxLayout))
 
     def test_add_widget_succeeding(self):
         parent = QStackedWidget()
-        child_lookup = {'child_widget': QLabel()}
-        ChildAdder.add_child_to_parent(
-                'child_widget', parent, child_lookup,
-                InputTextRecord.mock_record())
+        ChildAdder.add(QLabel(), 'fred', parent)
         self.assertEqual(parent.count(), 1)
         self.assertTrue(isinstance(parent.currentWidget(), QLabel))
 
     def test_add_tab_succeeding(self):
         parent = QTabWidget()
-        child_lookup = {'child_widget': QLabel()}
-        ChildAdder.add_child_to_parent(
-                'child_widget', parent, child_lookup,
-                InputTextRecord.mock_record())
+        ChildAdder.add(QLabel(), 'fred', parent)
         self.assertEqual(parent.count(), 1)
         self.assertTrue(isinstance(parent.currentWidget(), QLabel))
