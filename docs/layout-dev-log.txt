@@ -21,13 +21,9 @@ o  Reboot with new contract
                 *  Assert tests
                 o  Works as should
                     o  Trivial input case with diversions as necessary
-                        o  Diversion refactor and test qobject maker
-                            *  Re code it
-                            o  Bring up tests
-                                *  Extend keywords and tests
-                                o  Bring up qobject maker tests
-                                    o  instantiate variants
-                                    o  find variants
+                        *  Diversion refactor and test qobject maker
+                        *  LayoutsCreated.most_recent_at_level(level)
+                        *  layouts_created.register_object(child_object, child_name, parent_level)
                 o  Exercise all logic present
 
 o  Later

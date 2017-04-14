@@ -5,12 +5,12 @@ from qtlayoutbuilder.lib.error_utils import raise_layout_error
 
 
 class QObjectMaker(object):
-    def __init__(self, widgets_and_layout_finder):
-        self._widgets_and_layout_finder = widgets_and_layout_finder
+    def __init__(self, widget_and_layout_finder):
+        self._widget_and_layout_finder = widget_and_layout_finder
 
     def make(self, name, type_word):
         if type_word.startswith('?'):
-            return self._find_existing_object(name, type_word)
+            return self._find_existing_object(name, type_word[1:])
         else:
             return self._instantiate_object(type_word)
 

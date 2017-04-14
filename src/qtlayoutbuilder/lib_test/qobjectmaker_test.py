@@ -81,139 +81,40 @@ class TestQObjectMaker(TestCase):
         if not result:
             self.fail()
 
-    def test_the_instantiation_behaviour(self):
+    # Now the 'Finding' behaviour.
 
-        # Suitable error when the class type is not recognized by python.
-        words = ['my_label:QThisWillNotExist', 'foo']
-        record = InputTextRecord.make_from_all_words(
-            words, self.DUMMY_FILE_LOC)
-        widget_or_layout_finder = None
-        try:
-            q_object, parent_name = qobjectmaker_orig.make_from_parent_info(
-                record, widget_or_layout_finder)
-        except LayoutError as e:
-            msg = str(e)
-            self.assertTrue(test_utils.fragments_are_present("""
-               Python cannot make any sense of this word. (it does not
-               exist in the global namespace) <QThisWillNotExist>,
-            """, msg))
+    def test_finding_should_work_without_error(self):
+        my_page = CustomLayout()
+        finder = WidgetAndLayoutFinder()
+        maker = QObjectMaker(finder)
+        made = maker.make('my_page', '?CustomLayout')
+        self.assertTrue(isinstance(made, CustomLayout))
 
-        # Suitable error when python recognizes the word in the global namespace,
-        # but cannot instantiate it.
-        # We use the string __doc__ because we know that Python will be
-        # able to resolve that name in the namespace the called function has,
-        # but it is not instantiable, because it is a string and a string is not
-        # a callable.
+    def test_finding_error_handling_when_nothing_found(self):
+        finder = WidgetAndLayoutFinder()
+        maker = QObjectMaker(finder)
+        result = raises_layout_error_with_this_message("""
+            Cannot find any objects of class <CustomLayout>,
+            that are referenced by a variable or attribute
+            called <wont_find_me>
+        """, maker.make, 'wont_find_me', '?CustomLayout')
+        if not result:
+            self.fail()
 
-        # We have to monkey-patch the record to defeat the parser's
-        # insistence that the word used for a QObject class begins with a Q.
-        # So we start with QLabel...
-        words = ['my_label:QLabel', 'foo']
-        record = InputTextRecord.make_from_all_words(
-            words, self.DUMMY_FILE_LOC)
-        # Then overwrite the class name inside the record.
-        record.class_required = '__doc__'
-        try:
-            widget_or_layout_finder = None
-            q_object, parent_name = qobjectmaker_orig.make_from_parent_info(
-                record, widget_or_layout_finder)
-        except LayoutError as e:
-            msg = str(e)
-            self.assertTrue(test_utils.fragments_are_present("""
-                Cannot instantiate one of these: <__doc__>.
-                It is supposed to be a QtQui class name like QString or
-                QLabel that can be used as a constructor.
-                When the code tried to instantiate one...
-                the underlying error message was: <'str' object is not callable>,
-            """, msg))
+    def test_finding_error_handling_when_duplicates_found(self):
+        # Create two items that should get found and thus be duplicates.
+        my_page = CustomLayout()
+        competing_reference = HasTargetIn()
 
-        # Suitable error when the thing gets instantiated, but turns out not to be
-        # a QWidget or QLayout
-        words = ['my_label:QColor', 'foo']
-        record = InputTextRecord.make_from_all_words(
-            words, self.DUMMY_FILE_LOC)
-        try:
-            widget_or_layout_finder = None
-            q_object, parent_name = qobjectmaker_orig.make_from_parent_info(
-                record, widget_or_layout_finder)
-        except LayoutError as e:
-            msg = str(e)
-            self.assertTrue(test_utils.fragments_are_present("""
-               This class name: <QColor> instantiates successfully,
-                but is neither a QLayout, nor a QWidget,
-            """, msg))
-
-        # Works properly when the QWord is explicit.
-        words = ['my_label:QLabel', 'foo']
-        record = InputTextRecord.make_from_all_words \
-            (words, self.DUMMY_FILE_LOC)
-        widget_or_layout_finder = None
-        q_object, parent_name = qobjectmaker_orig.make_from_parent_info(
-            record, widget_or_layout_finder)
-        class_name = q_object.__class__.__name__
-        self.assertTrue(isinstance(q_object, QLabel))
-        self.assertEquals(parent_name, 'my_label')
-
-        # Works properly when the QWord is implicit (ie a keyword).
-        words = ['my_box:HBOX', 'foo']
-        record = InputTextRecord.make_from_all_words \
-            (words, self.DUMMY_FILE_LOC)
-        widget_or_layout_finder = None
-        q_object, parent_name = qobjectmaker_orig.make_from_parent_info(
-            record, widget_or_layout_finder)
-        class_name = q_object.__class__.__name__
-        self.assertTrue(isinstance(q_object, QHBoxLayout))
-        self.assertEquals(parent_name, 'my_box')
-
-    def test_the_finding_behaviour(self):
-        # Prove out the operation of the syntax variant that requires an
-        # existing layout or widget to be found:
-        #   'Find:CustomLayout:my_page a b c'.
-
-        # Correct error handling when nothing found.
-        words = ['my_page:Find:CustomLayout', 'a', 'b', 'c']
-        record = InputTextRecord.make_from_all_words(
-            words, self.DUMMY_FILE_LOC)
-        widget_or_layout_finder = WidgetAndLayoutFinder()
-        try:
-            q_object, parent_name = qobjectmaker_orig.make_from_parent_info(
-                record, widget_or_layout_finder)
-        except LayoutError as e:
-            msg = str(e)
-            self.assertTrue(test_utils.fragments_are_present("""
-                Cannot find any objects of class: <CustomLayout>,
-                that are referenced by a variable called: <my_page>.
-            """, msg))
-
-        # Correct error handling when duplicates found.
-        words = ['my_page:Find:CustomLayout', 'a', 'b', 'c']
-        record = InputTextRecord.make_from_all_words(
-            words, self.DUMMY_FILE_LOC)
-        has_target_object_in_a = HasTargetIn()
-        has_target_object_in_b = HasTargetIn()
-        widget_or_layout_finder = WidgetAndLayoutFinder()
-        try:
-            q_object, parent_name = qobjectmaker_orig.make_from_parent_info(
-                record, widget_or_layout_finder)
-        except LayoutError as e:
-            msg = str(e)
-            self.assertTrue(test_utils.fragments_are_present("""
-               Ambiguity Problem: Found more than one objects of class:
-               <CustomLayout>,
-               that is referenced by a variable called: <my_page>.
-            """, msg))
-
-        # Finds the target QObject when it should.
-        words = ['my_solitary_page:Find:CustomLayout', 'a',
-                 'b', 'c']
-        record = InputTextRecord.make_from_all_words(
-            words, self.DUMMY_FILE_LOC)
-        my_solitary_page = CustomLayout()
-        widget_or_layout_finder = WidgetAndLayoutFinder()
-        q_object, parent_name = qobjectmaker_orig.make_from_parent_info(
-            record, widget_or_layout_finder)
-        self.assertEquals(parent_name, 'my_solitary_page')
-        self.assertEquals(q_object.__class__.__name__, 'CustomLayout')
+        finder = WidgetAndLayoutFinder()
+        maker = QObjectMaker(finder)
+        result = raises_layout_error_with_this_message("""
+            Ambiguity problem. Found more than one object of
+            class: <CustomLayout>, referenced by a variable or attribute
+            called: <my_page>
+        """, maker.make, 'my_page', '?CustomLayout')
+        if not result:
+            self.fail()
 
 
 class CustomLayout(QLayout):

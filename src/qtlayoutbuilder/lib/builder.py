@@ -34,19 +34,24 @@ class Builder(object):
     def _process_line(cls, line, finder, layouts_created):
 
         cls._assert_no_tabs_present(line)
-        working_line = regex_helpers.with_hash_style_comment_removed(line)
+        working_line = regex_helpers.remove_comment(line)
         if cls._nothing_significant_remains(working_line):
             return
-        working_line = regex_helpers.with_parenthesis_removed(working_line)
-        level = string_utils.measure_indent(working_line) / 2
+        working_line = regex_helpers.remove_parenthesis(working_line)
+        # No indent is top level (level 1). First level of indent is level 2.
+        level = 1 + string_utils.measure_indent(working_line) / 2
         words = string_utils.as_list_of_words(working_line)
         cls._assert_is_two_words(words, line)
-        child_name, type_string = words
-        child_object = QObjectMaker(finder).make(child_name)
-        parent_level = level -1
-        parent_object = layouts_created.most_recent_at_level(parent_level)
-        ChildAdder.add(child_object, parent_object)
-        layouts_created.register_object(child_object, child_name, parent_level)
+        name, type_string = words
+        created = QObjectMaker(finder).make(name, type_string)
+        if level > 1: # A child that must be added to a parent.
+            parent_level = level -1
+            parent_object, parent_path = \
+                layouts_created.most_recently_added_at_level(parent_level)
+            ChildAdder.add(created, parent_object)
+            layouts_created.register_child(created, parent_path, name)
+        else: # A top-level object.
+            layouts_created.register_top_level_object(created, name)
 
     @classmethod
     def _nothing_significant_remains(cls, line):

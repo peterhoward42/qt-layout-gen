@@ -1,5 +1,6 @@
 from unittest import TestCase
 
+from PySide.QtGui import QApplication
 from PySide.QtGui import QHBoxLayout
 
 from qtlayoutbuilder.lib.builder import Builder
@@ -8,6 +9,15 @@ from qtlayoutbuilder.lib_test.test_utils import \
 
 
 class TestBuilder(TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        # Needs QApplication context.
+        super(TestBuilder, cls).setUpClass()
+        try:
+            QApplication([])
+        except RuntimeError:
+            pass # Singleton already exists
 
     # Test utilities and helpers, bottom up.
 
