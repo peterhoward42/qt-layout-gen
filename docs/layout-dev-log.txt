@@ -28,11 +28,11 @@ o  Reboot with new contract
                         *  addressing
                 o  Exercise all logic present
                     * sibling child addn works
-                    o  descending two levels
-                    o  coming back up again
-                    o  repeated top level
+                    *  descending two levels
+                    *  coming back up again
+                    *  repeated top level
+                    *  skip level indent error handling
                     o  chehc code again
-                    o  skip level indent error handling
                     o  all tests in module pass
     o  consider remainder of contract
 

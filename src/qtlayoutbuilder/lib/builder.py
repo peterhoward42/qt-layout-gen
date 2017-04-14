@@ -26,7 +26,7 @@ class Builder(object):
             except LayoutError as e:
                 raise_layout_error("""
                     %s\n(Line number: %d, from %s)
-                """ % (str(e), line_number, provenance))
+                """,  (str(e), line_number, provenance))
         return LayoutsCreatedAccessor(layouts_created)
 
     # --------------------------------------------------------
@@ -42,6 +42,7 @@ class Builder(object):
         working_line = regex_helpers.remove_parenthesis(working_line)
         # No indent is top level (level 1). First level of indent is level 2.
         level = 1 + string_utils.measure_indent(working_line) / 2
+        cls._assert_have_not_skipped_a_level(level, line, layouts_created)
         words = string_utils.as_list_of_words(working_line)
         cls._assert_is_two_words(words, line)
         name, type_string = words
@@ -87,4 +88,16 @@ class Builder(object):
             Cannot split this line: <%s>,
             into exactly two words,
             (after comments and parenthesis have been removed.)
+        """, (line))
+
+
+    @classmethod
+    def _assert_have_not_skipped_a_level(cls, level, line, layouts_created):
+        # Only allowed to descend levels in single steps.
+        if level <= layouts_created.current_level() + 1:
+            return
+        raise_layout_error("""
+            This line is indented too much: <%s>.
+            It cannot be indented relative to the line
+            above it by more than 2 spaces.
         """, (line))

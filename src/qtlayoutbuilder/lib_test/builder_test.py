@@ -22,7 +22,8 @@ class TestBuilder(TestCase):
             pass # Singleton already exists
 
     #-------------------------------------------------------------------------
-    # Test utilities and helpers, bottom up.
+    # Test utilities and helpers, bottom up first to make sure we can
+    # rely on what they say when debugging problems from higher level tests.
 
     #-------------------------------------------------------------------------
     # Assertions and error reporting.
@@ -65,6 +66,21 @@ class TestBuilder(TestCase):
             (after comments and parenthesis have been removed.)
             """,
             Builder._assert_is_two_words, ('foo'), _MOCK_LINE)
+        if not result:
+            self.fail()
+
+    def test_error_message_when_skip_indent_levels(self):
+        input = """
+            page        widget
+                layout    vbox
+        """
+        result = raises_layout_error_with_this_message("""
+                This line is indented too much: <    layout    vbox>.
+                It cannot be indented relative to the line
+                above it by more than 2 spaces.
+                (Line number: 2, from unit test provenance)
+            """,
+            Builder.build, input, 'unit test provenance')
         if not result:
             self.fail()
 
@@ -149,6 +165,51 @@ class TestBuilder(TestCase):
         """)
         self.assertEqual(dumped, expected)
 
+    def test_multi_level_descent_and_ascent_works(self):
+        input = """
+            page          widget
+              layout      vbox
+                a         label
+                b         label
+                fred      widget
+                  layout  hbox
+                    lbl   label
+                c         label
+        """
+        layouts_created = Builder.build(input, 'unit test provenenance')
+        dumped = MultilineString.normalise(layouts_created.dump())
+        expected = MultilineString.normalise("""
+            page                           QWidget
+            page.layout                    QVBoxLayout
+            page.layout.a                  QLabel
+            page.layout.b                  QLabel
+            page.layout.fred               QWidget
+            page.layout.fred.layout        QHBoxLayout
+            page.layout.fred.layout.lbl    QLabel
+            page.layout.c                  QLabel
+        """)
+        self.assertEqual(dumped, expected)
+        layout = layouts_created.get_element('page.layout')
+        self.assertEqual(layout.count(), 4)
+
+    def test_more_than_one_top_level_object_works(self):
+        input = """
+            page1          widget
+              layout      vbox
+            page2          widget
+              layout      vbox
+        """
+        layouts_created = Builder.build(input, 'unit test provenenance')
+        dumped = MultilineString.normalise(layouts_created.dump())
+        expected = MultilineString.normalise("""
+            page1           QWidget
+            page1.layout    QVBoxLayout
+            page2           QWidget
+            page2.layout    QVBoxLayout
+        """)
+        self.assertEqual(dumped, expected)
+        widget = layouts_created.get_element('page2')
+        self.assertTrue(isinstance(widget.layout(), QVBoxLayout))
 
 
 

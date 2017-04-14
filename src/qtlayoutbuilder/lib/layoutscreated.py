@@ -10,7 +10,6 @@ class LayoutsCreated(object):
         # (A level-two item)
         self._elements = OrderedDict()
 
-
     def get_element(self, path):
         return self._elements[path]
 
@@ -27,6 +26,13 @@ class LayoutsCreated(object):
             if len(key.split('.')) == level:
                 return self._elements[key], key
         return None
+
+    def current_level(self):
+        keys = self._elements.keys()
+        if len(keys) == 0:
+            return 1
+        last_key = self._elements.keys().pop()
+        return len(last_key.split('.'))
 
     def dump(self):
         key_lengths = [len(key) for key in self._elements.keys()]
