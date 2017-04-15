@@ -54,11 +54,18 @@ class MultilineString(object):
         """
         lines = input_string.split('\n')
 
+        # Counter intuitive to do anything if there is not at least one newline
+        # present in the input.
+        if len(lines) <= 2:
+            return input_string
+
+        # Deal with first last line.
         first_line = lines[0]
         stripped = first_line.strip()
         if len(stripped) == 0:
             lines = lines[1:]
 
+        # Deal with last line
         last_line = lines[len(lines) - 1]
         stripped = last_line.strip()
         if len(stripped) == 0:

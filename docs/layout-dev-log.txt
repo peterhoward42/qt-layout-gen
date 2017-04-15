@@ -1,40 +1,11 @@
-o  Reboot with new contract
-    *  Write contract
-    *  Tag code base
-    *  Meta design of indentation consumption
-    *  Meta design of context in error handling
-    o  Code most of it top down
-        o  Unit test utilities
-            *  regex
-            *  builder helpers
-        o  Higher level tests
-            o  Work through builder behaviour, getting bits to work
-               and diverting into unit test bring up of dependencies.
-               o  Convert to only use single string
-                    *  util to clean multiline string
-                        *  need to remove solely-whitespace last line also.
-                    *  better way for error formation and comparison
-                    *  Now convert builder api
-               *  Separate multiline strings utils and plain
-               *  Make builder more modular and file smaller
-               o  Revert to builder
-                *  Assert tests
-                o  Works as should
-                    *  Trivial input case with diversions as necessary
-                        *  Diversion refactor and test qobject maker
-                        *  LayoutsCreated.most_recent_at_level(level)
-                        *  layouts_created.register_object(child_object, child_name, parent_level)
-                        *  child adder
-                        *  addressing
-                o  Exercise all logic present
-                    * sibling child addn works
-                    *  descending two levels
-                    *  coming back up again
-                    *  repeated top level
-                    *  skip level indent error handling
-                    o  chehc code again
-                    o  all tests in module pass
-    o  consider remainder of contract
+*  Reboot with new contract
+*  Go back to integrate with api and get that working
+*  Ditch all the redundant lib stuff
+o  Any redundant files / code?
+o  Get ALL tests working
+o  Resume working up contract
+o  Laters
+o  Quality
 
 
 o  Later

@@ -84,6 +84,18 @@ class TestBuilder(TestCase):
         if not result:
             self.fail()
 
+    def test_error_message_when_no_meaninful_input_found(self):
+        input = """
+            # Hello
+        """
+        result = raises_layout_error_with_this_message("""
+                This input provided (unit test provenance) contains nothing, or
+                nothing except whitespace and comments.
+            """,
+                Builder.build, input, 'unit test provenance')
+        if not result:
+            self.fail()
+
     #-------------------------------------------------------------------------
     # API Level
 

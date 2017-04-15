@@ -1,3 +1,0 @@
-banana
-HBOX:my_hbox left middle right
-VBOX:my_vbox top body right

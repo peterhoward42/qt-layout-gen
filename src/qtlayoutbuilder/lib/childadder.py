@@ -3,9 +3,7 @@ This module provides a generalised function that tries various adventures,
 to add a child to a Qt parent object. See the code below for the logical
 experiments it tries.
 """
-
-from qtlayoutbuilder.api import LayoutError
-from qtlayoutbuilder.lib.error_utils import raise_layout_error
+from qtlayoutbuilder.api.layouterror import LayoutError
 
 
 class ChildAdder(object):
@@ -40,7 +38,7 @@ class ChildAdder(object):
                 # In which case move on to try the next method.
                 continue
         # Nothing worked, which is an error
-        raise_layout_error("""
+        raise LayoutError("""
             None of the child addition methods worked, for
             the child with this name: <%s>.
             """, child_name)

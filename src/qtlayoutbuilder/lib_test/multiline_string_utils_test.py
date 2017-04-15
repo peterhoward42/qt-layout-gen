@@ -22,6 +22,10 @@ class MultilineStringUtilsTest(TestCase):
         self.assertTrue(result.startswith('x\n'))
         self.assertTrue(result.endswith('x'))
 
+        # When input is empty.
+        result = MultilineString.remove_empty_first_and_last_lines('')
+        self.assertEqual(result, '')
+
     def test_shift_left(self):
         # Normal usage
         input = """

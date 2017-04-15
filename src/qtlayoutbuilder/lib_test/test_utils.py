@@ -2,8 +2,7 @@
 A module providing utility functions that make it easier to write tests
 that examine multi-line error messages.
 """
-
-from qtlayoutbuilder.api import LayoutError
+from qtlayoutbuilder.api.layouterror import LayoutError
 from qtlayoutbuilder.lib.multiline_string_utils import MultilineString
 
 

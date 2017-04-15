@@ -1,0 +1,4 @@
+my_page         widget
+  layout        vbox
+    foo         button
+    bar         button

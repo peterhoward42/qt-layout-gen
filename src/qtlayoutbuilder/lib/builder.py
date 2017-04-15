@@ -1,8 +1,7 @@
-from qtlayoutbuilder.api import LayoutError, LayoutsCreatedAccessor
+from qtlayoutbuilder.api.layouterror import LayoutError
 from qtlayoutbuilder.lib import regex_helpers
 from qtlayoutbuilder.lib import string_utils
 from qtlayoutbuilder.lib.childadder import ChildAdder
-from qtlayoutbuilder.lib.error_utils import raise_layout_error
 from qtlayoutbuilder.lib.layoutscreated import LayoutsCreated
 from qtlayoutbuilder.lib.multiline_string_utils import MultilineString
 from qtlayoutbuilder.lib.qobjectmaker import QObjectMaker
@@ -20,14 +19,19 @@ class Builder(object):
         for line in lines:
             line_number += 1
             # Catch all LayoutExceptions, so that we can add the line
-            # number and provenance to them before remitting them.
+            # number and provenance to them before re-emitting them.
             try:
                 cls._process_line(line, finder, layouts_created)
             except LayoutError as e:
-                raise_layout_error("""
+                raise LayoutError("""
                     %s\n(Line number: %d, from %s)
                 """,  (str(e), line_number, provenance))
-        return LayoutsCreatedAccessor(layouts_created)
+        if layouts_created.is_empty():
+            raise LayoutError("""
+                This input provided (%s) contains nothing, or
+                nothing except whitespace and comments.
+                """, provenance)
+        return layouts_created
 
     # --------------------------------------------------------
     # Private below
@@ -59,6 +63,7 @@ class Builder(object):
     @classmethod
     def _nothing_significant_remains(cls, line):
         return len(line.strip()) == 0
+
     #-------------------------------------------------------------------------
     # Assertions
 
@@ -66,7 +71,7 @@ class Builder(object):
     def _assert_multiple_of_two(self, indent, line):
         if indent % 2 == 0:
             return
-        raise_layout_error("""
+        raise LayoutError("""
             Indentation spaces must be a multiple of 2.
             This line: <%s> is indented by %d spaces.
             """, (line, indent))
@@ -75,7 +80,7 @@ class Builder(object):
     def _assert_no_tabs_present(self, line):
         if '\t' not in line:
             return
-        raise_layout_error("""
+        raise LayoutError("""
             This line: <%s> contains a tab character -
             which is not allowed.
             """, (line))
@@ -84,7 +89,7 @@ class Builder(object):
     def _assert_is_two_words(cls, words, line):
         if len(words) == 2:
             return
-        raise_layout_error("""
+        raise LayoutError("""
             Cannot split this line: <%s>,
             into exactly two words,
             (after comments and parenthesis have been removed.)
@@ -96,7 +101,7 @@ class Builder(object):
         # Only allowed to descend levels in single steps.
         if level <= layouts_created.current_level() + 1:
             return
-        raise_layout_error("""
+        raise LayoutError("""
             This line is indented too much: <%s>.
             It cannot be indented relative to the line
             above it by more than 2 spaces.

@@ -34,6 +34,9 @@ class LayoutsCreated(object):
         last_key = self._elements.keys().pop()
         return len(last_key.split('.'))
 
+    def is_empty(self):
+        return len(self._elements.keys()) == 0
+
     def dump(self):
         key_lengths = [len(key) for key in self._elements.keys()]
         pad_columns = max(key_lengths) + 4

@@ -1,7 +1,7 @@
 from PySide.QtGui import * # So that we can construct any QObject from a string.
 
+from qtlayoutbuilder.api.layouterror import LayoutError
 from qtlayoutbuilder.lib import keywords
-from qtlayoutbuilder.lib.error_utils import raise_layout_error
 
 
 class QObjectMaker(object):
@@ -27,7 +27,7 @@ class QObjectMaker(object):
             try:
                 constructor = globals()[type_word]
             except KeyError as e:
-                raise_layout_error("""
+                raise LayoutError("""
                     Python cannot make any sense of this word: <%s>,
                     it does not exist in the global namespace.
                 """, (type_word))
@@ -37,7 +37,7 @@ class QObjectMaker(object):
         try:
             instance = constructor()
         except Exception as e:
-            raise_layout_error("""
+            raise LayoutError("""
                     Cannot instantiate one of these: <%s>.
                     It is supposed to be the name a a QLayout or QWidget
                     class, that can be used as a constructor.
@@ -50,7 +50,7 @@ class QObjectMaker(object):
             return instance
         if isinstance(instance, QLayout):
             return instance
-        raise_layout_error("""
+        raise LayoutError("""
             This class name: <%s>, instantiates successfully,
             but is neither a QLayout nor a QWidget.
         """, (type_word))
@@ -67,13 +67,13 @@ class QObjectMaker(object):
 
         # Object to nothing found, or duplicates found.
         if len(found) == 0:
-            raise_layout_error("""
+            raise LayoutError("""
                 Cannot find any objects of class <%s>,
                 that are referenced by a variable or attribute
                 called <%s>
             """, (type_word, name))
         if len(found) > 1:
-            raise_layout_error("""
+            raise LayoutError("""
                 Ambiguity problem. Found more than one object of
                 class: <%s>, referenced by a variable or attribute
                 called: <%s>
