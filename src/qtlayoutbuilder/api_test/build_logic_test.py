@@ -41,4 +41,4 @@ class TestBuilderApi(TestCase):
         layouts_created = build_from_file(file_path)
         widget = layouts_created.get_element('my_page')
         widget.show()
-        #qApp.exec_()
+        qApp.exec_()

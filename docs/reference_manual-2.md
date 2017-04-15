@@ -117,13 +117,16 @@ or an attribute called *my_widget*. For example:
     
 > It does this with the help of Python's garbage collector - which knows about
 > every object that exists in your program.
+
+Nb. It raises an error if it finds more than one object that qualifies.
     
 ## Setting the Text on Things
 Anytime you put something in parenthesis after a type word like this:
 
     label1      label(some text)
     
-The builder will call setText('some text') on the parent object.
+The builder will (indiscriminately) call setText('some text') on the object
+that the line has created. (Good for QLabel, QPushButton, QLineEdit).
    
 ## Taking the Input From a File
 

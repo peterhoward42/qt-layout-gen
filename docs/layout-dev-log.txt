@@ -5,6 +5,10 @@
 *  Get ALL tests working
 *  Resume working up contract
 o  Stretch and setTitle
+o  Wider widget set support incl setText / setTitle
+    o  Harvest as table
+    o  Test of very large range of add children
+o  Unicode settext and thus unicode icons
 
 o  Laters
 o  Quality
@@ -15,6 +19,9 @@ o  Later
     o  Publish dumped layouts created api?
     o  Spread use of fuzzy equality of multiline strings
     o  Note synth of tab name for addTab
+    o  Qt versions
+    o  Python 3 support
+    o  PyQt support
     o  Unify use of multiline tests and generation.
     o  Move all regex into module
     o  Revisit addStretch - had to drop
@@ -26,53 +33,7 @@ o  Later
 
 
 o  Make examples as proper tests incl name and folder
-o  Examples tests modules from txt
-    *  v simple from txt
-    o  big realistic to shake out and mabye use as exemplars
-        *  capture desired scope
-        *  make mockup
-        o  just develop by experimentation and addition
-            *  need to support setlayout for QFrame
-            *  try using groupbox instead of frame cos can see it
-            *  timeout - redefine contract as having name first!!!
-            *  allow comments somehow for big example?
-            *  double underscore space subst
-            *  consider simple try catch sequence of add operations
-            o  allow space after first word
-                *  first see if indentation and comments look ok
-                *  would spaces help?
-                    *  play around
-                o  lessons learned?
-                    o  Tabular is nice, maybe first two words
-                    o  More keywords
-                    o  Case insen keywords
-                    o  USE LINES
-                    o  USE ORDER
-                    o  HAVE FORMATTER in situ
-                    o  HAVE SEARCH ACCESS TO TREE
-                    o  HAVE DEV MODE WHERE GIVES DIAGNOSTICS and more help
-                o  Merits a branch because of order dependent processing !!!
-            o  get diagnostic ready
-            o  position diagnostics as formatter
-            o  would diagnostic view server better?
-                o  there's a thought?
 
-    o  add text to filelocaton?
-    o  merit of splitting into separate files?
-
-    o  lessons learned and fixes
-    o  did i need to instantiate non qt classes or should I like clickablewidget?
-    o  v simple from dir
-
-
-
-                o  using q widgets that have children
-                o  using your own widgets
-                o  using the query api
-                o  using the debugging tools
-                o  a nice big complex one
-                o  check doc what missed
-        o  more use of assert?
         o  tests that test errors by catching exceptions should throw exception if not thrown
         o  80 columns and '\n'.join... idiom
         o  example formats to error messages
@@ -82,8 +43,6 @@ o  Examples tests modules from txt
             o  examples
             o  add text to
         o  add strings to labels, buttons and group boxes
-        o  api
-        o  all tests pass
         o  beautify
         o  no warnings
         o  real world try
@@ -95,49 +54,4 @@ o  Examples tests modules from txt
             pass # Singleton already existso  docco
 
 -----------------------------------------------------------------------------
-Meta design of indentation consumption
 -----------------------------------------------------------------------------
-
-state
-    previous line's indent
-    current parent object per indentation level
-    path stack
-
-consume line
-  remove comments
-  if nothing remains noop otherwise the following must work
-  if whole line is comment ignore
-  measure indnet and assert multiple of 2 or zero
-  remove trailing comments
-  isolate and remove parenthesised args
-  isolate exactly two words - name and type
-
-  if indented by 2 wrt previous line's indent:
-    pop = 0
-    add child to parent defined by indent - 2
-
-  if indented same as previous line's indent:
-    pop = 1
-    add child to parent defined by or indent - 2
-
-  if indented by less than previous line's indent:
-    pop = calc
-    potential negative index error
-    parent to add to is 2 less than this indent
-
-  in all cases
-    pop pop number from path stack
-    push new name onto path stack
-    save current item at level
-
-  afterwards apply text
-
-  store item on ordered dict created at its path name
-
------------------------------------------------------------------------------
-    o  Meta design of context in error handling
------------------------------------------------------------------------------
-Line looper can catch lower exceptions and write contextual report. E.g.
-pre and post lines. With content.
-
-So lower exceptions should report only line objections.
