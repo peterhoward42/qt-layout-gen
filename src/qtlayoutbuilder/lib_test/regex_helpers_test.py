@@ -26,3 +26,20 @@ class TestRegexHelpers(TestCase):
         input = 'foo(bar)baz'
         output = regex_helpers.remove_parenthesis(input)
         self.assertEquals(output, 'foobaz')
+
+        input = 'foobarbaz'
+        output = regex_helpers.remove_parenthesis(input)
+        self.assertEquals(output, 'foobarbaz')
+
+    def test_capture_parenthesis(self):
+        input = 'foo(bar)baz'
+        output = regex_helpers.capture_parenthesis(input)
+        self.assertEquals(output, 'bar')
+
+        input = 'foo()baz'
+        output = regex_helpers.capture_parenthesis(input)
+        self.assertIsNone(output)
+
+        input = 'foobarbaz'
+        output = regex_helpers.capture_parenthesis(input)
+        self.assertIsNone(output)

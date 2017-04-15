@@ -1,9 +1,11 @@
 *  Reboot with new contract
 *  Go back to integrate with api and get that working
 *  Ditch all the redundant lib stuff
-o  Any redundant files / code?
-o  Get ALL tests working
+*  Any redundant files / code?
+*  Get ALL tests working
 o  Resume working up contract
+    *  add text
+
 o  Laters
 o  Quality
 
@@ -17,6 +19,9 @@ o  Later
     o  Revisit addStretch - had to drop
     o  Does user have to make sure qt gui imported at time? = no,
             we import * in qtobject maker.
+    o  What other types to support?
+        o  include setText + setTitle
+        o  lineedit, combo, splitter, radio, groupbox
 
 
 o  Make examples as proper tests incl name and folder

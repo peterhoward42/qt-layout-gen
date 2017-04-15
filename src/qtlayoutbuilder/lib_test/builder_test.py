@@ -54,18 +54,31 @@ class TestBuilder(TestCase):
         if not result:
             self.fail()
 
-    def test_assert_is_two_words(self):
-        # Is silent when assertion succeeds.
-        self.assertIsNone(Builder._assert_is_two_words(
-                ('foo', 'bar'), _MOCK_LINE))
-
-        # Is vociferous when assertion fails.
+    def test_error_message_when_too_many_words_per_line(self):
+        input = """
+            page        first_word  second_word
+        """
         result = raises_layout_error_with_this_message("""
-            Cannot split this line: <mock line>,
-            into exactly two words,
-            (after comments and parenthesis have been removed.)
+                Cannot split this line: <page        first_word  second_word>,
+                into exactly two words,
+                (after comments and parenthesis have been removed.)
+                (Line number: 1, from unit test provenance)
             """,
-            Builder._assert_is_two_words, ('foo'), _MOCK_LINE)
+            Builder.build, input, 'unit test provenance')
+        if not result:
+            self.fail()
+
+    def test_error_message_when_too_few_words_per_line(self):
+        input = """
+            page
+        """
+        result = raises_layout_error_with_this_message("""
+                Cannot split this line: <page>,
+                into exactly two words,
+                (after comments and parenthesis have been removed.)
+                (Line number: 1, from unit test provenance)
+            """,
+            Builder.build, input, 'unit test provenance')
         if not result:
             self.fail()
 
@@ -91,6 +104,22 @@ class TestBuilder(TestCase):
         result = raises_layout_error_with_this_message("""
                 This input provided (unit test provenance) contains nothing, or
                 nothing except whitespace and comments.
+            """,
+                Builder.build, input, 'unit test provenance')
+        if not result:
+            self.fail()
+
+    def test_error_message_when_set_text_fails(self):
+        # You can't call setText('hello') on a QVBoxLayout.
+        input = """
+            layout      vbox(hello)
+        """
+        result = raises_layout_error_with_this_message("""
+            The attempt to call setText() with your parenthesised text
+            from this line: <layout      vbox(hello)> failed.
+            The underlying error reported was:
+            <'PySide.QtGui.QVBoxLayout' object has no attribute 'setText'>.
+            (Line number: 1, from unit test provenance)
             """,
                 Builder.build, input, 'unit test provenance')
         if not result:
@@ -222,6 +251,14 @@ class TestBuilder(TestCase):
         self.assertEqual(dumped, expected)
         widget = layouts_created.get_element('page2')
         self.assertTrue(isinstance(widget.layout(), QVBoxLayout))
+
+    def test_adding_text_works_for_relevant_types(self):
+        input = """
+            label       label(hello)
+            button      button(hello)
+            lineedit    QLineEdit(hello)
+        """
+        layouts_created = Builder.build(input, 'unit test provenenance')
 
 
 
