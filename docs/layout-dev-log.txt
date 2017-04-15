@@ -3,14 +3,15 @@
 *  Ditch all the redundant lib stuff
 *  Any redundant files / code?
 *  Get ALL tests working
-o  Resume working up contract
-    *  add text
+*  Resume working up contract
+o  Stretch and setTitle
 
 o  Laters
 o  Quality
 
 
 o  Later
+    o  Version contract
     o  Publish dumped layouts created api?
     o  Spread use of fuzzy equality of multiline strings
     o  Note synth of tab name for addTab

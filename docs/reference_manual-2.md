@@ -1,6 +1,6 @@
 # User Manual
 
-## Reference Example
+## Getting Started Example
 
     from PySide.QtGui import QApplication
     from qtlayoutbuilder.api import Builder
@@ -22,7 +22,7 @@
     """
     
     # Access the objects created like this...
-    the_button = layouts.my_page.right_btn
+    the_button = layouts.get_element('my_page.layout.right_btn')
     
     app = QApplication()
     layouts.my_page.show()
@@ -40,15 +40,24 @@ The example also shows how you can access the objects created afterwards.
 ## Anatomy of the Input Text
 Each line of input creates an object of the type specified by the second word,
 and gives that object the name specified by the first word. The relative 
-indentation of the first word specifies a (very loosely defined) 
-parent-child hierarchy that the builder will create. 
+indentation of the first word specifies the parent-child hierarchy that the 
+builder will create. 
 
-The **type word** on the right will **usually** be one of the shortcut 
+The **type word** on the right hand side will **usually** be one of the shortcut 
 keywords as illustrated by the example. These refer to commonly used QLayouts 
 and QWidgets. More details of this follow.
 
+While the indented alignment of the *name* words is of central importance, there
+is no significance to the alignment of the *type words*. They are lined up in
+the example solely for readability.
+
 ## Parent / Child Relationships Supported
-The builder adds children to their parent using a simple and 'dumb' procedure.
+The builder appropriates Qt's existing notion of parent child relationships, but
+has a much wider and looser interpretation of it - as you will see below.
+
+The builder *'adds'* children to their *'parent'* using the following simple 
+and 'dumb' procedure.
+
 It speculatively calls the following methods on the parent object 
 (in the order specified), and stops at the first one that works.
 
@@ -57,7 +66,7 @@ It speculatively calls the following methods on the parent object
     addWidget(child)
     addTab(child)
     
-> What we mean by *the first method that works*, is: the parent object has 
+> What we mean by *the first one that works*, is that the parent object has 
 > such a method, and when that method is called with the child as a single 
 > argument, it does not raise an exception.
     
@@ -70,23 +79,25 @@ This procedure allows:
 
 ## Shortcut Keywords
 
-The shortcut keywords aim to reduce typing and to prevent the need to 
-think about case-sensitivity of the Qt class names.
-
-todo - make sure these agree with code and list is complete.
+The purpose of shortcut keywords is to minimise the typing required, and avoid
+case-sensitivity for the frequently used Qt classes:
 
     hbox, vbox, label, button, stack, tabbed, group, widget, stretch
     
-You can use the full Qt class names in their place. (Or any other Qt class).
+You can use the full Qt class names in their place. (Or specify any other 
+QtGui class).
 
     layout            hbox
     layout            QHBoxLayout
     layout            QGridLayout       
     
 > Note that the builder can only add children to parents for you automatically
-> when one of the methods listed earlier, works when called with a single 
-> argument. (Unlike QGridLayout). All is not lost however - see the later 
-> section XXXX.
+> when one of the methods listed earlier, works when called with a **single**
+> argument. (Which excludes QGridLayout for example). All is not lost 
+> however - see the later section about *Incomplete Hierarchies* below.
+
+> (The builder gets round this when calling *addTab* on a QTabbedWidget by 
+> specifying the title for the tab using an automatically generated sequence.)
 
 ## Using Objects you Instantiated Externally
 The builder can incorporate objects you have instantiated somewhere else in 
@@ -118,19 +129,6 @@ The builder will call setText('some text') on the parent object.
 
     layouts = Builder.from_file(file_path)
     
-This variant has a couple of practical advantages, particularly during 
-iterative development. Firstly, the line numbers in the error reporting are 
-more directly useful. But it also offers the capability to write back out
-your file (over-writing the original), having automatically aligned the right 
-column to just beyond the longest name entry present. This is considerably
-easier than bothering to maintain this manually. Nb. the right aligment of
-the *type* column is only a visual aid - it is not necessary syntactically.
-
-    layouts = Builder.from_file(file_path, write_back_out=True)
-    
-Your original file variants are not lost, they are saved in a temporary directory - as
-detailed (to stdout) when using this mode.
-
 ## Error Handling
 The builder handles all errors by raising an api.LayoutError which contains
 an explanation and the offending line number from the input.
@@ -158,10 +156,9 @@ You can build multiple hierarchies like this:
       layout    vbox
       etc...
       
-If you incorporate an object into your hierarchy that the builder cannot
-recursively continue to populate with children (like the QGridLayout for 
-example). You can anticipate doing that bit externally afterwards, but continue
-to build the tree below that discontinuity.
+Using the capability to make multiple, separate hierarchies from the same input 
+is useful for situations when the builder cannot automatically generate your 
+tree all the way down (like if you use a QGridLayout). 
 
     layouts = Builder.from_multiline_string("""
         page1       widget
@@ -177,5 +174,6 @@ to build the tree below that discontinuity.
     """
     
     # And then access the objects to finish the job.
-    layouts.page1.layout.addWidget(layouts.cell_widget, 0, 1)
-
+    grid = layouts.get_element('page1.layout')
+    cell = layouts.get_element('cell_widget'
+    grid.addWidget(cell, 0, 1)
