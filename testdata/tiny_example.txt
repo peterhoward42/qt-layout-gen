@@ -1,4 +1,4 @@
-my_page         widget
-  layout        vbox
-    foo         button
-    bar         button
+my_page         QWidget
+  layout        QVBoxLayout
+    foo         QPushButton(Hello)
+    bar         QPushButton(World)

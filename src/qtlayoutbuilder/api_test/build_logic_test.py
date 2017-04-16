@@ -20,10 +20,10 @@ class TestBuilderApi(TestCase):
             pass # Singleton already exists.
 
         input = """
-            my_page         widget
-              layout        vbox
-                foo         button
-                bar         button
+            my_page         QWidget
+              layout        QVBoxLayout
+                foo         QPushButton
+                bar         QPushButton
         """
         layouts_created = build_from_multi_line_string(input)
         widget = layouts_created.get_element('my_page')

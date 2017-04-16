@@ -6,19 +6,19 @@
     from qtlayoutbuilder.api import Builder
     
     layouts = Builder.from_multiline_string("""
-        my_page             widget
-          layout            hbox
-            left            group(Fruits)
-              layout        vbox
-                label1      label(Apple)
-                label2      label(Pear)
-                label3      label(Banana)
-            middle          group(Authors)
-              layout        vbox
-                label1      label(Dickens)
-                label2      label(Adams)
-                label3      label(Rowling)
-            right_btn       button(Click me!)
+        my_page             QWidget
+          layout            QHBoxLayout
+            left            QGroupBox(Fruits)
+              layout        QVBoxLayout
+                label1      QLabel(Apple)
+                label2      QLabel(Pear)
+                label3      QLabel(Banana)
+            middle          QGroupBox(Authors)
+              layout        QVBoxLayout
+                label1      QLabel(Dickens)
+                label2      QLabel(Adams)
+                label3      QLabel(Rowling)
+            right_btn       QPushButton(Click me!)
     """
     
     # Access the objects created like this...
@@ -33,26 +33,23 @@ This example creates a QWidget (which it calls *my_page*), and then sets its
 layout to be a *QHBoxLayout*. Then it populates that layout with three items,
 which it calls *left*, *middle*, and *right_btn*. The item called *left* is
 specified as  QGroupBox, and it will get the text *Fruits* - by calling 
-*setText()* on it.
+*setTitle()* on it. The first item called *label1* will get the text *Apple*, by
+calling *setText()* on it.
 
 The example also shows how you can access the objects created afterwards.
 
 ## Anatomy of the Input Text
 Each line of input creates an object of the type specified by the second word,
 and gives that object the name specified by the first word. The relative 
-indentation of the first word specifies the parent-child hierarchy that the 
+indentation of the first words specifies the parent-child hierarchy that the 
 builder will create. 
 
-The **type word** on the right hand side will **usually** be one of the shortcut 
-keywords as illustrated by the example. These refer to commonly used QLayouts 
-and QWidgets. More details of this follow.
-
-While the indented alignment of the *name* words is of central importance, there
+The indented alignment of the *name* words is of central importance. But there
 is no significance to the alignment of the *type words*. They are lined up in
 the example solely for readability.
 
 ## Parent / Child Relationships Supported
-The builder appropriates Qt's existing notion of parent child relationships, but
+The builder *'borrows'* Qt's existing notion of parent child relationships, but
 has a much wider and looser interpretation of it - as you will see below.
 
 The builder *'adds'* children to their *'parent'* using the following simple 
@@ -77,20 +74,6 @@ This procedure allows:
 *  Widgets to be added to a QStackedWidget
 *  Widgets to be added to a QTabbedWidget
 
-## Shortcut Keywords
-
-The purpose of shortcut keywords is to minimise the typing required, and avoid
-case-sensitivity for the frequently used Qt classes:
-
-    hbox, vbox, label, button, stack, tabbed, group, widget, stretch
-    
-You can use the full Qt class names in their place. (Or specify any other 
-QtGui class).
-
-    layout            hbox
-    layout            QHBoxLayout
-    layout            QGridLayout       
-    
 > Note that the builder can only add children to parents for you automatically
 > when one of the methods listed earlier, works when called with a **single**
 > argument. (Which excludes QGridLayout for example). All is not lost 
@@ -121,12 +104,14 @@ or an attribute called *my_widget*. For example:
 Nb. It raises an error if it finds more than one object that qualifies.
     
 ## Setting the Text on Things
-Anytime you put something in parenthesis after a type word like this:
+Anytime you put some text in parenthesis after a type word like this:
 
-    label1      label(some text)
+    label1      QLabel(some text)
     
-The builder will (indiscriminately) call setText('some text') on the object
-that the line has created. (Good for QLabel, QPushButton, QLineEdit).
+The builder will try to give that text to the object created, first by trying
+to call setText(), and then with setTitle().
+
+(Good for QLabel, QPushButton, QLineEdit, QGroupBox and possibly other classes).
    
 ## Taking the Input From a File
 
@@ -143,37 +128,40 @@ an explanation and the offending line number from the input.
 
 ## Comments
 
+A comment is any hash character encountered up to the end that line.
+
     # I am a comment
     layouts = Builder.from_multiline_string("""
-        my_page             widget # ME TOO !
+        my_page             QWidget # ME TOO !
           layout            hbox
           
 ## Incomplete or Multiple Hierarchies
 
 You can build multiple hierarchies like this:
 
-    page1       widget
-      layout    vbox
+    page1       QWidget
+      layout    QVBoxLayout
       etc...
-    page2       widget
-      layout    vbox
+    page2       QWidget
+      layout    QVBoxLayout
       etc...
       
-Using the capability to make multiple, separate hierarchies from the same input 
-is useful for situations when the builder cannot automatically generate your 
-tree all the way down (like if you use a QGridLayout). 
+This can be useful when the builder cannot create the whole tree you want 
+because it includes an item that the builder cannot add children to. (Like 
+QGridLayout for example.) You can create seperate hierarchies for the 
+children and then add them manually afterwards. E.g.
 
     layouts = Builder.from_multiline_string("""
-        page1       widget
+        page1       QWidget
           layout    QGridLayout
           # Cannot go any further because need row/column to add children :-(
       
         # We can still make the things to go into the grid.
-        cell_widget widget
-          layout    vbox
-            label1  label(foo)
-            label2  label(bar)
-            label3  label(baz)
+        cell_widget QWidget
+          layout    QVBoxLayout
+            label1  QLabel(foo)
+            label2  QLabel(bar)
+            label3  QLabel(baz)
     """
     
     # And then access the objects to finish the job.

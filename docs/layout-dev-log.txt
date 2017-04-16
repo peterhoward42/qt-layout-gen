@@ -5,8 +5,10 @@
 *  Get ALL tests working
 *  Resume working up contract
 o  No keywords
-    o  Baseline commit
-    o  Make so
+    *  Baseline commit
+    *  Make so
+    *  Manual
+    *  Poss to aide with Qt class names in errors?
 o  Stretch and setTitle
 o  Wider widget set support incl setText / setTitle
     o  Harvest as table
@@ -19,6 +21,7 @@ o  Quality
 
 o  Later
     o  Version contract
+    o  Spit back out would be nice
     o  Publish dumped layouts created api?
     o  Spread use of fuzzy equality of multiline strings
     o  Note synth of tab name for addTab

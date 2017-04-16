@@ -56,13 +56,13 @@ class TestBuilder(TestCase):
 
     def test_error_message_when_too_many_words_per_line(self):
         input = """
-            page        first_word  second_word
+            page        QLabel  QLabel
         """
         result = raises_layout_error_with_this_message("""
-                Cannot split this line: <page        first_word  second_word>,
-                into exactly two words,
-                (after comments and parenthesis have been removed.)
-                (Line number: 1, from unit test provenance)
+            Cannot split this line: <page        QLabel  QLabel>,
+            into exactly two words,
+            (after comments and parenthesis have been removed.)
+            (Line number: 1, from unit test provenance)
             """,
             Builder.build, input, 'unit test provenance')
         if not result:
@@ -84,11 +84,11 @@ class TestBuilder(TestCase):
 
     def test_error_message_when_skip_indent_levels(self):
         input = """
-            page        widget
-                layout    vbox
+            page        QWidget
+                layout    QVBoxLayout
         """
         result = raises_layout_error_with_this_message("""
-                This line is indented too much: <    layout    vbox>.
+                This line is indented too much: <    layout    QVBoxLayout>.
                 It cannot be indented relative to the line
                 above it by more than 2 spaces.
                 (Line number: 2, from unit test provenance)
@@ -97,7 +97,7 @@ class TestBuilder(TestCase):
         if not result:
             self.fail()
 
-    def test_error_message_when_no_meaninful_input_found(self):
+    def test_error_message_when_no_meaningful_input_found(self):
         input = """
             # Hello
         """
@@ -112,11 +112,11 @@ class TestBuilder(TestCase):
     def test_error_message_when_set_text_fails(self):
         # You can't call setText('hello') on a QVBoxLayout.
         input = """
-            layout      vbox(hello)
+            layout      QVBoxLayout(hello)
         """
         result = raises_layout_error_with_this_message("""
             The attempt to call setText() with your parenthesised text
-            from this line: <layout      vbox(hello)> failed.
+            from this line: <layout      QVBoxLayout(hello)> failed.
             The underlying error reported was:
             <'PySide.QtGui.QVBoxLayout' object has no attribute 'setText'>.
             (Line number: 1, from unit test provenance)
@@ -133,15 +133,15 @@ class TestBuilder(TestCase):
 
     def test_simplest_possible_runs_without_crashing(self):
         input = """
-            page        widget
-              layout    vbox
+            page        QWidget
+              layout    QVBoxLayout
         """
         layouts_created = Builder.build(input, 'unit test provenenance')
 
     def test_simplest_possible_dump_of_contents_is_correct(self):
         input = """
-            page        widget
-              layout    vbox
+            page        QWidget
+              layout    QVBoxLayout
         """
         layouts_created = Builder.build(input, 'unit test provenenance')
         dumped = MultilineString.normalise(layouts_created.dump())
@@ -153,8 +153,8 @@ class TestBuilder(TestCase):
 
     def test_simplest_possible_querying_accessor_works(self):
         input = """
-            page        widget
-              layout    vbox
+            page        QWidget
+              layout    QVBoxLayout
         """
         layouts_created = Builder.build(input, 'unit test provenenance')
         page = layouts_created.get_element('page')
@@ -162,8 +162,8 @@ class TestBuilder(TestCase):
 
     def test_simplest_possible_creates_parent_child_relations(self):
         input = """
-            page        widget
-              layout    vbox
+            page        QWidget
+              layout    QVBoxLayout
         """
         layouts_created = Builder.build(input, 'unit test provenenance')
         page = layouts_created.get_element('page')
@@ -171,10 +171,10 @@ class TestBuilder(TestCase):
 
     def test_sibling_child_additions_work(self):
         input = """
-            layout      vbox
-              a         label
-              b         label
-              c         label
+            layout      QVBoxLayout
+              a         QLabel
+              b         QLabel
+              c         QLabel
         """
         layouts_created = Builder.build(input, 'unit test provenenance')
         dumped = MultilineString.normalise(layouts_created.dump())
@@ -189,11 +189,11 @@ class TestBuilder(TestCase):
 
     def test_multi_level_descent_works(self):
         input = """
-            page          widget
-              layout      vbox
-                a         label
-                b         label
-                c         label
+            page          QWidget
+              layout      QVBoxLayout
+                a         QLabel
+                b         QLabel
+                c         QLabel
         """
         layouts_created = Builder.build(input, 'unit test provenenance')
         dumped = MultilineString.normalise(layouts_created.dump())
@@ -208,14 +208,14 @@ class TestBuilder(TestCase):
 
     def test_multi_level_descent_and_ascent_works(self):
         input = """
-            page          widget
-              layout      vbox
-                a         label
-                b         label
-                fred      widget
-                  layout  hbox
-                    lbl   label
-                c         label
+            page          QWidget
+              layout      QVBoxLayout
+                a         QLabel
+                b         QLabel
+                fred      QWidget
+                  layout  QHBoxLayout
+                    lbl   QLabel
+                c         QLabel
         """
         layouts_created = Builder.build(input, 'unit test provenenance')
         dumped = MultilineString.normalise(layouts_created.dump())
@@ -235,10 +235,10 @@ class TestBuilder(TestCase):
 
     def test_more_than_one_top_level_object_works(self):
         input = """
-            page1          widget
-              layout      vbox
-            page2          widget
-              layout      vbox
+            page1         QWidget
+              layout      QVBoxLayout
+            page2         QWidget
+              layout      QVBoxLayout
         """
         layouts_created = Builder.build(input, 'unit test provenenance')
         dumped = MultilineString.normalise(layouts_created.dump())
@@ -254,14 +254,11 @@ class TestBuilder(TestCase):
 
     def test_adding_text_works_for_relevant_types(self):
         input = """
-            label       label(hello)
-            button      button(hello)
+            label       QLabel(hello)
+            button      QPushButton(hello)
             lineedit    QLineEdit(hello)
         """
         layouts_created = Builder.build(input, 'unit test provenenance')
-
-
-
 
 
 _MOCK_LINE = 'mock line'

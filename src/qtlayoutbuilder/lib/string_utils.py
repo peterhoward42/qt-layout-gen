@@ -14,3 +14,6 @@ def measure_indent(line):
 def as_list_of_words(line):
     line = line.strip()
     return  line.split()
+
+def consonants_to_lower_case(input_string):
+    fart

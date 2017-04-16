@@ -1,7 +1,7 @@
 from PySide.QtGui import * # So that we can construct any QObject from a string.
 
 from qtlayoutbuilder.api.layouterror import LayoutError
-from qtlayoutbuilder.lib import keywords
+from qtlayoutbuilder.lib.qtclassnameprompter import QtClassNamePrompter
 
 
 class QObjectMaker(object):
@@ -21,16 +21,16 @@ class QObjectMaker(object):
         """
         Instantiates a QObject of the type specified by the name.
         """
-        if keywords.is_a_keyword(type_word):
-            constructor = keywords.class_required_for(type_word)
-        else:
-            try:
-                constructor = globals()[type_word]
-            except KeyError as e:
-                raise LayoutError("""
-                    Python cannot make any sense of this word: <%s>,
-                    it does not exist in the global namespace.
-                """, (type_word))
+        constructor = None
+        try:
+            constructor = globals()[type_word]
+        except KeyError as e:
+            raise LayoutError("""
+                Python cannot find this word in the QtGui namespace: <%s>,
+                Did you mean one of these:
+
+                %s
+            """, (type_word, self._generate_name_suggestions(type_word)))
 
         # Have a go at constructing it, and then make sure it is a class derived
         # from QLayout or QWidget.
@@ -81,3 +81,9 @@ class QObjectMaker(object):
 
         # All is well
         return found[0]
+
+    def _generate_name_suggestions(self, duff_word):
+        list_of_names = QtClassNamePrompter.suggest_names_similar_to_this(
+                duff_word)
+        return '\n'.join(list_of_names)
+

@@ -35,7 +35,8 @@ class Builder(object):
             cls._process_line(line, finder, layouts_created)
         except LayoutError as e:
             raise LayoutError("""
-                    %s\n(Line number: %d, from %s)
+                    %s
+                    (Line number: %d, from %s)
                 """,  (str(e), line_number, provenance))
 
     @classmethod

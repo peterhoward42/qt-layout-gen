@@ -7,7 +7,6 @@ from PySide.QtGui import QApplication
 from PySide.QtGui import QHBoxLayout
 from PySide.QtGui import QLayout
 
-from qtlayoutbuilder.lib import keywords
 from qtlayoutbuilder.lib.qobjectmaker import QObjectMaker
 from qtlayoutbuilder.lib.widgetandlayoutfinder import WidgetAndLayoutFinder
 from qtlayoutbuilder.lib_test.test_utils import \
@@ -28,18 +27,6 @@ class TestQObjectMaker(TestCase):
 
     # Use cases that should work.
 
-    def test_keyword_instantiation_for_example_keyword(self):
-        finder = None
-        maker = QObjectMaker(finder)
-        object_made = maker.make('fred', 'hbox')
-        self.assertTrue(isinstance(object_made, QHBoxLayout))
-
-    def test_keyword_instantiation_for_all_keywords(self):
-        finder = None
-        maker = QObjectMaker(finder)
-        for keyword in keywords.all_keywords():
-            object_made = maker.make('fred', keyword)
-
     def test_explicit_qt_class_instantiation(self):
         finder = None
         maker = QObjectMaker(finder)
@@ -49,12 +36,20 @@ class TestQObjectMaker(TestCase):
     # Error handling.
 
     def test_unrecognized_class(self):
+        # Specify the required class as HBoxLayout (omitting the Q)
         finder = None
         maker = QObjectMaker(finder)
         result = raises_layout_error_with_this_message("""
-            Python cannot make any sense of this word: <NoSuchClass>,
-            it does not exist in the global namespace.
-        """, maker.make, 'fred', 'NoSuchClass')
+            Python cannot find this word in the QtGui namespace: <HBoxLayout>,
+            Did you mean one of these:
+
+            QHBoxLayout
+            QBoxLayout
+            QVBoxLayout
+            QLayout
+            QTextLayout
+            QFormLayout
+        """, maker.make, 'fred', 'HBoxLayout')
         if not result:
             self.fail()
 
