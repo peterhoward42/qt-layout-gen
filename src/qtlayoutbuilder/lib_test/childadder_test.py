@@ -2,6 +2,7 @@ from unittest import TestCase
 
 from PySide.QtGui import QApplication, QLabel, QHBoxLayout, \
     QStackedWidget, QTabWidget
+from PySide.QtGui import QScrollArea
 from PySide.QtGui import QVBoxLayout
 from PySide.QtGui import QWidget
 
@@ -24,8 +25,14 @@ class TestChildAdder(TestCase):
     def test_error_handling_when_speculative_methods_all_fail(self):
         # There is no way to add a widget to a widget.
         result = raises_layout_error_with_this_message("""
-            None of the child addition methods worked, for
-            the child with this name: <fred>.
+            Could not add this child: <fred> to its parent.
+            None of the following addition methods worked:
+
+            addLayout
+            setLayout
+            addWidget
+            addTab
+            setWidget
         """, ChildAdder.add, QWidget(), 'fred', QWidget())
         if not result:
             self.fail()
@@ -52,3 +59,8 @@ class TestChildAdder(TestCase):
         ChildAdder.add(QLabel(), 'fred', parent)
         self.assertEqual(parent.count(), 1)
         self.assertTrue(isinstance(parent.currentWidget(), QLabel))
+
+    def test_set_widget_succeeding(self):
+        parent = QScrollArea()
+        ChildAdder.add(QLabel(), 'fred', parent)
+        self.assertTrue(isinstance(parent.widget(), QLabel))

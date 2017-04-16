@@ -1,6 +1,8 @@
 from collections import OrderedDict
 
+from qtlayoutbuilder.api.layouterror import LayoutError
 from qtlayoutbuilder.lib import string_utils
+from qtlayoutbuilder.lib.multiline_string_utils import MultilineString
 
 
 class LayoutsCreated(object):
@@ -11,7 +13,16 @@ class LayoutsCreated(object):
         self._elements = OrderedDict()
 
     def get_element(self, path):
-        return self._elements[path]
+        element = self._elements.get(path, None)
+        if element is None:
+            raise LayoutError("""
+                The path you have requested (<%s>) in get_element()
+                does not exist in the layouts created.
+
+                The paths that do exist are these:
+                %s
+            """, (path, self.dump()))
+        return element
 
     def register_top_level_object(self, object, name):
         key = name

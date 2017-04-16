@@ -6,7 +6,7 @@ from qtlayoutbuilder.api.build import build_from_multi_line_string, \
     build_from_file
 
 
-class TestBuilderApi(TestCase):
+class TestApiBasics(TestCase):
     """
     This class tests the API entry-point functions are viable and not much
     else. The API functions delegate all their meaningful work to an

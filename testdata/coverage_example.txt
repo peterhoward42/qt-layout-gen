@@ -1,0 +1,14 @@
+# Put most of into a vertical box layout, inside a scrolling widget.
+
+layout                QHBoxLayout
+  group                 QGroupBox
+
+page                  QWidget
+  layout              QVBoxLayout
+    scroll            QScrollArea
+      scroll_content  QWidget
+        layout        QHBoxLayout
+          group        QGroupBox(my box)
+            layout     QHBoxLayout
+              label    QLabel(hello label)
+              button   QPushButton(hello button)

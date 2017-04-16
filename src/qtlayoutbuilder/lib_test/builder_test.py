@@ -59,9 +59,9 @@ class TestBuilder(TestCase):
             page        QLabel  QLabel
         """
         result = raises_layout_error_with_this_message("""
-            Cannot split this line: <page        QLabel  QLabel>,
-            into exactly two words,
+            Cannot split this line, into exactly two words,
             (after comments and parenthesis have been removed.)
+            (This line: <page        QLabel  QLabel>)
             (Line number: 1, from unit test provenance)
             """,
             Builder.build, input, 'unit test provenance')
@@ -73,10 +73,10 @@ class TestBuilder(TestCase):
             page
         """
         result = raises_layout_error_with_this_message("""
-                Cannot split this line: <page>,
-                into exactly two words,
-                (after comments and parenthesis have been removed.)
-                (Line number: 1, from unit test provenance)
+            Cannot split this line, into exactly two words,
+            (after comments and parenthesis have been removed.)
+            (This line: <page>)
+            (Line number: 1, from unit test provenance)
             """,
             Builder.build, input, 'unit test provenance')
         if not result:
@@ -88,10 +88,11 @@ class TestBuilder(TestCase):
                 layout    QVBoxLayout
         """
         result = raises_layout_error_with_this_message("""
-                This line is indented too much: <    layout    QVBoxLayout>.
-                It cannot be indented relative to the line
-                above it by more than 2 spaces.
-                (Line number: 2, from unit test provenance)
+            This line is indented too much.
+            It cannot be indented relative to the line
+            above it by more than 2 spaces.
+            (This line: <    layout    QVBoxLayout>)
+            (Line number: 2, from unit test provenance)
             """,
             Builder.build, input, 'unit test provenance')
         if not result:
@@ -115,13 +116,13 @@ class TestBuilder(TestCase):
             layout      QVBoxLayout(hello)
         """
         result = raises_layout_error_with_this_message("""
-            The attempt to call setText() with your parenthesised text
-            from this line: <layout      QVBoxLayout(hello)> failed.
-            The underlying error reported was:
-            <'PySide.QtGui.QVBoxLayout' object has no attribute 'setText'>.
+            Cannot do anything with the text you specified
+            in parenthesis because the object being created
+            has neither the setText(), nor the setTitle() method.
+            (This line: <layout      QVBoxLayout(hello)>)
             (Line number: 1, from unit test provenance)
             """,
-                Builder.build, input, 'unit test provenance')
+            Builder.build, input, 'unit test provenance')
         if not result:
             self.fail()
 
@@ -252,13 +253,21 @@ class TestBuilder(TestCase):
         widget = layouts_created.get_element('page2')
         self.assertTrue(isinstance(widget.layout(), QVBoxLayout))
 
-    def test_adding_text_works_for_relevant_types(self):
+    def test_adding_text_works_using_set_text_works(self):
         input = """
             label       QLabel(hello)
-            button      QPushButton(hello)
-            lineedit    QLineEdit(hello)
         """
         layouts_created = Builder.build(input, 'unit test provenenance')
+        widget = layouts_created.get_element('label')
+        self.assertEqual(widget.text(), 'hello')
+
+    def test_adding_text_works_using_set_title(self):
+        input = """
+            group       QGroupBox(hello)
+        """
+        layouts_created = Builder.build(input, 'unit test provenenance')
+        widget = layouts_created.get_element('group')
+        self.assertEqual(widget.title(), 'hello')
 
 
 _MOCK_LINE = 'mock line'

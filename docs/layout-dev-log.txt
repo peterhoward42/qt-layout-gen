@@ -4,14 +4,18 @@
 *  Any redundant files / code?
 *  Get ALL tests working
 *  Resume working up contract
-o  No keywords
-    *  Baseline commit
-    *  Make so
-    *  Manual
-    *  Poss to aide with Qt class names in errors?
-o  Stretch and setTitle
-o  Wider widget set support incl setText / setTitle
-    o  Harvest as table
+*  No keywords
+o  Stretch and setTitle o  Wider widget set support incl setText / setTitle o  Harvest as table
+    o  Make a test that exercises just about every type incl adding children and text to see what happens
+        o  Start by experimenting
+            *  Divert to add unit tests for setWidget on scroll area
+            *  and setTitle on groupbox
+            *  Include line in wrapped error message.
+            *  Add types of child parent in error messages like could not add this child
+            o  Not barfing at relative indent of 1
+            o  Scroll area may need resize child? and similar exceptions.
+    o  Consider section in manual for how addchild augments single argument
+    o  Fixed stretch?
     o  Test of very large range of add children
 o  Unicode settext and thus unicode icons
 
@@ -62,4 +66,5 @@ o  Make examples as proper tests incl name and folder
             pass # Singleton already existso  docco
 
 -----------------------------------------------------------------------------
+List of widgets
 -----------------------------------------------------------------------------

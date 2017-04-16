@@ -39,9 +39,17 @@ class ChildAdder(object):
                 continue
         # Nothing worked, which is an error
         raise LayoutError("""
-            None of the child addition methods worked, for
-            the child with this name: <%s>.
-            """, child_name)
+            Could not add this child: <%s> to its parent.
+            The child is a: <%s>
+            The parent is a: <%s>
+
+            None of the following addition methods worked:
+
+            %s
+            """,
+            (child_name, child_object.__class__.__name__,
+             parent_object.__class__.__name__,
+             cls._format_supported_add_methods()))
 
     @classmethod
     def _get_method(cls, object, method_name):
@@ -52,4 +60,15 @@ class ChildAdder(object):
             return None
         return attr
 
-_SPECULATIVE_METHODS = ('addLayout', 'setLayout', 'addWidget', 'addTab',)
+    @classmethod
+    def _format_supported_add_methods(cls):
+        return '\n'.join(_SPECULATIVE_METHODS)
+
+
+_SPECULATIVE_METHODS = (
+'addLayout',
+'setLayout',
+'addWidget',
+'addTab',
+'setWidget',
+)

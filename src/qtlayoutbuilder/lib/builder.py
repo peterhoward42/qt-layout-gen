@@ -36,8 +36,9 @@ class Builder(object):
         except LayoutError as e:
             raise LayoutError("""
                     %s
+                    (This line: <%s>)
                     (Line number: %d, from %s)
-                """,  (str(e), line_number, provenance))
+                """,  (str(e), line, line_number, provenance))
 
     @classmethod
     def _process_line(cls, line, finder, layouts_created):
@@ -90,10 +91,9 @@ class Builder(object):
         words = (working_line.strip()).split()
         if len(words) != 2:
             raise LayoutError("""
-                Cannot split this line: <%s>,
-                into exactly two words,
+                Cannot split this line, into exactly two words,
                 (after comments and parenthesis have been removed.)
-            """, (full_line))
+            """, ())
         return words
 
     @classmethod
@@ -101,15 +101,17 @@ class Builder(object):
         text = regex_helpers.capture_parenthesis(line)
         if text is None:
             return
-        try:
+        if hasattr(object_to_add_text_to, 'setText'):
             object_to_add_text_to.setText(text)
-        except Exception as e:
-            raise LayoutError("""
-                The attempt to call setText() with your parenthesised text
-                from this line: <%s> failed.
-                The underlying error reported was:
-                <%s>.
-                """, (line, str(e)))
+            return
+        if hasattr(object_to_add_text_to, 'setTitle'):
+            object_to_add_text_to.setTitle(text)
+            return
+        raise LayoutError("""
+            Cannot do anything with the text you specified
+            in parenthesis because the object being created
+            has neither the setText(), nor the setTitle() method.
+            """, ())
     #-------------------------------------------------------------------------
     # Assertions
 
@@ -137,7 +139,7 @@ class Builder(object):
         if level <= layouts_created.current_level() + 1:
             return
         raise LayoutError("""
-            This line is indented too much: <%s>.
+            This line is indented too much.
             It cannot be indented relative to the line
             above it by more than 2 spaces.
-        """, (line))
+        """, ())

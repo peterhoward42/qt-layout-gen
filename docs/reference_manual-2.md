@@ -62,6 +62,7 @@ It speculatively calls the following methods on the parent object
     setLayout(child)
     addWidget(child)
     addTab(child)
+    setWidget(child)
     
 > What we mean by *the first one that works*, is that the parent object has 
 > such a method, and when that method is called with the child as a single 
@@ -73,6 +74,7 @@ This procedure allows:
 *  Widgets to be added to a Layout
 *  Widgets to be added to a QStackedWidget
 *  Widgets to be added to a QTabbedWidget
+*  The widget to be set on a QScrollArea
 
 > Note that the builder can only add children to parents for you automatically
 > when one of the methods listed earlier, works when called with a **single**
