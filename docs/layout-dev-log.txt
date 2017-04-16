@@ -4,6 +4,9 @@
 *  Any redundant files / code?
 *  Get ALL tests working
 *  Resume working up contract
+o  No keywords
+    o  Baseline commit
+    o  Make so
 o  Stretch and setTitle
 o  Wider widget set support incl setText / setTitle
     o  Harvest as table
@@ -20,11 +23,13 @@ o  Later
     o  Spread use of fuzzy equality of multiline strings
     o  Note synth of tab name for addTab
     o  Qt versions
+    o  Licence and copyright
     o  Python 3 support
     o  PyQt support
     o  Unify use of multiline tests and generation.
     o  Move all regex into module
     o  Revisit addStretch - had to drop
+    o  Viable to put on PyPy
     o  Does user have to make sure qt gui imported at time? = no,
             we import * in qtobject maker.
     o  What other types to support?
