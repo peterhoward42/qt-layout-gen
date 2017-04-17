@@ -28,29 +28,31 @@ class TestBuilder(TestCase):
     #-------------------------------------------------------------------------
     # Assertions and error reporting.
 
-    def test_assert_multiple_of_two(self):
-        # Is silent when assertion succeeds.
-        self.assertIsNone(Builder._assert_multiple_of_two(4, 'mock line'))
-
-        # Is vociferous when assertion fails.
+    def test_error_message_when_tabs_are_present(self):
+        input = """
+            page        \t QLabel
+        """
         result = raises_layout_error_with_this_message("""
-            Indentation spaces must be a multiple of 2.
-            This line: <mock line> is indented by 3 spaces.
+                This line contains a tab character - which is not allowed.
+                (This line: <page        \t QLabel>)
+                (Line number: 1, from unit test provenance)
             """,
-            Builder._assert_multiple_of_two, 3, 'mock line')
+                Builder.build, input, 'unit test provenance')
         if not result:
             self.fail()
 
-    def test_assert_no_tabs_present(self):
-        # Is silent when assertion succeeds.
-        self.assertIsNone(Builder._assert_no_tabs_present('no tabs here'))
-
-        # Is vociferous when assertion fails.
+    def test_error_message_when_indent_is_not_multiple_of_two(self):
+        input = """
+            page        QLabel
+             layout     QHBoxLayout
+        """
         result = raises_layout_error_with_this_message("""
-            This line: <	> contains a tab character -
-            which is not allowed.
+                Indentation spaces must be a multiple of 2.
+                This line is indented by 1 spaces.
+                (This line: < layout     QHBoxLayout>)
+                (Line number: 2, from unit test provenance)
             """,
-            Builder._assert_no_tabs_present, '\t')
+                Builder.build, input, 'unit test provenance')
         if not result:
             self.fail()
 

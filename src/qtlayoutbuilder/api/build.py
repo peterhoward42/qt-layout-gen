@@ -1,11 +1,13 @@
 from qtlayoutbuilder.lib import file_utils
 from qtlayoutbuilder.lib.builder import Builder
 
+tidy_and_overwrite=True
 
-def build_from_file(file_path):
+def build_from_file(file_path, tidy_and_overwrite):
     one_big_string = file_utils.get_file_contents_as_a_string(
             file_path)
-    return Builder.build(one_big_string, provenance=file_path)
+    return Builder.build(
+            one_big_string, file_path, tidy_and_overwrite)
 
 def build_from_multi_line_string(one_big_string):
     return Builder.build(

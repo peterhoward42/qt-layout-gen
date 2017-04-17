@@ -12,8 +12,18 @@ o  Stretch and setTitle o  Wider widget set support incl setText / setTitle o  H
             *  and setTitle on groupbox
             *  Include line in wrapped error message.
             *  Add types of child parent in error messages like could not add this child
-            o  Not barfing at relative indent of 1
+            *  Not barfing at relative indent of 1
+            o  Divert to overwrite as helper
+                *  Push assertions and checks into helper module
+                *  Top down from api
+                *  Put in proper exception handling for IO
+                o  Default? what about from multiline, what about reports, what about turning it off?
+                o  What tests
+                o  Manual
+                o  What about from big string?
+            o  Have to disallow mid line comments
             o  Scroll area may need resize child? and similar exceptions.
+            o  What gives slider - going vert?
     o  Consider section in manual for how addchild augments single argument
     o  Fixed stretch?
     o  Test of very large range of add children
@@ -68,3 +78,14 @@ o  Make examples as proper tests incl name and folder
 -----------------------------------------------------------------------------
 List of widgets
 -----------------------------------------------------------------------------
+    @classmethod
+    def _tidy_and_overwrite(cls, provenance):
+        # save orig file to temp
+        # retreive ideal column to start type word part
+        # open file for write with
+        # for each orig line
+        #   if contains adjust handles
+        #       replace adjust handles span with right length
+        #       write them to the file
+        #   else
+        #       write original line to file
