@@ -46,7 +46,7 @@ builder will create.
 
 The indented alignment of the *name* words is of central importance. But there
 is no significance to the alignment of the *type words*. They are lined up in
-the example solely for readability.
+the example solely for readability. (See later section on auto-formatting)
 
 ## Parent / Child Relationships Supported
 The builder *'borrows'* Qt's existing notion of parent child relationships, but
@@ -118,6 +118,24 @@ to call setText(), and then with setTitle().
 ## Taking the Input From a File
 
     layouts = Builder.from_file(file_path)
+    
+## Auto Formatting
+When you use the build-from-file option, the builder will automatically 
+re-format your file (in-place) to line up the right hand column, so you don't
+have to waste effort on doing it (or changing it) manually. It creates a backup
+each time - and adds a comment to the file about where the backups are saved.
+
+To turn this behaviour off:
+
+    layouts = Builder.from_file(file_path, auto_format=False)
+    
+Auto formatting also takes place by default when you use the multiline string 
+input option:
+
+    Builder.from_multiline_string('the string')
+    
+In this case the re-formatted version will have been placed on the 
+system clipboard ready for you to *paste*.
     
 ## Error Handling
 The builder handles all errors by raising an api.LayoutError which contains

@@ -15,6 +15,7 @@ def raises_layout_error_with_this_message(
     equality checking copes with multiline strings and massages these before
     comparison to unify minor differences in whitespace and indentation.
     """
+    a = 1
     try:
         callable(*args, **kwargs)
         # If reach here, it didn't raise the exception.

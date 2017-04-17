@@ -17,7 +17,21 @@ o  Stretch and setTitle o  Wider widget set support incl setText / setTitle o  H
                 *  Push assertions and checks into helper module
                 *  Top down from api
                 *  Put in proper exception handling for IO
-                o  Default? what about from multiline, what about reports, what about turning it off?
+                o  Finish behaviour below
+                    *  manual
+                    o  file version
+                        o  leave existing code lying around but replicate as
+                           completely separate addon
+                            o  refactor builder to have split components
+                               function, inf act line parser module
+                                o  lost check for tabs
+                        o  ditch old code
+                        o  pass option thru with default and act on it
+                            o  split and dupe overwriter as auto_formatter and saver
+                        o  comment
+                        o  default but defeatable
+                        o  tests
+                    o  copy and paste version
                 o  What tests
                 o  Manual
                 o  What about from big string?
@@ -89,3 +103,15 @@ List of widgets
         #       write them to the file
         #   else
         #       write original line to file
+-----------------------------------------------------------------------------
+Write back out
+-----------------------------------------------------------------------------
+file vs text
+    file fine going to local data as is
+    text -> to clipboard if requested, but has to be pastable
+optionality
+    by default on
+    turn off with extra arg to build
+pub backup location
+    file add to comment
+    just manual for text

@@ -8,8 +8,8 @@ class BuilderAssertions(object):
         if indent % 2 == 0:
             return
         raise LayoutError("""
+            A line is indented by %d spaces.
             Indentation spaces must be a multiple of 2.
-            This line is indented by %d spaces.
             """, (indent))
 
     @classmethod

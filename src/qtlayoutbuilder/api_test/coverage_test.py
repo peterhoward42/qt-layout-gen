@@ -20,7 +20,7 @@ class TestCoverage(TestCase):
         file_path = os.path.abspath(
                 os.path.join(__file__,
                         "../../../../testdata/coverage_example.txt"))
-        layouts_created = build_from_file(file_path, tidy_and_overwrite=True)
+        layouts_created = build_from_file(file_path)
         widget = layouts_created.get_element('page')
         widget.show()
         qApp.exec_()

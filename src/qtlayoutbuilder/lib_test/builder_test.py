@@ -47,8 +47,8 @@ class TestBuilder(TestCase):
              layout     QHBoxLayout
         """
         result = raises_layout_error_with_this_message("""
+                A line is indented by 1 spaces.
                 Indentation spaces must be a multiple of 2.
-                This line is indented by 1 spaces.
                 (This line: < layout     QHBoxLayout>)
                 (Line number: 2, from unit test provenance)
             """,
