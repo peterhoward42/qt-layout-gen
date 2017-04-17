@@ -1,7 +1,7 @@
 from qtlayoutbuilder.lib import file_utils
-from qtlayoutbuilder.lib.reformatter import ReFormatter
 from qtlayoutbuilder.lib.builder import Builder
 from qtlayoutbuilder.lib.original_file_rewriter import OriginalFileReWriter
+from qtlayoutbuilder.lib.reformatter import ReFormatter
 
 
 def build_from_file(file_path, auto_format=True):

@@ -13,7 +13,7 @@ class LineParser(object):
         found and the composition of the line. The first item in the returned
         sequence indicates if the line is a comment, and when so, the others
         are undefined. If it is not a comment the remaining returned items
-        partition out: the length of the leading indentation strings, the name
+        partition out: the length of the leading indentation string, the name
         string, the type string, and the contents of any parenthesised
         content after the type word.
         :param line: The line to parse.
@@ -21,6 +21,7 @@ class LineParser(object):
         """
         if line.strip().startswith('#'):
             return True, None, None, None, None
+        cls._assert_no_tabs_present(line)
         original_line = line
         parenthesised = regex_helpers.capture_parenthesis(original_line)
         working_line = regex_helpers.remove_parenthesis(original_line)
@@ -47,3 +48,10 @@ class LineParser(object):
                 (after comments and parenthesis have been removed.)
             """, ())
         return words
+
+    @classmethod
+    def _assert_no_tabs_present(cls, line):
+        if '\t' in line:
+            raise LayoutError("""
+                This line contains a tab - which is not allowed.
+            """, ())

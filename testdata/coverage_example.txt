@@ -1,16 +1,16 @@
-page                 QWidget
-  layout             QVBoxLayout
-    layout           QHBoxLayout
-      group          QGroupBox(my box)
-        layout       QHBoxLayout
-          label      QLabel(hello label)
-          button     QPushButton(hello button)
-    edit             QLineEdit(edit me)
-    slider           QSlider
-    split_page       QSplitter
-      label1         QLabel(on the left)
-      label2         QLabel(on the right)
-    tabs             QTabWidget
-      w1             QLabel(foo)
-      w2             QLabel(bar)
-      w3             QLabel(baz)
+page                  QWidget
+  layout              QVBoxLayout
+    layout            QHBoxLayout
+      group           QGroupBox(my box)
+        layout        QHBoxLayout
+          label       QLabel(hello label)
+          button      QPushButton(hello button)
+    edit              QLineEdit(edit me)
+    slider            QSlider
+    split_page        QSplitter
+      label1          QLabel(on the left)
+      label2          QLabel(on the right)
+    tabs              QTabWidget
+      w1              QLabel(foo)
+      w2              QLabel(bar)
+      w3              QLabel(baz)

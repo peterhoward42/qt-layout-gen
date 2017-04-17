@@ -33,7 +33,7 @@ class TestBuilder(TestCase):
             page        \t QLabel
         """
         result = raises_layout_error_with_this_message("""
-                This line contains a tab character - which is not allowed.
+                This line contains a tab - which is not allowed.
                 (This line: <page        \t QLabel>)
                 (Line number: 1, from unit test provenance)
             """,

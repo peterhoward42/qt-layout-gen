@@ -22,10 +22,20 @@ o  Stretch and setTitle o  Wider widget set support incl setText / setTitle o  H
                     o  file version
                         o  leave existing code lying around but replicate as
                            completely separate addon
-                            o  refactor builder to have split components
+                            *  refactor builder to have split components
                                function, inf act line parser module
-                                o  lost check for tabs
-                        o  ditch old code
+                                *  lost check for tabs
+                            *  anticipate reformatter and test
+                            o  now anticipate / remodel save to file as only that
+                               and test?
+                                *  basics
+                                o  write comment to file
+                                    o  unit tests
+                                        *  replace comment
+                                        o  next utility
+                            o  what about clipboard then?
+                            o  what about not asking for it
+                        o  ditch old rewrite code
                         o  pass option thru with default and act on it
                             o  split and dupe overwriter as auto_formatter and saver
                         o  comment

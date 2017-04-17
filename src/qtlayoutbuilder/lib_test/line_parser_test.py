@@ -41,3 +41,11 @@ class TestLineParser(TestCase):
             LineParser.parse_line, 'foo')
         if not result:
             self.fail()
+
+    def test_error_message_when_tab_is_present(self):
+        result = raises_layout_error_with_this_message("""
+                This line contains a tab - which is not allowed.
+            """,
+                LineParser.parse_line, '\t')
+        if not result:
+            self.fail()
