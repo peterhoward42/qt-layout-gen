@@ -25,9 +25,10 @@ class OriginalFileReWriter(object):
 
     @classmethod
     def overwrite_original(cls, file_path, replacement_one_big_string):
-        folder, file_path = cls._make_backup_of_existing_file(file_path)
+        backup_folder, backup_file_path = \
+            cls._make_backup_of_existing_file(file_path)
         augmented_string = cls._add_backup_location_comment(
-                folder, replacement_one_big_string)
+                backup_folder, replacement_one_big_string)
         with open(file_path, 'w') as output_file:
             output_file.write(augmented_string)
 

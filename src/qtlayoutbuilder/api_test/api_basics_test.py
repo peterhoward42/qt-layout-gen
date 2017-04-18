@@ -19,6 +19,7 @@ class TestApiBasics(TestCase):
         except RuntimeError:
             pass # Singleton already exists.
 
+
         input = """
             my_page         QWidget
               layout        QVBoxLayout
@@ -41,4 +42,17 @@ class TestApiBasics(TestCase):
         layouts_created = build_from_file(file_path)
         widget = layouts_created.get_element('my_page')
         widget.show()
-        qApp.exec_()
+        #qApp.exec_()
+
+    def test_reformatted_file_gets_written_to_clipboard(self):
+        try:
+            QApplication([])
+        except RuntimeError:
+            pass # Singleton already exists.
+        input = """
+            my_page         QWidget
+              layout                QVBoxLayout
+        """
+        layouts_created = build_from_multi_line_string(input)
+        reformatted = QApplication.clipboard().text()
+        print reformatted

@@ -1,3 +1,5 @@
+from PySide.QtGui import QApplication
+
 from qtlayoutbuilder.lib import file_utils
 from qtlayoutbuilder.lib.builder import Builder
 from qtlayoutbuilder.lib.original_file_rewriter import OriginalFileReWriter
@@ -17,7 +19,7 @@ def build_from_multi_line_string(one_big_string, auto_format=True):
     layouts_created = Builder.build(one_big_string, 'No input file used')
     if auto_format:
         re_formatted = ReFormatter.format(one_big_string)
-        ClipBoardWriter.write(re_formatted)
+        QApplication.clipboard().setText(re_formatted)
     return LayoutsCreatedAccessor(layouts_created)
 
 class LayoutsCreatedAccessor(object):

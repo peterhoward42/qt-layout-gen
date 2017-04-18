@@ -1,3 +1,7 @@
+# This file has been automatically re-formatted.
+# Previous versions can be found here:
+# C:\Users\phoward\AppData\Local\qtlayoutbuilder
+##
 page                  QWidget
   layout              QVBoxLayout
     layout            QHBoxLayout

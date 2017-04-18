@@ -48,22 +48,40 @@ class TestOriginalFileReWriter(TestCase):
 
     def test_make_backup_of_existing_file(self):
         # Make a file that we will then back up.
-        orig_fd = tempfile.TemporaryFile()
-        orig_path = abspath(orig_fd)
+        orig_fd = tempfile.NamedTemporaryFile(delete=False)
+        orig_file_path = orig_fd.name
         orig_fd.write('original file content')
+        orig_fd.close()
 
         # Back it up
         backup_folder, backup_file_path = \
-            OriginalFileReWriter._make_backup_of_existing_file(orig_path)
-
-        # Ensure that the file created has a sensible timestamp in the name.
-        print backup_file_path
-        self.assertEqual(backup_file_path, 'wont')
+            OriginalFileReWriter._make_backup_of_existing_file(orig_file_path)
 
         # Ensure that the backed up file  has the expected content.
         with open(backup_file_path, 'r') as read_fd:
             content = read_fd.read()
-            print 'xxxxx content is'
-            print content
-            self.assertEqual(content, 'wont')
+            self.assertEqual(content, 'original file content')
+
+    # Now at API level
+
+    def test_at_api_level(self):
+        # Make a file that we will then overwrite.
+        orig_fd = tempfile.NamedTemporaryFile(suffix='.txt', delete=False)
+        orig_file_path = orig_fd.name
+        content = MultilineString.shift_left("""
+            layout      QHBoxLayout
+              widget    QWidget
+        """)
+        orig_fd.write(content)
+        orig_fd.close()
+
+        # Mandate the overwrite
+        OriginalFileReWriter.overwrite_original(orig_file_path, 'new content')
+
+        # Check for both the presence of the new content, and the
+        # backup message.
+        with open(orig_file_path, 'r') as input_file:
+            content = input_file.read()
+            self.assertTrue('new content' in content)
+            self.assertTrue('has been' in content)
 

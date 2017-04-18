@@ -26,14 +26,12 @@ o  Stretch and setTitle o  Wider widget set support incl setText / setTitle o  H
                                function, inf act line parser module
                                 *  lost check for tabs
                             *  anticipate reformatter and test
-                            o  now anticipate / remodel save to file as only that
+                            *  now anticipate / remodel save to file as only that
                                and test?
-                                *  basics
-                                o  write comment to file
-                                    o  unit tests
-                                        *  replace comment
-                                        o  next utility
-                            o  what about clipboard then?
+                            *  what about clipboard then?
+                            o  Done, but clipboard intermittently unreliable.
+                                o  Change contract to backup to file always and
+                                   return location used from api functions.
                             o  what about not asking for it
                         o  ditch old rewrite code
                         o  pass option thru with default and act on it
