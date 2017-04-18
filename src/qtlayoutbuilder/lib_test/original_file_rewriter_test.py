@@ -1,3 +1,5 @@
+from os.path import abspath
+import tempfile
 from unittest import TestCase
 
 from qtlayoutbuilder.lib.multiline_string_utils import MultilineString
@@ -43,4 +45,25 @@ class TestOriginalFileReWriter(TestCase):
             just this text
         """)
         self.assertEquals(new_output, expected)
+
+    def test_make_backup_of_existing_file(self):
+        # Make a file that we will then back up.
+        orig_fd = tempfile.TemporaryFile()
+        orig_path = abspath(orig_fd)
+        orig_fd.write('original file content')
+
+        # Back it up
+        backup_folder, backup_file_path = \
+            OriginalFileReWriter._make_backup_of_existing_file(orig_path)
+
+        # Ensure that the file created has a sensible timestamp in the name.
+        print backup_file_path
+        self.assertEqual(backup_file_path, 'wont')
+
+        # Ensure that the backed up file  has the expected content.
+        with open(backup_file_path, 'r') as read_fd:
+            content = read_fd.read()
+            print 'xxxxx content is'
+            print content
+            self.assertEqual(content, 'wont')
 

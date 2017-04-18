@@ -148,11 +148,13 @@ an explanation and the offending line number from the input.
 
 ## Comments
 
-A comment is any hash character encountered up to the end that line.
+A comment line is a line in which the first non-space character is a hash.
+The whole of that line will be ignored by the builder. 
 
     # I am a comment
     layouts = Builder.from_multiline_string("""
-        my_page             QWidget # ME TOO !
+        my_page             QWidget
+                            # I am a comment also
           layout            hbox
           
 ## Incomplete or Multiple Hierarchies

@@ -25,9 +25,9 @@ class OriginalFileReWriter(object):
 
     @classmethod
     def overwrite_original(cls, file_path, replacement_one_big_string):
-        backup_folder = cls._make_backup_of_existing_file(file_path)
+        folder, file_path = cls._make_backup_of_existing_file(file_path)
         augmented_string = cls._add_backup_location_comment(
-                backup_folder, replacement_one_big_string)
+                folder, replacement_one_big_string)
         with open(file_path, 'w') as output_file:
             output_file.write(augmented_string)
 
@@ -51,7 +51,7 @@ class OriginalFileReWriter(object):
         archive_fname = path.join(
                 dir_for_archive_copy, 'archived_input-' + timestamp + '.txt')
         shutil.copyfile(original_file_path, archive_fname)
-        return dir_for_archive_copy
+        return dir_for_archive_copy, archive_fname
 
     @classmethod
     def _add_backup_location_comment(cls, backup_folder, one_big_string):
