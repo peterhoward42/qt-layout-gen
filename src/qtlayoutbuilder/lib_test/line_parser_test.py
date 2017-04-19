@@ -6,8 +6,18 @@ from qtlayoutbuilder.lib_test.test_utils import \
 
 class TestLineParser(TestCase):
 
+    def test_recognizes_comments(self):
+        is_a_comment, is_blank, indent, name, type_string, parenthesised = \
+            LineParser.parse_line('    # foo bar')
+        self.assertEqual(is_a_comment, True)
+
+    def test_recognizes_blank(self):
+        is_a_comment, is_blank, indent, name, type_string, parenthesised = \
+            LineParser.parse_line('    ')
+        self.assertEqual(is_blank, True)
+
     def test_on_legit_line(self):
-        is_a_comment, indent, name, type_string, parenthesised = \
+        is_a_comment, is_blank, indent, name, type_string, parenthesised = \
         LineParser.parse_line('    fred    QLabel(hello)')
         self.assertEqual(is_a_comment, False)
         self.assertEqual(indent, 4)

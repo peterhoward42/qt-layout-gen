@@ -18,12 +18,16 @@ class TestApiBasics(TestCase):
     implementation class - which has its own more comprehensive tests.
     """
 
-    def test_build_from_multiline_string_works(self):
+    @classmethod
+    def setUpClass(cls):
+        # Needs QApplication context.
+        super(TestApiBasics, cls).setUpClass()
         try:
             QApplication([])
         except RuntimeError:
-            pass # Singleton already exists.
+            pass  # Singleton already exists
 
+    def test_build_from_multiline_string_works(self):
 
         input = """
             my_page         QWidget
@@ -37,10 +41,6 @@ class TestApiBasics(TestCase):
         #qApp.exec_()
 
     def test_build_from_file(self):
-        try:
-            QApplication([])
-        except RuntimeError:
-            pass # Singleton already exists.
 
         file_path = os.path.abspath(
             os.path.join(__file__, "../../../../testdata/tiny_example.txt"))
@@ -50,14 +50,10 @@ class TestApiBasics(TestCase):
         #qApp.exec_()
 
     def test_reformatted_file_gets_written_to_file_specified(self):
+
         tmp_dir = tempfile.mkdtemp()
         reformat_location = path.join(tmp_dir, 're-formatted.txt')
-        print 'xxxxxxx %s' % reformat_location
 
-        try:
-            QApplication([])
-        except RuntimeError:
-            pass # Singleton already exists.
         input = """
             my_page         QWidget
               layout                QVBoxLayout

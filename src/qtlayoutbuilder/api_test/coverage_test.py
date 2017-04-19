@@ -11,12 +11,16 @@ class TestCoverage(TestCase):
     layout types.
     """
 
-    def test_coverage(self):
+    @classmethod
+    def setUpClass(cls):
+        # Needs QApplication context.
+        super(TestCoverage, cls).setUpClass()
         try:
             QApplication([])
         except RuntimeError:
-            pass # Singleton already exists.
+            pass  # Singleton already exists
 
+    def test_coverage(self):
         file_path = os.path.abspath(
                 os.path.join(__file__,
                         "../../../../testdata/coverage_example.txt"))

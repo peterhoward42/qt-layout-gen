@@ -49,9 +49,9 @@ class Builder(object):
         """
         The real process line logic.
         """
-        is_a_comment, indent, name, type_string, parenthesised = \
+        is_a_comment, is_blank, indent, name, type_string, parenthesised = \
             LineParser.parse_line(line)
-        if is_a_comment:
+        if is_a_comment or is_blank:
             return
 
         # Amount of indentation gives us the depth at which this line lives in

@@ -10,25 +10,27 @@ class LineParser(object):
     def parse_line(cls, line):
         """
         Parses one line of input and returns information about what is
-        found and the composition of the line. The first item in the returned
-        sequence indicates if the line is a comment, and when so, the others
-        are undefined. If it is not a comment the remaining returned items
-        partition out: the length of the leading indentation string, the name
-        string, the type string, and the contents of any parenthesised
-        content after the type word.
+        found and the composition of the line. The first two items indicate if
+        the line is a comment or is a blank line.
+        When so, the others are undefined. If it is not a comment or blank,
+        the remaining returned items partition out: the length of the leading
+        indentation string, the name string, the type string, and the contents
+        of any parenthesised content after the type word.
         :param line: The line to parse.
-        :return: (is_a_comment, indent, name, type, parenthesised)
+        :return: (is_a_comment, is_blank, indent, name, type, parenthesised)
         """
-        if line.strip().startswith('#'):
-            return True, None, None, None, None
         cls._assert_no_tabs_present(line)
+        if line.strip().startswith('#'):
+            return True, False, None, None, None, None
+        if len(line.strip()) == 0:
+            return False, True, None, None, None, None
         original_line = line
         parenthesised = regex_helpers.capture_parenthesis(original_line)
         working_line = regex_helpers.remove_parenthesis(original_line)
         indent = cls._measure_and_validate_indent(working_line, original_line)
         name, type_string = cls._parse_name_and_type(
                 working_line, original_line)
-        return False, indent, name, type_string, parenthesised
+        return False, False, indent, name, type_string, parenthesised
 
     # --------------------------------------------------------
     # Private below

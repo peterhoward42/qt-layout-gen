@@ -26,6 +26,9 @@ class TestChildAdder(TestCase):
         # There is no way to add a widget to a widget.
         result = raises_layout_error_with_this_message("""
             Could not add this child: <fred> to its parent.
+            The child is a: <QWidget>
+            The parent is a: <QWidget>
+
             None of the following addition methods worked:
 
             addLayout

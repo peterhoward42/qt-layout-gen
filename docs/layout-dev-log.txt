@@ -6,8 +6,14 @@
 *  Resume working up contract
 *  No keywords
 o  Experimental usage / lessons learned
-    o  Try mockup-like example
+    o  Tabs with lots of everything
     o  Lessons learned
+        o  We are not trapping paths being overwritten in the layouts
+           created store
+        o  QComboBox would work if we added addItem(text)
+        o  could add text items to QMenu if we implemented addAction(text)
+        o  could add sub menus as children if we implemented addMenu
+        o  we know grid/table need params
         o  Scroll area may need resize child? and similar exceptions.
         o  What gives slider - going vert?
 
@@ -27,6 +33,8 @@ o  Later
     o  Qt versions
     o  Licence and copyright
     o  Python 3 support
+    o  Qt5 support
+    o  Test on Linux
     o  PyQt support
     o  Unify use of multiline tests and generation.
     o  Move all regex into module

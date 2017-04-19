@@ -20,8 +20,9 @@ class ReFormatter(object):
         # section present.
         widest = -1
         for parsed_line in parsed_lines:
-            is_a_comment, indent, name, type_string, parenthesised = parsed_line
-            if is_a_comment:
+            is_a_comment, is_blank, indent, name, type_string, parenthesised = \
+                parsed_line
+            if is_a_comment or is_blank:
                 continue
             extent = indent + len(name)
             if extent > widest:
@@ -31,8 +32,9 @@ class ReFormatter(object):
         # to create alignment.
         formatted_lines = []
         for parsed_line, line in zip(parsed_lines, lines):
-            is_a_comment, indent, name, type_string, parenthesised = parsed_line
-            if is_a_comment:
+            is_a_comment, is_blank, indent, name, type_string, parenthesised = \
+                parsed_line
+            if is_a_comment or is_blank:
                 formatted_lines.append(line)
                 continue
             padding_required = widest + cls._MIN_GUTTER - (indent + len(name))

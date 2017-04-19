@@ -1,20 +1,40 @@
 # This file has been automatically re-formatted.
 # Previous versions can be found here:
-# C:\Users\phoward\AppData\Local\qtlayoutbuilder
+# C:\Users\Peter.Howard\AppData\Local\python\qtlayoutbuilder
 ##
-page                  QWidget
-  layout              QVBoxLayout
-    layout            QHBoxLayout
-      group           QGroupBox(my box)
-        layout        QHBoxLayout
-          label       QLabel(hello label)
-          button      QPushButton(hello button)
-    edit              QLineEdit(edit me)
-    slider            QSlider
-    split_page        QSplitter
-      label1          QLabel(on the left)
-      label2          QLabel(on the right)
-    tabs              QTabWidget
-      w1              QLabel(foo)
-      w2              QLabel(bar)
-      w3              QLabel(baz)
+page                         QWidget
+  layout                     QVBoxLayout
+    tabbed                   QTabWidget
+      tab1                   QWidget
+        layout               QVBoxLayout
+          row1               QHBoxLayout
+            label            QLabel(it)
+            button           QPushButton(is)
+            texted           QTextEdit(a truth universally)
+            label            QLineEdit(acknowledged)
+            radio1           QRadioButton(that)
+            radio2           QRadioButton(a)
+            group            QGroupBox(single)
+              layout         QVBoxLayout
+                label1       QLabel(man)
+                label2       QLabel(in)
+                label3       QLabel(possession)
+            spinner          QSpinBox
+            check1           QCheckBox(of)
+            check2           QCheckBox(a)
+            check3           QCheckBox(good)
+            combo            QComboBox
+          row2               QHBoxLayout
+            slider           QSlider
+            dates            QDateEdit
+            time             QTimeEdit
+            dataandtime      QDateTimeEdit
+            calendar         QCalendarWidget
+            colors           QColorDialog
+
+              #toolbox
+              #toolbar
+              # qdial
+
+
+            # truth universally acknowledged, that a single man in possession of a good fortune must be in want of a wife

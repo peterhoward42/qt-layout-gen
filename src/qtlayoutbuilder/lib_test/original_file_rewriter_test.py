@@ -1,4 +1,3 @@
-from os.path import abspath
 import tempfile
 from unittest import TestCase
 
