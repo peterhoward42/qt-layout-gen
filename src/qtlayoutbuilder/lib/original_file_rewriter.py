@@ -21,6 +21,9 @@ class OriginalFileReWriter(object):
     IO exceptions are not caught - by design. Such errors cannot be
     recovered from, and the underlying exceptions provide perfectly lucid
     explanations.
+    
+    This class is not responsible for the reformatting itself - you have
+    to pass the reformatted text in.
     """
 
     @classmethod

@@ -127,15 +127,15 @@ each time - and adds a comment to the file about where the backups are saved.
 
 To turn this behaviour off:
 
-    layouts = Builder.from_file(file_path, auto_format=False)
+    layouts = Builder.from_file(file_path, auto_format_and_overwrite=False)
     
-Auto formatting also takes place by default when you use the multiline string 
-input option:
+Auto formatting is not turned on by default for the multiline string variant of 
+the API call; largely because there is nowhere obvious for the builder to 
+write it to. You can turn it on however by specifying a file it should 
+write to:
 
-    Builder.from_multiline_string('the string')
-    
-In this case the re-formatted version will have been placed on the 
-system clipboard ready for you to *paste*.
+    Builder.from_multiline_string(
+            'the string', auto_format_and_write_to='my_file.txt')
     
 ## Error Handling
 The builder handles all errors by raising an api.LayoutError which contains

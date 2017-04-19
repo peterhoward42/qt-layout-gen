@@ -1,37 +1,60 @@
-from PySide.QtGui import QApplication
-
 from qtlayoutbuilder.lib import file_utils
 from qtlayoutbuilder.lib.builder import Builder
 from qtlayoutbuilder.lib.original_file_rewriter import OriginalFileReWriter
 from qtlayoutbuilder.lib.reformatter import ReFormatter
 
 
-def build_from_file(file_path, auto_format=True):
+def build_from_file(file_path, auto_format_and_overwrite=True):
+    """
+    Builds a QtLayout and QtWidget hierarchy based on the input text provided
+    in the input file specified.
+    :param file_path:  Full path of input file.
+    :param auto_format_and_overwrite: Set this to False to prevent the builder
+    from automatically reformatting and overwriting the input file.
+    :raises LayoutError:
+    :return: A LayoutsCreatedAccessor object.
+    """
     one_big_string = file_utils.get_file_contents_as_a_string(
             file_path)
     layouts_created = Builder.build(one_big_string, file_path)
-    if auto_format:
+    if auto_format_and_overwrite:
         re_formatted = ReFormatter.format(one_big_string)
         OriginalFileReWriter.overwrite_original(file_path, re_formatted)
     return LayoutsCreatedAccessor(layouts_created)
 
-def build_from_multi_line_string(one_big_string, auto_format=True):
+
+def build_from_multi_line_string(one_big_string, auto_format_and_write_to=''):
+    """
+    Builds a QtLayout and QtWidget hierarchy based on the input text provided
+    in the (multi-line) input string provided.
+    :param one_big_string: The input text.
+    :param auto_format_and_write_to: Set this to a non-empty file pathname to
+    make the builder automatically reformat the input and write the formatted
+    input to that file.
+    :raises LayoutError:
+    :return: A LayoutsCreatedAccessor object.
+    """
     layouts_created = Builder.build(one_big_string, 'No input file used')
-    if auto_format:
+    if auto_format_and_write_to:
         re_formatted = ReFormatter.format(one_big_string)
-        QApplication.clipboard().setText(re_formatted)
+        with open(auto_format_and_write_to, 'w') as output_file:
+            output_file.write(re_formatted)
     return LayoutsCreatedAccessor(layouts_created)
 
 class LayoutsCreatedAccessor(object):
+    """
+    A container for the layouts and widget hiearcies created by the builder.
+    """
 
     def __init__(self, layouts_created):
         # Provide a LayoutsCreated object.
         self._impl = layouts_created
 
     def get_element(self, path):
-        # Access the items created like this: elements['my_page.right_btn']
-        # (A level-two item)
+        """
+        Access the items created like this: elements['my_page.right_btn']
+        :param path: The dot-delimitted path of item you want.
+        :raises LayoutError:
+        :return: The QLayout or QWidget at that position in the hierarchy.
+        """
         return self._impl.get_element(path)
-
-    def dump(self):
-        return self._impl.dump()

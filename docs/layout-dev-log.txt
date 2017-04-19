@@ -5,47 +5,12 @@
 *  Get ALL tests working
 *  Resume working up contract
 *  No keywords
-o  Stretch and setTitle o  Wider widget set support incl setText / setTitle o  Harvest as table
-    o  Make a test that exercises just about every type incl adding children and text to see what happens
-        o  Start by experimenting
-            *  Divert to add unit tests for setWidget on scroll area
-            *  and setTitle on groupbox
-            *  Include line in wrapped error message.
-            *  Add types of child parent in error messages like could not add this child
-            *  Not barfing at relative indent of 1
-            o  Divert to overwrite as helper
-                *  Push assertions and checks into helper module
-                *  Top down from api
-                *  Put in proper exception handling for IO
-                o  Finish behaviour below
-                    *  manual
-                    o  file version
-                        o  leave existing code lying around but replicate as
-                           completely separate addon
-                            *  refactor builder to have split components
-                               function, inf act line parser module
-                                *  lost check for tabs
-                            *  anticipate reformatter and test
-                            *  now anticipate / remodel save to file as only that
-                               and test?
-                            *  what about clipboard then?
-                            o  Done, but clipboard intermittently unreliable.
-                                o  Change contract to backup to file always and
-                                   return location used from api functions.
-                            o  what about not asking for it
-                        o  ditch old rewrite code
-                        o  pass option thru with default and act on it
-                            o  split and dupe overwriter as auto_formatter and saver
-                        o  comment
-                        o  default but defeatable
-                        o  tests
-                    o  copy and paste version
-                o  What tests
-                o  Manual
-                o  What about from big string?
-            o  Have to disallow mid line comments
-            o  Scroll area may need resize child? and similar exceptions.
-            o  What gives slider - going vert?
+o  Experimental usage / lessons learned
+    o  Try mockup-like example
+    o  Lessons learned
+        o  Scroll area may need resize child? and similar exceptions.
+        o  What gives slider - going vert?
+
     o  Consider section in manual for how addchild augments single argument
     o  Fixed stretch?
     o  Test of very large range of add children
@@ -57,8 +22,6 @@ o  Quality
 
 o  Later
     o  Version contract
-    o  Spit back out would be nice
-    o  Publish dumped layouts created api?
     o  Spread use of fuzzy equality of multiline strings
     o  Note synth of tab name for addTab
     o  Qt versions
