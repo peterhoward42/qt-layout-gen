@@ -1,3 +1,6 @@
+o  Timeout to develop interuptable thing
+
+
 *  Reboot with new contract
 *  Go back to integrate with api and get that working
 *  Ditch all the redundant lib stuff
