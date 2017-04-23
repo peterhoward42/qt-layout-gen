@@ -2,44 +2,55 @@
 # Previous versions can be found here:
 # C:\Users\Peter.Howard\AppData\Local\python\qtlayoutbuilder
 ##
-page                         QWidget
-  layout                     QVBoxLayout
-    header                   QLabel(Some content before the tabbed widget)
-    tabbed                   QTabWidget
-      tab1                   QWidget
-        layout               QVBoxLayout
-          row1               QHBoxLayout
-            label            QLabel(it)
-            button           QPushButton(is)
-            texted           QTextEdit(a truth universally)
-            label            QLineEdit(acknowledged)
-            radio1           QRadioButton(that)
-            radio2           QRadioButton(a)
-            group            QGroupBox(single)
-              layout         QVBoxLayout
-                label1       QLabel(man)
-                label2       QLabel(in)
-                label3       QLabel(possession)
-            spinner          QSpinBox
-            check1           QCheckBox(of)
-            check2           QCheckBox(a)
-            check3           QCheckBox(good)
-            combo            QComboBox
-          row2               QHBoxLayout
-            slider           QSlider
-            row3             QProgressBar
-            dates            QDateEdit
-            time             QTimeEdit
-            dataandtime      QDateTimeEdit
-            calendar         QCalendarWidget
-            colors           QColorDialog
-      tab2                   QWidget
-        layout               QStackedLayout
-          a                  QLabel(item1 in stack widget)
-          b                  QLabel(item2 in stack widget)
-    footer                   QLabel(Some content underneath the tabbed widget)
+page                          QWidget
+  layout                      QVBoxLayout
+    header                    QLabel(Some content before the tabbed widget)
+    tabbed                    QTabWidget
+      tab1                    QWidget
+        layout                QVBoxLayout
+          row1                QHBoxLayout
+            label             QLabel(it)
+            button            QPushButton(is)
+            texted            QTextEdit(a truth universally)
+            label             QLineEdit(acknowledged)
+            radio1            QRadioButton(that)
+            radio2            QRadioButton(a)
+            group             QGroupBox(single)
+              layout          QVBoxLayout
+                label1        QLabel(man)
+                label2        QLabel(in)
+                label3        QLabel(possession)
+            spinner           QSpinBox
+            check1            QCheckBox(of)
+            check2            QCheckBox(a)
+            check3            QCheckBox(good)
+            combo             QComboBox
+          row2                QHBoxLayout
+            slider            QSlider
+            row3              QProgressBar
+            dates             QDateEdit
+            time              QTimeEdit
+            dataandtime       QDateTimeEdit
+            calendar          QCalendarWidget
+            colors            QColorDialog
+      tab2                    QWidget
+        layout                QStackedLayout
+          a                   QLabel(item1 in stack widget)
+          b                   QLabel(item2 in stack widget)
+      tab3                    QWidget
+        layout                QVBoxLayout
+          layout              QHBoxLayout
+            pre               QLabel(before the splitter)
+            split             QSplitter
+              edit1           QTextEdit(left panel in splitter)
+              edit2           QTextEdit(right panel in splitter)
+            beyond            QLabel(beyond the splitter)
+          status_bar          QStatusBar
+            status_item1      QLabel(foo)
+            status_item2      QLabel(bar)
+    footer                    QLabel(Some content underneath the tabbed widget)
 
-my_dialog                    QDialog
-  layout                     QVBoxLayout
-    btn1                     QPushButton(action 1)
-    btn2                     QPushButton(action 2)
+my_dialog                     QDialog
+  layout                      QVBoxLayout
+    btn1                      QPushButton(action 1)
+    btn2                      QPushButton(action 2)

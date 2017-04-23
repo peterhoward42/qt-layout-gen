@@ -5,25 +5,25 @@
 *  Get ALL tests working
 *  Resume working up contract
 *  No keywords
-o  Experimental usage / lessons learned
-    o  Tabs with lots of everything
-        *  Layouts
-        o  Splitter
-        o  StatusBar
-        o  TabBar
-        o  WizardPage
-        o  Sep experiment for menu and menubar
-        o  Sep experiment for mainwindow with dock areas and toolbar
+*  Experimental usage / lessons learned
+o  Decide what lessons learned
     o  Lessons learned
         o  You can inadvertently set the layout on a QLabel and it messes up!
         o  We are not trapping paths being overwritten in the layouts
            created store
+        o  adding StretchItem(0, 0) would give us stretch
         o  QComboBox would work if we added addItem(text)
         o  could add text items to QMenu if we implemented addAction(text)
         o  could add sub menus as children if we implemented addMenu
+           ..., plus also then menubar
         o  we know grid/table need params
         o  Scroll area may need resize child? and similar exceptions.
         o  What gives slider - going vert?
+        o  Could do wizard and adding wizard pages if added addPage or whatever
+        o  Doc explain which things no good incl model based views
+            o  eg treeview, listview
+            o  eg menu and main window / docable stuff
+    o  Revisit mockup to showcase what is supported
 
     o  Consider section in manual for how addchild augments single argument
     o  Fixed stretch?
@@ -91,14 +91,28 @@ List of widgets
         #   else
         #       write original line to file
 -----------------------------------------------------------------------------
-Write back out
+QCalendarWidget
+QCheckBox
+QColorDialog
+QComboBox
+QDateEdit
+QDateTimeEdit
+QDialog
+QGroupBox
+QHBoxLayout
+QLabel
+QLineEdit
+QProgressBar
+QPushButton
+QRadioButton
+QSlider
+QSpinBox
+QSplitter
+QStackedLayout
+QStatusBar
+QTabWidget
+QTextEdit
+QTimeEdit
+QVBoxLayout
+QWidget
 -----------------------------------------------------------------------------
-file vs text
-    file fine going to local data as is
-    text -> to clipboard if requested, but has to be pastable
-optionality
-    by default on
-    turn off with extra arg to build
-pub backup location
-    file add to comment
-    just manual for text

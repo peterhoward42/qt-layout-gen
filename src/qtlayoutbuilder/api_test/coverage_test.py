@@ -25,6 +25,15 @@ class TestCoverage(TestCase):
                 os.path.join(__file__,
                         "../../../../testdata/coverage_example.txt"))
         layouts_created = build_from_file(file_path)
+
+        lines = layouts_created._impl.dump().split('\n')
+        qwords = [line.split().pop() for line in lines]
+        qwords = set(qwords)
+        qwords = sorted(qwords)
+        for w in qwords:
+            print w
+
+
         widget = layouts_created.get_element('page')
         widget.show()
 
