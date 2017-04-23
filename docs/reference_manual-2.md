@@ -190,3 +190,14 @@ children and then add them manually afterwards. E.g.
     grid = layouts.get_element('page1.layout')
     cell = layouts.get_element('cell_widget'
     grid.addWidget(cell, 0, 1)
+    
+## Limitations
+    
+## Cautionary Notes
+1. The builder is quite happy to let you set the layout on the types of 
+widgets that you don't normally change the layout for. For example putting a 
+QVBoxLayout on a QLabel. This is perfectly legal Qt and the builder does not 
+attempt to second-guess whether you meant it or not. It's normally obvious when
+you look at the result that the layout for that widget is screwed up.
+
+
