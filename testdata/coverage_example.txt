@@ -4,6 +4,7 @@
 ##
 page                         QWidget
   layout                     QVBoxLayout
+    header                   QLabel(Some content before the tabbed widget)
     tabbed                   QTabWidget
       tab1                   QWidget
         layout               QVBoxLayout
@@ -26,15 +27,19 @@ page                         QWidget
             combo            QComboBox
           row2               QHBoxLayout
             slider           QSlider
+            row3             QProgressBar
             dates            QDateEdit
             time             QTimeEdit
             dataandtime      QDateTimeEdit
             calendar         QCalendarWidget
             colors           QColorDialog
+      tab2                   QWidget
+        layout               QStackedLayout
+          a                  QLabel(item1 in stack widget)
+          b                  QLabel(item2 in stack widget)
+    footer                   QLabel(Some content underneath the tabbed widget)
 
-              #toolbox
-              #toolbar
-              # qdial
-
-
-            # truth universally acknowledged, that a single man in possession of a good fortune must be in want of a wife
+my_dialog                    QDialog
+  layout                     QVBoxLayout
+    btn1                     QPushButton(action 1)
+    btn2                     QPushButton(action 2)

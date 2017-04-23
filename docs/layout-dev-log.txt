@@ -1,6 +1,3 @@
-o  Timeout to develop interuptable thing
-
-
 *  Reboot with new contract
 *  Go back to integrate with api and get that working
 *  Ditch all the redundant lib stuff
@@ -10,7 +7,15 @@ o  Timeout to develop interuptable thing
 *  No keywords
 o  Experimental usage / lessons learned
     o  Tabs with lots of everything
+        *  Layouts
+        o  Splitter
+        o  StatusBar
+        o  TabBar
+        o  WizardPage
+        o  Sep experiment for menu and menubar
+        o  Sep experiment for mainwindow with dock areas and toolbar
     o  Lessons learned
+        o  You can inadvertently set the layout on a QLabel and it messes up!
         o  We are not trapping paths being overwritten in the layouts
            created store
         o  QComboBox would work if we added addItem(text)

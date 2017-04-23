@@ -27,4 +27,8 @@ class TestCoverage(TestCase):
         layouts_created = build_from_file(file_path)
         widget = layouts_created.get_element('page')
         widget.show()
+
+        #dialog = layouts_created.get_element('my_dialog')
+        #dialog.exec_()
+
         qApp.exec_()
