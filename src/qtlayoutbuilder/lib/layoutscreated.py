@@ -1,8 +1,6 @@
 from collections import OrderedDict
 
 from qtlayoutbuilder.api.layouterror import LayoutError
-from qtlayoutbuilder.lib import string_utils
-from qtlayoutbuilder.lib.multiline_string_utils import MultilineString
 
 
 class LayoutsCreated(object):
@@ -25,11 +23,20 @@ class LayoutsCreated(object):
         return element
 
     def register_top_level_object(self, object, name):
-        key = name
-        self._elements[key] = object
+        if name in self._elements:
+            raise LayoutError("""
+                The top-level name you have given this item (<%s>), has already
+                been used.
+            """, name)
+        self._elements[name] = object
 
     def register_child(self, child_object, parent_path, child_name):
         key = parent_path + '.' + child_name
+        if key in self._elements:
+            raise LayoutError("""
+                Each child you create for an object must have a unique name.
+                You are duplicating the child name in this path (<%s>).
+            """, key)
         self._elements[key] = child_object
 
     def most_recently_added_at_level(self, level):

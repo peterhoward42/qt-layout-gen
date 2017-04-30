@@ -128,6 +128,38 @@ class TestBuilder(TestCase):
         if not result:
             self.fail()
 
+    def test_error_message_when_your_overwrite_a_path_in_the_layout_tree(self):
+        # Top level objects must have unique names.
+        input = """
+            foo      QVBoxLayout
+            foo      QGroupBox
+        """
+        result = raises_layout_error_with_this_message("""
+            The top-level name you have given this item (<foo>), has already
+            been used.
+            (This line: <foo      QGroupBox>)
+            (Line number: 2, from unit test provenance)
+            """,
+            Builder.build, input, 'unit test provenance')
+        if not result:
+            self.fail()
+
+        # Child paths must be unique.
+        input = """
+            foo      QVBoxLayout
+              bar    QGroupBox
+              bar    QLabel
+        """
+        result = raises_layout_error_with_this_message("""
+            Each child you create for an object must have a unique name.
+            You are duplicating the child name in this path (<foo.bar>).
+            (This line: <  bar    QLabel>)
+            (Line number: 3, from unit test provenance)
+            """,
+            Builder.build, input, 'unit test provenance')
+        if not result:
+            self.fail()
+
     #-------------------------------------------------------------------------
     # API Level
 

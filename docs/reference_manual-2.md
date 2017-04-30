@@ -32,7 +32,7 @@
 This example creates a QWidget (which it calls *my_page*), and then sets its
 layout to be a *QHBoxLayout*. Then it populates that layout with three items,
 which it calls *left*, *middle*, and *right_btn*. The item called *left* is
-specified as  QGroupBox, and it will get the text *Fruits* - by calling 
+specified as  QGroupBox, and will have its title set to *Fruits* - by calling 
 *setTitle()* on it. The first item called *label1* will get the text *Apple*, by
 calling *setText()* on it.
 
@@ -40,49 +40,80 @@ The example also shows how you can access the objects created afterwards.
 
 ## Anatomy of the Input Text
 Each line of input creates an object of the type specified by the second word,
-and gives that object the name specified by the first word. The relative 
-indentation of the first words specifies the parent-child hierarchy that the 
-builder will create. 
+and provides the builder with a name to associate with it. The indentation of 
+the first words specifies the parent-child hierarchy that the builder will 
+create. Children are indented in relation to their parents by two spaces.
 
 The indented alignment of the *name* words is of central importance. But there
-is no significance to the alignment of the *type words*. They are lined up in
+is no significance in the alignment of the *type words*. They are lined up in
 the example solely for readability. (See later section on auto-formatting)
 
 ## Parent / Child Relationships Supported
-The builder *'borrows'* Qt's existing notion of parent child relationships, but
-has a much wider and looser interpretation of it - as you will see below.
+The builder implements Qt's existing system for parent child relationships by 
+automatically adding items to layouts. But it goes further as you have already 
+seen in the example input text above. The example showed how you can get it to
+set the layout for a widget, and add text to suitable widgets.
 
 The builder *'adds'* children to their *'parent'* using the following simple 
-and 'dumb' procedure.
+procedure.
 
-It speculatively calls the following methods on the parent object 
-(in the order specified), and stops at the first one that works.
+### General Cases
+First, it deals with the more general cases, by speculatively calling the following 
+methods on the parent object with the child as a single argument. It stops at
+the first one that works.
 
     addLayout(child)
     setLayout(child)
     addWidget(child)
-    addTab(child)
-    setWidget(child)
     
 > What we mean by *the first one that works*, is that the parent object has 
 > such a method, and when that method is called with the child as a single 
 > argument, it does not raise an exception.
     
-This procedure allows:
-*  Layout children to be added to layout parents
-*  The layout to be set for a widget.
-*  Widgets to be added to a Layout
-*  Widgets to be added to a QStackedWidget
-*  Widgets to be added to a QTabbedWidget
-*  The widget to be set on a QScrollArea
+If none of the above worked, it tries some methods intended for special cases as
+follows. 
+    
+### Special case 1: addSpacerItem(child)
+This is for adding a QSpacerItem child to a Q*BoxLayout like this:
 
-> Note that the builder can only add children to parents for you automatically
-> when one of the methods listed earlier, works when called with a **single**
-> argument. (Which excludes QGridLayout for example). All is not lost 
-> however - see the later section about *Incomplete Hierarchies* below.
+    horiz       QHBoxLayout
+      label1    QLabel('foo')
+      spacer    QSpacerItem
+      label1    QLabel('foo')
+     
+ The builder constructs the QSpacerItem with zero horizontal and vertical sizes,
+ and it is thus exactly equivalent to calling addStretch() to the QHBoxLayout.
+ 
+### Special case 2: addTab(child)
 
-> (The builder gets round this when calling *addTab* on a QTabbedWidget by 
-> specifying the title for the tab using an automatically generated sequence.)
+This is for adding tabs to a QTabWidget like this:
+
+    tab_widget          QTabWidget
+      first_tab         QWidget
+      second_tab        QWidget
+      third_tab         QWidget
+      
+ The builder names the tabs sequentially: tab_1, tab_2, ... tab_n
+ 
+### Special case 3: setWidget(child)
+
+This is for specifying the child QWidget for a QScrollArea like this:
+
+    scroller            QScrollArea
+      content           QWidget
+
+> Note there are some parent child relationships that the builder cannot make
+> completely automatically for you, because the arguments that must be provided
+> to the *'add'* method cannot be guessed by the builder. An example would be
+> adding the children to a QGridLayout - where the builder cannot know which
+> rows and columns to specify.
+
+> We could have extended the input file syntax to deal with some of these
+> cases - but preferred to preserve the very simple, and quick to learn simple
+> syntax.
+
+> All is not lost however - see the later section about *Incomplete 
+Hierarchies* below.
 
 ## Using Objects you Instantiated Externally
 The builder can incorporate objects you have instantiated somewhere else in 

@@ -8,8 +8,9 @@
 *  Experimental usage / lessons learned
 o  Decide what lessons learned
     *  Set layout on qlabel - just caution
-    o  Treat overwriting of path as an error.
-        o  TDD from bottom level of interest upwards.
+    *  Treat overwriting of path as an error.
+    o  Add QSpacerItem(0,0)
+        o  Docco
 o  Update docco to suit lessons learned at bottom
 o  Revisit mockup to showcase what is supported
 
@@ -104,9 +105,6 @@ QVBoxLayout
 QWidget
 -----------------------------------------------------------------------------
     o  Lessons learned
-        o  We are not trapping paths being overwritten in the layouts
-           created store
-            o  Needs fix
         o  adding StretchItem(0, 0) would give us stretch
             o  Yes plus docco
         o  QComboBox would work if we added addItem(text)

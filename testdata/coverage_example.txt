@@ -9,10 +9,10 @@ page                          QWidget
       tab1                    QWidget
         layout                QVBoxLayout
           row1                QHBoxLayout
-            label             QLabel(it)
+            label1            QLabel(it)
             button            QPushButton(is)
             texted            QTextEdit(a truth universally)
-            label             QLineEdit(acknowledged)
+            label2            QLineEdit(acknowledged)
             radio1            QRadioButton(that)
             radio2            QRadioButton(a)
             group             QGroupBox(single)
