@@ -11,6 +11,14 @@ o  Decide what lessons learned
     *  Treat overwriting of path as an error.
     o  Add QSpacerItem(0,0)
         o  Docco
+        o  TDD bottom up
+            *  QObject creator
+                *  Code
+                *  Add test bottom up
+            *  child adder
+                *  first refactor and regression
+            o  Add to list of what supported
+            o  Add to coverage test
 o  Update docco to suit lessons learned at bottom
 o  Revisit mockup to showcase what is supported
 

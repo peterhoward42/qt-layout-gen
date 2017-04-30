@@ -21,6 +21,9 @@ class QObjectMaker(object):
         """
         Instantiates a QObject of the type specified by the name.
         """
+
+        # First see if the constructor can be found.
+
         constructor = None
         try:
             constructor = globals()[type_word]
@@ -31,6 +34,14 @@ class QObjectMaker(object):
 
                 %s
             """, (type_word, self._generate_name_suggestions(type_word)))
+
+        # Deal with one special case (pity - but adding stretch to QxBoxLayout
+        # is too common not to support.
+        if type_word == 'QSpacerItem':
+            instance = QSpacerItem(0, 0)
+            return instance
+
+        # Now the general case.
 
         # Have a go at constructing it, and then make sure it is a class derived
         # from QLayout or QWidget.

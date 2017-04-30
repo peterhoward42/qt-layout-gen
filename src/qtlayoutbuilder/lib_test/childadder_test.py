@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from PySide.QtGui import QApplication, QLabel, QHBoxLayout, \
-    QStackedWidget, QTabWidget
+from PySide.QtGui import QApplication, QLabel, QHBoxLayout, QStackedWidget, \
+    QTabWidget, QSpacerItem, QGridLayout
 from PySide.QtGui import QScrollArea
 from PySide.QtGui import QVBoxLayout
 from PySide.QtGui import QWidget
@@ -36,6 +36,7 @@ class TestChildAdder(TestCase):
             addWidget
             addTab
             setWidget
+            addSpacerItem
         """, ChildAdder.add, QWidget(), 'fred', QWidget())
         if not result:
             self.fail()
@@ -67,3 +68,8 @@ class TestChildAdder(TestCase):
         parent = QScrollArea()
         ChildAdder.add(QLabel(), 'fred', parent)
         self.assertTrue(isinstance(parent.widget(), QLabel))
+
+    def test_add_spacer_item_succeeding(self):
+        parent = QHBoxLayout()
+        ChildAdder.add(QSpacerItem(0, 0), 'fred', parent)
+        self.assertTrue(isinstance(parent.itemAt(0), QSpacerItem))

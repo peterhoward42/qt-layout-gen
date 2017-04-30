@@ -3,7 +3,7 @@ This module provides unit tests for the parentmaker module.
 """
 from unittest import TestCase
 
-from PySide.QtGui import QApplication
+from PySide.QtGui import QApplication, QSpacerItem
 from PySide.QtGui import QHBoxLayout
 from PySide.QtGui import QLayout
 
@@ -32,6 +32,14 @@ class TestQObjectMaker(TestCase):
         maker = QObjectMaker(finder)
         object_made = maker.make('fred', 'QHBoxLayout')
         self.assertTrue(isinstance(object_made, QHBoxLayout))
+
+    def test_special_cases_qt_class_instantiation(self):
+        # QSpacerItem cannot be contstructed with no arguments, so the object
+        # maker passes in 0,0 as width, height.
+        finder = None
+        maker = QObjectMaker(finder)
+        object_made = maker.make('fred', 'QSpacerItem')
+        self.assertTrue(isinstance(object_made, QSpacerItem))
 
     # Error handling.
 

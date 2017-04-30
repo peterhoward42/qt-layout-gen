@@ -131,8 +131,8 @@ or an attribute called *my_widget*. For example:
     my_widget = CustomWidget(), or
     something.my_widget = CustomWidget()
     
-> It does this with the help of Python's garbage collector - which knows about
-> every object that exists in your program.
+> The builder finds the object you are referring to with the help of Python's 
+> garbage collector - which knows about every object that exists in your program.
 
 Nb. It raises an error if it finds more than one object that qualifies.
     
