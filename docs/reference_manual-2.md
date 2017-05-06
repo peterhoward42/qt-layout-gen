@@ -1,4 +1,4 @@
-# User Manual
+# Qt Layout Builder - User Manual
 
 ## Getting Started Example
 
@@ -64,12 +64,12 @@ of layouts and widgets.
 - setLayout(child) # Set the layout for a parent widget
 - addWidget(child) # Add a widget into a parent layout
 
-It calls these speculatively, and stops at the first one that works.
-(Doesn't raise an exception)
+For each line of input, the builder calls these methods speculatively, and 
+stops at the first one that works. (Doesn't raise an exception)
 
 If none of the above worked, the builder then tries a few more methods 
 speculatively, and again stops at the first one that works. These are intended 
-for special cases as follows. 
+for some very common special cases, as follows. 
     
 ### Adding a QSpacerItem to a Q*BoxLayout
 The builder tries calling addSpacerItem(child).
@@ -78,7 +78,7 @@ You use it like this:
     horiz       QHBoxLayout
       label1    QLabel('foo')
       spacer    QSpacerItem
-      label1    QLabel('foo')
+      label2    QLabel('bar')
      
 The builder constructs the QSpacerItem with zero horizontal and vertical sizes,
 but with an *Expanding* size policy, which makes it exactly equivalent to the 
@@ -223,21 +223,18 @@ children and then add them manually afterwards. E.g.
     
     # And then access the objects to finish the job.
     grid = layouts.get_element('page1.layout')
-    cell = layouts.get_element('cell_widget'
+    cell = layouts.get_element('cell_widget')
     grid.addWidget(cell, 0, 1)
     
 ## Limitations
-The builder cannot add textual entries to a QComboBox. You might think this
-would work (but it doesn't):
 
-    combo       QComboBox
-      item1     QString(foo)
-      item2     QString(bar)
-      
-It doesn't work partly because the builder doesn't try *addItem()*
-as a child adding method. But this is in turn because recent versions of
-PySide prevent you from instantiating a QString from Python. (It produces them
-automatically internally when you use a Python string).
+These are the most common parent child relationships that the builder 
+**cannot** make for you automatically:
+
+- Cannot populate anything that has rows and columns
+- Cannot populate QComboBox or QMenu
+- Cannot populate the model-based widgets (like QListView)
+- Doesn't deal with QMainWindow, Dockable Areas or Toolbars.
     
 ## Cautionary Notes
 Qt itself lets you override the layout of all QWidgets, but when you are
@@ -249,5 +246,5 @@ input, like this:
     label       QLabel
       layout    QVBoxLayout
       
-If when you using the builder you end up with layouts that have widgets 
-bizarrely superimposed - this is the likely reason.
+If you end up with layouts that have widgets bizarrely superimposed - this is the 
+likely reason.

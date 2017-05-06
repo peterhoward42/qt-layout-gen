@@ -17,7 +17,8 @@ o  Decide what lessons learned
         *  Passing test
         *  Manual
             *  Restructure special case narrative
-    o  Unicode symbols
+    o  Unicode symbols would be so nice
+        o  Speculate what input could be like
 o  Update docco to suit lessons learned at bottom
 o  Revisit mockup to showcase what is supported
 
@@ -70,9 +71,3 @@ o  Make examples as proper tests incl name and folder
 -----------------------------------------------------------------------------
 List of widgets
 -----------------------------------------------------------------------------
-    o  Lessons learned
-        o  Doc explain which things no good incl model based views
-            o  explain trade off
-            o  grid / table
-            o  eg treeview, listview
-            o  eg menu and main window / docable stuff
