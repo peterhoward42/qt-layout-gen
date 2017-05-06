@@ -240,7 +240,7 @@ PySide prevent you from instantiating a QString from Python. (It produces them
 automatically internally when you use a Python string).
     
 ## Cautionary Notes
-1. Qt itself lets you override the layout of all QWidgets, but when you are
+Qt itself lets you override the layout of all QWidgets, but when you are
 programming layouts manually it's almost impossible to do so by accident. For
 example, you wouldn't accidentally change the layout used by a QLabel in regular
 code. Unfortunately you can do so accidentally rather easily with the builder's
