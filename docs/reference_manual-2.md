@@ -246,8 +246,7 @@ example, you wouldn't accidentally change the layout used by a QLabel in regular
 code. Unfortunately you can do so accidentally rather easily with the builder's
 input, like this:
 
-    # This is illustrating a MISTAKE
-    label       QLabel
+    label       QLabel # Delibarate mistake
       layout    QVBoxLayout
       
 If when you using the builder you end up with layouts that have widgets 
