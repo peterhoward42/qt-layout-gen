@@ -9,30 +9,30 @@
 o  Decide what lessons learned
     *  Set layout on qlabel - just caution
     *  Treat overwriting of path as an error.
-    o  Add QSpacerItem(0,0)
-        o  Docco
-        o  TDD bottom up
-            *  QObject creator
-                *  Code
-                *  Add test bottom up
-            *  child adder
-                *  first refactor and regression
-            o  Add to list of what supported
-            o  Add to coverage test
+    *  Add QSpacerItem(0,0)
+    *  QComboBox would work if we added addItem(text) - no ditch
+    *  Scroll area may need resize child? and similar exceptions.
+    *  QSlider, auto set orientation to horiz, test, and explain
+        *  Failing test
+        *  Passing test
+        *  Manual
+            *  Restructure special case narrative
+    o  Unicode symbols
 o  Update docco to suit lessons learned at bottom
 o  Revisit mockup to showcase what is supported
 
-o  Consider section in manual for how addchild augments single argument
-o  Unicode settext and thus unicode icons?
-
 o  Laters
 o  Quality
+    o  Any modules getting too big or too small?
+    o  Comments
+    o  PEP8
+    o  Manual edit / review
 
 
 o  Later
     o  Version contract
+    o  Product versions like pycharm eg 2017.1
     o  Spread use of fuzzy equality of multiline strings
-    o  Note synth of tab name for addTab
     o  Make sure all examples from the manual are tested
     o  Qt versions
     o  Licence and copyright
@@ -42,12 +42,8 @@ o  Later
     o  PyQt support
     o  Unify use of multiline tests and generation.
     o  Move all regex into module
-    o  Revisit addStretch - had to drop
     o  Viable to put on PyPy
-    o  Does user have to make sure qt gui imported at time? = no,
-            we import * in qtobject maker.
     o  What other types to support?
-        o  include setText + setTitle
         o  lineedit, combo, splitter, radio, groupbox
 
 
@@ -61,7 +57,6 @@ o  Make examples as proper tests incl name and folder
             o  first class
             o  examples
             o  add text to
-        o  add strings to labels, buttons and group boxes
         o  beautify
         o  no warnings
         o  real world try
@@ -75,54 +70,7 @@ o  Make examples as proper tests incl name and folder
 -----------------------------------------------------------------------------
 List of widgets
 -----------------------------------------------------------------------------
-    @classmethod
-    def _tidy_and_overwrite(cls, provenance):
-        # save orig file to temp
-        # retreive ideal column to start type word part
-        # open file for write with
-        # for each orig line
-        #   if contains adjust handles
-        #       replace adjust handles span with right length
-        #       write them to the file
-        #   else
-        #       write original line to file
------------------------------------------------------------------------------
-QCalendarWidget
-QCheckBox
-QColorDialog
-QComboBox
-QDateEdit
-QDateTimeEdit
-QDialog
-QGroupBox
-QHBoxLayout
-QLabel
-QLineEdit
-QProgressBar
-QPushButton
-QRadioButton
-QSlider
-QSpinBox
-QSplitter
-QStackedLayout
-QStatusBar
-QTabWidget
-QTextEdit
-QTimeEdit
-QVBoxLayout
-QWidget
------------------------------------------------------------------------------
     o  Lessons learned
-        o  adding StretchItem(0, 0) would give us stretch
-            o  Yes plus docco
-        o  QComboBox would work if we added addItem(text)
-            o  Needs fix + docco
-        o  Scroll area may need resize child? and similar exceptions.
-            o  Try first
-        o  What gives slider - going vert?
-            o  Look into
-        o  Could do wizard and adding wizard pages if added addPage or whatever
-            o  Too minority
         o  Doc explain which things no good incl model based views
             o  explain trade off
             o  grid / table

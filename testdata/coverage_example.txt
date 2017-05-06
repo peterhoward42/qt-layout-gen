@@ -17,9 +17,9 @@ page                          QWidget
             radio2            QRadioButton(a)
             group             QGroupBox(single)
               layout          QVBoxLayout
-                label1        QLabel(man)
-                label2        QLabel(in)
-                label3        QLabel(possession)
+                label1        QLabel(man in)
+                spacer        QSpacerItem
+                label2a       QLabel(possession)
             spinner           QSpinBox
             check1            QCheckBox(of)
             check2            QCheckBox(a)
@@ -48,6 +48,14 @@ page                          QWidget
           status_bar          QStatusBar
             status_item1      QLabel(foo)
             status_item2      QLabel(bar)
+      tab4                    QWidget
+        layout                QVBoxLayout
+          scroll              QScrollArea
+            content           QWidget
+              vlayout         QVBoxLayout
+                pickerA       QColorDialog
+                pickerB       QColorDialog
+                pickerC       QColorDialog
     footer                    QLabel(Some content underneath the tabbed widget)
 
 my_dialog                     QDialog

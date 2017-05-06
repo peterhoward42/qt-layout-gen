@@ -1,7 +1,8 @@
 from unittest import TestCase
 
+from PySide.QtCore import Qt
 from PySide.QtGui import QApplication, QLabel, QHBoxLayout, QStackedWidget, \
-    QTabWidget, QSpacerItem, QGridLayout
+    QTabWidget, QSpacerItem, QGridLayout, QSlider
 from PySide.QtGui import QScrollArea
 from PySide.QtGui import QVBoxLayout
 from PySide.QtGui import QWidget
@@ -68,8 +69,20 @@ class TestChildAdder(TestCase):
         parent = QScrollArea()
         ChildAdder.add(QLabel(), 'fred', parent)
         self.assertTrue(isinstance(parent.widget(), QLabel))
+        # We promise to setWidgetResizable(True), also.
+        resizable = parent.widgetResizable()
+        self.assertTrue(resizable)
 
     def test_add_spacer_item_succeeding(self):
         parent = QHBoxLayout()
         ChildAdder.add(QSpacerItem(0, 0), 'fred', parent)
         self.assertTrue(isinstance(parent.itemAt(0), QSpacerItem))
+
+    def test_qslider_intervention(self):
+        parent = QHBoxLayout()
+        slider = QSlider() # Don't specify orientation.
+        ChildAdder.add(slider, 'fred', parent)
+        # We promise to give it horizontal (the non-default) orientation.
+        orient = slider.orientation()
+        self.assertEqual(orient, Qt.Orientation.Horizontal)
+

@@ -1,4 +1,6 @@
-from PySide.QtGui import * # So that we can construct any QObject from a string.
+# So that we can construct any QObject from a string.
+from PySide.QtGui import *
+
 
 from qtlayoutbuilder.api.layouterror import LayoutError
 from qtlayoutbuilder.lib.qtclassnameprompter import QtClassNamePrompter
@@ -38,7 +40,8 @@ class QObjectMaker(object):
         # Deal with one special case (pity - but adding stretch to QxBoxLayout
         # is too common not to support.
         if type_word == 'QSpacerItem':
-            instance = QSpacerItem(0, 0)
+            instance = QSpacerItem(
+                    0, 0, QSizePolicy.Expanding, QSizePolicy.Expanding)
             return instance
 
         # Now the general case.

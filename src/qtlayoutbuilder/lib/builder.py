@@ -88,5 +88,6 @@ class Builder(object):
         raise LayoutError("""
             Cannot do anything with the text you specified
             in parenthesis because the object being created
-            has neither the setText(), nor the setTitle() method.
+            has none of the following methods: setText(), setTitle(),
+            or addItem().
             """, ())

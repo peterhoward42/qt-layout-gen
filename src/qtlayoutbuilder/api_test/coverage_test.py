@@ -33,7 +33,6 @@ class TestCoverage(TestCase):
         for w in qwords:
             print w
 
-
         widget = layouts_created.get_element('page')
         widget.show()
 

@@ -3,6 +3,9 @@ This module provides a generalised function that tries various adventures,
 to add a child to a Qt parent object. See the code below for the logical
 experiments it tries.
 """
+from PySide.QtCore import Qt
+from PySide.QtGui import QScrollArea, QSlider
+
 from qtlayoutbuilder.api.layouterror import LayoutError
 
 
@@ -43,12 +46,20 @@ class ChildAdder(object):
         # The method is available and callable - let's see if it
         # complains.
         try:
-            # Some methods need additional arguments.
-            if method_name == 'addTab':
+            # Some addition methods require a bit of intervention.
+            if method_name == 'addTab': # QTabWidget
                 cls._next_tab_number += 1
                 method(child_object, 'tab_%d' % cls._next_tab_number)
             else:  # General case.
                 method(child_object)
+
+            # We promise a few post-addition actions for some child or
+            # parent types.
+            if isinstance(parent_object, QScrollArea):
+                parent_object.setWidgetResizable(True)
+            if isinstance(child_object, QSlider):
+                child_object.setOrientation(Qt.Orientation.Horizontal)
+
             return True # The method worked.
         except TypeError as e:
             return False
