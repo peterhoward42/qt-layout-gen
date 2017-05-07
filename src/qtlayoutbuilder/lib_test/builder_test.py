@@ -288,6 +288,37 @@ class TestBuilder(TestCase):
         widget = layouts_created.get_element('page2')
         self.assertTrue(isinstance(widget.layout(), QVBoxLayout))
 
+    def test_adding_text_unicode_decode_works(self):
+        input = """
+            page        QWidget
+              layout    QHBoxLayout
+                label       QLabel(\u25c0)
+        """
+        layouts_created = Builder.build(input, 'unit test provenenance')
+        label = layouts_created.get_element('page.layout.label')
+        txt = label.text()
+        self.assertEqual(txt, u'\u25c0')
+
+    def test_adding_text_unicode_decode_error_reporting(self):
+        # The \u encoded unicode code-point, has only 3 ascii characters
+        # following. Well formed needs 4.
+        input = """
+            page        QWidget
+              layout    QHBoxLayout
+                label       QLabel(\u25c) 
+        """
+        result = raises_layout_error_with_this_message("""
+            Python raised an exception when the builder tried to
+            deal with unicode encoded values in your text: <\u25c>. The
+            underlying python error was:
+            'rawunicodeescape' codec can't decode bytes in position 0-4: truncated \uXXXX
+            (This line: <    label       QLabel(\u25c) >)
+            (Line number: 3, from unit test provenance)
+            """,
+                Builder.build, input, 'unit test provenance')
+        if not result:
+            self.fail()
+
     def test_adding_text_works_using_set_text_works(self):
         input = """
             label       QLabel(hello)

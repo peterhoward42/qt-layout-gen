@@ -39,4 +39,4 @@ class TestCoverage(TestCase):
         #dialog = layouts_created.get_element('my_dialog')
         #dialog.exec_()
 
-        qApp.exec_()
+        #qApp.exec_()

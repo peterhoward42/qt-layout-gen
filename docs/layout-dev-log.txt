@@ -22,8 +22,9 @@ o  Decide what lessons learned
         *  Play around with what could do
         *  See if decode('unicode-escape') disrupts existing tests
         *  Do properly and make sure works
-        o  Dedicated test with font etc.
-        o  Catch exceptions from decode and augment tests
+        *  Dedicated test with font etc.
+        *  Catch exceptions from decode and augment tests
+        *  Make sure format and write back works
         o  Manual
 o  Update docco to suit lessons learned at bottom
 o  Revisit mockup to showcase what is supported

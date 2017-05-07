@@ -26,20 +26,24 @@ class TestUnicodeText(TestCase):
             page          QWidget
               layout      QVBoxLayout
                 layout1   QHBoxLayout
-                  btn1    QPushButton(\u2605)
-                  btn2    QPushButton(\u2605)
-                  btna    QToolButton(\u2791)
-                  btnb    QToolButton(\u2791)
-                  btnc    QToolButton(\u2791)
-                  label1  QLabel(\u2791)
-                  label2  QLabel(\u2791)
+                          # left arrow
+                  btn1    QPushButton(\u25c0) 
+                          # right arrow
+                  btn2    QPushButton(\u25b6) 
+                          # envelope
+                  btna    QToolButton(\u2709)
+                          # pencil 
+                  btnb    QToolButton(\u270e)
+                          # hamburger 
+                  btnc    QToolButton(\u2630)
+                          # return / enter
+                label1  QLabel(Press \u23ce when done.)
         """)
 
         widget = layouts_created.get_element('page')
         widget.setStyleSheet("""
             * {
-            font-family: Lucida Sans Unicode;
-            font-size: 25px;
+            font-size: 36px;
             }
         """)
         widget.show()

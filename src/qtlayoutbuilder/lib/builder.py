@@ -79,7 +79,20 @@ class Builder(object):
     def _process_parenthesised_text(cls, parenthesised, object_to_add_text_to):
         if not parenthesised:
             return
-        decoded_with_unicode_escapes = parenthesised.decode('unicode-escape')
+        # We parse the parenthises text almost indentically to the way python
+        # itself parses string literals in source code. This means the
+        # parenthesised text can be like this: # 'hello \u25c0'.
+        # In that case 25c0 is a solid left-pointing arrow.
+        try:
+            decoded_with_unicode_escapes = parenthesised.decode(
+                'raw_unicode-escape')
+        except Exception as e:
+            raise LayoutError("""
+                Python raised an exception when the builder tried to
+                deal with unicode encoded values in your text: <%s>. The 
+                underlying python error was:
+                %s
+            """, (parenthesised, str(e)))
         if hasattr(object_to_add_text_to, 'setText'):
             object_to_add_text_to.setText(decoded_with_unicode_escapes)
             return
