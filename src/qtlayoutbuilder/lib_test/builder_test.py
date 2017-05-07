@@ -120,7 +120,8 @@ class TestBuilder(TestCase):
         result = raises_layout_error_with_this_message("""
             Cannot do anything with the text you specified
             in parenthesis because the object being created
-            has neither the setText(), nor the setTitle() method.
+            has none of the following methods: setText(), setTitle(),
+            or addItem().
             (This line: <layout      QVBoxLayout(hello)>)
             (Line number: 1, from unit test provenance)
             """,

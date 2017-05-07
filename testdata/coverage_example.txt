@@ -10,7 +10,7 @@ page                          QWidget
         layout                QVBoxLayout
           row1                QHBoxLayout
             label1            QLabel(it)
-            button            QPushButton(is)
+            button            QPushButton(is \u2127)
             texted            QTextEdit(a truth universally)
             label2            QLineEdit(acknowledged)
             radio1            QRadioButton(that)
@@ -56,6 +56,11 @@ page                          QWidget
                 pickerA       QColorDialog
                 pickerB       QColorDialog
                 pickerC       QColorDialog
+    btns                      QHBoxLayout
+      btn1                    QPushButton(u'u0064')
+      btn2                    QPushButton(bar)
+      btn3                    QPushButton(baz)
+      stretch                 QSpacerItem
     footer                    QLabel(Some content underneath the tabbed widget)
 
 my_dialog                     QDialog

@@ -18,7 +18,13 @@ o  Decide what lessons learned
         *  Manual
             *  Restructure special case narrative
     o  Unicode symbols would be so nice
-        o  Speculate what input could be like
+        *  Speculate what input could be like
+        *  Play around with what could do
+        *  See if decode('unicode-escape') disrupts existing tests
+        *  Do properly and make sure works
+        o  Dedicated test with font etc.
+        o  Catch exceptions from decode and augment tests
+        o  Manual
 o  Update docco to suit lessons learned at bottom
 o  Revisit mockup to showcase what is supported
 

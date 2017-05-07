@@ -79,11 +79,12 @@ class Builder(object):
     def _process_parenthesised_text(cls, parenthesised, object_to_add_text_to):
         if not parenthesised:
             return
+        decoded_with_unicode_escapes = parenthesised.decode('unicode-escape')
         if hasattr(object_to_add_text_to, 'setText'):
-            object_to_add_text_to.setText(parenthesised)
+            object_to_add_text_to.setText(decoded_with_unicode_escapes)
             return
         if hasattr(object_to_add_text_to, 'setTitle'):
-            object_to_add_text_to.setTitle(parenthesised)
+            object_to_add_text_to.setTitle(decoded_with_unicode_escapes)
             return
         raise LayoutError("""
             Cannot do anything with the text you specified
