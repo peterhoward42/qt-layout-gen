@@ -149,6 +149,53 @@ The builder will try to give that text to the object created, first by trying
 to call setText(), and then with setTitle().
 
 (Good for QLabel, QPushButton, QLineEdit, QGroupBox and possibly other classes).
+
+### Using Symbols and Icons on Buttons and Labels
+The strings used by QLabels, QPushButtons etc. are Unicode. And Unicode 
+includes a very wide variety of symbols and graphical icons. Like the ones
+described here for example.
+
+https://en.wikipedia.org/wiki/Miscellaneous_Symbols
+
+See also the official reference: http://unicode.org/charts/#symbols 
+
+These typographic symbols render very much more crisply than image-based icons, 
+because of the anti-aliasing of edges implemented by the font designers. They
+also remove the need to manage image resources.
+
+You can include Unicode characters (or more properly *code-points*) in your
+builder input, using the same notation as you would if you were writing a
+string literal in python source code. Like this example which puts the *pencil*
+symbol on a button:
+
+    button      QPushButton(\u2709)
+    
+Or this example that includes the symbol for *return* or *enter* in the middle
+of a label:
+
+    label       QLabel(Press \u23ce when done.)
+    
+Some Unicode symbols have *code-points* above 0xFFFF, and you can encode these
+again, just like in python source code. Note the upper case U and 8 instead of
+4 ascii characters following. This example is a hamburger symbol. (Not the 3-bar
+hamburger menu - but a **real** hamburger!)
+
+    label       QLabel(\U0001F354)
+   
+Using Unicode in text in Qt is dependent on a suitably equipped font being
+available, and chosen (by your Qt program) on the runtime machine.
+
+A very convenient font that includes a wide range of symbols for Windows is 
+'Lucida Sans Unicode' because it has been installed by default for all 
+versions of Windows since Windows 98. To get the widest possible symbol
+support try the open-source Code2000 font. 
+
+You can specify the font from your PySide / PyQt program like this:
+
+    widget = layouts_created.get_element('page')
+    widget.setStyleSheet(""" * { font-family: "Lucida Sans Unicode"; } """)
+    
+(Or more selectively, for a widget lower in the layout hiearchy.)
    
 ## Taking the Input From a File
 

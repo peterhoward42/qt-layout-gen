@@ -41,11 +41,7 @@ class TestUnicodeText(TestCase):
         """)
 
         widget = layouts_created.get_element('page')
-        widget.setStyleSheet("""
-            * {
-            font-size: 36px;
-            }
-        """)
+        widget.setStyleSheet(""" * { font-size: 36px; } """)
         widget.show()
         qApp.exec_()
 
