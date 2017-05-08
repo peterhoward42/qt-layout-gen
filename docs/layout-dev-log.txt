@@ -1,5 +1,7 @@
 *  Revisit mockup to showcase what is supported
 o  Start working up
+    o  Do footer
+    o  It has to look perfect to wash
 
 o  Laters
 o  Quality

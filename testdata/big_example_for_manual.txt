@@ -36,6 +36,33 @@ page                          QWidget
           custom_label        QLabel(Custom:)
           custom_btn          QPushButton(Scheme 1 \u25BC)
           left_justify        QSpacerItem
-    main_area                 QLabel(main area)
+    main_area                 QHBoxLayout
+      left                    QVBoxLayout
+        top_box               QGroupBox
+          layout              QVBoxLayout
+            a                 QLabel(TCP)
+            b                 QLabel(UDP)
+            c                 QLabel(SMTP)
+            d                 QLabel(POP3)
+        bottom_box            QGroupBox
+          layout              QVBoxLayout
+            a                 QLabel(High Pass)
+            b                 QLabel(Low Pass)
+            c                 QLabel(Band Pass)
+      middle                  QTabWidget
+        splitter              QSplitter
+          left_split          QGroupBox(Adjustable Left)
+            layout            QVBoxLayout
+              text_edit       QTextEdit(Type something on the left...)
+          right_split         QGroupBox(Adjustable Right)
+            layout            QVBoxLayout
+              text_edit       QTextEdit(Type something on the right...)
+      right                   QGroupBox(Mode)
+        layout                QVBoxLayout
+          a                   QPushButton(Share)
+          b                   QPushButton(Dump)
+          c                   QPushButton(Load)
+          d                   QPushButton(Snap)
+          e                   QPushButton(Hide)
 
     footer                    QLabel(footer)
