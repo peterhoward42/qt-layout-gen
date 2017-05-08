@@ -18,6 +18,7 @@ o  Decide what lessons learned
         *  Manual
             *  Restructure special case narrative
     *  Unicode symbols would be so nice
+o  A constant monitor?
 
 o  Update docco to suit lessons learned at bottom
 o  Revisit mockup to showcase what is supported
