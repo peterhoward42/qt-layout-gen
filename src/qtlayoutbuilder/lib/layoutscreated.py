@@ -1,5 +1,7 @@
 from collections import OrderedDict
 
+from PySide.QtGui import QWidget
+
 from qtlayoutbuilder.api.layouterror import LayoutError
 
 

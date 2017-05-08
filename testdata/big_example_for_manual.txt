@@ -1,68 +1,72 @@
 # This file has been automatically re-formatted.
 # Previous versions can be found here:
-# C:\Users\phoward\AppData\Local\qtlayoutbuilder
+# C:\Users\Peter.Howard\AppData\Local\python\qtlayoutbuilder
 ##
-page                          QWidget
-  layout                      QVBoxLayout
-    title_strip               QHBoxLayout
-      left_space              QSpacerItem
-      title                   QLabel(Nonsense GUI)
-      right_space             QSpacerItem
-    settings                  QWidget
-      layout                  QVBoxLayout
-        top_row               QHBoxLayout
-          source              QLabel(Source:)
-          summary             QGroupBox
-            layout            QVBoxLayout
-              label           QLabel(URL: http://www.foo.bar, earliest: 2015, price limit: $99)
-          start_btn           QToolButton(\u2606)
-          menu_btn            QToolButton(\u2630)
-          stretch             QSpacerItem
-          btn_box             QGroupBox
-            layout            QHBoxLayout
-              cross_btn       QLabel(\u2718)
-              pencil_btn      QLabel(\u270E)
-        slider_row            QHBoxLayout
-          jingle              QLabel(\u266b)
-          slider              QSlider
-        settings_bot_row      QHBoxLayout
-          display_label       QLabel(Display:)
-          layout              QHBoxLayout
-            left_arrow        QLabel(\u25C0)
-            page_btn          QPushButton(Page 42)
-            right_arrow       QLabel(\u25B6)
-          range_label         QLabel(Range:)
-          range_btn           QPushButton(0x0000 to 0x00FF \u25BC)
-          custom_label        QLabel(Custom:)
-          custom_btn          QPushButton(Scheme 1 \u25BC)
-          left_justify        QSpacerItem
-    main_area                 QHBoxLayout
-      left                    QVBoxLayout
-        top_box               QGroupBox
-          layout              QVBoxLayout
-            a                 QLabel(TCP)
-            b                 QLabel(UDP)
-            c                 QLabel(SMTP)
-            d                 QLabel(POP3)
-        bottom_box            QGroupBox
-          layout              QVBoxLayout
-            a                 QLabel(High Pass)
-            b                 QLabel(Low Pass)
-            c                 QLabel(Band Pass)
-      middle                  QTabWidget
-        splitter              QSplitter
-          left_split          QGroupBox(Adjustable Left)
-            layout            QVBoxLayout
-              text_edit       QTextEdit(Type something on the left...)
-          right_split         QGroupBox(Adjustable Right)
-            layout            QVBoxLayout
-              text_edit       QTextEdit(Type something on the right...)
-      right                   QGroupBox(Mode)
-        layout                QVBoxLayout
-          a                   QPushButton(Share)
-          b                   QPushButton(Dump)
-          c                   QPushButton(Load)
-          d                   QPushButton(Snap)
-          e                   QPushButton(Hide)
-
-    footer                    QLabel(footer)
+page                           QWidget
+  layout                       QVBoxLayout
+    title_strip                QHBoxLayout
+      left_space               QSpacerItem
+      title                    QLabel(<h1>Nonsense GUI</h1>)
+      right_space              QSpacerItem
+    settings                   QWidget
+      layout                   QVBoxLayout
+        top_row                QHBoxLayout
+          source               QLabel(<h3>Source:</h3)
+          summary              QGroupBox
+            layout             QVBoxLayout
+              label            QLabel(URL: http://www.foo.bar, earliest: 2015, price limit: $99)
+          star_btn             QToolButton(\u2606)
+          menu_btn             QToolButton(\u2630)
+          stretch              QSpacerItem
+          btn_box              QGroupBox
+            layout             QHBoxLayout
+              cross_btn        QLabel(<font size=7>\u2718</font>)
+              pencil_btn       QLabel(<font size=7>\u270E</font>)
+        slider_row             QHBoxLayout
+          jingle               QLabel(\u266b)
+          slider               QSlider
+        settings_bot_row       QHBoxLayout
+          display_label        QLabel(Display:)
+          layout               QHBoxLayout
+            left_arrow         QLabel(\u25C0)
+            page_btn           QPushButton(Page 42)
+            right_arrow        QLabel(\u25B6)
+          range_label          QLabel(Range:)
+          range_btn            QPushButton(0x0000 to 0x00FF \u25BC)
+          custom_label         QLabel(Custom:)
+          custom_btn           QPushButton(Scheme 1 \u25BC)
+          left_justify         QSpacerItem
+    main_area                  QHBoxLayout
+      left                     QVBoxLayout
+        top_box                QGroupBox
+          layout               QVBoxLayout
+            a                  QLabel(TCP)
+            b                  QLabel(UDP)
+            c                  QLabel(SMTP)
+            d                  QLabel(POP3)
+        bottom_box             QGroupBox
+          layout               QVBoxLayout
+            a                  QLabel(High Pass)
+            b                  QLabel(Low Pass)
+            c                  QLabel(Band Pass)
+      middle                   QTabWidget
+        widget1                QWidget
+          layout               QVBoxLayout
+            splitter           QSplitter
+              left_split       QTextEdit(editor on the left ... type something)
+              right_split      QTextEdit(editor on the right... type something)
+        widget2                QWidget
+        widget3                QWidget
+      right                    QGroupBox(Mode)
+        layout                 QVBoxLayout
+          a                    QPushButton(Share)
+          b                    QPushButton(Dump)
+          c                    QPushButton(Load)
+          d                    QPushButton(Snap)
+          e                    QPushButton(Hide)
+    footer                     QHBoxLayout
+      about                    QLabel(<u><font color=blue>About</font></u>)
+      contact                  QLabel(Contact)
+      careers                  QLabel(Careers)
+      investors                QLabel(Investors)
+      stretch                  QSpacerItem

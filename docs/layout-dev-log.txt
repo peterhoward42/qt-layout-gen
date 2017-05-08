@@ -1,6 +1,5 @@
 *  Revisit mockup to showcase what is supported
-o  A moniter?
-    o  Try new api watch fn
+o  font etc inline?
 
 
 o  Start working up
