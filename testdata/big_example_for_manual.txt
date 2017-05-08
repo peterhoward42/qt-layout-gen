@@ -1,0 +1,41 @@
+# This file has been automatically re-formatted.
+# Previous versions can be found here:
+# C:\Users\phoward\AppData\Local\qtlayoutbuilder
+##
+page                          QWidget
+  layout                      QVBoxLayout
+    title_strip               QHBoxLayout
+      left_space              QSpacerItem
+      title                   QLabel(Nonsense GUI)
+      right_space             QSpacerItem
+    settings                  QWidget
+      layout                  QVBoxLayout
+        top_row               QHBoxLayout
+          source              QLabel(Source:)
+          summary             QGroupBox
+            layout            QVBoxLayout
+              label           QLabel(URL: http://www.foo.bar, earliest: 2015, price limit: $99)
+          start_btn           QToolButton(\u2606)
+          menu_btn            QToolButton(\u2630)
+          stretch             QSpacerItem
+          btn_box             QGroupBox
+            layout            QHBoxLayout
+              cross_btn       QLabel(\u2718)
+              pencil_btn      QLabel(\u270E)
+        slider_row            QHBoxLayout
+          jingle              QLabel(\u266b)
+          slider              QSlider
+        settings_bot_row      QHBoxLayout
+          display_label       QLabel(Display:)
+          layout              QHBoxLayout
+            left_arrow        QLabel(\u25C0)
+            page_btn          QPushButton(Page 42)
+            right_arrow       QLabel(\u25B6)
+          range_label         QLabel(Range:)
+          range_btn           QPushButton(0x0000 to 0x00FF \u25BC)
+          custom_label        QLabel(Custom:)
+          custom_btn          QPushButton(Scheme 1 \u25BC)
+          left_justify        QSpacerItem
+    main_area                 QLabel(main area)
+
+    footer                    QLabel(footer)

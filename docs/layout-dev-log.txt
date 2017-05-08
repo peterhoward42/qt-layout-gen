@@ -1,26 +1,5 @@
-*  Reboot with new contract
-*  Go back to integrate with api and get that working
-*  Ditch all the redundant lib stuff
-*  Any redundant files / code?
-*  Get ALL tests working
-*  Resume working up contract
-*  No keywords
-*  Experimental usage / lessons learned
-o  Decide what lessons learned
-    *  Set layout on qlabel - just caution
-    *  Treat overwriting of path as an error.
-    *  Add QSpacerItem(0,0)
-    *  QComboBox would work if we added addItem(text) - no ditch
-    *  Scroll area may need resize child? and similar exceptions.
-    *  QSlider, auto set orientation to horiz, test, and explain
-        *  Failing test
-        *  Passing test
-        *  Manual
-            *  Restructure special case narrative
-    *  Unicode symbols would be so nice
-
-o  Update docco to suit lessons learned at bottom
-o  Revisit mockup to showcase what is supported
+*  Revisit mockup to showcase what is supported
+o  Start working up
 
 o  Laters
 o  Quality
@@ -55,22 +34,6 @@ o  Make examples as proper tests incl name and folder
 
         o  tests that test errors by catching exceptions should throw exception if not thrown
         o  80 columns and '\n'.join... idiom
-        o  example formats to error messages
         o  ditch _ classes convention
-        o  cope with group boxes
-            o  first class
-            o  examples
-            o  add text to
         o  beautify
         o  no warnings
-        o  real world try
-
-                try:
-            app = QApplication([])
-            kk
-        except RuntimeError:
-            pass # Singleton already existso  docco
-
------------------------------------------------------------------------------
-List of widgets
------------------------------------------------------------------------------
