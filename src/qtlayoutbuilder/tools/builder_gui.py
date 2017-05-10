@@ -42,20 +42,20 @@ class BuilderGui(QObject):
 
         self._layouts = self._make_gui()
 
-        self._layouts.get_element(
+        self._layouts.at(
             'main_page.layout.path_controls.path').setText(self._input_path)
 
-        self._layouts.get_element(
+        self._layouts.at(
             'main_page.layout.path_controls.change_btn').clicked.connect(
             self._handle_change_path)
-        self._layouts.get_element(
+        self._layouts.at(
             'main_page.layout.main_btns.build_btn').clicked.connect(
             self._handle_build)
-        self._layouts.get_element(
+        self._layouts.at(
             'main_page.layout.main_btns.format_btn').clicked.connect(
             self._handle_reformat)
 
-        self._layouts.get_element('main_page').show()
+        self._layouts.at('main_page').show()
 
     def _make_gui(self):
         layouts = build_from_multi_line_string("""
@@ -76,18 +76,18 @@ class BuilderGui(QObject):
             None, 'Input file', self._input_path, 'Text files (*.txt)')
         self._input_path = path
         self._settings.setValue(_LAST_KNOWN, self._input_path)
-        self._layouts.get_element('foo').setText(self._input_path)
+        self._layouts.at('foo').setText(self._input_path)
 
     def _handle_build(self):
         try:
             users_layouts = build_from_file(
                 self._input_path, auto_format_and_overwrite=False)
         except LayoutError as e:
-            self._layouts.get_element('foo').setText(str(e))
+            self._layouts.at('foo').setText(str(e))
             return
         top_item = users_layouts.get_first_top_level()
         if isinstance(top_item, QLayout):
-            self._users_layouts.get_element('foo').setText(
+            self._users_layouts.at('foo').setText(
                 MultilineString.shift_left("""
                     Your top level item is a QLayout, so I cannot
                     show() it. If you wrap your layout in a QWidget,
@@ -98,20 +98,20 @@ class BuilderGui(QObject):
                 self._last_user_widget_shown.hide()
             self._last_user_widget_shown = top_item
             self._last_user_widget_shown.show()
-            self._users_layouts.get_element('foo').setText('Done')
+            self._users_layouts.at('foo').setText('Done')
 
     def _handle_reformat(self):
         try:
             users_layouts = build_from_file(
                 self._input_path, auto_format_and_overwrite=True)
-            self._users_layouts.get_element('foo').setText(
+            self._users_layouts.at('foo').setText(
                 MultilineString.shift_left("""
                     Your input file has been reformatted and overwritten.
                     You may need to reload it to see the changes in your
                     editor.
                 """))
         except LayoutError as e:
-            self._layouts.get_element('foo').setText(str(e))
+            self._layouts.at('foo').setText(str(e))
             return
 
     def _last_known_input_file(self):

@@ -193,7 +193,7 @@ class TestBuilder(TestCase):
               layout    QVBoxLayout
         """
         layouts_created = Builder.build(input, 'unit test provenenance')
-        page = layouts_created.get_element('page')
+        page = layouts_created.at('page')
         self.assertTrue(isinstance(page, QWidget))
 
     def test_simplest_possible_creates_parent_child_relations(self):
@@ -202,7 +202,7 @@ class TestBuilder(TestCase):
               layout    QVBoxLayout
         """
         layouts_created = Builder.build(input, 'unit test provenenance')
-        page = layouts_created.get_element('page')
+        page = layouts_created.at('page')
         self.assertTrue(isinstance(page.layout(), QVBoxLayout))
 
     def test_sibling_child_additions_work(self):
@@ -220,7 +220,7 @@ class TestBuilder(TestCase):
             layout.b    QLabel
             layout.c    QLabel
         """)
-        layout = layouts_created.get_element('layout')
+        layout = layouts_created.at('layout')
         self.assertEqual(layout.count(), 3)
 
     def test_multi_level_descent_works(self):
@@ -266,7 +266,7 @@ class TestBuilder(TestCase):
             page.layout.c                  QLabel
         """)
         self.assertEqual(dumped, expected)
-        layout = layouts_created.get_element('page.layout')
+        layout = layouts_created.at('page.layout')
         self.assertEqual(layout.count(), 4)
 
     def test_more_than_one_top_level_object_works(self):
@@ -285,7 +285,7 @@ class TestBuilder(TestCase):
             page2.layout    QVBoxLayout
         """)
         self.assertEqual(dumped, expected)
-        widget = layouts_created.get_element('page2')
+        widget = layouts_created.at('page2')
         self.assertTrue(isinstance(widget.layout(), QVBoxLayout))
 
     def test_adding_text_unicode_decode_works(self):
@@ -295,7 +295,7 @@ class TestBuilder(TestCase):
                 label       QLabel(\u25c0)
         """
         layouts_created = Builder.build(input, 'unit test provenenance')
-        label = layouts_created.get_element('page.layout.label')
+        label = layouts_created.at('page.layout.label')
         txt = label.text()
         self.assertEqual(txt, u'\u25c0')
 
@@ -324,7 +324,7 @@ class TestBuilder(TestCase):
             label       QLabel(hello)
         """
         layouts_created = Builder.build(input, 'unit test provenenance')
-        widget = layouts_created.get_element('label')
+        widget = layouts_created.at('label')
         self.assertEqual(widget.text(), 'hello')
 
     def test_adding_text_works_using_set_title(self):
@@ -332,7 +332,7 @@ class TestBuilder(TestCase):
             group       QGroupBox(hello)
         """
         layouts_created = Builder.build(input, 'unit test provenenance')
-        widget = layouts_created.get_element('group')
+        widget = layouts_created.at('group')
         self.assertEqual(widget.title(), 'hello')
 
 

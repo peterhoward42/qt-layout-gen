@@ -29,7 +29,7 @@ class TestBigExampleForManual(TestCase):
         for w in qwords:
             print w
 
-        widget = layouts_created.get_element('page')
+        widget = layouts_created.at('page')
         widget.show()
 
-        qApp.exec_()
+        #qApp.exec_()

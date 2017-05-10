@@ -36,7 +36,7 @@ class TestApiBasics(TestCase):
                 bar         QPushButton
         """
         layouts_created = build_from_multi_line_string(input)
-        widget = layouts_created.get_element('my_page')
+        widget = layouts_created.at('my_page')
         widget.show()
         #qApp.exec_()
 
@@ -45,7 +45,7 @@ class TestApiBasics(TestCase):
         file_path = os.path.abspath(
             os.path.join(__file__, "../../../../testdata/tiny_example.txt"))
         layouts_created = build_from_file(file_path)
-        widget = layouts_created.get_element('my_page')
+        widget = layouts_created.at('my_page')
         widget.show()
         #qApp.exec_()
 

@@ -12,7 +12,7 @@ class LayoutsCreated(object):
         # (A level-two item)
         self._elements = OrderedDict()
 
-    def get_element(self, path):
+    def at(self, path):
         element = self._elements.get(path, None)
         if element is None:
             raise LayoutError("""

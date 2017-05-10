@@ -40,8 +40,8 @@ class TestUnicodeText(TestCase):
                 label1  QLabel(Press \u23ce when done.)
         """)
 
-        widget = layouts_created.get_element('page')
+        widget = layouts_created.at('page')
         widget.setStyleSheet(""" * { font-size: 36px; } """)
         widget.show()
-        qApp.exec_()
+        #qApp.exec_()
 

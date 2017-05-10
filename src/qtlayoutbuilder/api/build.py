@@ -4,7 +4,6 @@ import time
 
 from os.path import exists
 
-from qtlayoutbuilder.api.layouterror import LayoutError
 from qtlayoutbuilder.lib import file_utils
 from qtlayoutbuilder.lib.builder import Builder
 from qtlayoutbuilder.lib.original_file_rewriter import OriginalFileReWriter
@@ -57,14 +56,14 @@ class LayoutsCreatedAccessor(object):
         # Provide a LayoutsCreated object.
         self._impl = layouts_created
 
-    def get_element(self, path):
+    def at(self, path):
         """
         Access the items created like this: elements['my_page.right_btn']
         :param path: The dot-delimitted path of item you want.
         :raises LayoutError:
         :return: The QLayout or QWidget at that position in the hierarchy.
         """
-        return self._impl.get_element(path)
+        return self._impl.at(path)
 
     def first_top_level_item(self):
         return self._impl.first_top_level_item()

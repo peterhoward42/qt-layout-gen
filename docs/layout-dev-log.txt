@@ -1,3 +1,10 @@
+o  Accept partial path
+    o  Refactor to shorter name
+    o  Could it be dict notation to be shorter to call?
+    o  Make a failing test
+    o  TDD
+    o  Document
+    o  See which other calls to get_element could be changed thus
 o  Go back to watch
     *  change defn to contents differ not time
     o  make as gui prog with show or reformat buttons, no polling
