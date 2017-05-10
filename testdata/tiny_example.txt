@@ -1,6 +1,6 @@
 # This file has been automatically re-formatted.
 # Previous versions can be found here:
-# C:\Users\Peter.Howard\AppData\Local\python\qtlayoutbuilder
+# C:\Users\phoward\AppData\Local\qtlayoutbuilder
 ##
 my_page       QWidget
   layout      QVBoxLayout

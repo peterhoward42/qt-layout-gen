@@ -1,4 +1,23 @@
 o  Go back to watch
+    *  change defn to contents differ not time
+    o  make as gui prog with show or reformat buttons, no polling
+        *  wireframe
+        *  code again from scratch
+        o  get basics working
+        o  tooltips
+        o  mature uxp
+            o  file dlg when quit
+            o  all error handling
+            o  posn of widget
+
+
+
+    o  test when works
+        o  overwrite tricky
+            *  is overwrite demanding to succeed? = yes
+            o  neither vi nor pycharm alert you to reload file immediately
+        o  position of window and on top
+    o  test when fails
 *  Revisit mockup to showcase what is supported
 o  font etc inline?
 

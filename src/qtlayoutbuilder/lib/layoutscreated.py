@@ -41,6 +41,12 @@ class LayoutsCreated(object):
             """, key)
         self._elements[key] = child_object
 
+    def first_top_level_item(self):
+        if len(self._elements.keys()) == 0:
+            return None
+        key = self._elements.keys()[0]
+        return self._elements[key]
+
     def most_recently_added_at_level(self, level):
         for key in reversed(self._elements.keys()):
             if len(key.split('.')) == level:

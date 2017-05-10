@@ -65,3 +65,6 @@ class LayoutsCreatedAccessor(object):
         :return: The QLayout or QWidget at that position in the hierarchy.
         """
         return self._impl.get_element(path)
+
+    def first_top_level_item(self):
+        return self._impl.first_top_level_item()

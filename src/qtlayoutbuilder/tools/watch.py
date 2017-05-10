@@ -13,11 +13,12 @@ It reports any layout errors that are raised, but keeps monitoring.
 
 import os
 
-from PySide.QtCore import QObject, QThread, QEvent, QCoreApplication
+from PySide.QtCore import QObject, QThread, QEvent, QCoreApplication, QTimer
 from PySide.QtGui import qApp, QApplication, QWidget
 import sys
 
-import qtlayoutbuilder
+
+from qtlayoutbuilder.api.build import build_from_file
 from qtlayoutbuilder.api.layouterror import LayoutError
 
 
@@ -33,23 +34,20 @@ class WatchApp(QObject):
         super(WatchApp, self).__init__()
         self._input_path = self._validate_input_path(cmd_line_args)
         self._top_level_widget = None
+        self._prev_contents = None
 
-        # A separate thread observes when the last-modified date changes on
-        # the input file, and calls back here by posting() a
-        # QEvent(FileMonitor.FILE_CHANGED) back to this class' event handler.
-        # (So that the monitor doesn't block the GUI thread, and all the
-        # GUI code runs back here in the main thread).
-        file_monitor = FileMonitorThread(self, self._input_path)
-        file_monitor.start()
+        self._timer = QTimer()
+        self._timer.timeout.connect(self._timer_callback)
+        self._timer.start(2.0)
 
-    def event(self, event):
-        """
-        Receive the FILE_CHANGED event posted from the monitor thread.
-        """
-        if event.type != FileMonitorThread.FILE_CHANGED:
+    def _timer_callback(self):
+        # Only react when the file contents have changed.
+        new_contents = self._get_file_contents()
+        if new_contents == self._prev_contents:
             return
+        self._prev_contents = new_contents
         try:
-            layout = qtlayoutbuilder.api.build.build_from_file(self._input_path)
+            layout = build_from_file(self._input_path)
         except LayoutError as e:
             print str(e)
             return
@@ -61,7 +59,7 @@ class WatchApp(QObject):
             self._top_level_widget.show()
 
     def _validate_input_path(self, cmd_line_args):
-        if len(cmd_line_args != 2):
+        if len(cmd_line_args) != 2:
             print 'Usage: watch file_path'
         return cmd_line_args[1]
 
@@ -71,39 +69,18 @@ class WatchApp(QObject):
             return item, True
         return None, False
 
-
-class FileMonitorThread(QThread):
-
-    FILE_CHANGED = QEvent.User + 1 # First available non-reserved event type.
-
-    def __init__(self, watch_app, input_path):
-        self._watch_app = watch_app
-        self._input_path = input_path
-
-    def run(self):
-        prev_file_time = None
-        while True:
-            file_time = self._get_file_time()
-            if file_time != prev_file_time:
-                prev_file_time = file_time
-                QCoreApplication.postEvent(
-                    self._watch_app, QEvent(self.FILE_CHANGED))
-            sys.sleep(2.0) # Don't hog CPU.
-
-    def _get_file_time(self):
-        # If the file is being written to right now, it may be locked by
-        # whatever outside party is doing so, which makes getmtime() raise
-        # raise an error.
+    def _get_file_contents(self):
+        # Loop to cope with access errors arising from another process writing
+        # to the file.
         while True:
             try:
-                file_time = os.path.getmtime()
-                return file_time
-            except os.Error as e:
+                with open(self._input_path, 'r') as input_file:
+                    return input_file.read()
+            except IOError as e:
                 continue
-
 
 if __name__ == '__main__':
     QApplication([])
-    WatchApp(sys.argv)
+    app = WatchApp(sys.argv)
     qApp.exec_()
 
