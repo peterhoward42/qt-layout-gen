@@ -1,10 +1,13 @@
 o  Accept partial path
-    o  Refactor to shorter name
-    o  Could it be dict notation to be shorter to call?
-    o  Make a failing test
-    o  TDD
+    *  Refactor to shorter name
+    *  In builder test
+        *  Make and satify test that demands find behaviour
+        *  Make and satify test that checks error when none found
+        *  Make and satify test that checks error when dupes found
+        *  Regression on all tests
     o  Document
     o  See which other calls to get_element could be changed thus
+o  Manual note about rules and error handling
 o  Go back to watch
     *  change defn to contents differ not time
     o  make as gui prog with show or reformat buttons, no polling

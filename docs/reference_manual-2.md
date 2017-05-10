@@ -10,19 +10,19 @@
           layout            QHBoxLayout
             left            QGroupBox(Fruits)
               layout        QVBoxLayout
-                label1      QLabel(Apple)
-                label2      QLabel(Pear)
-                label3      QLabel(Banana)
+                apple       QLabel(Apple)
+                pear        QLabel(Pear)
+                banana      QLabel(Banana)
             middle          QGroupBox(Authors)
               layout        QVBoxLayout
-                label1      QLabel(Dickens)
-                label2      QLabel(Adams)
-                label3      QLabel(Rowling)
+                dickens     QLabel(Dickens)
+                adams       QLabel(Adams)
+                rowling     QLabel(Rowling)
             right_btn       QPushButton(Click me!)
     """
     
     # Access the objects created like this...
-    the_button = layouts.get_element('my_page.layout.right_btn')
+    the_button = layouts.at('right_btn')
     
     app = QApplication()
     layouts.my_page.show()
@@ -33,7 +33,7 @@ This example creates a QWidget (which it refers to as *my_page*), and then sets
 that widget's layout to be a *QHBoxLayout*. Then it populates that layout with 
 three items, which it refers to as *left*, *middle*, and *right_btn*. The item 
 called *left* is specified as QGroupBox, and will have its title set 
-to *Fruits* - by calling *setTitle()* on it. The first item called *label1* 
+to *Fruits* - by calling *setTitle()* on it. The item called *apple* 
 will get the text *Apple*, by calling *setText()* on it.
 
 The example also shows how you can access the objects created afterwards.
@@ -118,6 +118,34 @@ syntax.
 
 All is not lost however - see the later section about *Incomplete 
 Hierarchies* below.
+
+## More on Accessing the Items Created
+You saw earler how you access the items created like this:
+
+    the_button = layouts.at('right_btn')
+   
+But your names do **not** have to be unique (which would be a nuisance). 
+Each item is stored as a path like this:
+
+    my_page.layout.right_btn
+    
+And your search string specifies what the path ends with.
+So if you had both these paths:
+
+    my_page.layout.top.btn1
+    my_page.layout.bottom.btn1
+    
+You could find the second one with:
+
+    layouts.at('top.btn1')
+    
+Or for that matter if you had a very long name like this:
+
+    my_page.layout.extraordinarly_and_frankly_bizarre_name
+    
+You could find it with:
+
+    layouts.at('arre_name')
 
 ## Using Objects you Instantiated Externally
 The builder can incorporate objects you have instantiated somewhere else in 

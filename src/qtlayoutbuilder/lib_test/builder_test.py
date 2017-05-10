@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from PySide.QtGui import QApplication
+from PySide.QtGui import QApplication, QPushButton
 from PySide.QtGui import QVBoxLayout
 from PySide.QtGui import QWidget
 
@@ -187,14 +187,58 @@ class TestBuilder(TestCase):
         """)
         self.assertEqual(dumped, expected)
 
-    def test_simplest_possible_querying_accessor_works(self):
+    def test_querying_accessor_with_fragment_works(self):
         input = """
-            page        QWidget
-              layout    QVBoxLayout
+            layout       QVBoxLayout
+              foo_n1     QLabel
+              foo_n2     QPushButton
+              foo_n3     QTextEdit
         """
         layouts_created = Builder.build(input, 'unit test provenenance')
-        page = layouts_created.at('page')
-        self.assertTrue(isinstance(page, QWidget))
+        found = layouts_created.at('n2')
+        self.assertTrue(isinstance(found, QPushButton))
+
+    def test_querying_accessor_error_msg_for_none_found(self):
+        input = """
+            layout       QVBoxLayout
+              foo_n1     QLabel
+              foo_n2     QPushButton
+              foo_n3     QTextEdit
+        """
+        layouts_created = Builder.build(input, 'unit test provenance')
+        result = raises_layout_error_with_this_message("""
+            No path can be found that ends with <n4>.
+            These are the paths that do exist:
+            
+            layout           QVBoxLayout
+            layout.foo_n1    QLabel
+            layout.foo_n2    QPushButton
+            layout.foo_n3    QTextEdit
+        """,
+            layouts_created.at, 'n4')
+        if not result:
+            self.fail()
+
+    def test_querying_accessor_error_msg_for_duplicates_found(self):
+        input = """
+            layout       QVBoxLayout
+              foo_n1     QLabel
+              foo_n2     QPushButton
+              foo_n3     QTextEdit
+        """
+        layouts_created = Builder.build(input, 'unit test provenance')
+        result = raises_layout_error_with_this_message("""
+            No path can be found that ends with <_n>.
+            These are the paths that do exist:
+            
+            layout           QVBoxLayout
+            layout.foo_n1    QLabel
+            layout.foo_n2    QPushButton
+            layout.foo_n3    QTextEdit
+        """,
+                layouts_created.at, '_n')
+        if not result:
+            self.fail()
 
     def test_simplest_possible_creates_parent_child_relations(self):
         input = """

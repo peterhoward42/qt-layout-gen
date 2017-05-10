@@ -56,14 +56,18 @@ class LayoutsCreatedAccessor(object):
         # Provide a LayoutsCreated object.
         self._impl = layouts_created
 
-    def at(self, path):
+    def at(self, path_ending):
         """
-        Access the items created like this: elements['my_page.right_btn']
-        :param path: The dot-delimitted path of item you want.
+        Find the item with a path that ends with the string provided.
+        
+        The ending can be as short as you like.
+        Raises LayoutError however, if it doesn't resolve to a single item.
+        
+        :param path_ending: The sub string to search with.
         :raises LayoutError:
         :return: The QLayout or QWidget at that position in the hierarchy.
         """
-        return self._impl.at(path)
+        return self._impl.at(path_ending)
 
     def first_top_level_item(self):
         return self._impl.first_top_level_item()

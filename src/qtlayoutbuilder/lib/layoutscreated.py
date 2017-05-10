@@ -12,17 +12,28 @@ class LayoutsCreated(object):
         # (A level-two item)
         self._elements = OrderedDict()
 
-    def at(self, path):
-        element = self._elements.get(path, None)
-        if element is None:
+    def at(self, path_ending):
+        """
+        See doc string in method of the same name in api.build.py
+        """
+        matching_paths = [path for path in self._elements.keys() if
+                         path.endswith(path_ending)]
+        if len(matching_paths) == 0:
             raise LayoutError("""
-                The path you have requested (<%s>) in get_element()
-                does not exist in the layouts created.
-
-                The paths that do exist are these:
+                No path can be found that ends with <%s>.
+                These are the paths that do exist:
+                
                 %s
-            """, (path, self.dump()))
-        return element
+            """, (path_ending, self.dump()))
+        if len(matching_paths) > 1:
+            raise LayoutError("""
+                More than one path exists that ends with <%s>.
+                
+                The first two are:
+                %s
+                %s
+            """, (path_ending, matching_paths.pop(), matching_paths.pop()))
+        return self._elements[matching_paths.pop()]
 
     def register_top_level_object(self, object, name):
         if name in self._elements:
