@@ -7,6 +7,7 @@ o  Go back to watch
         o  tooltips
         o  mature uxp
             o  file dlg when quit
+            o  size of log pane / fixedness
             o  all error handling
             o  posn of widget
 

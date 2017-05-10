@@ -25,6 +25,7 @@ from qtlayoutbuilder.lib.multiline_string_utils import MultilineString
 _ORG = 'PARJI'
 _APP = 'QtLayoutBuilder'
 _LAST_KNOWN = '_lastknown'
+_DEFAULT_PATH = 'no_such_dir/no_such_file.txt'
 
 class BuilderGui(QObject):
     """
@@ -41,18 +42,23 @@ class BuilderGui(QObject):
 
         self._layouts = self._make_gui()
 
-        self.main_window = QMainWindow()
-        self.main_window.setTitle('Layout Builder GUI')
-        self.main_window.setCentralWidget(self._layouts.get_element('foo'))
+        self._layouts.get_element(
+            'main_page.layout.path_controls.path').setText(self._input_path)
 
-        self._layouts.get_element('foo').setText(self._input_path)
+        self._layouts.get_element(
+            'main_page.layout.path_controls.change_btn').clicked.connect(
+            self._handle_change_path)
+        self._layouts.get_element(
+            'main_page.layout.main_btns.build_btn').clicked.connect(
+            self._handle_build)
+        self._layouts.get_element(
+            'main_page.layout.main_btns.format_btn').clicked.connect(
+            self._handle_reformat)
 
-        self._layouts.get_element('foo').clicked.connect(self._handle_change_path)
-        self._layouts.get_element('foo').clicked.connect(self._handle_build)
-        self._layouts.get_element('foo').clicked.connect(self._handle_reformat)
+        self._layouts.get_element('main_page').show()
 
     def _make_gui(self):
-        layouts = build_from_multi_line_string(""")
+        layouts = build_from_multi_line_string("""
             main_page           QWidget
               layout            QVBoxLayout
                 path_controls   QHBoxLayout
@@ -61,17 +67,15 @@ class BuilderGui(QObject):
                 main_btns       QHBoxLayout
                   build_btn     QPushButton(Build)
                   format_btn    QPushButton(Reformat)
-                log_pane        QTextArea
+                log_pane        QTextEdit
         """)
         return layouts
 
     def _handle_change_path(self):
-        dir = os.dirname(self.input_path)
-        fname = os.basename(self.input_path)
         path = QFileDialog.getOpenFileName(
-            self, 'Input file', dir, 'Text files (*.txt)')
+            None, 'Input file', self._input_path, 'Text files (*.txt)')
         self._input_path = path
-        self._settings.setValue(fibble, self._input_path)
+        self._settings.setValue(_LAST_KNOWN, self._input_path)
         self._layouts.get_element('foo').setText(self._input_path)
 
     def _handle_build(self):
@@ -114,7 +118,7 @@ class BuilderGui(QObject):
         last_known = self._settings.value(_LAST_KNOWN)
         if last_known:
             return last_known
-        return bar # splittable default
+        return _DEFAULT_PATH # splittable default
 
 
 
