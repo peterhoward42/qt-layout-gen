@@ -5,7 +5,7 @@ o  Accept partial path
         *  Make and satify test that checks error when none found
         *  Make and satify test that checks error when dupes found
         *  Regression on all tests
-    o  Document
+    *  Document
     o  See which other calls to get_element could be changed thus
 o  Manual note about rules and error handling
 o  Go back to watch
