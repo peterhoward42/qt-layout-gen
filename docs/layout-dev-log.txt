@@ -4,15 +4,27 @@ o  Go back to gui runner
     o  make as gui prog with show or reformat buttons, no polling
         *  wireframe
         *  code again from scratch
-        o  remove remembering path until basics work
-        o  get basics working
-        o  tooltips
+        *  remove remembering path until basics work
+        *  reinstate persisting path
+        *  get basics working
+            *  build when works
+            *  repeated failure
+            *  mix
+        *  tooltips
+        *  reformat
+        o  show user gui below inside the vlayout?
+            o  put stack widget in place with log as perma member, and never
+               seen second widget that says placeholder for user built widgtet.
+            o  init stack to first widget
+            o  whenever want to show log switch to widget one
+            o  whenver want to show user gui switch to widget 2
         o  mature uxp
-            o  file dlg when quit
+            o  layout tune
+            o  sizing
+            o  where show popup
             o  size of log pane / fixedness
-            o  all error handling
-            o  posn of widget
-        o  reinstate persisting path
+            o  styling
+            o  Window style and title
         o  full testing
 
 
