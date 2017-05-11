@@ -119,34 +119,6 @@ syntax.
 All is not lost however - see the later section about *Incomplete 
 Hierarchies* below.
 
-## More on Accessing the Items Created
-You saw earler how you access the items created like this:
-
-    the_button = layouts.at('right_btn')
-   
-But your names do **not** have to be unique (which would be a nuisance). 
-Each item is stored as a path like this:
-
-    my_page.layout.right_btn
-    
-And your search string specifies what the path ends with.
-So if you had both these paths:
-
-    my_page.layout.top.btn1
-    my_page.layout.bottom.btn1
-    
-You could find the second one with:
-
-    layouts.at('top.btn1')
-    
-Or for that matter if you had a very long name like this:
-
-    my_page.layout.extraordinarly_and_frankly_bizarre_name
-    
-You could find it with:
-
-    layouts.at('arre_name')
-
 ## Using Objects you Instantiated Externally
 The builder can incorporate objects you have instantiated somewhere else in 
 your code into the layout hierarchies it makes. This is useful for objects with
@@ -220,7 +192,7 @@ support try the open-source Code2000 font.
 
 You can specify the font from your PySide / PyQt program like this:
 
-    widget = layouts_created.get_element('page')
+    widget = layouts_created.at('page')
     widget.setStyleSheet(""" * { font-family: "Lucida Sans Unicode"; } """)
     
 (Or more selectively, for a widget lower in the layout hiearchy.)
@@ -297,8 +269,8 @@ children and then add them manually afterwards. E.g.
     """
     
     # And then access the objects to finish the job.
-    grid = layouts.get_element('page1.layout')
-    cell = layouts.get_element('cell_widget')
+    grid = layouts.at('layout')
+    cell = layouts.at('cell_widget')
     grid.addWidget(cell, 0, 1)
     
 ## Limitations

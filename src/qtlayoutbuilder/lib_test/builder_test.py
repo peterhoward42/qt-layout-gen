@@ -2,7 +2,6 @@ from unittest import TestCase
 
 from PySide.QtGui import QApplication, QPushButton
 from PySide.QtGui import QVBoxLayout
-from PySide.QtGui import QWidget
 
 from qtlayoutbuilder.lib.builder import Builder
 from qtlayoutbuilder.lib.multiline_string_utils import MultilineString
@@ -129,31 +128,16 @@ class TestBuilder(TestCase):
         if not result:
             self.fail()
 
-    def test_error_message_when_your_overwrite_a_path_in_the_layout_tree(self):
-        # Top level objects must have unique names.
-        input = """
-            foo      QVBoxLayout
-            foo      QGroupBox
-        """
-        result = raises_layout_error_with_this_message("""
-            The top-level name you have given this item (<foo>), has already
-            been used.
-            (This line: <foo      QGroupBox>)
-            (Line number: 2, from unit test provenance)
-            """,
-            Builder.build, input, 'unit test provenance')
-        if not result:
-            self.fail()
-
-        # Child paths must be unique.
+    def test_error_message_when_name_is_not_unique(self):
+        # Names must be unique.
         input = """
             foo      QVBoxLayout
               bar    QGroupBox
               bar    QLabel
         """
         result = raises_layout_error_with_this_message("""
-            Each child you create for an object must have a unique name.
-            You are duplicating the child name in this path (<foo.bar>).
+            The name you have given this item (<bar>), has already
+            been used.
             (This line: <  bar    QLabel>)
             (Line number: 3, from unit test provenance)
             """,
@@ -187,7 +171,7 @@ class TestBuilder(TestCase):
         """)
         self.assertEqual(dumped, expected)
 
-    def test_querying_accessor_with_fragment_works(self):
+    def test_querying_accessor_normal_working(self):
         input = """
             layout       QVBoxLayout
               foo_n1     QLabel
@@ -195,48 +179,27 @@ class TestBuilder(TestCase):
               foo_n3     QTextEdit
         """
         layouts_created = Builder.build(input, 'unit test provenenance')
-        found = layouts_created.at('n2')
+        found = layouts_created.at('foo_n2')
         self.assertTrue(isinstance(found, QPushButton))
 
     def test_querying_accessor_error_msg_for_none_found(self):
         input = """
             layout       QVBoxLayout
-              foo_n1     QLabel
-              foo_n2     QPushButton
-              foo_n3     QTextEdit
+              foo        QLabel
+              bar        QPushButton
+              baz        QTextEdit
         """
         layouts_created = Builder.build(input, 'unit test provenance')
         result = raises_layout_error_with_this_message("""
-            No path can be found that ends with <n4>.
+            No path can be found that ends with <harry>.
             These are the paths that do exist:
             
-            layout           QVBoxLayout
-            layout.foo_n1    QLabel
-            layout.foo_n2    QPushButton
-            layout.foo_n3    QTextEdit
+            layout        QVBoxLayout
+            layout.foo    QLabel
+            layout.bar    QPushButton
+            layout.baz    QTextEdit
         """,
-            layouts_created.at, 'n4')
-        if not result:
-            self.fail()
-
-    def test_querying_accessor_error_msg_for_duplicates_found(self):
-        input = """
-            layout       QVBoxLayout
-              foo_n1     QLabel
-              foo_n2     QPushButton
-              foo_n3     QTextEdit
-        """
-        layouts_created = Builder.build(input, 'unit test provenance')
-        result = raises_layout_error_with_this_message("""
-            No path can be found that ends with <_n>.
-            These are the paths that do exist:
-            
-            layout           QVBoxLayout
-            layout.foo_n1    QLabel
-            layout.foo_n2    QPushButton
-            layout.foo_n3    QTextEdit
-        """,
-                layouts_created.at, '_n')
+            layouts_created.at, 'harry')
         if not result:
             self.fail()
 
@@ -288,45 +251,45 @@ class TestBuilder(TestCase):
 
     def test_multi_level_descent_and_ascent_works(self):
         input = """
-            page          QWidget
-              layout      QVBoxLayout
-                a         QLabel
-                b         QLabel
-                fred      QWidget
-                  layout  QHBoxLayout
-                    lbl   QLabel
-                c         QLabel
+            page           QWidget
+              vlayout      QVBoxLayout
+                a          QLabel
+                b          QLabel
+                fred       QWidget
+                  hlayout  QHBoxLayout
+                    lbl    QLabel
+                c          QLabel
         """
         layouts_created = Builder.build(input, 'unit test provenenance')
         dumped = MultilineString.normalise(layouts_created.dump())
         expected = MultilineString.normalise("""
-            page                           QWidget
-            page.layout                    QVBoxLayout
-            page.layout.a                  QLabel
-            page.layout.b                  QLabel
-            page.layout.fred               QWidget
-            page.layout.fred.layout        QHBoxLayout
-            page.layout.fred.layout.lbl    QLabel
-            page.layout.c                  QLabel
+            page                             QWidget
+            page.vlayout                     QVBoxLayout
+            page.vlayout.a                   QLabel
+            page.vlayout.b                   QLabel
+            page.vlayout.fred                QWidget
+            page.vlayout.fred.hlayout        QHBoxLayout
+            page.vlayout.fred.hlayout.lbl    QLabel
+            page.vlayout.c                   QLabel
         """)
         self.assertEqual(dumped, expected)
-        layout = layouts_created.at('page.layout')
+        layout = layouts_created.at('vlayout')
         self.assertEqual(layout.count(), 4)
 
     def test_more_than_one_top_level_object_works(self):
         input = """
-            page1         QWidget
-              layout      QVBoxLayout
-            page2         QWidget
-              layout      QVBoxLayout
+            page1          QWidget
+              layout1      QVBoxLayout
+            page2          QWidget
+              layout2      QVBoxLayout
         """
         layouts_created = Builder.build(input, 'unit test provenenance')
         dumped = MultilineString.normalise(layouts_created.dump())
         expected = MultilineString.normalise("""
-            page1           QWidget
-            page1.layout    QVBoxLayout
-            page2           QWidget
-            page2.layout    QVBoxLayout
+            page1            QWidget
+            page1.layout1    QVBoxLayout
+            page2            QWidget
+            page2.layout2    QVBoxLayout
         """)
         self.assertEqual(dumped, expected)
         widget = layouts_created.at('page2')
@@ -339,7 +302,7 @@ class TestBuilder(TestCase):
                 label       QLabel(\u25c0)
         """
         layouts_created = Builder.build(input, 'unit test provenenance')
-        label = layouts_created.at('page.layout.label')
+        label = layouts_created.at('label')
         txt = label.text()
         self.assertEqual(txt, u'\u25c0')
 

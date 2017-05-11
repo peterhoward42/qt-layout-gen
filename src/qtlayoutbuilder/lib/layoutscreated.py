@@ -12,19 +12,23 @@ class LayoutsCreated(object):
         # (A level-two item)
         self._elements = OrderedDict()
 
-    def at(self, path_ending):
+    def at(self, name):
         """
-        See doc string in method of the same name in api.build.py
+        Find the item with the given name.
+        
+        :param name: The name to search for.
+        :raises LayoutError:
+        :return: The QLayout or QWidget at that position in the hierarchy.
         """
         matching_paths = [path for path in self._elements.keys() if
-                         path.endswith(path_ending)]
+                         self._name_segment(path) == name]
         if len(matching_paths) == 0:
             raise LayoutError("""
                 No path can be found that ends with <%s>.
                 These are the paths that do exist:
                 
                 %s
-            """, (path_ending, self.dump()))
+            """, (name, self.dump()))
         if len(matching_paths) > 1:
             raise LayoutError("""
                 More than one path exists that ends with <%s>.
@@ -32,24 +36,24 @@ class LayoutsCreated(object):
                 The first two are:
                 %s
                 %s
-            """, (path_ending, matching_paths.pop(), matching_paths.pop()))
+            """, (name, matching_paths.pop(), matching_paths.pop()))
         return self._elements[matching_paths.pop()]
 
     def register_top_level_object(self, object, name):
-        if name in self._elements:
+        if name in self._all_names():
             raise LayoutError("""
-                The top-level name you have given this item (<%s>), has already
+                The name you have given this item (<%s>), has already
                 been used.
             """, name)
         self._elements[name] = object
 
     def register_child(self, child_object, parent_path, child_name):
-        key = parent_path + '.' + child_name
-        if key in self._elements:
+        if child_name in self._all_names():
             raise LayoutError("""
-                Each child you create for an object must have a unique name.
-                You are duplicating the child name in this path (<%s>).
-            """, key)
+                The name you have given this item (<%s>), has already
+                been used.
+            """, child_name)
+        key = parent_path + '.' + child_name
         self._elements[key] = child_object
 
     def first_top_level_item(self):
@@ -83,3 +87,12 @@ class LayoutsCreated(object):
             lines.append(line)
         return '\n'.join(lines)
 
+    #------------------------------------------------------------------------
+    # Private below
+
+    def _all_names(self):
+        names = [self._name_segment(path) for path in self._elements.keys()]
+        return names
+
+    def _name_segment(self, path):
+        return path.split('.').pop()
