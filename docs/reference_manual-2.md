@@ -139,7 +139,7 @@ or an attribute called *my_widget*. For example:
 > garbage collector - which knows about every object that exists in your program.
 
 Nb. It raises an error if it finds more than one object that qualifies.
-    
+
 ## Setting the Text on Things
 Anytime you put some text in parenthesis after a type word like this:
 

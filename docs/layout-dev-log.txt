@@ -1,9 +1,10 @@
-o  Manual note about rules and error handling
+*  Manual note about rules and error handling
 o  Go back to gui runner
     *  change defn to contents differ not time
     o  make as gui prog with show or reformat buttons, no polling
         *  wireframe
         *  code again from scratch
+        o  remove remembering path until basics work
         o  get basics working
         o  tooltips
         o  mature uxp
@@ -11,8 +12,13 @@ o  Go back to gui runner
             o  size of log pane / fixedness
             o  all error handling
             o  posn of widget
+        o  reinstate persisting path
+        o  full testing
 
 
+o  Decide what to do about fonts and colours
+o  Finish demo example
+o
 
     o  test when works
         o  overwrite tricky
@@ -23,6 +29,7 @@ o  Go back to gui runner
 *  Revisit mockup to showcase what is supported
 o  font etc inline?
 
+o  k
 
 o  Start working up
     o  Do footer
