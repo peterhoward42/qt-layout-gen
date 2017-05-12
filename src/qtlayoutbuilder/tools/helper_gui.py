@@ -6,9 +6,10 @@ builds the layout and show()s the resultant top level widget.
 
 Plus a 'reformat' button that reformats the input file in-place.
 """
+
 from PySide.QtCore import QObject, QSettings
 from PySide.QtGui import qApp, QApplication, QFileDialog, QLayout, QWidget, \
-    QGridLayout, QVBoxLayout, QLabel
+    QLabel
 
 from qtlayoutbuilder.api.build import build_from_multi_line_string, \
     build_from_file
@@ -19,14 +20,19 @@ _ORG = 'PARJI'
 _APP = 'QtLayoutBuilder'
 _LAST_KNOWN = '_lastknown'
 
-class BuilderGui(QObject):
+class HelperGui(QObject):
     """
-    The watch application. clients should instantiate it, then drop into 
-    the Qt event loop.
+    Speeds up the process of editing and trying out a builder input file.
+    You specify your input file and then press a BUILD button any time you want.
+    
+    Also offers a FORMAT button that automatically reformats your input file,
+    and overwrites it (in place.)
+    
+    Usage: Just run helper_gui.py
     """
 
     def __init__(self):
-        super(BuilderGui, self).__init__()
+        super(HelperGui, self).__init__()
         self._settings = QSettings(_ORG, _APP)
         self._input_path = self._last_known_input_file()
 
@@ -34,11 +40,13 @@ class BuilderGui(QObject):
         self._layouts = self._make_gui()
 
         # Augment this GUI
-        self._set_text_for_path_label()
+        self._layouts.at('main_page').setWindowTitle('Helper GUI')
         self._layouts.at('build_btn').setToolTip(
                 'Run the builder and show() the layout created.')
         self._layouts.at('format_btn').setToolTip(
                 'Reformat (and overwrite the input file')
+
+        self._set_text_for_path_label()
 
         # Connect signals.
         self._layouts.at('path_btn').clicked.connect(self._handle_path)
@@ -53,12 +61,14 @@ class BuilderGui(QObject):
             main_page               QWidget
               page_layout           QVBoxLayout
                 path_controls       QHBoxLayout
-                  path_btn          QToolButton(Change Input File)
+                  build_btn         QPushButton(Build)
                   path_label        QLabel(Choose input file...)
-                  build_btn         QToolButton(Build)
-                  format_btn        QToolButton(Reformat)
-                stack               QStackedWidget
-                  dummy_content     QLabel(Your built widget will show up here)
+                  path_btn          QPushButton(Different File)
+                  format_btn        QPushButton(Reformat)
+                  stretch           QSpacerItem
+                messages            QLabel(Messages show up here)
+                user_content        QGridLayout
+                  
         """)
         return layouts
 
@@ -89,7 +99,7 @@ class BuilderGui(QObject):
         if isinstance(top_item, QLayout):
             wrapper = QWidget(top_item)
             thing_to_show = wrapper
-        self._replace_stack_widget(thing_to_show)
+        self._replace_users_layout(thing_to_show)
 
     def _handle_reformat(self):
         try:
@@ -112,21 +122,15 @@ class BuilderGui(QObject):
         return 'Please choose an input file'
 
     def _set_text_for_path_label(self):
-        txt = '...' + self._input_path[-30:]
+        txt = '<font color="grey">...%s</font>' % self._input_path[-30:]
         self._layouts.at('path_label').setText(txt)
 
-    def _replace_stack_widget(self, new_widget):
-        stack = self._layouts.at('stack')
-        stack.removeWidget(stack.currentWidget())
-        stack.addWidget(new_widget)
-
-    def _show_text_in_stack_widget(self, text):
-        widget = QLabel(text)
-        self._replace_stack_widget(widget)
-
+    def _replace_users_layout(self, thing_to_show):
+        grid = self._layouts.at('user_content')
+        grid.addWidget(thing_to_show, 0, 0)
 
 if __name__ == '__main__':
     QApplication([])
-    app = BuilderGui()
+    app = HelperGui()
     qApp.exec_()
 

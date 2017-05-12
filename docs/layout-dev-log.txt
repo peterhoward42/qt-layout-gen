@@ -2,12 +2,20 @@
 o  Go back to gui runner
     o  make as gui prog with show or reformat buttons, no polling
         o  mature uxp
-            o  naming and titling and main window style
+            *  naming and titling and main window style
+            o  don't use stack use vbox with text area atop and
+            o  user content below
+            o  when writing text just write to log area
+            o  when showing, write done to log area
+            o  content win should shrink to contents
+                o  is this stack?
             o  layout tune
             o  sizing
             o  styling
             o  Window style and title
+            o  make enter be default button
         o  full testing
+            o  short input file path with -30
         o  auto testing for regression
     o  doc
 
