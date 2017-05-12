@@ -7,7 +7,8 @@ builds the layout and show()s the resultant top level widget.
 Plus a 'reformat' button that reformats the input file in-place.
 """
 from PySide.QtCore import QObject, QSettings
-from PySide.QtGui import qApp, QApplication, QFileDialog, QLayout
+from PySide.QtGui import qApp, QApplication, QFileDialog, QLayout, QWidget, \
+    QGridLayout, QVBoxLayout, QLabel
 
 from qtlayoutbuilder.api.build import build_from_multi_line_string, \
     build_from_file
@@ -26,7 +27,6 @@ class BuilderGui(QObject):
 
     def __init__(self):
         super(BuilderGui, self).__init__()
-        self._last_user_widget_shown = None
         self._settings = QSettings(_ORG, _APP)
         self._input_path = self._last_known_input_file()
 
@@ -57,7 +57,8 @@ class BuilderGui(QObject):
                   path_label        QLabel(Choose input file...)
                   build_btn         QToolButton(Build)
                   format_btn        QToolButton(Reformat)
-                log_pane            QTextEdit
+                stack               QStackedWidget
+                  dummy_content     QLabel(Your built widget will show up here)
         """)
         return layouts
 
@@ -71,6 +72,7 @@ class BuilderGui(QObject):
         if not path:
             return
         self._input_path = path
+        # Persist the user's choice across restart.
         self._settings.setValue(_LAST_KNOWN, self._input_path)
         self._set_text_for_path_label()
 
@@ -79,32 +81,27 @@ class BuilderGui(QObject):
             users_layouts = build_from_file(
                 self._input_path, auto_format_and_overwrite=False)
         except LayoutError as e:
-            self._layouts.at('log_pane').setText(str(e))
+            self._show_text_in_stack_widget(str(e))
             return
         top_item = users_layouts.first_top_level_item()
+        if isinstance(top_item, QWidget):
+            thing_to_show = top_item
         if isinstance(top_item, QLayout):
-            self._users_layouts.at('foo').setText(
-                MultilineString.shift_left("""
-                    Your top level item is a QLayout, so I cannot
-                    show() it. If you wrap your layout in a QWidget,
-                    then I can.
-                """))
-        else:
-            self._last_user_widget_shown = top_item
-            self._last_user_widget_shown.show()
-            self._layouts.at('log_pane').setText('Done')
+            wrapper = QWidget(top_item)
+            thing_to_show = wrapper
+        self._replace_stack_widget(thing_to_show)
 
     def _handle_reformat(self):
         try:
             users_layouts = build_from_file(
                 self._input_path, auto_format_and_overwrite=True)
-            self._layouts.at('log_pane').setText(
+            self._show_text_in_stack_widget(
                 MultilineString.shift_left("""
-                    You may need to refresh your editor to see the
+                    Done! - You may need to refresh your editor to see the
                     formatting changes.
                 """))
         except LayoutError as e:
-            self._layouts.at('log_pane').setText(
+            self._show_text_in_stack_widget(
                     "Cannot reformat the file because it won't build.")
             return
 
@@ -118,6 +115,14 @@ class BuilderGui(QObject):
         txt = '...' + self._input_path[-30:]
         self._layouts.at('path_label').setText(txt)
 
+    def _replace_stack_widget(self, new_widget):
+        stack = self._layouts.at('stack')
+        stack.removeWidget(stack.currentWidget())
+        stack.addWidget(new_widget)
+
+    def _show_text_in_stack_widget(self, text):
+        widget = QLabel(text)
+        self._replace_stack_widget(widget)
 
 
 if __name__ == '__main__':

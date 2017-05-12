@@ -1,32 +1,15 @@
 *  Manual note about rules and error handling
 o  Go back to gui runner
-    *  change defn to contents differ not time
     o  make as gui prog with show or reformat buttons, no polling
-        *  wireframe
-        *  code again from scratch
-        *  remove remembering path until basics work
-        *  reinstate persisting path
-        *  get basics working
-            *  build when works
-            *  repeated failure
-            *  mix
-        *  tooltips
-        *  reformat
-        o  show user gui below inside the vlayout?
-            o  put stack widget in place with log as perma member, and never
-               seen second widget that says placeholder for user built widgtet.
-            o  init stack to first widget
-            o  whenever want to show log switch to widget one
-            o  whenver want to show user gui switch to widget 2
         o  mature uxp
+            o  naming and titling and main window style
             o  layout tune
             o  sizing
-            o  where show popup
-            o  size of log pane / fixedness
             o  styling
             o  Window style and title
         o  full testing
-
+        o  auto testing for regression
+    o  doc
 
 o  Decide what to do about fonts and colours
 o  Finish demo example
