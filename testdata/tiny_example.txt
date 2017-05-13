@@ -4,5 +4,5 @@
 ##
 my_page       QWidget
   layout      QVBoxLayout
-    foo       QPushButton(Hello)
+    foo       QPushButton(Hello World)
     bar       QPushButton(World)

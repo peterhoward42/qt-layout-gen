@@ -11,8 +11,10 @@ Usage: Just run helper_gui.py
 """
 import os
 
+import time
 from PySide.QtCore import QObject, QSettings, QTimer, QPoint
-from PySide.QtGui import qApp, QApplication, QFileDialog, QLayout, QWidget
+from PySide.QtGui import qApp, QApplication, QFileDialog, QLayout, QWidget, \
+    QMessageBox
 
 from qtlayoutbuilder.api.build import build_from_multi_line_string, \
     build_from_file
@@ -51,7 +53,7 @@ class HelperGui(QObject):
         # Set up the timed call back to see if the input file has changed.
         self._timer = QTimer()
         self._timer.timeout.connect(self._timer_callback)
-        self._timer.start(1) # milli-seconds
+        self._timer.start(500) # milli-seconds
 
     def _make_gui(self):
         layouts = build_from_multi_line_string("""
@@ -59,7 +61,7 @@ class HelperGui(QObject):
               page_layout           QVBoxLayout
                 path_controls       QHBoxLayout
                   path_label        QLabel(Choose input file...)
-                  path_btn          QPushButton(Different File)
+                  path_btn          QPushButton(Choose File)
                   format_btn        QPushButton(Reformat)
                 log                 QLabel(Messages show up here)
                   
@@ -93,6 +95,11 @@ class HelperGui(QObject):
                     Re format done! - You may need to refresh your editor to 
                     see the formatting changes.
                 """))
+            # We should provide some confirmation and feedback. The log is
+            # not much good because the overwrite stimualtes a fresh build
+            # which almost immediately replaces any log message we put out here.
+            QMessageBox.information(self._layouts.at('main_page'),
+                '', 'Reformat Done\n\n+ Original file overwritten.')
         except LayoutError as e:
             self._layouts.at('log').setText(
                     "Cannot reformat the file because it won't build.")
@@ -106,28 +113,40 @@ class HelperGui(QObject):
     # Utility helpers
 
     def _file_has_been_updated(self):
-        if not os.path.exists(self._input_path):
-            self._layouts.at('log').setText(
-                'Cannot check for file updates because the ' +
-                'specified input file does not exist.')
-            return False
-        new_time = self._get_mtime()
-        if new_time != self._previous_timestamp:
-            self._previous_timestamp = new_time
-            return True
-        return False
+        # Returns True if the input file's timestamp has changed from
+        # last time we got a measurement.
 
-    def _get_mtime(self):
-        # Protect against file appearing to be missing because an editor has
-        # locked it. Perhaps while saving it.
-        return os.path.getmtime(self._input_path)
+        # The call to time.getmtime() will raise exceptions if the file
+        # is temporarily locked (maybe by the editor doing a save), so when
+        # this is so, we just it hasn't changed, and wait for the next timer
+        # tick. This does mean that if the file has really gone missing we
+        # will not detect it, but better to avoid the complexity of two
+        # timers or similar.
+        if self._input_path is None:
+            return False
+        try:
+            mtime = os.path.getmtime(self._input_path)
+            if mtime != self._previous_timestamp:
+                self._previous_timestamp = mtime
+                return True
+        except Exception as e: # Can be IOError or WindowsError or ?
+            return False
 
     def _attempt_build(self):
+        log = self._layouts.at('log')
         try:
             users_layouts = build_from_file(self._input_path,
                     auto_format_and_overwrite = False)
         except LayoutError as e:
-            self._layouts.at('log').setText(str(e))
+            if 'Cannot read this file' in str(e):
+                log.setText(MultilineString.shift_left("""
+                    The builder says it cannot access your input file,
+                    but that is probably because your editor had it locked
+                    at the moment it tried. It will carry on as normal the
+                    next time you save a change.
+                """))
+            else:
+                log.setText(str(e))
             return
         top_item = users_layouts.first_top_level_item()
         if isinstance(top_item, QWidget):
@@ -136,25 +155,29 @@ class HelperGui(QObject):
             wrapper = QWidget(top_item)
             thing_to_show = wrapper
         self._show_built_content(thing_to_show)
-        self._layouts.at('log').setText('Build successful')
+        log.setText('Build successful')
 
     def _last_known_input_file(self):
         last_known = self._settings.value(_LAST_KNOWN)
         if last_known:
             return last_known
-        return 'Please choose an input file'
+        return None
 
     def _set_text_for_path_label(self):
-        txt = '<font color="grey">...%s</font>' % self._input_path[-30:]
-        self._layouts.at('path_label').setText(txt)
+        if self._input_path is None:
+            self._layouts.at('path_label').setText(
+                '<font color="red">Please choose input file</font>'
+            )
+        else:
+            self._layouts.at('path_label').setText(
+                '<font color="grey">...%s</font>' % self._input_path[-30:]
+        )
 
     def _show_built_content(self, thing_to_show):
         if self._last_shown_content is not None:
             self._last_shown_content.hide()
         self._last_shown_content = thing_to_show
-        this_gui = self._layouts.at('main_page')
-        show_at = QPoint(0,0)
-        thing_to_show.move(show_at)
+        thing_to_show.move(QPoint(0,0))
         self._last_shown_content.show()
 
 if __name__ == '__main__':

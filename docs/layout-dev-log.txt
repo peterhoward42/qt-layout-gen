@@ -1,45 +1,11 @@
 *  Manual note about rules and error handling
 o  Go back to gui runner
-    o  Revert to timer
-        *  Comment
-        *  Bring in handler and thread from watch
-        *  Recompose gui
-        *  Put content of handle build in event handler
-        *  Hide old one for now
-        o  Make sure assess of mtime is robust
-            o  Make time v fast to stimulate probs
-                o  Put calls to mtime in loop that tries mtime until succeeds.
-                o  But protect with timeout
-                o  Use timeout to explain problem
-                o  May be able to test with duff initial value for input file
-
-            o  Push time back to sensible
-        o  Showing when changed and not otherwise?
-        o  How deal with no file specified or file missing vs being locked
-        o  What locks and waits must we have
-        o  Finish up
-            o  Don't hide old one should GC
-
-
-
-
-    o  make as gui prog with show or reformat buttons, no polling
-        o  mature uxp
-            *  naming and titling and main window style
-            o  don't use stack use vbox with text area atop and
-            o  user content below
-            o  when writing text just write to log area
-            o  when showing, write done to log area
-            o  content win should shrink to contents
-                o  is this stack?
-            o  layout tune
-            o  sizing
-            o  styling
-            o  Window style and title
-            o  make enter be default button
-        o  full testing
-            o  short input file path with -30
-        o  auto testing for regression
+    *  Revert to timer
+    *  Reformat done message lost cos gets built
+    o  Make attribs of common controls instead of gettingall time
+    o  Prettify
+    o  Robust with paths < 30?
+    o  Tests?
     o  doc
 
 o  Decide what to do about fonts and colours
