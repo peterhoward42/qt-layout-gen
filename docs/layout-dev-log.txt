@@ -1,5 +1,28 @@
 *  Manual note about rules and error handling
 o  Go back to gui runner
+    o  Revert to timer
+        *  Comment
+        *  Bring in handler and thread from watch
+        *  Recompose gui
+        *  Put content of handle build in event handler
+        *  Hide old one for now
+        o  Make sure assess of mtime is robust
+            o  Make time v fast to stimulate probs
+                o  Put calls to mtime in loop that tries mtime until succeeds.
+                o  But protect with timeout
+                o  Use timeout to explain problem
+                o  May be able to test with duff initial value for input file
+
+            o  Push time back to sensible
+        o  Showing when changed and not otherwise?
+        o  How deal with no file specified or file missing vs being locked
+        o  What locks and waits must we have
+        o  Finish up
+            o  Don't hide old one should GC
+
+
+
+
     o  make as gui prog with show or reformat buttons, no polling
         o  mature uxp
             *  naming and titling and main window style
@@ -37,6 +60,12 @@ o  k
 o  Start working up
     o  Do footer
     o  It has to look perfect to wash
+
+
+o  Bugs
+    o  Try this input.
+        o  bar       QPushButton(Worl)d
+        o  thinks qpushbuttond is a type
 
 
 o  Laters
