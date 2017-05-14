@@ -1,7 +1,8 @@
 # Qt Layout Builder - User Manual
 
 ## Table of Contents
-[link text](#abcd)
+- [link text](#abcd)
+- [foo link text](#parent--child-relationships-supported)
 
 ## Getting Started Example
 
