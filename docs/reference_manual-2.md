@@ -10,6 +10,7 @@
 - [Comments](#comments)
 - [Using Objects You Instantiated Externally](#using-objects-you-instantiated-externally)
 - [Incomplete or Multiple Hierarchies](#incomplete-or-multiple-hierarchies)
+- [Instant Feedback During Development](#instant-feedback-during-development)
 - [Limitations](#limitations)
 - [Cautionary Notes](#cautionary-notes)
 
