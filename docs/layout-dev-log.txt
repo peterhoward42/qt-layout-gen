@@ -1,13 +1,13 @@
 *  Manual note about rules and error handling
 *  Go back to gui runner
 o  Decide what to do about fonts and colours
-    o  Simple example to try out some features
+    *  Simple example to try out some features
         *  Choose which and note qt ref page
             *  http://doc.qt.io/qt-4.8/richtext-html-subset.html
             *  Fonts and colors
-            o  <a>
-            o  <img>
     o  Manual
+        o  Got to try an image link first at bottom of manual
+            o  Create image for it look for
 
 o  Finish demo example
     o  Remove style sheets

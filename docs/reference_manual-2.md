@@ -328,3 +328,11 @@ input, like this:
       
 If you end up with layouts that have widgets bizarrely superimposed - this is the 
 likely reason.
+
+# Experiment with linking to images
+
+line before
+
+before line ![Kiku](media/typography.png) after link
+
+next line
