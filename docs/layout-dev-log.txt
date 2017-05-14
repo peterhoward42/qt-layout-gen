@@ -2,10 +2,14 @@
 o  Go back to gui runner
     *  Revert to timer
     *  Reformat done message lost cos gets built
-    o  Make attribs of common controls instead of gettingall time
-    o  Prettify
-    o  Robust with paths < 30?
+    *  Make attribs of common controls instead of gettingall time
+    *  Prettify
     o  Tests?
+      *  Make list of logic
+      *  Decide which are redundant
+      o  design setup
+        o  test setup should terminate any running qapp
+        o  anticipate input files in test data
     o  doc
 
 o  Decide what to do about fonts and colours
@@ -39,6 +43,7 @@ o  Quality
     o  Any modules getting too big or too small?
     o  Comments
     o  PEP8
+    o  PyDoc on api and tools
     o  Manual edit / review
         o  Split into sections
         o  Include pictures
@@ -72,14 +77,21 @@ o  Make examples as proper tests incl name and folder
         o  no warnings
 
 ------------------------------------------------------------------------
-A monitor design
+Gui helper tests
 ------------------------------------------------------------------------
-o  Same entry point would be nice with flag to say keep listening
-o  Could block in a loop waiting for mtime on file to change
-    o  In passive loop output listening...
-o  When stimulated could
-    o  Hide incumbent widget
-    o  Garbage collect incumbent widget
-    o  Run builder and show widget catching exceptions
-    o  Exception prevents attempt to show duff layout
-    o  In catch print to std out what exception was
+explain mainly for regression sweep across python versions, pyqt and pyside,
+and os.
+ones own build created viable artefacts and init behaviour
+timer is repeating
+modified file gets build and shown
+file wont build get error shown
+path label reflects input path and is coloured
+settings lifecycle is used
+skips build with explanation when finds file locked
+copes with layout or widget
+is updated copes with no input file set
+is updated copes says no, catching io exceptions
+reformat does and sends messagebox
+error logged when cannot reformat cos wont build
+paths less than 30
+

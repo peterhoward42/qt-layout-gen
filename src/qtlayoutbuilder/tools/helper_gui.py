@@ -11,7 +11,6 @@ Usage: Just run helper_gui.py
 """
 import os
 
-import time
 from PySide.QtCore import QObject, QSettings, QTimer, QPoint
 from PySide.QtGui import qApp, QApplication, QFileDialog, QLayout, QWidget, \
     QMessageBox
@@ -37,18 +36,25 @@ class HelperGui(QObject):
         # Make this GUI
         self._layouts = self._make_gui()
 
+        # Capture the GUI items we need to interact with programmatically.
+        # (Avoids proliferation of string literals and aids testing).
+        self._main_page = self._layouts.at('main_page')
+        self._format_btn = self._layouts.at('format_btn')
+        self._path_btn = self._layouts.at('path_btn')
+        self._log = self._layouts.at('log')
+        self._path_label = self._layouts.at('path_label')
+
         # Augment this GUI
-        self._layouts.at('main_page').setWindowTitle('Helper GUI')
-        self._layouts.at('format_btn').setToolTip(
-                'Reformat (and overwrite the input file')
+        self._main_page.setWindowTitle('QtLayoutBuilder Helper GUI')
+        self._format_btn.setToolTip('Reformat (and overwrite the input file)')
         self._set_text_for_path_label()
 
         # Connect signals.
-        self._layouts.at('path_btn').clicked.connect(self._handle_path)
-        self._layouts.at('format_btn').clicked.connect(self._handle_reformat)
+        self._path_btn.clicked.connect(self._handle_path)
+        self._format_btn.clicked.connect(self._handle_reformat)
 
         # And show it.
-        self._layouts.at('main_page').show()
+        self._main_page.show()
 
         # Set up the timed call back to see if the input file has changed.
         self._timer = QTimer()
@@ -63,7 +69,9 @@ class HelperGui(QObject):
                   path_label        QLabel(Choose input file...)
                   path_btn          QPushButton(Choose File)
                   format_btn        QPushButton(Reformat)
-                log                 QLabel(Messages show up here)
+                log_groupbox        QGroupBox(Log)
+                  log_layout        QVBoxLayout
+                    log                 QLabel(Messages show up here)
                   
         """)
         return layouts
@@ -73,7 +81,7 @@ class HelperGui(QObject):
     # Event handlers
 
     def _handle_path(self):
-        result = QFileDialog.getOpenFileName(self._layouts.at('main_page'),
+        result = QFileDialog.getOpenFileName(self._main_page,
                 'Choose input file', self._input_path)
         try: # PySide 1.2.4 and who knows which other?
             path, file_type_option_selected = result
@@ -90,19 +98,13 @@ class HelperGui(QObject):
         try:
             users_layouts = build_from_file(
                     self._input_path, auto_format_and_overwrite=True)
-            self._layouts.at('log').setText(
-                    MultilineString.shift_left("""
-                    Re format done! - You may need to refresh your editor to 
-                    see the formatting changes.
-                """))
             # We should provide some confirmation and feedback. The log is
             # not much good because the overwrite stimualtes a fresh build
             # which almost immediately replaces any log message we put out here.
-            QMessageBox.information(self._layouts.at('main_page'),
+            QMessageBox.information(self._main_page,
                 '', 'Reformat Done\n\n+ Original file overwritten.')
         except LayoutError as e:
-            self._layouts.at('log').setText(
-                    "Cannot reformat the file because it won't build.")
+            self._log.setText("Cannot reformat the file because it won't build.")
             return
 
     def _timer_callback(self):
@@ -133,20 +135,19 @@ class HelperGui(QObject):
             return False
 
     def _attempt_build(self):
-        log = self._layouts.at('log')
         try:
             users_layouts = build_from_file(self._input_path,
                     auto_format_and_overwrite = False)
         except LayoutError as e:
             if 'Cannot read this file' in str(e):
-                log.setText(MultilineString.shift_left("""
+                self._log.setText(MultilineString.shift_left("""
                     The builder says it cannot access your input file,
                     but that is probably because your editor had it locked
                     at the moment it tried. It will carry on as normal the
                     next time you save a change.
                 """))
             else:
-                log.setText(str(e))
+                self._log.setText(str(e))
             return
         top_item = users_layouts.first_top_level_item()
         if isinstance(top_item, QWidget):
@@ -155,7 +156,7 @@ class HelperGui(QObject):
             wrapper = QWidget(top_item)
             thing_to_show = wrapper
         self._show_built_content(thing_to_show)
-        log.setText('Build successful')
+        self._log.setText('Build successful')
 
     def _last_known_input_file(self):
         last_known = self._settings.value(_LAST_KNOWN)
@@ -165,11 +166,11 @@ class HelperGui(QObject):
 
     def _set_text_for_path_label(self):
         if self._input_path is None:
-            self._layouts.at('path_label').setText(
+            self._path_label.setText(
                 '<font color="red">Please choose input file</font>'
             )
         else:
-            self._layouts.at('path_label').setText(
+            self._path_label.setText(
                 '<font color="grey">...%s</font>' % self._input_path[-30:]
         )
 
