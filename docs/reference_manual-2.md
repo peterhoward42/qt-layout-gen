@@ -148,18 +148,35 @@ to call setText(), and then with setTitle().
 
 (Good for QLabel, QPushButton, QLineEdit, QGroupBox and possibly other classes).
 
+### Fonts, Colours, and Text Size
+
+Qt let's you control the font, colour and size of your text on widgets like
+QLabel, QPushButton etc, with HTML 4 inline style markup in the call to 
+*setText()* : http://doc.qt.io/qt-4.8/richtext-html-subset.html
+
+![](media/typography.png)
+
+Which means you can simply include your markup in the text you put in parenthesis:
+
+    h1              QLabel(<h1>Heading 1</h1)
+    h2              QLabel(<h2>Heading 2</h2)
+
+
 ### Using Symbols and Icons on Buttons and Labels
 The strings used by QLabels, QPushButtons etc. are Unicode. And Unicode 
-includes a very wide variety of symbols and graphical icons. Like the ones
-described here for example.
+includes a very wide variety of symbols and graphical icons.
+
+![](media/unicode.png)
+
+**Unicode Symbol References:**
 
 https://en.wikipedia.org/wiki/Miscellaneous_Symbols
 
-See also the official reference: http://unicode.org/charts/#symbols 
+http://unicode.org/charts/#symbols 
 
-These typographic symbols render very much more crisply than image-based icons, 
-because of the anti-aliasing of edges implemented by the font designers. They
-also remove the need to manage image resources.
+These typographic symbols render very much more crisply, and scale better than 
+image-based icons, (because of the anti-aliasing of edges built in by the
+font designers. They also remove the need to manage and deploy image resources.
 
 You can include Unicode characters (or more properly *code-points*) in your
 builder input, using the same notation as you would if you were writing a
@@ -180,20 +197,21 @@ hamburger menu - but a **real** hamburger!)
 
     label       QLabel(\U0001F354)
    
-Using Unicode in text in Qt is dependent on a suitably equipped font being
-available, and chosen (by your Qt program) on the runtime machine.
+> Using Unicode in text in Qt is dependent on a suitably equipped font being
+> available on the runtime machine.
 
-A very convenient font that includes a wide range of symbols for Windows is 
-'Lucida Sans Unicode' because it has been installed by default for all 
-versions of Windows since Windows 98. To get the widest possible symbol
-support try the open-source Code2000 font. 
+> A very convenient font that includes a wide range of symbols for Windows is 
+> 'Lucida Sans Unicode' because it has been installed by default for all 
+> versions of Windows since Windows 98. To get the widest possible symbol
+> support try the open-source Code2000 font. 
 
-You can specify the font from your PySide / PyQt program like this:
+You can specify the font from the builder like this:
 
-    widget = layouts_created.at('page')
-    widget.setStyleSheet(""" * { font-family: "Lucida Sans Unicode"; } """)
+    courier         QLabel(<font face="Courier">Courier</font>)
+
     
-(Or more selectively, for a widget lower in the layout hiearchy.)
+Or of course, you can do it programmatically afterwards by calling 
+*setStyleSheet()* on the widget (or parent).
    
 ## Taking the Input From a File
 
@@ -328,11 +346,3 @@ input, like this:
       
 If you end up with layouts that have widgets bizarrely superimposed - this is the 
 likely reason.
-
-# Experiment with linking to images
-
-line before
-
-before line ![Kiku](media/typography.png) after link
-
-next line
