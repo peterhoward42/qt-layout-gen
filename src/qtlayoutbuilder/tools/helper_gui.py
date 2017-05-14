@@ -23,6 +23,7 @@ from qtlayoutbuilder.lib.multiline_string_utils import MultilineString
 _ORG = 'PARJI'
 _APP = 'QtLayoutBuilder'
 _LAST_KNOWN = '_lastknown'
+_POLLING_INTERVAL = 500 # millisec
 
 class HelperGui(QObject):
 
@@ -32,6 +33,8 @@ class HelperGui(QObject):
         self._input_path = self._last_known_input_file()
         self._last_shown_content = None
         self._previous_timestamp = None
+        # Client can inject alternatve file chooser.
+        self._alt_file_chooser = None
 
         # Make this GUI
         self._layouts = self._make_gui()
@@ -59,7 +62,10 @@ class HelperGui(QObject):
         # Set up the timed call back to see if the input file has changed.
         self._timer = QTimer()
         self._timer.timeout.connect(self._timer_callback)
-        self._timer.start(500) # milli-seconds
+        self._timer.start(_POLLING_INTERVAL)
+
+    #-------------------------------------------------------------------------
+    # Private below.
 
     def _make_gui(self):
         layouts = build_from_multi_line_string("""
@@ -81,6 +87,10 @@ class HelperGui(QObject):
     # Event handlers
 
     def _handle_path(self):
+        # Has the client injected an alternative for choosing input files to
+        # popping up the file chooser dialogue? (for unit testing).
+        if self._alt_file_chooser is not None:
+            return self._alt_file_chooser()
         result = QFileDialog.getOpenFileName(self._main_page,
                 'Choose input file', self._input_path)
         try: # PySide 1.2.4 and who knows which other?

@@ -1,5 +1,8 @@
 # Qt Layout Builder - User Manual
 
+## Table of Contents
+[link text](#abcd)
+
 ## Getting Started Example
 
     from PySide.QtGui import QApplication
@@ -119,6 +122,7 @@ syntax.
 All is not lost however - see the later section about *Incomplete 
 Hierarchies* below.
 
+<a name="abcd"></a>
 ## Using Objects you Instantiated Externally
 The builder can incorporate objects you have instantiated somewhere else in 
 your code into the layout hierarchies it makes. This is useful for objects with

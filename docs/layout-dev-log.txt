@@ -4,13 +4,9 @@ o  Go back to gui runner
     *  Reformat done message lost cos gets built
     *  Make attribs of common controls instead of gettingall time
     *  Prettify
-    o  Tests?
-      *  Make list of logic
-      *  Decide which are redundant
-      o  design setup
-        o  test setup should terminate any running qapp
-        o  anticipate input files in test data
     o  doc
+        o  what to say
+        o  where to put it
 
 o  Decide what to do about fonts and colours
 o  Finish demo example
@@ -77,21 +73,13 @@ o  Make examples as proper tests incl name and folder
         o  no warnings
 
 ------------------------------------------------------------------------
-Gui helper tests
+What to say
 ------------------------------------------------------------------------
-explain mainly for regression sweep across python versions, pyqt and pyside,
-and os.
-ones own build created viable artefacts and init behaviour
-timer is repeating
-modified file gets build and shown
-file wont build get error shown
-path label reflects input path and is coloured
-settings lifecycle is used
-skips build with explanation when finds file locked
-copes with layout or widget
-is updated copes with no input file set
-is updated copes says no, catching io exceptions
-reformat does and sends messagebox
-error logged when cannot reformat cos wont build
-paths less than 30
 
+is v useful to instant feedback when editing input files
+about what will happen when you call one of the build methods on it
+have support gui tool to provide this instant feedback - that rebuilds and
+shows your gui in response to each save from your editor
+
+run it like this
+see pic
