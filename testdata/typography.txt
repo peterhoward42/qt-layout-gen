@@ -1,0 +1,24 @@
+# This file has been automatically re-formatted.
+# Previous versions can be found here:
+# C:\Users\Peter.Howard\AppData\Local\python\qtlayoutbuilder
+##
+page                QWidget
+  main_layout       QVBoxLayout
+    std             QLabel(standard)
+    ital            QLabel(<i>Italicised</i>)
+    bold            QLabel(<b>Bold</b>)
+    h1              QLabel(<h1>Heading 1</h1)
+    h2              QLabel(<h2>Heading 2</h2)
+    h3              QLabel(<h3>Heading 3</h3)
+    red             QLabel(<font color="red">Red</font>)
+    blue            QLabel(<font color="blue">Blue</font>)
+    courier         QLabel(<font face="Courier">Courier</font>)
+    times           QLabel(<font face="Courier">Times</font>)
+
+    background      QLabel(<h1 style="background-color:yellow">Background</h1>)
+    before          QLabel(Before HR)
+    horiz           QLabel(<hr>)
+    after           QLabel(After HR)
+
+    list            QLabel(List)
+    ul1             QLabel(<ul> <li>item 1</li> <li>item 2</li> </ul>)

@@ -1,25 +1,24 @@
 *  Manual note about rules and error handling
 *  Go back to gui runner
-
-
 o  Decide what to do about fonts and colours
+    o  Simple example to try out some features
+        *  Choose which and note qt ref page
+            *  http://doc.qt.io/qt-4.8/richtext-html-subset.html
+            *  Fonts and colors
+            o  <a>
+            o  <img>
+    o  Manual
+
 o  Finish demo example
-o
+    o  Remove style sheets
+    o  Decide what typography, links and colors in and where
 
-    o  test when works
-        o  overwrite tricky
-            *  is overwrite demanding to succeed? = yes
-            o  neither vi nor pycharm alert you to reload file immediately
-        o  position of window and on top
-    o  test when fails
-*  Revisit mockup to showcase what is supported
-o  font etc inline?
-
-o  k
-
-o  Start working up
-    o  Do footer
-    o  It has to look perfect to wash
+o  Decide docco taxonomy
+    o  Covering:
+        o  Design aims
+        o  Fonts / colours
+        o  Incremental adoption
+        o  Instant feedback as per nodejs npm start -watch
 
 
 o  Bugs
