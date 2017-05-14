@@ -1,9 +1,18 @@
 # Qt Layout Builder - User Manual
 
-## Table of Contents
 - [Getting Started](#getting-started-example)
+- [The Input Text](#anatomy-of-the-input-text)
 - [Parent Child Relationships Supported](#parent--child-relationships-supported)
-- [Anatomy of the Input Text](#anatomy-of-the-input-text)
+- [Setting the Text on Things](#setting-the-text-on-things)
+- [Taking Input From a File](#taking-the-input-from-a-file)
+- [Auto Formatting](#auto-formatting)
+- [Error Handling](#error-handling)
+- [Comments](#comments)
+- [Using Objects You Instantiated Externally](#using-objects-you-instantiated-externally)
+- [Incomplete or Multiple Hierarchies](#incomplete-or-multiple-hierarchies)
+- [Limitations](#limitations)
+- [Cautionary Notes](#cautionary-notes)
+
 
 ## Getting Started Example
 
@@ -54,10 +63,13 @@ is no significance in the alignment of the *type words*. They are lined up in
 the example solely for readability. (See later section on auto-formatting)
 
 ## Parent / Child Relationships Supported
-The builder implements Qt's existing system for parent child relationships by 
-automatically adding items to layouts; but goes further. As the example shows,
-it can set the layout for a widget, and set the text or title on suitable 
-widgets.
+The builder does more to create parent-child relationships, than 
+just adding things to layouts. It can:
+- Set the layout for a widget.
+- Set the text content on some widgets
+- Add tabs to tab widgets
+- Set the widget for a scroll area
+- Add a spacer item to a Q*BoxLayout
 
 The full capabilities for adding children to parents are as follows:
 
@@ -111,40 +123,19 @@ The builder also calls setWidgetResizable(True) on the QScrollArea.
 (Because they work rather unintuitively otherwise).
 
 ## Omitted Special Cases
-Note there are some parent child relationships that the builder cannot make
-completely automatically for you, because the arguments that must be provided
-to the *'add'* method cannot be guessed by the builder. An example would be
-adding the children to a QGridLayout - where the builder cannot know which
-rows and columns to specify.
+There are some parent child relationships that the builder cannot make
+completely automatically for you, because it can't guess all the parameters
+required by the addition methods. An example would be adding the children 
+to a QGridLayout - where the builder cannot guess which rows and columns to 
+specify.
 
-We could have extended the input file syntax to deal with some of these
-cases - but preferred to preserve the very simple, and quick to learn 
-syntax.
+> We could have extended the input file syntax to deal with some of these
+> cases - but preferred to preserve the very simple, and quick to learn 
+> syntax.
 
 All is not lost however - see the later section about *Incomplete 
 Hierarchies* below.
 
-<a name="abcd"></a>
-## Using Objects you Instantiated Externally
-The builder can incorporate objects you have instantiated somewhere else in 
-your code into the layout hierarchies it makes. This is useful for objects with
-more complex construction needs, and when introducing the builder incrementally
-to existing code.
-
-    my_widget      ?CustomWidget
-    
-This syntax will make the builder introspect your running code to find an object
-of the *CustomWidget* class (or subclass), that you have **already** 
-instantiated in your program and referred to with a variable called *my_widget*, 
-or an attribute called *my_widget*. For example:
-
-    my_widget = CustomWidget(), or
-    something.my_widget = CustomWidget()
-    
-> The builder finds the object you are referring to with the help of Python's 
-> garbage collector - which knows about every object that exists in your program.
-
-Nb. It raises an error if it finds more than one object that qualifies.
 
 ## Setting the Text on Things
 Anytime you put some text in parenthesis after a type word like this:
@@ -245,6 +236,26 @@ The whole of that line will be ignored by the builder.
                             # I am a comment also
           layout            hbox
           
+## Using Objects you Instantiated Externally
+The builder can incorporate objects you have instantiated somewhere else in 
+your code into the layout hierarchies it makes. This is useful for objects with
+more complex construction needs, and when introducing the builder incrementally
+to existing code.
+
+    my_widget      ?CustomWidget
+    
+This syntax will make the builder introspect your running code to find an object
+of the *CustomWidget* class (or subclass), that you have **already** 
+instantiated in your program and referred to with a variable called *my_widget*, 
+or an attribute called *my_widget*. For example:
+
+    my_widget = CustomWidget(), or
+    something.my_widget = CustomWidget()
+    
+> The builder finds the object you are referring to with the help of Python's 
+> garbage collector - which knows about every object that exists in your program.
+
+Nb. It raises an error if it finds more than one object that qualifies.
 ## Incomplete or Multiple Hierarchies
 
 You can build multiple, (unrelated) hierarchies like this:
@@ -278,6 +289,21 @@ children and then add them manually afterwards. E.g.
     grid = layouts.at('layout')
     cell = layouts.at('cell_widget')
     grid.addWidget(cell, 0, 1)
+    
+## Instant Feedback During Development
+It is extremely useful to see instant feedback when you are editing input files
+for the builder; which is what the **tools/helper_gui.py** tool is for.
+
+It monitors every time you (or your editor) saves your input file, and 
+immediately shows you the resultant GUI.
+
+It also has a button to automatically reformat your input file in situ, to save
+you having to bother to line up the right hand side.
+
+**Usage**
+
+    python helper_gui.py
+
     
 ## Limitations
 
