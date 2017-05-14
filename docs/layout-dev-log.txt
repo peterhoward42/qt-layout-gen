@@ -1,12 +1,6 @@
 *  Manual note about rules and error handling
-o  Go back to gui runner
-    *  Revert to timer
-    *  Reformat done message lost cos gets built
-    *  Make attribs of common controls instead of gettingall time
-    *  Prettify
-    o  doc
-        o  what to say
-        o  where to put it
+*  Go back to gui runner
+
 
 o  Decide what to do about fonts and colours
 o  Finish demo example
