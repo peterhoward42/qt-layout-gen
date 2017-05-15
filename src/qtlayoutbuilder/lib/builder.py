@@ -7,28 +7,28 @@ from qtlayoutbuilder.lib.multiline_string_utils import MultilineString
 from qtlayoutbuilder.lib.qobjectmaker import QObjectMaker
 from qtlayoutbuilder.lib.widgetandlayoutfinder import WidgetAndLayoutFinder
 
-class Builder(object):
 
+class Builder(object):
     @classmethod
     def build(cls, one_big_string, provenance):
-        finder = WidgetAndLayoutFinder() # A helper.
-        layouts_created = LayoutsCreated() # Will be populated, then returned.
+        finder = WidgetAndLayoutFinder()  # A helper.
+        layouts_created = LayoutsCreated()  # Will be populated, then returned.
         line_number = 0
         lines = MultilineString.get_as_left_shifted_lines(one_big_string)
         for line in lines:
             line_number += 1
-            cls._process_line(line, finder, layouts_created,
-                    line_number, provenance)
-        BuilderAssertions.assert_layouts_created_is_not_empty(
-                layouts_created, provenance)
+            cls._process_line(line, finder, layouts_created, line_number,
+                    provenance)
+        BuilderAssertions.assert_layouts_created_is_not_empty(layouts_created,
+                provenance)
         return layouts_created
 
     # --------------------------------------------------------
     # Private below
 
     @classmethod
-    def _process_line(
-            cls, line, finder, layouts_created, line_number, provenance):
+    def _process_line(cls, line, finder, layouts_created, line_number,
+            provenance):
         """
         This function exists only to encapsulate the process_line_internals()
         function with exception handling that adds line number and input
@@ -42,7 +42,7 @@ class Builder(object):
                     %s
                     (This line: <%s>)
                     (Line number: %d, from %s)
-                """,  (str(e), line, line_number, provenance))
+                """, (str(e), line, line_number, provenance))
 
     @classmethod
     def _process_line_internals(cls, line, finder, layouts_created):
@@ -50,26 +50,28 @@ class Builder(object):
         The real process line logic.
         """
         is_a_comment, is_blank, indent, name, type_string, parenthesised = \
-            LineParser.parse_line(line)
+            LineParser.parse_line(
+                line)
         if is_a_comment or is_blank:
             return
 
         # Amount of indentation gives us the depth at which this line lives in
         # parent-child hierarchy.
 
-        depth = 1 + indent / 2 # Top level objects have depth=1
-        BuilderAssertions.assert_have_not_skipped_a_level(
-                depth, line, layouts_created)
+        depth = 1 + indent / 2  # Top level objects have depth=1
+        BuilderAssertions.assert_have_not_skipped_a_level(depth, line,
+                layouts_created)
         new_qobject = QObjectMaker(finder).make(name, type_string)
 
         # Add child to parent if required.
         if depth > 1:
-            parent_level = depth -1
+            parent_level = depth - 1
             parent_object, parent_path = \
-                layouts_created.most_recently_added_at_level(parent_level)
+                layouts_created.most_recently_added_at_level(
+                    parent_level)
             ChildAdder.add(new_qobject, name, parent_object)
             layouts_created.register_child(new_qobject, parent_path, name)
-        else: # A top-level object.
+        else:  # A top-level object.
             layouts_created.register_top_level_object(new_qobject, name)
 
         # Finish up by processing any text present in the line in parenthesis.
@@ -85,7 +87,7 @@ class Builder(object):
         # In that case 25c0 is a solid left-pointing arrow.
         try:
             decoded_with_unicode_escapes = parenthesised.decode(
-                'raw_unicode-escape')
+                    'raw_unicode-escape')
         except Exception as e:
             raise LayoutError("""
                 Python raised an exception when the builder tried to

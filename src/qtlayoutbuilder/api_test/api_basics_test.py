@@ -38,16 +38,16 @@ class TestApiBasics(TestCase):
         layouts_created = build_from_multi_line_string(input)
         widget = layouts_created.at('my_page')
         widget.show()
-        #qApp.exec_()
+        # qApp.exec_()
 
     def test_build_from_file(self):
 
         file_path = os.path.abspath(
-            os.path.join(__file__, "../../../../testdata/tiny_example.txt"))
+                os.path.join(__file__, "../../../../testdata/tiny_example.txt"))
         layouts_created = build_from_file(file_path)
         widget = layouts_created.at('my_page')
         widget.show()
-        #qApp.exec_()
+        # qApp.exec_()
 
     def test_reformatted_file_gets_written_to_file_specified(self):
 
@@ -58,8 +58,8 @@ class TestApiBasics(TestCase):
             my_page         QWidget
               layout                QVBoxLayout
         """
-        layouts_created = build_from_multi_line_string(
-            input, auto_format_and_write_to=reformat_location)
+        layouts_created = build_from_multi_line_string(input,
+                auto_format_and_write_to=reformat_location)
 
         with open(reformat_location, 'r') as input_file:
             contents = MultilineString.shift_left(input_file.read())

@@ -6,7 +6,6 @@ from qtlayoutbuilder.api.layouterror import LayoutError
 
 
 class LayoutsCreated(object):
-
     def __init__(self):
         # Access the items created like this: elements['my_page.right_btn']
         # (A level-two item)
@@ -21,7 +20,7 @@ class LayoutsCreated(object):
         :return: The QLayout or QWidget at that position in the hierarchy.
         """
         matching_paths = [path for path in self._elements.keys() if
-                         self._name_segment(path) == name]
+                          self._name_segment(path) == name]
         if len(matching_paths) == 0:
             raise LayoutError("""
                 No path can be found that ends with <%s>.
@@ -87,7 +86,7 @@ class LayoutsCreated(object):
             lines.append(line)
         return '\n'.join(lines)
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private below
 
     def _all_names(self):

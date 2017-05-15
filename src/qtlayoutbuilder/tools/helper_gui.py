@@ -23,10 +23,10 @@ from qtlayoutbuilder.lib.multiline_string_utils import MultilineString
 _ORG = 'PARJI'
 _APP = 'QtLayoutBuilder'
 _LAST_KNOWN = '_lastknown'
-_POLLING_INTERVAL = 500 # millisec
+_POLLING_INTERVAL = 500  # millisec
+
 
 class HelperGui(QObject):
-
     def __init__(self):
         super(HelperGui, self).__init__()
         self._settings = QSettings(_ORG, _APP)
@@ -64,7 +64,7 @@ class HelperGui(QObject):
         self._timer.timeout.connect(self._timer_callback)
         self._timer.start(_POLLING_INTERVAL)
 
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # Private below.
 
     def _make_gui(self):
@@ -82,8 +82,7 @@ class HelperGui(QObject):
         """)
         return layouts
 
-
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # Event handlers
 
     def _handle_path(self):
@@ -93,10 +92,10 @@ class HelperGui(QObject):
             return self._alt_file_chooser()
         result = QFileDialog.getOpenFileName(self._main_page,
                 'Choose input file', self._input_path)
-        try: # PySide 1.2.4 and who knows which other?
+        try:  # PySide 1.2.4 and who knows which other?
             path, file_type_option_selected = result
         except ValueError:
-            path = result # PyQt and mabye some PySide versions?
+            path = result  # PyQt and mabye some PySide versions?
         if not path:
             return
         self._input_path = path
@@ -106,22 +105,23 @@ class HelperGui(QObject):
 
     def _handle_reformat(self):
         try:
-            users_layouts = build_from_file(
-                    self._input_path, auto_format_and_overwrite=True)
+            users_layouts = build_from_file(self._input_path,
+                    auto_format_and_overwrite=True)
             # We should provide some confirmation and feedback. The log is
             # not much good because the overwrite stimualtes a fresh build
             # which almost immediately replaces any log message we put out here.
-            QMessageBox.information(self._main_page,
-                '', 'Reformat Done\n\n+ Original file overwritten.')
+            QMessageBox.information(self._main_page, '',
+                    'Reformat Done\n\n+ Original file overwritten.')
         except LayoutError as e:
-            self._log.setText("Cannot reformat the file because it won't build.")
+            self._log.setText(
+                    "Cannot reformat the file because it won't build.")
             return
 
     def _timer_callback(self):
         if self._file_has_been_updated():
             self._attempt_build()
 
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # Utility helpers
 
     def _file_has_been_updated(self):
@@ -141,13 +141,13 @@ class HelperGui(QObject):
             if mtime != self._previous_timestamp:
                 self._previous_timestamp = mtime
                 return True
-        except Exception as e: # Can be IOError or WindowsError or ?
+        except Exception as e:  # Can be IOError or WindowsError or ?
             return False
 
     def _attempt_build(self):
         try:
             users_layouts = build_from_file(self._input_path,
-                    auto_format_and_overwrite = False)
+                    auto_format_and_overwrite=False)
         except LayoutError as e:
             if 'Cannot read this file' in str(e):
                 self._log.setText(MultilineString.shift_left("""
@@ -177,22 +177,20 @@ class HelperGui(QObject):
     def _set_text_for_path_label(self):
         if self._input_path is None:
             self._path_label.setText(
-                '<font color="red">Please choose input file</font>'
-            )
+                    '<font color="red">Please choose input file</font>')
         else:
             self._path_label.setText(
-                '<font color="grey">...%s</font>' % self._input_path[-30:]
-        )
+                    '<font color="grey">...%s</font>' % self._input_path[-30:])
 
     def _show_built_content(self, thing_to_show):
         if self._last_shown_content is not None:
             self._last_shown_content.hide()
         self._last_shown_content = thing_to_show
-        thing_to_show.move(QPoint(0,0))
+        thing_to_show.move(QPoint(0, 0))
         self._last_shown_content.show()
+
 
 if __name__ == '__main__':
     QApplication([])
     app = HelperGui()
     qApp.exec_()
-

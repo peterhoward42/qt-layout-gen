@@ -22,7 +22,6 @@ class TestChildAdder(TestCase):
         except RuntimeError:
             pass  # Singleton already exists
 
-
     def test_error_handling_when_speculative_methods_all_fail(self):
         # There is no way to add a widget to a widget.
         result = raises_layout_error_with_this_message("""
@@ -80,9 +79,8 @@ class TestChildAdder(TestCase):
 
     def test_qslider_intervention(self):
         parent = QHBoxLayout()
-        slider = QSlider() # Don't specify orientation.
+        slider = QSlider()  # Don't specify orientation.
         ChildAdder.add(slider, 'fred', parent)
         # We promise to give it horizontal (the non-default) orientation.
         orient = slider.orientation()
         self.assertEqual(orient, Qt.Orientation.Horizontal)
-

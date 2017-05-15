@@ -1,4 +1,3 @@
-
 from PySide import QtGui
 
 import difflib
@@ -19,13 +18,13 @@ class QtClassNamePrompter(object):
         lowercase_to_original_map = {}
         for orig, lowered in zip(all_qtgui_names, lower_cased):
             lowercase_to_original_map[lowered] = orig
-        similar_names = difflib.get_close_matches(
-                name.lower(), lower_cased, cls._LIMIT, cutoff=0.0)
-        result = [lowercase_to_original_map[similar_name] for
-                  similar_name in similar_names]
+        similar_names = difflib.get_close_matches(name.lower(), lower_cased,
+                cls._LIMIT, cutoff=0.0)
+        result = [lowercase_to_original_map[similar_name] for similar_name in
+                  similar_names]
         return result
 
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # Private below.
 
     _LIMIT = 6

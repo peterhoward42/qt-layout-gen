@@ -6,7 +6,6 @@ from qtlayoutbuilder.api.build import build_from_file
 
 
 class TestBigExampleForManual(TestCase):
-
     @classmethod
     def setUpClass(cls):
         # Needs QApplication context.
@@ -17,9 +16,8 @@ class TestBigExampleForManual(TestCase):
             pass  # Singleton already exists
 
     def test_big_example(self):
-        file_path = os.path.abspath(
-                os.path.join(__file__,
-                        "../../../../testdata/big_example_for_manual.txt"))
+        file_path = os.path.abspath(os.path.join(__file__,
+                "../../../../testdata/big_example_for_manual.txt"))
         layouts_created = build_from_file(file_path)
 
         widget = layouts_created.at('page')

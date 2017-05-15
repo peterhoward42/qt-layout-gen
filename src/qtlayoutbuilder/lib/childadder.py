@@ -10,7 +10,6 @@ from qtlayoutbuilder.api.layouterror import LayoutError
 
 
 class ChildAdder(object):
-
     # Used for the tab name if addTab() is called.
     _next_tab_number = 0
 
@@ -32,13 +31,13 @@ class ChildAdder(object):
             None of the following addition methods worked:
 
             %s
-            """,
-            (child_name, child_object.__class__.__name__,
-             parent_object.__class__.__name__,
-             cls._format_supported_add_methods()))
+            """, (child_name, child_object.__class__.__name__,
+                  parent_object.__class__.__name__,
+                  cls._format_supported_add_methods()))
 
     @classmethod
-    def _method_worked(cls, method_name, child_object, child_name, parent_object):
+    def _method_worked(cls, method_name, child_object, child_name,
+            parent_object):
         # Does this parent have this method?
         method = cls._get_method(parent_object, method_name)
         if method is None:
@@ -47,7 +46,7 @@ class ChildAdder(object):
         # complains.
         try:
             # Some addition methods require a bit of intervention.
-            if method_name == 'addTab': # QTabWidget
+            if method_name == 'addTab':  # QTabWidget
                 cls._next_tab_number += 1
                 method(child_object, 'tab_%d' % cls._next_tab_number)
             else:  # General case.
@@ -60,7 +59,7 @@ class ChildAdder(object):
             if isinstance(child_object, QSlider):
                 child_object.setOrientation(Qt.Orientation.Horizontal)
 
-            return True # The method worked.
+            return True  # The method worked.
         except TypeError as e:
             return False
 
@@ -79,10 +78,5 @@ class ChildAdder(object):
 
 
 _SPECULATIVE_METHODS = (
-'addLayout',
-'setLayout',
-'addWidget',
-'addTab',
-'setWidget',
-'addSpacerItem',
-)
+    'addLayout', 'setLayout', 'addWidget', 'addTab', 'setWidget',
+    'addSpacerItem',)

@@ -2,9 +2,11 @@ from unittest import TestCase
 
 from qtlayoutbuilder.lib.objectfinder import ObjectFinder
 
+
 class Banana(object):
     """We look for instances of Bananas."""
     pass
+
 
 class HasABanana(object):
     """
@@ -17,12 +19,11 @@ class HasABanana(object):
 
 
 class TestObjectFinder(TestCase):
-
     def test_search_for_objects_finding_local_variable(self):
         # We create a local variable 'my_banana' and then search for the object
         # it is pointing to.
         my_banana = Banana()
-        finder = ObjectFinder([Banana,])
+        finder = ObjectFinder([Banana, ])
         found = finder.find_objects('my_banana')
         self.assertEquals(len(found), 1)
         found_object = found[0]
@@ -35,7 +36,7 @@ class TestObjectFinder(TestCase):
         # We are NOT searching for the HasABanana instance. But for
         # the Banana it references by its 'my_banana' attribute.
         has_banana = HasABanana()
-        finder = ObjectFinder([Banana,])
+        finder = ObjectFinder([Banana, ])
         found = finder.find_objects('my_banana')
         self.assertEquals(len(found), 1)
         found_object = found[0]
@@ -46,6 +47,6 @@ class TestObjectFinder(TestCase):
         bar = HasABanana()
         my_banana = Banana()
         wrong_name = Banana()
-        finder = ObjectFinder([Banana,])
+        finder = ObjectFinder([Banana, ])
         found = finder.find_objects('my_banana')
         self.assertEquals(len(found), 3)

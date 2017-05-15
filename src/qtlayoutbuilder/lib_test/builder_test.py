@@ -10,7 +10,6 @@ from qtlayoutbuilder.lib_test.test_utils import \
 
 
 class TestBuilder(TestCase):
-
     @classmethod
     def setUpClass(cls):
         # Needs QApplication context.
@@ -18,13 +17,13 @@ class TestBuilder(TestCase):
         try:
             QApplication([])
         except RuntimeError:
-            pass # Singleton already exists
+            pass  # Singleton already exists
 
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # Test utilities and helpers, bottom up first to make sure we can
     # rely on what they say when debugging problems from higher level tests.
 
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # Assertions and error reporting.
 
     def test_error_message_when_tabs_are_present(self):
@@ -35,8 +34,7 @@ class TestBuilder(TestCase):
                 This line contains a tab - which is not allowed.
                 (This line: <page        \t QLabel>)
                 (Line number: 1, from unit test provenance)
-            """,
-                Builder.build, input, 'unit test provenance')
+            """, Builder.build, input, 'unit test provenance')
         if not result:
             self.fail()
 
@@ -50,8 +48,7 @@ class TestBuilder(TestCase):
                 Indentation spaces must be a multiple of 2.
                 (This line: < layout     QHBoxLayout>)
                 (Line number: 2, from unit test provenance)
-            """,
-                Builder.build, input, 'unit test provenance')
+            """, Builder.build, input, 'unit test provenance')
         if not result:
             self.fail()
 
@@ -64,8 +61,7 @@ class TestBuilder(TestCase):
             (after comments and parenthesis have been removed.)
             (This line: <page        QLabel  QLabel>)
             (Line number: 1, from unit test provenance)
-            """,
-            Builder.build, input, 'unit test provenance')
+            """, Builder.build, input, 'unit test provenance')
         if not result:
             self.fail()
 
@@ -78,8 +74,7 @@ class TestBuilder(TestCase):
             (after comments and parenthesis have been removed.)
             (This line: <page>)
             (Line number: 1, from unit test provenance)
-            """,
-            Builder.build, input, 'unit test provenance')
+            """, Builder.build, input, 'unit test provenance')
         if not result:
             self.fail()
 
@@ -94,8 +89,7 @@ class TestBuilder(TestCase):
             above it by more than 2 spaces.
             (This line: <    layout    QVBoxLayout>)
             (Line number: 2, from unit test provenance)
-            """,
-            Builder.build, input, 'unit test provenance')
+            """, Builder.build, input, 'unit test provenance')
         if not result:
             self.fail()
 
@@ -106,8 +100,7 @@ class TestBuilder(TestCase):
         result = raises_layout_error_with_this_message("""
                 This input provided (unit test provenance) contains nothing, or
                 nothing except whitespace and comments.
-            """,
-                Builder.build, input, 'unit test provenance')
+            """, Builder.build, input, 'unit test provenance')
         if not result:
             self.fail()
 
@@ -123,8 +116,7 @@ class TestBuilder(TestCase):
             or addItem().
             (This line: <layout      QVBoxLayout(hello)>)
             (Line number: 1, from unit test provenance)
-            """,
-            Builder.build, input, 'unit test provenance')
+            """, Builder.build, input, 'unit test provenance')
         if not result:
             self.fail()
 
@@ -140,15 +132,14 @@ class TestBuilder(TestCase):
             been used.
             (This line: <  bar    QLabel>)
             (Line number: 3, from unit test provenance)
-            """,
-            Builder.build, input, 'unit test provenance')
+            """, Builder.build, input, 'unit test provenance')
         if not result:
             self.fail()
 
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # API Level
 
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # Simplest possible input.
 
     def test_simplest_possible_runs_without_crashing(self):
@@ -198,8 +189,7 @@ class TestBuilder(TestCase):
             layout.foo    QLabel
             layout.bar    QPushButton
             layout.baz    QTextEdit
-        """,
-            layouts_created.at, 'harry')
+        """, layouts_created.at, 'harry')
         if not result:
             self.fail()
 
@@ -318,11 +308,11 @@ class TestBuilder(TestCase):
             Python raised an exception when the builder tried to
             deal with unicode encoded values in your text: <\u25c>. The
             underlying python error was:
-            'rawunicodeescape' codec can't decode bytes in position 0-4: truncated \uXXXX
+            'rawunicodeescape' codec can't decode bytes in position 0-4: 
+            truncated \uXXXX
             (This line: <    label       QLabel(\u25c) >)
             (Line number: 3, from unit test provenance)
-            """,
-                Builder.build, input, 'unit test provenance')
+            """, Builder.build, input, 'unit test provenance')
         if not result:
             self.fail()
 

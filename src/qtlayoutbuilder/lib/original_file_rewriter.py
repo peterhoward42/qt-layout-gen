@@ -28,15 +28,14 @@ class OriginalFileReWriter(object):
 
     @classmethod
     def overwrite_original(cls, file_path, replacement_one_big_string):
-        backup_folder, backup_file_path = \
-            cls._make_backup_of_existing_file(file_path)
-        augmented_string = cls._add_backup_location_comment(
-                backup_folder, replacement_one_big_string)
+        backup_folder, backup_file_path = cls._make_backup_of_existing_file(
+                file_path)
+        augmented_string = cls._add_backup_location_comment(backup_folder,
+                replacement_one_big_string)
         with open(file_path, 'w') as output_file:
             output_file.write(augmented_string)
 
-
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private below.
 
     @classmethod
@@ -47,13 +46,14 @@ class OriginalFileReWriter(object):
         # Each file is timestamped like this:
         # archived_input-20170417-003554.txt
 
-        dir_for_archive_copy = path.join(QDesktopServices.storageLocation(
-                QDesktopServices.DataLocation), 'qtlayoutbuilder')
+        dir_for_archive_copy = path.join(
+                QDesktopServices.storageLocation(QDesktopServices.DataLocation),
+                'qtlayoutbuilder')
         if not os.path.exists(dir_for_archive_copy):
             os.makedirs(dir_for_archive_copy)
         timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
-        archive_fname = path.join(
-                dir_for_archive_copy, 'archived_input-' + timestamp + '.txt')
+        archive_fname = path.join(dir_for_archive_copy,
+                'archived_input-' + timestamp + '.txt')
         shutil.copyfile(original_file_path, archive_fname)
         return dir_for_archive_copy, archive_fname
 
@@ -67,10 +67,10 @@ class OriginalFileReWriter(object):
         """ % backup_folder
         comment_string = MultilineString.normalise(comment_string)
         if cls._BACKUP_COMMENT_RE.search(one_big_string):
-            one_big_string = cls._BACKUP_COMMENT_RE.sub(
-                    comment_string, one_big_string, 1)
+            one_big_string = cls._BACKUP_COMMENT_RE.sub(comment_string,
+                    one_big_string, 1)
         else:
-            one_big_string = comment_string + '\n'+ one_big_string
+            one_big_string = comment_string + '\n' + one_big_string
         return one_big_string
 
     # Note the DOTALL in the regex. It means that the dot metacharacter

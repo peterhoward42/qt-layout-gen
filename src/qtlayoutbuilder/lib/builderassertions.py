@@ -32,7 +32,7 @@ class BuilderAssertions(object):
                 """, provenance)
 
     @classmethod
-    def assert_no_tabs_present(self, line):
+    def assert_no_tabs_present(cls, line):
         if '\t' not in line:
             return
         raise LayoutError("""

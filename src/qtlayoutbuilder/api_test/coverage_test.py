@@ -21,9 +21,8 @@ class TestCoverage(TestCase):
             pass  # Singleton already exists
 
     def test_coverage(self):
-        file_path = os.path.abspath(
-                os.path.join(__file__,
-                        "../../../../testdata/coverage_example.txt"))
+        file_path = os.path.abspath(os.path.join(__file__,
+                "../../../../testdata/coverage_example.txt"))
         layouts_created = build_from_file(file_path)
 
         lines = layouts_created._impl.dump().split('\n')
@@ -36,7 +35,7 @@ class TestCoverage(TestCase):
         widget = layouts_created.at('page')
         widget.show()
 
-        #dialog = layouts_created.get_element('my_dialog')
-        #dialog.exec_()
+        # dialog = layouts_created.get_element('my_dialog')
+        # dialog.exec_()
 
         qApp.exec_()

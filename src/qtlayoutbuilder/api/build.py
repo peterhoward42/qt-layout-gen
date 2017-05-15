@@ -14,8 +14,7 @@ def build_from_file(file_path, auto_format_and_overwrite=True):
     :raises LayoutError:
     :return: A LayoutsCreatedAccessor object.
     """
-    one_big_string = file_utils.get_file_contents_as_a_string(
-            file_path)
+    one_big_string = file_utils.get_file_contents_as_a_string(file_path)
     layouts_created = Builder.build(one_big_string, file_path)
     if auto_format_and_overwrite:
         re_formatted = ReFormatter.format(one_big_string)
@@ -40,6 +39,7 @@ def build_from_multi_line_string(one_big_string, auto_format_and_write_to=''):
         with open(auto_format_and_write_to, 'w') as output_file:
             output_file.write(re_formatted)
     return LayoutsCreatedAccessor(layouts_created)
+
 
 class LayoutsCreatedAccessor(object):
     """

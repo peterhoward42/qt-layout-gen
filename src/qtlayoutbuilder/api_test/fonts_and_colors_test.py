@@ -22,8 +22,7 @@ class FontsAndColorsTest(TestCase):
 
     def test_coverage(self):
         file_path = os.path.abspath(
-                os.path.join(__file__,
-                        "../../../../testdata/typography.txt"))
+                os.path.join(__file__, "../../../../testdata/typography.txt"))
         layouts_created = build_from_file(file_path)
 
         widget = layouts_created.at('page')

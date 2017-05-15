@@ -21,7 +21,7 @@ class TestQObjectMaker(TestCase):
         try:
             QApplication([])
         except RuntimeError:
-            pass # Singleton already exists
+            pass  # Singleton already exists
 
     # First the instantiation behaviour.
 
