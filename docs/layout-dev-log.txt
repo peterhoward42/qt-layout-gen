@@ -1,25 +1,21 @@
 *  Manual note about rules and error handling
 *  Go back to gui runner
-o  Decide what to do about fonts and colours
-    *  Simple example to try out some features
-        *  Choose which and note qt ref page
-            *  http://doc.qt.io/qt-4.8/richtext-html-subset.html
-            *  Fonts and colors
-    o  Manual
-        o  Got to try an image link first at bottom of manual
-            o  Create image for it look for
+*  Decide what to do about fonts and colours
+*  Finish demo example
+o  Comments and size
+    o  do trial section
+    o  pep8 decide
+    o  try pydoc
+    o  finish
 
-o  Finish demo example
-    o  Remove style sheets
-    o  Decide what typography, links and colors in and where
-
-o  Decide docco taxonomy
+o  Decide docco taxonomy and finish with pics
     o  Covering:
+        o  Intro as well as manual
         o  Design aims
-        o  Fonts / colours
         o  Incremental adoption
         o  Instant feedback as per nodejs npm start -watch
 
+o  Portability
 
 o  Bugs
     o  Try this input.
@@ -27,52 +23,23 @@ o  Bugs
         o  thinks qpushbuttond is a type
 
 
-o  Laters
-o  Quality
-    o  Any modules getting too big or too small?
-    o  Comments
-    o  PEP8
-    o  PyDoc on api and tools
-    o  Manual edit / review
-        o  Split into sections
-        o  Include pictures
-        o  Have TOC with links
-
-
 o  Later
+    o  Rationalise tests and example files
     o  Version contract
     o  Product versions like pycharm eg 2017.1
     o  Spread use of fuzzy equality of multiline strings
     o  Make sure all examples from the manual are tested
-    o  Qt versions
     o  Licence and copyright
-    o  Python 3 support
-    o  Qt5 support
-    o  Test on Linux
     o  PyQt support
     o  Unify use of multiline tests and generation.
     o  Move all regex into module
     o  Viable to put on PyPy
-    o  What other types to support?
-        o  lineedit, combo, splitter, radio, groupbox
+    o  Clean out dross from repo
 
 
-o  Make examples as proper tests incl name and folder
-
-        o  tests that test errors by catching exceptions should throw exception if not thrown
-        o  80 columns and '\n'.join... idiom
-        o  ditch _ classes convention
-        o  beautify
-        o  no warnings
+    o  tests that test errors by catching exceptions should throw exception if not thrown
+    o  80 columns and '\n'.join... idiom
+    o  ditch _ classes convention
 
 ------------------------------------------------------------------------
-What to say
 ------------------------------------------------------------------------
-
-is v useful to instant feedback when editing input files
-about what will happen when you call one of the build methods on it
-have support gui tool to provide this instant feedback - that rebuilds and
-shows your gui in response to each save from your editor
-
-run it like this
-see pic

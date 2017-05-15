@@ -78,12 +78,13 @@ The full capabilities for adding children to parents are as follows:
 First the builder, uses the methods required to create the standard hierarchy
 of layouts and widgets.
 
+- addWidget(child) # Add a widget into a parent layout
 - addLayout(child) # Add a sub-layout to parent layout
 - setLayout(child) # Set the layout for a parent widget
-- addWidget(child) # Add a widget into a parent layout
 
-For each line of input, the builder calls these methods speculatively, and 
-stops at the first one that works. (Doesn't raise an exception)
+For each line of input, the builder calls these methods speculatively on the 
+parent object, and stops at the first one that works.
+(Doesn't raise an exception)
 
 If none of the above worked, the builder then tries a few more methods 
 speculatively, and again stops at the first one that works. These are intended 
@@ -123,7 +124,7 @@ You use it like this:
 The builder also calls setWidgetResizable(True) on the QScrollArea.
 (Because they work rather unintuitively otherwise).
 
-## Omitted Special Cases
+### Omitted Special Cases
 There are some parent child relationships that the builder cannot make
 completely automatically for you, because it can't guess all the parameters
 required by the addition methods. An example would be adding the children 
@@ -151,7 +152,7 @@ to call setText(), and then with setTitle().
 ### Fonts, Colours, and Text Size
 
 Qt let's you control the font, colour and size of your text on widgets like
-QLabel, QPushButton etc, with HTML 4 inline style markup in the call to 
+QLabel, QTextEdit etc, with HTML 4 in-line style markup in the call to 
 *setText()* : http://doc.qt.io/qt-4.8/richtext-html-subset.html
 
 ![](media/typography.png)
@@ -176,7 +177,7 @@ http://unicode.org/charts/#symbols
 
 These typographic symbols render very much more crisply, and scale better than 
 image-based icons, (because of the anti-aliasing of edges built in by the
-font designers. They also remove the need to manage and deploy image resources.
+font designers). They also remove the need to manage and deploy image resources.
 
 You can include Unicode characters (or more properly *code-points*) in your
 builder input, using the same notation as you would if you were writing a
@@ -190,6 +191,10 @@ of a label:
 
     label       QLabel(Press \u23ce when done.)
     
+> Qt does not support rich text (and thus the in-line html4 markup) for 
+> QPushButton and QToolButton, so if you want to alter the size, and font etc.
+> for symbols used on buttons, you have to use setStyleSheet() manually.
+
 Some Unicode symbols have *code-points* above 0xFFFF, and you can encode these
 again, just like in python source code. Note the upper case U and 8 instead of
 4 ascii characters following. This example is a hamburger symbol. (Not the 3-bar
@@ -286,7 +291,8 @@ You can build multiple, (unrelated) hierarchies like this:
       layout    QVBoxLayout
       etc...
       
-This can be useful when the builder cannot create the whole tree you want 
+This can be useful to make some dialogues that you are going to bring up
+independently, or when the builder cannot create the whole tree you want 
 because it includes an item that the builder cannot add children to. (Like 
 QGridLayout for example.) You can create seperate hierarchies for the 
 children and then add them manually afterwards. E.g.

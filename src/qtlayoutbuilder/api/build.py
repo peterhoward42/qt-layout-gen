@@ -1,9 +1,3 @@
-import os
-
-import time
-
-from os.path import exists
-
 from qtlayoutbuilder.lib import file_utils
 from qtlayoutbuilder.lib.builder import Builder
 from qtlayoutbuilder.lib.original_file_rewriter import OriginalFileReWriter
@@ -50,6 +44,7 @@ def build_from_multi_line_string(one_big_string, auto_format_and_write_to=''):
 class LayoutsCreatedAccessor(object):
     """
     A container for the layouts and widget hiearcies created by the builder.
+    You query for any object in the built hierarchy using the at() method.
     """
 
     def __init__(self, layouts_created):
