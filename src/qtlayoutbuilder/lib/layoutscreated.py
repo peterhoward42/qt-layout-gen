@@ -1,7 +1,5 @@
 from collections import OrderedDict
 
-from PySide.QtGui import QWidget
-
 from qtlayoutbuilder.api.layouterror import LayoutError
 
 
@@ -14,7 +12,7 @@ class LayoutsCreated(object):
     def at(self, name):
         """
         Find the item with the given name.
-        
+
         :param name: The name to search for.
         :raises LayoutError:
         :return: The QLayout or QWidget at that position in the hierarchy.
@@ -25,26 +23,26 @@ class LayoutsCreated(object):
             raise LayoutError("""
                 No path can be found that ends with <%s>.
                 These are the paths that do exist:
-                
+
                 %s
             """, (name, self.dump()))
         if len(matching_paths) > 1:
             raise LayoutError("""
                 More than one path exists that ends with <%s>.
-                
+
                 The first two are:
                 %s
                 %s
             """, (name, matching_paths.pop(), matching_paths.pop()))
         return self._elements[matching_paths.pop()]
 
-    def register_top_level_object(self, object, name):
+    def register_top_level_object(self, object_to_register, name):
         if name in self._all_names():
             raise LayoutError("""
                 The name you have given this item (<%s>), has already
                 been used.
             """, name)
-        self._elements[name] = object
+        self._elements[name] = object_to_register
 
     def register_child(self, child_object, parent_path, child_name):
         if child_name in self._all_names():

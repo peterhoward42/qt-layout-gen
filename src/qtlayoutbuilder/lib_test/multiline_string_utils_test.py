@@ -28,24 +28,24 @@ class MultilineStringUtilsTest(TestCase):
 
     def test_shift_left(self):
         # Normal usage
-        input = """
+        str_input = """
             foo
               bar
                 baz
         """
-        result = MultilineString.shift_left(input)
+        result = MultilineString.shift_left(str_input)
         lines = result.split('\n')
         self.assertEqual(lines[0], 'foo')
         self.assertEqual(lines[1], '  bar')
         self.assertEqual(lines[2], '    baz')
 
     def test_normalise(self):
-        input = """
+        str_input = """
             foo
               bar
                 baz
         """
-        result = MultilineString.normalise(input)
+        result = MultilineString.normalise(str_input)
         lines = result.split('\n')
         self.assertEqual(lines[0], 'foo')
         self.assertEqual(lines[1], 'bar')

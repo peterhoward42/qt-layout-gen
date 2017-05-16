@@ -7,7 +7,7 @@ from qtlayoutbuilder.lib.multiline_string_utils import MultilineString
 
 
 def raises_layout_error_with_this_message(
-        required_message, callable, *args, **kwargs):
+        required_message, this_callable, *args, **kwargs):
     """
     Makes sure that the callable object provided, when called with *args and
     **kwargs, raises a LayoutException, and that the exception's string
@@ -15,9 +15,8 @@ def raises_layout_error_with_this_message(
     equality checking copes with multiline strings and massages these before
     comparison to unify minor differences in whitespace and indentation.
     """
-    a = 1
     try:
-        callable(*args, **kwargs)
+        this_callable(*args, **kwargs)
         # If reach here, it didn't raise the exception.
         return False
     except LayoutError as e:

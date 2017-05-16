@@ -7,6 +7,6 @@ class LayoutError(Exception):
     """
 
     def __init__(self, multiline_format_string, args):
-        format = MultilineString.normalise(multiline_format_string)
-        message = format % args
+        str_format = MultilineString.normalise(multiline_format_string)
+        message = str_format % args
         super(Exception, self).__init__(message)

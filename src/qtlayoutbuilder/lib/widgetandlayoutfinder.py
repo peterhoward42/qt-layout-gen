@@ -42,6 +42,6 @@ class WidgetAndLayoutFinder(object):
         # Now reduce to only those of the specified particular class.
 
         filtered = [obj for obj in found if
-                    obj.__class__.__name__   ==  particular_class]
+                    obj.__class__.__name__ == particular_class]
 
         return filtered

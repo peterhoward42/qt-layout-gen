@@ -1,6 +1,5 @@
 from qtlayoutbuilder.api.layouterror import LayoutError
-from qtlayoutbuilder.lib import regex_helpers
-from qtlayoutbuilder.lib import string_utils
+from qtlayoutbuilder.lib import regex_helpers, string_utils
 from qtlayoutbuilder.lib.builderassertions import BuilderAssertions
 
 
@@ -27,22 +26,21 @@ class LineParser(object):
         original_line = line
         parenthesised = regex_helpers.capture_parenthesis(original_line)
         working_line = regex_helpers.remove_parenthesis(original_line)
-        indent = cls._measure_and_validate_indent(working_line, original_line)
-        name, type_string = cls._parse_name_and_type(
-                working_line, original_line)
+        indent = cls._measure_and_validate_indent(working_line)
+        name, type_string = cls._parse_name_and_type(working_line)
         return False, False, indent, name, type_string, parenthesised
 
     # --------------------------------------------------------
     # Private below
 
     @classmethod
-    def _measure_and_validate_indent(cls, working_line, original_line):
+    def _measure_and_validate_indent(cls, working_line):
         indent = string_utils.measure_indent(working_line)
         BuilderAssertions.assert_multiple_of_two(indent)
         return indent
 
     @classmethod
-    def _parse_name_and_type(cls, working_line, full_line):
+    def _parse_name_and_type(cls, working_line):
         words = (working_line.strip()).split()
         if len(words) != 2:
             raise LayoutError("""

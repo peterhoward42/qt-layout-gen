@@ -1,7 +1,6 @@
 from unittest import TestCase
 
-from PySide.QtGui import QApplication, QPushButton
-from PySide.QtGui import QVBoxLayout
+from PySide.QtGui import QApplication, QPushButton, QVBoxLayout
 
 from qtlayoutbuilder.lib.builder import Builder
 from qtlayoutbuilder.lib.multiline_string_utils import MultilineString
@@ -27,19 +26,19 @@ class TestBuilder(TestCase):
     # Assertions and error reporting.
 
     def test_error_message_when_tabs_are_present(self):
-        input = """
+        str_input = """
             page        \t QLabel
         """
         result = raises_layout_error_with_this_message("""
                 This line contains a tab - which is not allowed.
                 (This line: <page        \t QLabel>)
                 (Line number: 1, from unit test provenance)
-            """, Builder.build, input, 'unit test provenance')
+            """, Builder.build, str_input, 'unit test provenance')
         if not result:
             self.fail()
 
     def test_error_message_when_indent_is_not_multiple_of_two(self):
-        input = """
+        str_input = """
             page        QLabel
              layout     QHBoxLayout
         """
@@ -48,12 +47,12 @@ class TestBuilder(TestCase):
                 Indentation spaces must be a multiple of 2.
                 (This line: < layout     QHBoxLayout>)
                 (Line number: 2, from unit test provenance)
-            """, Builder.build, input, 'unit test provenance')
+            """, Builder.build, str_input, 'unit test provenance')
         if not result:
             self.fail()
 
     def test_error_message_when_too_many_words_per_line(self):
-        input = """
+        str_input = """
             page        QLabel  QLabel
         """
         result = raises_layout_error_with_this_message("""
@@ -61,12 +60,12 @@ class TestBuilder(TestCase):
             (after comments and parenthesis have been removed.)
             (This line: <page        QLabel  QLabel>)
             (Line number: 1, from unit test provenance)
-            """, Builder.build, input, 'unit test provenance')
+            """, Builder.build, str_input, 'unit test provenance')
         if not result:
             self.fail()
 
     def test_error_message_when_too_few_words_per_line(self):
-        input = """
+        str_input = """
             page
         """
         result = raises_layout_error_with_this_message("""
@@ -74,12 +73,12 @@ class TestBuilder(TestCase):
             (after comments and parenthesis have been removed.)
             (This line: <page>)
             (Line number: 1, from unit test provenance)
-            """, Builder.build, input, 'unit test provenance')
+            """, Builder.build, str_input, 'unit test provenance')
         if not result:
             self.fail()
 
     def test_error_message_when_skip_indent_levels(self):
-        input = """
+        str_input = """
             page        QWidget
                 layout    QVBoxLayout
         """
@@ -89,24 +88,24 @@ class TestBuilder(TestCase):
             above it by more than 2 spaces.
             (This line: <    layout    QVBoxLayout>)
             (Line number: 2, from unit test provenance)
-            """, Builder.build, input, 'unit test provenance')
+            """, Builder.build, str_input, 'unit test provenance')
         if not result:
             self.fail()
 
     def test_error_message_when_no_meaningful_input_found(self):
-        input = """
+        str_input = """
             # Hello
         """
         result = raises_layout_error_with_this_message("""
                 This input provided (unit test provenance) contains nothing, or
                 nothing except whitespace and comments.
-            """, Builder.build, input, 'unit test provenance')
+            """, Builder.build, str_input, 'unit test provenance')
         if not result:
             self.fail()
 
     def test_error_message_when_set_text_fails(self):
         # You can't call setText('hello') on a QVBoxLayout.
-        input = """
+        str_input = """
             layout      QVBoxLayout(hello)
         """
         result = raises_layout_error_with_this_message("""
@@ -116,13 +115,13 @@ class TestBuilder(TestCase):
             or addItem().
             (This line: <layout      QVBoxLayout(hello)>)
             (Line number: 1, from unit test provenance)
-            """, Builder.build, input, 'unit test provenance')
+            """, Builder.build, str_input, 'unit test provenance')
         if not result:
             self.fail()
 
     def test_error_message_when_name_is_not_unique(self):
         # Names must be unique.
-        input = """
+        str_input = """
             foo      QVBoxLayout
               bar    QGroupBox
               bar    QLabel
@@ -132,7 +131,7 @@ class TestBuilder(TestCase):
             been used.
             (This line: <  bar    QLabel>)
             (Line number: 3, from unit test provenance)
-            """, Builder.build, input, 'unit test provenance')
+            """, Builder.build, str_input, 'unit test provenance')
         if not result:
             self.fail()
 
@@ -143,18 +142,18 @@ class TestBuilder(TestCase):
     # Simplest possible input.
 
     def test_simplest_possible_runs_without_crashing(self):
-        input = """
+        str_input = """
             page        QWidget
               layout    QVBoxLayout
         """
-        layouts_created = Builder.build(input, 'unit test provenenance')
+        Builder.build(str_input, 'unit test provenenance')
 
     def test_simplest_possible_dump_of_contents_is_correct(self):
-        input = """
+        str_input = """
             page        QWidget
               layout    QVBoxLayout
         """
-        layouts_created = Builder.build(input, 'unit test provenenance')
+        layouts_created = Builder.build(str_input, 'unit test provenenance')
         dumped = MultilineString.normalise(layouts_created.dump())
         expected = MultilineString.normalise("""
             page           QWidget
@@ -163,28 +162,28 @@ class TestBuilder(TestCase):
         self.assertEqual(dumped, expected)
 
     def test_querying_accessor_normal_working(self):
-        input = """
+        str_input = """
             layout       QVBoxLayout
               foo_n1     QLabel
               foo_n2     QPushButton
               foo_n3     QTextEdit
         """
-        layouts_created = Builder.build(input, 'unit test provenenance')
+        layouts_created = Builder.build(str_input, 'unit test provenenance')
         found = layouts_created.at('foo_n2')
         self.assertTrue(isinstance(found, QPushButton))
 
     def test_querying_accessor_error_msg_for_none_found(self):
-        input = """
+        str_input = """
             layout       QVBoxLayout
               foo        QLabel
               bar        QPushButton
               baz        QTextEdit
         """
-        layouts_created = Builder.build(input, 'unit test provenance')
+        layouts_created = Builder.build(str_input, 'unit test provenance')
         result = raises_layout_error_with_this_message("""
             No path can be found that ends with <harry>.
             These are the paths that do exist:
-            
+
             layout        QVBoxLayout
             layout.foo    QLabel
             layout.bar    QPushButton
@@ -194,41 +193,35 @@ class TestBuilder(TestCase):
             self.fail()
 
     def test_simplest_possible_creates_parent_child_relations(self):
-        input = """
+        str_input = """
             page        QWidget
               layout    QVBoxLayout
         """
-        layouts_created = Builder.build(input, 'unit test provenenance')
+        layouts_created = Builder.build(str_input, 'unit test provenenance')
         page = layouts_created.at('page')
         self.assertTrue(isinstance(page.layout(), QVBoxLayout))
 
     def test_sibling_child_additions_work(self):
-        input = """
+        str_input = """
             layout      QVBoxLayout
               a         QLabel
               b         QLabel
               c         QLabel
         """
-        layouts_created = Builder.build(input, 'unit test provenenance')
-        dumped = MultilineString.normalise(layouts_created.dump())
-        expected = MultilineString.normalise("""
-            layout      QVBoxLayout
-            layout.a    QLabel
-            layout.b    QLabel
-            layout.c    QLabel
-        """)
+        layouts_created = Builder.build(str_input, 'unit test provenenance')
+        MultilineString.normalise(layouts_created.dump())
         layout = layouts_created.at('layout')
         self.assertEqual(layout.count(), 3)
 
     def test_multi_level_descent_works(self):
-        input = """
+        str_input = """
             page          QWidget
               layout      QVBoxLayout
                 a         QLabel
                 b         QLabel
                 c         QLabel
         """
-        layouts_created = Builder.build(input, 'unit test provenenance')
+        layouts_created = Builder.build(str_input, 'unit test provenenance')
         dumped = MultilineString.normalise(layouts_created.dump())
         expected = MultilineString.normalise("""
             page             QWidget
@@ -240,7 +233,7 @@ class TestBuilder(TestCase):
         self.assertEqual(dumped, expected)
 
     def test_multi_level_descent_and_ascent_works(self):
-        input = """
+        str_input = """
             page           QWidget
               vlayout      QVBoxLayout
                 a          QLabel
@@ -250,7 +243,7 @@ class TestBuilder(TestCase):
                     lbl    QLabel
                 c          QLabel
         """
-        layouts_created = Builder.build(input, 'unit test provenenance')
+        layouts_created = Builder.build(str_input, 'unit test provenenance')
         dumped = MultilineString.normalise(layouts_created.dump())
         expected = MultilineString.normalise("""
             page                             QWidget
@@ -267,13 +260,13 @@ class TestBuilder(TestCase):
         self.assertEqual(layout.count(), 4)
 
     def test_more_than_one_top_level_object_works(self):
-        input = """
+        str_input = """
             page1          QWidget
               layout1      QVBoxLayout
             page2          QWidget
               layout2      QVBoxLayout
         """
-        layouts_created = Builder.build(input, 'unit test provenenance')
+        layouts_created = Builder.build(str_input, 'unit test provenenance')
         dumped = MultilineString.normalise(layouts_created.dump())
         expected = MultilineString.normalise("""
             page1            QWidget
@@ -286,12 +279,12 @@ class TestBuilder(TestCase):
         self.assertTrue(isinstance(widget.layout(), QVBoxLayout))
 
     def test_adding_text_unicode_decode_works(self):
-        input = """
+        str_input = """
             page        QWidget
               layout    QHBoxLayout
                 label       QLabel(\u25c0)
         """
-        layouts_created = Builder.build(input, 'unit test provenenance')
+        layouts_created = Builder.build(str_input, 'unit test provenenance')
         label = layouts_created.at('label')
         txt = label.text()
         self.assertEqual(txt, u'\u25c0')
@@ -299,36 +292,36 @@ class TestBuilder(TestCase):
     def test_adding_text_unicode_decode_error_reporting(self):
         # The \u encoded unicode code-point, has only 3 ascii characters
         # following. Well formed needs 4.
-        input = """
+        str_input = """
             page        QWidget
               layout    QHBoxLayout
-                label       QLabel(\u25c) 
+                label       QLabel(\u25c)
         """
         result = raises_layout_error_with_this_message("""
             Python raised an exception when the builder tried to
             deal with unicode encoded values in your text: <\u25c>. The
             underlying python error was:
-            'rawunicodeescape' codec can't decode bytes in position 0-4: 
+            'rawunicodeescape' codec can't decode bytes in position 0-4:
             truncated \uXXXX
             (This line: <    label       QLabel(\u25c) >)
             (Line number: 3, from unit test provenance)
-            """, Builder.build, input, 'unit test provenance')
+            """, Builder.build, str_input, 'unit test provenance')
         if not result:
             self.fail()
 
     def test_adding_text_works_using_set_text_works(self):
-        input = """
+        str_input = """
             label       QLabel(hello)
         """
-        layouts_created = Builder.build(input, 'unit test provenenance')
+        layouts_created = Builder.build(str_input, 'unit test provenenance')
         widget = layouts_created.at('label')
         self.assertEqual(widget.text(), 'hello')
 
     def test_adding_text_works_using_set_title(self):
-        input = """
+        str_input = """
             group       QGroupBox(hello)
         """
-        layouts_created = Builder.build(input, 'unit test provenenance')
+        layouts_created = Builder.build(str_input, 'unit test provenenance')
         widget = layouts_created.at('group')
         self.assertEqual(widget.title(), 'hello')
 

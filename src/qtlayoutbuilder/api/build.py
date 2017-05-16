@@ -54,7 +54,7 @@ class LayoutsCreatedAccessor(object):
     def at(self, name):
         """
         Find the item with the given name.
-        
+
         :param name: The name to search for.
         :raises LayoutError:
         :return: The QLayout or QWidget at that position in the hierarchy.

@@ -2,6 +2,7 @@ import os
 from unittest import TestCase
 
 from PySide.QtGui import QApplication, qApp
+
 from qtlayoutbuilder.api.build import build_from_file
 
 
@@ -21,7 +22,9 @@ class TestCoverage(TestCase):
             pass  # Singleton already exists
 
     def test_coverage(self):
-        file_path = os.path.abspath(os.path.join(__file__,
+        file_path = os.path.abspath(
+            os.path.join(
+                __file__,
                 "../../../../testdata/coverage_example.txt"))
         layouts_created = build_from_file(file_path)
 

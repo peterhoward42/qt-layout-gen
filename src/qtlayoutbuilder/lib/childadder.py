@@ -19,8 +19,7 @@ class ChildAdder(object):
         # the parent object has, and which does not raise  exceptions when it
         # is called.
         for method_name in _SPECULATIVE_METHODS:
-            if cls._method_worked(method_name, child_object, child_name,
-                    parent_object):
+            if cls._method_worked(method_name, child_object, parent_object):
                 return
         # Nothing worked, which is an error
         raise LayoutError("""
@@ -36,8 +35,7 @@ class ChildAdder(object):
                   cls._format_supported_add_methods()))
 
     @classmethod
-    def _method_worked(cls, method_name, child_object, child_name,
-            parent_object):
+    def _method_worked(cls, method_name, child_object, parent_object):
         # Does this parent have this method?
         method = cls._get_method(parent_object, method_name)
         if method is None:
@@ -60,12 +58,12 @@ class ChildAdder(object):
                 child_object.setOrientation(Qt.Orientation.Horizontal)
 
             return True  # The method worked.
-        except TypeError as e:
+        except TypeError:
             return False
 
     @classmethod
-    def _get_method(cls, object, method_name):
-        attr = getattr(object, method_name, None)
+    def _get_method(cls, target_object, method_name):
+        attr = getattr(target_object, method_name, None)
         if attr is None:
             return None
         if not callable(attr):

@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from PySide.QtGui import QApplication, qApp, QLabel
+from PySide.QtGui import QApplication, qApp
 
 from qtlayoutbuilder.api.build import build_from_multi_line_string
 
@@ -26,14 +26,14 @@ class TestUnicodeText(TestCase):
               layout      QVBoxLayout
                 layout1   QHBoxLayout
                           # left arrow
-                  btn1    QPushButton(\u25c0) 
+                  btn1    QPushButton(\u25c0)
                           # right arrow
-                  btn2    QPushButton(\u25b6) 
+                  btn2    QPushButton(\u25b6)
                           # envelope
                   btna    QToolButton(\u2709)
-                          # pencil 
+                          # pencil
                   btnb    QToolButton(\u270e)
-                          # hamburger 
+                          # hamburger
                   btnc    QToolButton(\u2630)
                           # return / enter
                 label1  QLabel(Press \u23ce when done.)
@@ -43,4 +43,3 @@ class TestUnicodeText(TestCase):
         widget.setStyleSheet(""" * { font-size: 36px; } """)
         widget.show()
         qApp.exec_()
-

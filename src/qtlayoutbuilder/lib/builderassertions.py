@@ -10,10 +10,10 @@ class BuilderAssertions(object):
         raise LayoutError("""
             A line is indented by %d spaces.
             Indentation spaces must be a multiple of 2.
-            """, (indent))
+            """, indent)
 
     @classmethod
-    def assert_have_not_skipped_a_level(cls, level, line, layouts_created):
+    def assert_have_not_skipped_a_level(cls, level, layouts_created):
         # Only allowed to descend levels in single steps.
         if level <= layouts_created.current_level() + 1:
             return

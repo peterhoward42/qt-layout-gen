@@ -2,7 +2,7 @@
 A tool that aims to make it quicker and easier to iterate on developing your
 input files, by providing immediate feedback with no extra programming effort.
 
-It listens out for every change you make to your input file shows you 
+It listens out for every change you make to your input file shows you
 immediately what your GUI looks like.
 
 It also offers a REFORMAT button that reformats your input file in place.
@@ -11,12 +11,12 @@ Usage: Just run helper_gui.py
 """
 import os
 
-from PySide.QtCore import QObject, QSettings, QTimer, QPoint
-from PySide.QtGui import qApp, QApplication, QFileDialog, QLayout, QWidget, \
-    QMessageBox
+from PySide.QtCore import QObject, QPoint, QSettings, QTimer
+from PySide.QtGui import QApplication, QFileDialog, QLayout, QMessageBox, \
+    QWidget, qApp
 
-from qtlayoutbuilder.api.build import build_from_multi_line_string, \
-    build_from_file
+from qtlayoutbuilder.api.build import build_from_file, \
+    build_from_multi_line_string
 from qtlayoutbuilder.api.layouterror import LayoutError
 from qtlayoutbuilder.lib.multiline_string_utils import MultilineString
 
@@ -61,6 +61,7 @@ class HelperGui(QObject):
 
         # Set up the timed call back to see if the input file has changed.
         self._timer = QTimer()
+        # noinspection PyUnresolvedReferences
         self._timer.timeout.connect(self._timer_callback)
         self._timer.start(_POLLING_INTERVAL)
 
@@ -78,7 +79,7 @@ class HelperGui(QObject):
                 log_groupbox        QGroupBox(Log)
                   log_layout        QVBoxLayout
                     log                 QLabel(Messages show up here)
-                  
+
         """)
         return layouts
 
@@ -90,7 +91,8 @@ class HelperGui(QObject):
         # popping up the file chooser dialogue? (for unit testing).
         if self._alt_file_chooser is not None:
             return self._alt_file_chooser()
-        result = QFileDialog.getOpenFileName(self._main_page,
+        result = QFileDialog.getOpenFileName(
+                self._main_page,
                 'Choose input file', self._input_path)
         try:  # PySide 1.2.4 and who knows which other?
             path, file_type_option_selected = result
@@ -105,14 +107,15 @@ class HelperGui(QObject):
 
     def _handle_reformat(self):
         try:
-            users_layouts = build_from_file(self._input_path,
-                    auto_format_and_overwrite=True)
+            build_from_file(self._input_path, auto_format_and_overwrite=True)
             # We should provide some confirmation and feedback. The log is
             # not much good because the overwrite stimualtes a fresh build
-            # which almost immediately replaces any log message we put out here.
-            QMessageBox.information(self._main_page, '',
+            # which almost immediately replaces any log message we put out
+            # here.
+            QMessageBox.information(
+                    self._main_page, '',
                     'Reformat Done\n\n+ Original file overwritten.')
-        except LayoutError as e:
+        except LayoutError:
             self._log.setText(
                     "Cannot reformat the file because it won't build.")
             return
@@ -136,17 +139,19 @@ class HelperGui(QObject):
         # timers or similar.
         if self._input_path is None:
             return False
+        # noinspection PyBroadException
         try:
             mtime = os.path.getmtime(self._input_path)
             if mtime != self._previous_timestamp:
                 self._previous_timestamp = mtime
                 return True
-        except Exception as e:  # Can be IOError or WindowsError or ?
+        except Exception:  # Can be IOError or WindowsError or ?
             return False
 
     def _attempt_build(self):
         try:
-            users_layouts = build_from_file(self._input_path,
+            users_layouts = build_from_file(
+                    self._input_path,
                     auto_format_and_overwrite=False)
         except LayoutError as e:
             if 'Cannot read this file' in str(e):
@@ -161,11 +166,10 @@ class HelperGui(QObject):
             return
         top_item = users_layouts.first_top_level_item()
         if isinstance(top_item, QWidget):
-            thing_to_show = top_item
+            self._show_built_content(top_item)
         if isinstance(top_item, QLayout):
             wrapper = QWidget(top_item)
-            thing_to_show = wrapper
-        self._show_built_content(thing_to_show)
+            self._show_built_content(wrapper)
         self._log.setText('Build successful')
 
     def _last_known_input_file(self):

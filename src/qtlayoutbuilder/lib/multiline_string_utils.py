@@ -21,7 +21,7 @@ class MultilineString(object):
         quote and ends on the line before the closing triple quote.
         """
         topped_and_tailed = MultilineString.remove_empty_first_and_last_lines(
-                input_string)
+            input_string)
         lines = topped_and_tailed.split('\n')
         shortest = 999
         shortest_string = ''

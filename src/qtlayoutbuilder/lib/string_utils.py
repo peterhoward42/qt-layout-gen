@@ -8,12 +8,12 @@ def get_leading_spaces(input_string):
     string = ' ' * length
     return string, length
 
+
 def measure_indent(line):
     return len(line) - len(line.lstrip())
 
+
 def as_list_of_words(line):
     line = line.strip()
-    return  line.split()
+    return line.split()
 
-def consonants_to_lower_case(input_string):
-    fart

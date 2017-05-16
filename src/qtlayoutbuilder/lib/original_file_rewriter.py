@@ -1,10 +1,10 @@
 import os
 import re
-from datetime import datetime
-
 import shutil
-from PySide.QtGui import QDesktopServices
+from datetime import datetime
 from os import path
+
+from PySide.QtGui import QDesktopServices
 
 from qtlayoutbuilder.lib.multiline_string_utils import MultilineString
 
@@ -21,7 +21,7 @@ class OriginalFileReWriter(object):
     IO exceptions are not caught - by design. Such errors cannot be
     recovered from, and the underlying exceptions provide perfectly lucid
     explanations.
-    
+
     This class is not responsible for the reformatting itself - you have
     to pass the reformatted text in.
     """
@@ -29,9 +29,9 @@ class OriginalFileReWriter(object):
     @classmethod
     def overwrite_original(cls, file_path, replacement_one_big_string):
         backup_folder, backup_file_path = cls._make_backup_of_existing_file(
-                file_path)
-        augmented_string = cls._add_backup_location_comment(backup_folder,
-                replacement_one_big_string)
+            file_path)
+        augmented_string = cls._add_backup_location_comment(
+            backup_folder, replacement_one_big_string)
         with open(file_path, 'w') as output_file:
             output_file.write(augmented_string)
 
@@ -47,13 +47,13 @@ class OriginalFileReWriter(object):
         # archived_input-20170417-003554.txt
 
         dir_for_archive_copy = path.join(
-                QDesktopServices.storageLocation(QDesktopServices.DataLocation),
-                'qtlayoutbuilder')
+            QDesktopServices.storageLocation(QDesktopServices.DataLocation),
+            'qtlayoutbuilder')
         if not os.path.exists(dir_for_archive_copy):
             os.makedirs(dir_for_archive_copy)
         timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
         archive_fname = path.join(dir_for_archive_copy,
-                'archived_input-' + timestamp + '.txt')
+                                  'archived_input-' + timestamp + '.txt')
         shutil.copyfile(original_file_path, archive_fname)
         return dir_for_archive_copy, archive_fname
 
@@ -68,7 +68,7 @@ class OriginalFileReWriter(object):
         comment_string = MultilineString.normalise(comment_string)
         if cls._BACKUP_COMMENT_RE.search(one_big_string):
             one_big_string = cls._BACKUP_COMMENT_RE.sub(comment_string,
-                    one_big_string, 1)
+                                                        one_big_string, 1)
         else:
             one_big_string = comment_string + '\n' + one_big_string
         return one_big_string

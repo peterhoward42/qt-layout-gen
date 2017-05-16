@@ -47,6 +47,3 @@ class ReFormatter(object):
                 output_line += '(%s)' % parenthesised
             formatted_lines.append(output_line)
         return '\n'.join(formatted_lines)
-
-
-

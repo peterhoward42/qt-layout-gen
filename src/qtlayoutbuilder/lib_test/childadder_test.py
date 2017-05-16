@@ -1,11 +1,8 @@
 from unittest import TestCase
 
 from PySide.QtCore import Qt
-from PySide.QtGui import QApplication, QLabel, QHBoxLayout, QStackedWidget, \
-    QTabWidget, QSpacerItem, QGridLayout, QSlider
-from PySide.QtGui import QScrollArea
-from PySide.QtGui import QVBoxLayout
-from PySide.QtGui import QWidget
+from PySide.QtGui import QApplication, QHBoxLayout, QLabel, QScrollArea, \
+    QSlider, QSpacerItem, QStackedWidget, QTabWidget, QVBoxLayout, QWidget
 
 from qtlayoutbuilder.lib.childadder import ChildAdder
 from qtlayoutbuilder.lib_test.test_utils import \

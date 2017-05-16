@@ -18,9 +18,9 @@ class Builder(object):
         for line in lines:
             line_number += 1
             cls._process_line(line, finder, layouts_created, line_number,
-                    provenance)
+                              provenance)
         BuilderAssertions.assert_layouts_created_is_not_empty(layouts_created,
-                provenance)
+                                                              provenance)
         return layouts_created
 
     # --------------------------------------------------------
@@ -28,7 +28,7 @@ class Builder(object):
 
     @classmethod
     def _process_line(cls, line, finder, layouts_created, line_number,
-            provenance):
+                      provenance):
         """
         This function exists only to encapsulate the process_line_internals()
         function with exception handling that adds line number and input
@@ -59,8 +59,8 @@ class Builder(object):
         # parent-child hierarchy.
 
         depth = 1 + indent / 2  # Top level objects have depth=1
-        BuilderAssertions.assert_have_not_skipped_a_level(depth, line,
-                layouts_created)
+        BuilderAssertions.assert_have_not_skipped_a_level(
+                depth, layouts_created)
         new_qobject = QObjectMaker(finder).make(name, type_string)
 
         # Add child to parent if required.
@@ -87,11 +87,11 @@ class Builder(object):
         # In that case 25c0 is a solid left-pointing arrow.
         try:
             decoded_with_unicode_escapes = parenthesised.decode(
-                    'raw_unicode-escape')
+                'raw_unicode-escape')
         except Exception as e:
             raise LayoutError("""
                 Python raised an exception when the builder tried to
-                deal with unicode encoded values in your text: <%s>. The 
+                deal with unicode encoded values in your text: <%s>. The
                 underlying python error was:
                 %s
             """, (parenthesised, str(e)))

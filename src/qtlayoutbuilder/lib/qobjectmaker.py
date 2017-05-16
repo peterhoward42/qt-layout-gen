@@ -1,7 +1,6 @@
 # So that we can construct any QObject from a string.
 from PySide.QtGui import *
 
-
 from qtlayoutbuilder.api.layouterror import LayoutError
 from qtlayoutbuilder.lib.qtclassnameprompter import QtClassNamePrompter
 
@@ -26,10 +25,9 @@ class QObjectMaker(object):
 
         # First see if the constructor can be found.
 
-        constructor = None
         try:
             constructor = globals()[type_word]
-        except KeyError as e:
+        except KeyError:
             raise LayoutError("""
                 Python cannot find this word in the QtGui namespace: <%s>,
                 Did you mean one of these:
@@ -41,7 +39,7 @@ class QObjectMaker(object):
         # is too common not to support.
         if type_word == 'QSpacerItem':
             instance = QSpacerItem(
-                    0, 0, QSizePolicy.Expanding, QSizePolicy.Expanding)
+                0, 0, QSizePolicy.Expanding, QSizePolicy.Expanding)
             return instance
 
         # Now the general case.
@@ -67,7 +65,7 @@ class QObjectMaker(object):
         raise LayoutError("""
             This class name: <%s>, instantiates successfully,
             but is neither a QLayout nor a QWidget.
-        """, (type_word))
+        """, type_word)
 
     def _find_existing_object(self, name, type_word):
         """
@@ -98,6 +96,5 @@ class QObjectMaker(object):
 
     def _generate_name_suggestions(self, duff_word):
         list_of_names = QtClassNamePrompter.suggest_names_similar_to_this(
-                duff_word)
+            duff_word)
         return '\n'.join(list_of_names)
-

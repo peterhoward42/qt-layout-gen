@@ -16,7 +16,7 @@ class TestOriginalFileReWriter(TestCase):
         one_big_string = 'just this text'
         mock_backup_folder_string = 'mock_backup_folder'
         output = OriginalFileReWriter._add_backup_location_comment(
-                mock_backup_folder_string, one_big_string)
+            mock_backup_folder_string, one_big_string)
         output = MultilineString.normalise(output)
         expected = MultilineString.normalise("""
             # This file has been automatically re-formatted.
@@ -83,4 +83,3 @@ class TestOriginalFileReWriter(TestCase):
             content = input_file.read()
             self.assertTrue('new content' in content)
             self.assertTrue('has been' in content)
-

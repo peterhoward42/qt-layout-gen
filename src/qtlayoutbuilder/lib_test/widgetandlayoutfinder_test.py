@@ -1,29 +1,34 @@
 from unittest import TestCase
 
-from PySide.QtGui import QLabel, QHBoxLayout, qApp, QApplication
+from PySide.QtGui import QApplication, QHBoxLayout, QLabel
 
 from qtlayoutbuilder.lib.widgetandlayoutfinder import WidgetAndLayoutFinder
 
 
 class HasBox(object):
     """ The tests search for the QHBoxLayout inside instances of these. """
+
     def __init__(self):
         self.fibble = QHBoxLayout()
 
+
 class HasLabel(object):
     """ The tests search for the QLabel inside instances of these. """
+
     def __init__(self):
         self.fibble = QLabel()
+
 
 class TestWidgetAndLayoutFinder(TestCase):
 
     def setUp(self):
         super(TestWidgetAndLayoutFinder, self).setUp()
         try:
-            app = QApplication([])
+            QApplication([])
         except RuntimeError:
-            pass # Singleton already exists
+            pass  # Singleton already exists
 
+    # noinspection PyUnusedLocal
     def test_search_for_widget(self):
 
         # Make sure it discriminates on the particular class you specify,

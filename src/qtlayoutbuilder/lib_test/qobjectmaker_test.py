@@ -87,7 +87,7 @@ class TestQObjectMaker(TestCase):
     # Now the 'Finding' behaviour.
 
     def test_finding_should_work_without_error(self):
-        my_page = CustomLayout()
+        CustomLayout()
         finder = WidgetAndLayoutFinder()
         maker = QObjectMaker(finder)
         made = maker.make('my_page', '?CustomLayout')
@@ -106,8 +106,8 @@ class TestQObjectMaker(TestCase):
 
     def test_finding_error_handling_when_duplicates_found(self):
         # Create two items that should get found and thus be duplicates.
-        my_page = CustomLayout()
-        competing_reference = HasTargetIn()
+        CustomLayout()
+        HasTargetIn()
 
         finder = WidgetAndLayoutFinder()
         maker = QObjectMaker(finder)
