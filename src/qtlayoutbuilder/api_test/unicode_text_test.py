@@ -7,8 +7,7 @@ from qtlayoutbuilder.api.build import build_from_multi_line_string
 
 class TestUnicodeText(TestCase):
     """
-    This class exercies the builder with a large variety of Qt widget and
-    layout types.
+    Exercies the builder with a variety of Unicode symbols on buttons.
     """
 
     @classmethod

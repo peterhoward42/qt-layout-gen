@@ -43,7 +43,7 @@ def build_from_multi_line_string(one_big_string, auto_format_and_write_to=''):
 
 class LayoutsCreatedAccessor(object):
     """
-    A container for the layouts and widget hiearcies created by the builder.
+    A container for the layouts and widget hieararchies created by the builder.
     You query for any object in the built hierarchy using the at() method.
     """
 
@@ -54,7 +54,6 @@ class LayoutsCreatedAccessor(object):
     def at(self, name):
         """
         Find the item with the given name.
-
         :param name: The name to search for.
         :raises LayoutError:
         :return: The QLayout or QWidget at that position in the hierarchy.
@@ -62,4 +61,8 @@ class LayoutsCreatedAccessor(object):
         return self._impl.at(name)
 
     def first_top_level_item(self):
+        """
+        Returns the first item in the build hierarchy. Created to support
+        the tools/helper_gui - which cannot know what name to search for.
+        """
         return self._impl.first_top_level_item()

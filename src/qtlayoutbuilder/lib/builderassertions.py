@@ -2,6 +2,10 @@ from qtlayoutbuilder.api.layouterror import LayoutError
 
 
 class BuilderAssertions(object):
+    """
+    A set of assertion functions that the builder can use which raise
+    properly formed LayoutError(s) when the assertions are false.
+    """
 
     @classmethod
     def assert_multiple_of_two(cls, indent):

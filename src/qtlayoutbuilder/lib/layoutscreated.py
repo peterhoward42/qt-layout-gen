@@ -4,9 +4,14 @@ from qtlayoutbuilder.api.layouterror import LayoutError
 
 
 class LayoutsCreated(object):
+    """
+    Holds the tree of layouts created as an ordered dictionary, keyed on
+    pathnames that look likethis 'my_page.layout.my_widget'.
+    
+    Offers methods to register objects in the tree, and a method to query
+    what is in the tree.
+    """
     def __init__(self):
-        # Access the items created like this: elements['my_page.right_btn']
-        # (A level-two item)
         self._elements = OrderedDict()
 
     def at(self, name):
@@ -37,6 +42,10 @@ class LayoutsCreated(object):
         return self._elements[matching_paths.pop()]
 
     def register_top_level_object(self, object_to_register, name):
+        """
+        Register the given object in the tree using the given name, 
+        as a top-level object.
+        """
         if name in self._all_names():
             raise LayoutError("""
                 The name you have given this item (<%s>), has already
@@ -45,6 +54,10 @@ class LayoutsCreated(object):
         self._elements[name] = object_to_register
 
     def register_child(self, child_object, parent_path, child_name):
+        """
+        Register the given child object of the given name in the tree,
+        as a child of the given parent path (not parent object).
+        """
         if child_name in self._all_names():
             raise LayoutError("""
                 The name you have given this item (<%s>), has already

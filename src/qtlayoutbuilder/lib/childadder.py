@@ -1,8 +1,3 @@
-"""
-This module provides a generalised function that tries various adventures,
-to add a child to a Qt parent object. See the code below for the logical
-experiments it tries.
-"""
 from PySide.QtCore import Qt
 from PySide.QtGui import QScrollArea, QSlider
 
@@ -10,7 +5,14 @@ from qtlayoutbuilder.api.layouterror import LayoutError
 
 
 class ChildAdder(object):
-    # Used for the tab name if addTab() is called.
+    """
+    Provides a generalised function that tries various adventures,
+    to add a child to a Qt parent object. See the code below for the logical
+    experiments it tries.
+    """
+
+    # This variable is used to increment the name for every tab created.
+    # Note it is class scope and will hence work across separate instantiations.
     _next_tab_number = 0
 
     @classmethod

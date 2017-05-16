@@ -3,8 +3,8 @@ from qtlayoutbuilder.lib.string_utils import get_leading_spaces
 
 class MultilineString(object):
     """
-    Tools to work with multi-line, triple-quoted strings; mainly to make writing
-    unit tests easier.
+    Tools to work with multi-line, triple-quoted strings; mainly to 
+    make writing unit tests easier.
     """
 
     @classmethod

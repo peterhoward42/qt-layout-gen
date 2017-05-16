@@ -7,8 +7,8 @@ o  Comments and size
     *  check in
     *  try auto pep 8 (already installed)
     *  fix up all tests
-    o  check in
-    o  do trial section
+    *  check in
+    o  do trial section (alpha order)
     o  finish
 
 o  Decide docco taxonomy and finish with pics

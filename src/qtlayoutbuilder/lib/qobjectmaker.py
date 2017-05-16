@@ -6,6 +6,12 @@ from qtlayoutbuilder.lib.qtclassnameprompter import QtClassNamePrompter
 
 
 class QObjectMaker(object):
+    """
+    Able to construct (or find) the QObjects cited by each line of the
+    builder's input. Includes fairly rich error handling, including suggestions
+    of what you might have meant when it can't recognize the class you
+    asked for.
+    """
     def __init__(self, widget_and_layout_finder):
         self._widget_and_layout_finder = widget_and_layout_finder
 

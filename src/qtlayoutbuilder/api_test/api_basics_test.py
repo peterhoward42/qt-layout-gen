@@ -40,7 +40,7 @@ class TestApiBasics(TestCase):
         widget.show()
         # qApp.exec_()
 
-    def test_build_from_file(self):
+    def test_build_from_file_works(self):
 
         file_path = os.path.abspath(
             os.path.join(__file__, "../../../../testdata/tiny_example.txt"))

@@ -11,7 +11,7 @@ class ObjectFinder(object):
 
     The search for objects of the qualifying classes is relatively expensive,
     but is done at construction time only. The find_objects() query method then
-    has a relatively small search space is is consequently inexpensive.
+    has a relatively small search space and is consequently inexpensive.
     """
 
     def __init__(self, class_filters):

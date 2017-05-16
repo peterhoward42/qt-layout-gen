@@ -9,7 +9,8 @@ from qtlayoutbuilder.api.build import build_from_file
 class TestCoverage(TestCase):
     """
     This class exercies the builder with a large variety of Qt widget and
-    layout types.
+    layout types. And prints out a uniqued and sorted list of each Qt Type
+    used.
     """
 
     @classmethod

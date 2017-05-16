@@ -7,6 +7,7 @@ from qtlayoutbuilder.api.build import build_from_file
 
 
 class TestBigExampleForManual(TestCase):
+    # Make sure the example used for the manual is viable.
     @classmethod
     def setUpClass(cls):
         # Needs QApplication context.

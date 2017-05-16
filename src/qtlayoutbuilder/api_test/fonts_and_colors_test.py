@@ -8,8 +8,8 @@ from qtlayoutbuilder.api.build import build_from_file
 
 class FontsAndColorsTest(TestCase):
     """
-    This class exercies the builder with a large variety of Qt widget and
-    layout types.
+    Exercises the builder with an input file that sets a variety of
+    fonts and colours on labels etc.
     """
 
     @classmethod
