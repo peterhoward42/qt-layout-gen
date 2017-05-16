@@ -91,13 +91,15 @@ class HelperGui(QObject):
         # popping up the file chooser dialogue? (for unit testing).
         if self._alt_file_chooser is not None:
             return self._alt_file_chooser()
+        # The general case is to use the standard file dialogue.
         result = QFileDialog.getOpenFileName(
                 self._main_page,
                 'Choose input file', self._input_path)
-        try:  # PySide 1.2.4 and who knows which other?
+        # Cope with differences in versions of bindings.
+        try:  # PySide 1.2.4 and who knows which other return tuple.
             path, file_type_option_selected = result
         except ValueError:
-            path = result  # PyQt and mabye some PySide versions?
+            path = result  # PyQt and mabye some PySide versions return value
         if not path:
             return
         self._input_path = path
@@ -109,7 +111,7 @@ class HelperGui(QObject):
         try:
             build_from_file(self._input_path, auto_format_and_overwrite=True)
             # We should provide some confirmation and feedback. The log is
-            # not much good because the overwrite stimualtes a fresh build
+            # not much good because the overwrite stimulates a fresh build
             # which almost immediately replaces any log message we put out
             # here.
             QMessageBox.information(
@@ -133,7 +135,7 @@ class HelperGui(QObject):
 
         # The call to time.getmtime() will raise exceptions if the file
         # is temporarily locked (maybe by the editor doing a save), so when
-        # this is so, we just it hasn't changed, and wait for the next timer
+        # this is so, we just say it hasn't changed, and wait for the next timer
         # tick. This does mean that if the file has really gone missing we
         # will not detect it, but better to avoid the complexity of two
         # timers or similar.
@@ -165,14 +167,17 @@ class HelperGui(QObject):
                 self._log.setText(str(e))
             return
         top_item = users_layouts.first_top_level_item()
+        # If the top level item in the tree is a widget, we just show it.
         if isinstance(top_item, QWidget):
             self._show_built_content(top_item)
-        if isinstance(top_item, QLayout):
+        # Whereas, if it is a layout we wrap it in a widget so we can show it.
+        elif isinstance(top_item, QLayout):
             wrapper = QWidget(top_item)
             self._show_built_content(wrapper)
         self._log.setText('Build successful')
 
     def _last_known_input_file(self):
+        # Using QSettings' persistence services.
         last_known = self._settings.value(_LAST_KNOWN)
         if last_known:
             return last_known
@@ -190,6 +195,9 @@ class HelperGui(QObject):
         if self._last_shown_content is not None:
             self._last_shown_content.hide()
         self._last_shown_content = thing_to_show
+        # Always stick it top left to make it easier for the user to know
+        # where to put this gui, such that they can see both this one and the
+        # built one.
         thing_to_show.move(QPoint(0, 0))
         self._last_shown_content.show()
 
