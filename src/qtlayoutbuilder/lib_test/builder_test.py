@@ -5,7 +5,8 @@ from PySide.QtGui import QApplication, QPushButton, QVBoxLayout
 from qtlayoutbuilder.lib.builder import Builder
 from qtlayoutbuilder.lib.multiline_string_utils import MultilineString
 from qtlayoutbuilder.lib_test.test_utils import \
-    raises_layout_error_with_this_message
+    raises_layout_error_with_this_message, \
+    raises_layout_error_with_this_approximately_this_message
 
 
 class TestBuilder(TestCase):
@@ -297,12 +298,14 @@ class TestBuilder(TestCase):
               layout    QHBoxLayout
                 label       QLabel(\u25c)
         """
-        result = raises_layout_error_with_this_message("""
+        # Use the approx test, because the python exception is a long line
+        # and gets messed up with auto reformat of the source.
+        result = raises_layout_error_with_this_approximately_this_message("""
             Python raised an exception when the builder tried to
             deal with unicode encoded values in your text: <\u25c>. The
             underlying python error was:
-            'rawunicodeescape' codec can't decode bytes in position 0-4:
-            truncated \uXXXX
+            'rawunicodeescape' codec can't decode bytes in position 
+            0-4: truncated \uXXXX
             (This line: <    label       QLabel(\u25c) >)
             (Line number: 3, from unit test provenance)
             """, Builder.build, str_input, 'unit test provenance')

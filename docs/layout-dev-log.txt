@@ -3,9 +3,11 @@
 *  Decide what to do about fonts and colours
 *  Finish demo example
 o  Comments and size
-    o  get regression tests to run
+    *  get regression tests to run
+    *  check in
+    *  try auto pep 8 (already installed)
+    *  fix up all tests
     o  check in
-    o  try auto pep 8 (already installed)
     o  do trial section
     o  finish
 

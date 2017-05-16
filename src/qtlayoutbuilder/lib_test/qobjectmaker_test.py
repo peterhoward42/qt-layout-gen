@@ -86,8 +86,9 @@ class TestQObjectMaker(TestCase):
 
     # Now the 'Finding' behaviour.
 
+    # noinspection PyUnusedLocal
     def test_finding_should_work_without_error(self):
-        CustomLayout()
+        my_page = CustomLayout()
         finder = WidgetAndLayoutFinder()
         maker = QObjectMaker(finder)
         made = maker.make('my_page', '?CustomLayout')
@@ -104,10 +105,12 @@ class TestQObjectMaker(TestCase):
         if not result:
             self.fail()
 
+    # noinspection PyUnusedLocal
     def test_finding_error_handling_when_duplicates_found(self):
         # Create two items that should get found and thus be duplicates.
-        CustomLayout()
-        HasTargetIn()
+        # Assign them the local variables to defeat immediate GC.
+        my_page = CustomLayout()
+        arbitrary = HasTargetIn()
 
         finder = WidgetAndLayoutFinder()
         maker = QObjectMaker(finder)

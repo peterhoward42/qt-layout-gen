@@ -26,4 +26,4 @@ class TestBigExampleForManual(TestCase):
         widget = layouts_created.at('page')
         widget.show()
 
-        qApp.exec_()
+        #qApp.exec_()

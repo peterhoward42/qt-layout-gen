@@ -17,3 +17,10 @@ def as_list_of_words(line):
     line = line.strip()
     return line.split()
 
+def with_all_whitespace_removed(input_string):
+    res = input_string
+    res = res.replace(' ', '')
+    res = res.replace('\t', '')
+    res = res.replace('\n', '')
+    return res
+
