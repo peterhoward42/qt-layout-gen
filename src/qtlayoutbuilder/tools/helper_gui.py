@@ -78,7 +78,7 @@ class HelperGui(QObject):
                   format_btn        QPushButton(Reformat)
                 log_groupbox        QGroupBox(Log)
                   log_layout        QVBoxLayout
-                    log                 QLabel(Messages show up here)
+                    log             QLabel(Messages show up here)
 
         """)
         return layouts
@@ -88,7 +88,7 @@ class HelperGui(QObject):
 
     def _handle_path(self):
         # Has the client injected an alternative for choosing input files to
-        # popping up the file chooser dialogue? (for unit testing).
+        # popping up the standard file chooser dialogue? (for unit testing).
         if self._alt_file_chooser is not None:
             return self._alt_file_chooser()
         # The general case is to use the standard file dialogue.

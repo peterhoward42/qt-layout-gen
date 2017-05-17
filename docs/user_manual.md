@@ -15,7 +15,25 @@
 - [Cautionary Notes](#cautionary-notes)
 
 
-## Getting Started Example
+## Getting Started
+
+### Prerequisites
+This manual assumes that you know the basics of PyQt or PySide, 
+and have previously created layouts either using *QtDesigner* or
+by coding them programmatically.
+
+The *qtlayoutbuilder* package is of course dependent on you 
+already having a viable *PyQt* or *PySide* development 
+environment.
+
+### Installation
+
+    pip install qtlayoutbuilder
+    
+> (Or just grab the files from GitHub and copy them into 
+> your project).
+    
+### First Example
 
     from PySide.QtGui import QApplication
     from qtlayoutbuilder.api import Builder

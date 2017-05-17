@@ -38,14 +38,7 @@ It has some aims that endeavour to make it practical:
        auto generating the more common ones (like QHBoxLayout) for you.
     o  Doesn't require you to alter (or tag) your existing widget code for them to take part.
     o  Very clear error reporting and diagnostics.
-    o  Allows you to put all your layout definitions either in a single file, or to
-       modularise it into smaller chunks in multiple files. Maybe one file per GUI section,
-       or one per widget etc.
-    o  Does not require you to think about what order you specify things in, in order
-       to satisfy dependency relationships.
-    o  Is not dependent in any way on how you organise or name your input files or how you
-       divide the content up among them. (Also means you can change your mind and shuffle
-       stuff around easily without creating extra work).
+    o  Allows you to put all your layout definitions either in a single file.
 
 We are advocating a runtime solution over a code-generator for two reasons.
 Firstly, because it preserves a single source of truth for the intent, and 
@@ -53,7 +46,5 @@ avoids bugs arising from stale generated code lying around. Secondly, it
 produces live object references that you can use in the rest of your program, and
 are hence in no way locked-in to this method for generating the GUI - you can
 mix and match and introduce it incrementally to existing code.
-
-See separate contract document.
 
 

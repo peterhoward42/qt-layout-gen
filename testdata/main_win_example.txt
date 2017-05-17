@@ -1,5 +1,0 @@
-# This file has been automatically re-formatted.
-# Previous versions can be found here:
-# C:\Users\Peter.Howard\AppData\Local\python\qtlayoutbuilder
-##
-main_win      QMainWindow

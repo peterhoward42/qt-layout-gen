@@ -1,59 +1,11 @@
-*  Manual note about rules and error handling
-*  Go back to gui runner
-*  Decide what to do about fonts and colours
-*  Finish demo example
-*  Comments and size
-*  Bug fix:
-*  Bug fix: get as left shifted needs to cope with multiple blank top and tail
-
-*  Decide docco taxonomy and finish with pics
-    *  Decide content for readme
-    *  And thence manual
-    *  Covering:
-        *  Intro as well as manual
-        *  Design aims
-        *  Incremental adoption
-        *  Instant feedback as per nodejs npm start -watch
-
-*  Work up readme
-
-o  Polish user manual
-    *  first example runs?
-    *  method names in builder partic from file
-    o  installation anticipate PyPI
-
+o  Clean out dross from repo
 o  Portability
-
-o  Later
-    o  Rationalise tests and example files
-    o  Version contract
-    o  Product versions like pycharm eg 2017.1
-    o  Spread use of fuzzy equality of multiline strings
-    o  Make sure all examples from the manual are tested
-    o  Licence and copyright
-    o  PyQt support
-    o  Unify use of multiline tests and generation.
-    o  Move all regex into module
-    o  Viable to put on PyPi
-    o  Clean out dross from repo
-
-
-    o  tests that test errors by catching exceptions should throw exception if not thrown
-    o  80 columns and '\n'.join... idiom
-    o  ditch _ classes convention
+o  ditch _ classes convention
+o  Rationalise tests and example files
+o  Licence and copyright
+o  Version contract product versions like pycharm eg 2017.1
+o  Portability incl PyQt support
+o  Viable to put on PyPi?
 
 ------------------------------------------------------------------------
-Manual
 ------------------------------------------------------------------------
-    o  Github readme
-        o  Elevator pitch with pics and movie reference
-            o  What problem solves
-            o  What is
-            o  Key aims
-        o  Tiny example pic with text
-        o  More complex example pic with ref to text
-        o  See manual here
-
-    o  User Manual
-        o  Installation
-        o  Pics and tune and check all examples
