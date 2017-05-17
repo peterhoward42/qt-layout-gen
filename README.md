@@ -30,6 +30,10 @@ much quicker and easier to develop (and evolve) GUIs.
     layouts_created.at('my_page').show()
 
 #### A More Realistic Example
+![](docs/media/realistic.png)
+
+You can see the input file for this GUI
+[here](testdata/big_example_for_manual.txt).
 
 #### Instant Feedback
 
