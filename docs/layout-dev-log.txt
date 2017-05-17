@@ -4,8 +4,11 @@
 *  Finish demo example
 *  Comments and size
 *  Bug fix:
+o  Bug fix: get as left shifted needs to cope with multiple blank top and tail
 
 o  Decide docco taxonomy and finish with pics
+    o  Decide content for readme
+    o  And thence manual
     o  Covering:
         o  Intro as well as manual
         o  Design aims
@@ -33,4 +36,17 @@ o  Later
     o  ditch _ classes convention
 
 ------------------------------------------------------------------------
+Manual
 ------------------------------------------------------------------------
+    o  Github readme
+        o  Elevator pitch with pics and movie reference
+            o  What problem solves
+            o  What is
+            o  Key aims
+        o  Tiny example pic with text
+        o  More complex example pic with ref to text
+        o  See manual here
+
+    o  User Manual
+        o  Installation
+        o  Pics and tune and check all examples

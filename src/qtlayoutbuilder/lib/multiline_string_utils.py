@@ -1,3 +1,4 @@
+from qtlayoutbuilder.lib import string_utils
 from qtlayoutbuilder.lib.string_utils import get_leading_spaces
 
 
@@ -15,10 +16,11 @@ class MultilineString(object):
         constituent line, where [N] is the longest amount of leading whitespace
         that ALL the lines have in common.
 
-        It assumes that if the first and last lines are solely whitespace
-        they can be discarded  - which makes it easier to write triple quoted
-        input strings where the body starts on the line below the opening triple
-        quote and ends on the line before the closing triple quote.
+        It assumes that any leading or trailing lines that are empty or contain
+        only whitespace can be discarded. Which makes it easier to write 
+        triple quoted input strings where the body starts on the line below 
+        the opening triple quote and ends on the line before the closing 
+        triple quote.
         """
         topped_and_tailed = MultilineString.remove_empty_first_and_last_lines(
             input_string)
@@ -46,11 +48,8 @@ class MultilineString(object):
     @classmethod
     def remove_empty_first_and_last_lines(cls, input_string):
         """
-        Returns a modified variant of the input string, in which the first
-        and last lines are removed if they contain only whitespace. Let's you
-        write triple quoted strings with the main body on separate lines from
-        the opening and closing quotes and then have the first and last partial
-        lines thus created ignored.
+        Returns a modified variant of the input string, in which leading 
+        and  trailing lines that are whitespace only, are femoved.
         """
         lines = input_string.split('\n')
 
@@ -59,17 +58,10 @@ class MultilineString(object):
         if len(lines) <= 2:
             return input_string
 
-        # Deal with first last line.
-        first_line = lines[0]
-        stripped = first_line.strip()
-        if len(stripped) == 0:
-            lines = lines[1:]
-
-        # Deal with last line
-        last_line = lines[len(lines) - 1]
-        stripped = last_line.strip()
-        if len(stripped) == 0:
-            lines = lines[:-1]
+        while ((len(lines) > 0) and (len(lines[0].strip()) == 0)):
+            del lines[0]
+        while ((len(lines) > 0) and (len(lines[-1].strip()) == 0)):
+            del lines[-1]
         return '\n'.join(lines)
 
     @classmethod

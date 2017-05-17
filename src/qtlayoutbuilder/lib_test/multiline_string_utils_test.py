@@ -26,6 +26,16 @@ class MultilineStringUtilsTest(TestCase):
         result = MultilineString.remove_empty_first_and_last_lines('')
         self.assertEqual(result, '')
 
+        # When several lines exist at the beginning and / or end that are
+        # whitespace only.
+        result = MultilineString.remove_empty_first_and_last_lines("""
+            
+            foo
+            bar
+            
+        """)
+        self.assertEqual(result, '            foo\n            bar')
+
     def test_shift_left(self):
         # Normal usage
         str_input = """
