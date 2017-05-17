@@ -7,6 +7,7 @@ much quicker and easier to develop (and evolve) GUIs.
 
 ##### Key Goals:
 - Fast workflow for the developer
+- Simple and easy to use
 - Instant feedback
 - Make layouts easier to change
 - Operate at runtime; no compile+integrate steps
@@ -27,7 +28,7 @@ much quicker and easier to develop (and evolve) GUIs.
               button_a        QPushButton(Hello)
               button-b        QPushButton(World)
     """)
-    layouts_created.at('my_page').show()
+    layouts_created.at('top_widget').show()
 
 #### A More Realistic Example
 ![](docs/media/realistic.png)
@@ -36,7 +37,19 @@ You can see the input file for this GUI
 [here](testdata/big_example_for_manual.txt).
 
 #### Instant Feedback
+QtLayoutBuilder comes with a tool to give you instant feedback while
+you are editing input files during development.
+
+![](docs/media/helper_alone.png)
+
+It monitors every edit you make to your input file, and shows you the 
+result immediately like this (below) without you having to leave 
+your editor or do anything. 
+
+![](docs/media/helper_windows.png)
 
 #### Getting started
+
+[User Manual](docs/user_manual.md)
 
 
