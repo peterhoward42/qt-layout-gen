@@ -4,16 +4,25 @@
 *  Finish demo example
 *  Comments and size
 *  Bug fix:
-o  Bug fix: get as left shifted needs to cope with multiple blank top and tail
+*  Bug fix: get as left shifted needs to cope with multiple blank top and tail
 
-o  Decide docco taxonomy and finish with pics
-    o  Decide content for readme
-    o  And thence manual
-    o  Covering:
-        o  Intro as well as manual
-        o  Design aims
-        o  Incremental adoption
-        o  Instant feedback as per nodejs npm start -watch
+*  Decide docco taxonomy and finish with pics
+    *  Decide content for readme
+    *  And thence manual
+    *  Covering:
+        *  Intro as well as manual
+        *  Design aims
+        *  Incremental adoption
+        *  Instant feedback as per nodejs npm start -watch
+
+o  Work up readme
+    o  simple example
+        *  .png
+        *  code snapshot from test
+        *  refer
+        *  regression
+    o  complex example section
+        o  screenshot and refer
 
 o  Portability
 

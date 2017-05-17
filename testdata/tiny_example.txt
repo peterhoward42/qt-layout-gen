@@ -2,7 +2,9 @@
 # Previous versions can be found here:
 # C:\Users\Peter.Howard\AppData\Local\python\qtlayoutbuilder
 ##
-my_page       QWidget
-  layout      QVBoxLayout
-    foo       QPushButton(Hello World)
-    bar       QPushButton(World)
+top_widget            QWidget
+  rows                QVBoxLayout
+    greeting          QLabel(Welcome to QtBuilder)
+    some_buttons      QHBoxLayout
+      button_a        QPushButton(Hello)
+      button-b        QPushButton(World)

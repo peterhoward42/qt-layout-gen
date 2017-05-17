@@ -45,7 +45,7 @@ class TestApiBasics(TestCase):
         file_path = os.path.abspath(
             os.path.join(__file__, "../../../../testdata/tiny_example.txt"))
         layouts_created = build_from_file(file_path)
-        widget = layouts_created.at('my_page')
+        widget = layouts_created.at('top_widget')
         widget.show()
         # qApp.exec_()
 
@@ -55,7 +55,7 @@ class TestApiBasics(TestCase):
         reformat_location = path.join(tmp_dir, 're-formatted.txt')
 
         str_input = """
-            my_page         QWidget
+            top_widget         QWidget
               layout                QVBoxLayout
         """
         build_from_multi_line_string(
@@ -64,9 +64,10 @@ class TestApiBasics(TestCase):
         with open(reformat_location, 'r') as input_file:
             contents = MultilineString.shift_left(input_file.read())
 
+        print contents
         self.assertEqual(contents, MultilineString.shift_left("""
-        my_page       QWidget
-          layout      QVBoxLayout
+            top_widget      QWidget
+              layout        QVBoxLayout
         """))
 
         shutil.rmtree(tmp_dir)

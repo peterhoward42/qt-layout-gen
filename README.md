@@ -3,8 +3,7 @@
 ### Quick Summary
 
 A python library that works with PyQt or PySide to make it **very**
-much quicker and easier to develop GUIs. And make it very much easier
-to change and iterate layouts.
+much quicker and easier to develop (and evolve) GUIs.
 
 ##### Key Goals:
 - Fast workflow for the developer
@@ -16,6 +15,19 @@ to change and iterate layouts.
 - No interference with standard Qt workings
 
 #### Making a Real Simple GUI
+![](docs/media/simple_example.png)
+
+    from qtlayoutbuilder.api.build import build_from_multi_line_string
+    
+    layouts_created = build_from_multi_line_string("""
+        top_widget            QWidget
+          rows                QVBoxLayout
+            greeting          QLabel(Welcome to QtBuilder)
+            some_buttons      QHBoxLayout
+              button_a        QPushButton(Hello)
+              button-b        QPushButton(World)
+    """)
+    layouts_created.at('my_page').show()
 
 #### A More Realistic Example
 
