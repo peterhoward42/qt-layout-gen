@@ -20,36 +20,29 @@
     from PySide.QtGui import QApplication
     from qtlayoutbuilder.api import Builder
     
-    layouts = Builder.from_multiline_string("""
-        my_page             QWidget
-          layout            QHBoxLayout
-            left            QGroupBox(Fruits)
-              layout        QVBoxLayout
-                apple       QLabel(Apple)
-                pear        QLabel(Pear)
-                banana      QLabel(Banana)
-            middle          QGroupBox(Authors)
-              layout        QVBoxLayout
-                dickens     QLabel(Dickens)
-                adams       QLabel(Adams)
-                rowling     QLabel(Rowling)
-            right_btn       QPushButton(Click me!)
-    """
+    Builder.build_from_multi_line_string("""
+    top_widget            QWidget
+      rows                QVBoxLayout
+        greeting          QLabel(Welcome to QtBuilder)
+        some_buttons      QHBoxLayout
+          button_a        QPushButton(Hello)
+          button_b        QPushButton(World)
+    """)
     
     # Access the objects created like this...
-    the_button = layouts.at('right_btn')
+    hello = layouts.at('button_a')
     
     app = QApplication()
-    layouts.my_page.show()
+    layouts.at('top_widget').show()
     app.exec_()
     
        
-This example creates a QWidget (which it refers to as *my_page*), and then sets 
-that widget's layout to be a *QHBoxLayout*. Then it populates that layout with 
-three items, which it refers to as *left*, *middle*, and *right_btn*. The item 
-called *left* is specified as QGroupBox, and will have its title set 
-to *Fruits* - by calling *setTitle()* on it. The item called *apple* 
-will get the text *Apple*, by calling *setText()* on it.
+This example creates a QWidget (which it refers to as *top_widget*), and then 
+sets its layout to be a *QVBoxLayout*. Then it populates that layout with 
+two items, which it refers to as *greeting*, and *some_buttons*. The item 
+called greetings is a QLabel, and has its text set to 'Welcome to QtBuilder'.
+The item called 'some_buttons' is a QHBoxLayout, which is populated with two
+QPushButtons.
 
 The example also shows how you can access the objects created afterwards.
 
@@ -175,13 +168,14 @@ https://en.wikipedia.org/wiki/Miscellaneous_Symbols
 
 http://unicode.org/charts/#symbols 
 
-These typographic symbols render very much more crisply, and scale better than 
-image-based icons, (because of the anti-aliasing of edges built in by the
+These typographic symbols (glyphs) render very much more crisply, and 
+scale better than 
+image-based icons, (because of the anti-aliasing of edges built-in by the
 font designers). They also remove the need to manage and deploy image resources.
 
 You can include Unicode characters (or more properly *code-points*) in your
 builder input, using the same notation as you would if you were writing a
-string literal in python source code. Like this example which puts the *pencil*
+string literal in Python source code. Like this example which puts the *pencil*
 symbol on a button:
 
     button      QPushButton(\u2709)
@@ -196,7 +190,7 @@ of a label:
 > for symbols used on buttons, you have to use setStyleSheet() manually.
 
 Some Unicode symbols have *code-points* above 0xFFFF, and you can encode these
-again, just like in python source code. Note the upper case U and 8 instead of
+again, just like in Python source code. Note the upper case U and 8 instead of
 4 ascii characters following. This example is a hamburger symbol. (Not the 3-bar
 hamburger menu - but a **real** hamburger!)
 
@@ -237,8 +231,8 @@ the API call; largely because there is nowhere obvious for the builder to
 write the reformatted version to. You can turn it on however by specifying a 
 file it should write to:
 
-    Builder.from_multiline_string(
-            'the string', auto_format_and_write_to='my_file.txt')
+    Builder.build_from_multi_line_string(
+        'the string', auto_format_and_write_to='my_file.txt')
     
 ## Error Handling
 The builder handles all errors by raising an api.LayoutError which contains
@@ -255,7 +249,7 @@ A comment line is a line in which the first non-space character is a hash.
 The whole of that line will be ignored by the builder. 
 
     # I am a comment
-    layouts = Builder.from_multiline_string("""
+    layouts = Builder.build_from_multiline_string("""
         my_page             QWidget
                             # I am a comment also
           layout            hbox
@@ -277,27 +271,27 @@ or an attribute called *my_widget*. For example:
     something.my_widget = CustomWidget()
     
 > The builder finds the object you are referring to with the help of Python's 
-> garbage collector - which knows about every object that exists in your program.
+> Garbage Collector - which knows about every object that exists in your program.
 
 Nb. It raises an error if it finds more than one object that qualifies.
 ## Incomplete or Multiple Hierarchies
 
 You can build multiple, (unrelated) hierarchies like this:
 
-    page1       QWidget
-      layout    QVBoxLayout
+    page1        QWidget
+      layout1    QVBoxLayout
       etc...
-    page2       QWidget
-      layout    QVBoxLayout
+    page2        QWidget
+      layout2    QVBoxLayout
       etc...
       
-This can be useful to make some dialogues that you are going to bring up
-independently, or when the builder cannot create the whole tree you want 
+This can be useful to make some QDialogs that you are going to bring up
+independently. Or when the builder cannot create the whole tree you want 
 because it includes an item that the builder cannot add children to. (Like 
-QGridLayout for example.) You can create seperate hierarchies for the 
+QGridLayout for example.) You can create separate hierarchies for the 
 children and then add them manually afterwards. E.g.
 
-    layouts = Builder.from_multiline_string("""
+    layouts = Builder.build_from_multiline_string("""
         page1       QWidget
           layout    QGridLayout
           # Cannot go any further because need row/column to add children :-(

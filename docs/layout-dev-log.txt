@@ -15,14 +15,12 @@
         *  Incremental adoption
         *  Instant feedback as per nodejs npm start -watch
 
-o  Work up readme
-    o  simple example
-        *  .png
-        *  code snapshot from test
-        *  refer
-        *  regression
-    o  complex example section
-        o  screenshot and refer
+*  Work up readme
+
+o  Polish user manual
+    *  first example runs?
+    *  method names in builder partic from file
+    o  installation anticipate PyPI
 
 o  Portability
 
@@ -36,7 +34,7 @@ o  Later
     o  PyQt support
     o  Unify use of multiline tests and generation.
     o  Move all regex into module
-    o  Viable to put on PyPy
+    o  Viable to put on PyPi
     o  Clean out dross from repo
 
 
