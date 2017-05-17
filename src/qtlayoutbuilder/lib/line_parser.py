@@ -25,6 +25,7 @@ class LineParser(object):
             return False, True, None, None, None, None
         original_line = line
         parenthesised = regex_helpers.capture_parenthesis(original_line)
+        cls._assert_nothing_follows_parenthesis(original_line, parenthesised)
         working_line = regex_helpers.remove_parenthesis(original_line)
         indent = cls._measure_and_validate_indent(working_line)
         name, type_string = cls._parse_name_and_type(working_line)
@@ -55,3 +56,14 @@ class LineParser(object):
             raise LayoutError("""
                 This line contains a tab - which is not allowed.
             """, ())
+
+    @classmethod
+    def _assert_nothing_follows_parenthesis(cls, original_line, parenthesised):
+        if parenthesised is None:
+            return
+        if original_line.strip().endswith(parenthesised + ')'):
+            return
+        raise LayoutError("""
+            This line contains something after the parenthesis, which is not
+            allowed.
+        """, ())

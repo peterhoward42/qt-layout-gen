@@ -57,3 +57,11 @@ class TestLineParser(TestCase):
             """, LineParser.parse_line, '\t')
         if not result:
             self.fail()
+
+    def test_error_message_when_something_comes_after_parenthesis(self):
+        result = raises_layout_error_with_this_message("""
+            This line contains something after the parenthesis, which is not
+            allowed.    
+            """, LineParser.parse_line, '    foo   QLabel(hello)X')
+        if not result:
+            self.fail()

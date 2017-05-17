@@ -2,14 +2,8 @@
 *  Go back to gui runner
 *  Decide what to do about fonts and colours
 *  Finish demo example
-o  Comments and size
-    *  get regression tests to run
-    *  check in
-    *  try auto pep 8 (already installed)
-    *  fix up all tests
-    *  check in
-    o  do trial section (alpha order)
-    o  finish
+*  Comments and size
+*  Bug fix:
 
 o  Decide docco taxonomy and finish with pics
     o  Covering:
@@ -19,12 +13,6 @@ o  Decide docco taxonomy and finish with pics
         o  Instant feedback as per nodejs npm start -watch
 
 o  Portability
-
-o  Bugs
-    o  Try this input.
-        o  bar       QPushButton(Worl)d
-        o  thinks qpushbuttond is a type
-
 
 o  Later
     o  Rationalise tests and example files
