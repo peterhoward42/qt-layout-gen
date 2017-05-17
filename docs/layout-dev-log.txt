@@ -1,5 +1,34 @@
-o  Clean out dross from repo
 o  Portability
+    o  Matrix
+        o  Qt5 vs Qt5
+        o  PySide vs PyQt
+        o  Windows vs Linux
+    o  Constraints
+        o  PySide cur version (1.2.4) is only Qt4.6 and onward
+    o  Get suitable env
+        *  Uninstall pyside
+        *  Uninstall python27
+        *  Remove python27 from env vars
+        *  Remove python27 dir
+        *  Isntall python27 with no env vars
+        *  Install python3 with no env vars
+        *  Install virtual envs for 2.7 and for 3.6
+        *  Work up 2.7 virtual env up to regression tests
+            *  Create 2.7 pyside virtual env
+            *  Install pyside into it
+            *  See if nose regression tests work on layout builder
+        o  Work up 3.6 using venv not virtual env
+            o  Create 3.6 ven pyside
+            o  Install pyside into it
+            o  Regression run (with ditch pyc)
+            o  Prove so with illegal print statement
+            o  Start truth table for testing
+        o  Install pyside for qt4 in a virtual env
+        o  Make sure both qt/pyside versions pass regression tests
+        o  Now consider PyQt
+
+    o PyQt
+    o Linux
 o  ditch _ classes convention
 o  Rationalise tests and example files
 o  Licence and copyright
