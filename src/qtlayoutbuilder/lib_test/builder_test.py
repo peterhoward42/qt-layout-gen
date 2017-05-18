@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from PySide.QtGui import QApplication, QPushButton, QVBoxLayout
+from PyQt5.QtWidgets import QApplication, QPushButton, QVBoxLayout
 
 from qtlayoutbuilder.lib.builder import Builder
 from qtlayoutbuilder.lib.multiline_string_utils import MultilineString
@@ -292,14 +292,14 @@ class TestBuilder(TestCase):
     def test_adding_text_unicode_decode_error_reporting(self):
         # The \u encoded unicode code-point, has only 3 ascii characters
         # following. Well formed needs 4.
-        str_input = """
+        str_input = r"""
             page        QWidget
               layout    QHBoxLayout
                 label       QLabel(\u25c)
         """
         # Use the approx test, because the python exception is a long line
         # and gets messed up with auto reformat of the source.
-        result = raises_layout_error_with_this_approximately_this_message("""
+        result = raises_layout_error_with_this_approximately_this_message(r"""
             Python raised an exception when the builder tried to
             deal with unicode encoded values in your text: <\u25c>. The
             underlying python error was:

@@ -1,6 +1,6 @@
 import difflib
 
-from PySide import QtGui
+from PyQt5 import QtWidgets
 
 
 class QtClassNamePrompter(object):
@@ -11,7 +11,7 @@ class QtClassNamePrompter(object):
 
     @classmethod
     def suggest_names_similar_to_this(cls, name):
-        all_qtgui_names = dir(QtGui)
+        all_qtgui_names = dir(QtWidgets)
         lower_cased = [n.lower() for n in all_qtgui_names]
         # The search is done in lower-case space, so we need a map to return
         # the results to their original case.

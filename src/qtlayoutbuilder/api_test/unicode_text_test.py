@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from PySide.QtGui import QApplication, qApp
+from PyQt5.QtGui import QApplication, qApp
 
 from qtlayoutbuilder.api.build import build_from_multi_line_string
 

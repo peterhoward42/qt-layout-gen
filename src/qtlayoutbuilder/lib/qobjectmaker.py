@@ -1,5 +1,6 @@
 # So that we can construct any QObject from a string.
-from PySide.QtGui import *
+from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
 
 from qtlayoutbuilder.api.layouterror import LayoutError
 from qtlayoutbuilder.lib.qtclassnameprompter import QtClassNamePrompter

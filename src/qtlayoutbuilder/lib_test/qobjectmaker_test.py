@@ -3,9 +3,7 @@ This module provides unit tests for the parentmaker module.
 """
 from unittest import TestCase
 
-from PySide.QtGui import QApplication, QSpacerItem
-from PySide.QtGui import QHBoxLayout
-from PySide.QtGui import QLayout
+from PyQt5.QtWidgets import QApplication, QSpacerItem, QHBoxLayout, QLayout
 
 from qtlayoutbuilder.lib.qobjectmaker import QObjectMaker
 from qtlayoutbuilder.lib.widgetandlayoutfinder import WidgetAndLayoutFinder
@@ -50,13 +48,13 @@ class TestQObjectMaker(TestCase):
         result = raises_layout_error_with_this_message("""
             Python cannot find this word in the QtGui namespace: <HBoxLayout>,
             Did you mean one of these:
-
+            
             QHBoxLayout
             QBoxLayout
             QVBoxLayout
             QLayout
-            QTextLayout
             QFormLayout
+            QLayoutItem
         """, maker.make, 'fred', 'HBoxLayout')
         if not result:
             self.fail()

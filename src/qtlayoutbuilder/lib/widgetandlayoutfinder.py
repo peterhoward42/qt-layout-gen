@@ -1,4 +1,4 @@
-from PySide.QtGui import QLayout, QWidget
+from PyQt5.QtWidgets import QLayout, QWidget
 
 from qtlayoutbuilder.lib.objectfinder import ObjectFinder
 

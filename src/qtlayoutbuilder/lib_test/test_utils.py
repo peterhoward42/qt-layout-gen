@@ -26,7 +26,7 @@ def raises_layout_error_with_this_message(
         if error_msg == required_message:
             return True
     # If we reach here, the message produces does not match that required.
-    print 'Message produced was\n%s' % error_msg
+    print('Message produced was\n%s' % error_msg)
     return False
 
 def raises_layout_error_with_this_approximately_this_message(
@@ -51,5 +51,5 @@ def raises_layout_error_with_this_approximately_this_message(
         if error_msg == required_message:
             return True
     # If we reach here, the message produces does not match that required.
-    print 'Message produced was\n%s' % error_msg
+    print ('Message produced was\n%s' % error_msg)
     return False

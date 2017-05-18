@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from PySide.QtCore import Qt
-from PySide.QtGui import QApplication, QHBoxLayout, QLabel, QScrollArea, \
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QApplication, QHBoxLayout, QLabel, QScrollArea, \
     QSlider, QSpacerItem, QStackedWidget, QTabWidget, QVBoxLayout, QWidget
 
 from qtlayoutbuilder.lib.childadder import ChildAdder

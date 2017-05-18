@@ -1,22 +1,28 @@
 o  Portability
     o  Constraints
-        o  PySide does not support beyond Qt4
-        o  PySide does not support latest Python3, which is Python3.6
+        o  Py Side does not support beyond Qt4
+        o  Py Side does not support latest Python3, which is Python3.6
 
     o  Explore use in Python2.7 and Python3.6
-        o  Works with PySide in Python 2.7 - brings in Qt4.6
-        o  Try in Python3.6 with PyQt5 - brings in Qt5.8
-            o  Needs PySide.QtGui replacing with PyQt5.QtWidgets
-                o  Do branch to experiment with
+        o  Works with Py Side in Python 2.7 - brings in Qt4.6
+        o  Try in Python3.6 with Py Qt5 - brings in Qt5.8
+            *  Do branch to experiment with
+            o  Focus on lib tests
+                *  Needs Py Side.QtGui replacing with PyQt5.QtWidgets
+                *  Print needs to be fn
+                *  Delibarate unicode errors must be rawed
+                *  Some file io (write) needs bytes-like object not string
 
-    o  Explore PySide scope available
-        o  Windows
-            o  Python27 + PySide = success (brings in Qt4.6)
-            o  Cannot use with Python36, because PySide support stops at Python34
-            o  Seems python27 + qt4.6 is the default setup.
-    o  Explore PyQt scope available
-        o  Windows
-            o  PyQt strongly advocating Python 3 and Qt5 so try those
+                o  Some wierd abnormal exit codes
+                    o  builder and widgetandlayoutfinder
+
+            o  Now api tests
+            o  And helper
+
+        o  Recipe for coping with both with duplicate imports or similar?
+
+    o  Regression in Python2.7 for all remedies
+
 
 o  ditch _ classes convention
 o  Rationalise tests and example files

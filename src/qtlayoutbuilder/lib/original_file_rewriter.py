@@ -4,7 +4,7 @@ import shutil
 from datetime import datetime
 from os import path
 
-from PySide.QtGui import QDesktopServices
+from PyQt5.QtGui import QDesktopServices
 
 from qtlayoutbuilder.lib.multiline_string_utils import MultilineString
 

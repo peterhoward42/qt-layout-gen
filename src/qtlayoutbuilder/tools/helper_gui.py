@@ -11,8 +11,8 @@ Usage: Just run helper_gui.py
 """
 import os
 
-from PySide.QtCore import QObject, QPoint, QSettings, QTimer
-from PySide.QtGui import QApplication, QFileDialog, QLayout, QMessageBox, \
+from PyQt5.QtCore import QObject, QPoint, QSettings, QTimer
+from PyQt5.QtGui import QApplication, QFileDialog, QLayout, QMessageBox, \
     QWidget, qApp
 
 from qtlayoutbuilder.api.build import build_from_file, \
@@ -96,10 +96,10 @@ class HelperGui(QObject):
                 self._main_page,
                 'Choose input file', self._input_path)
         # Cope with differences in versions of bindings.
-        try:  # PySide 1.2.4 and who knows which other return tuple.
+        try:  # PyQt5 1.2.4 and who knows which other return tuple.
             path, file_type_option_selected = result
         except ValueError:
-            path = result  # PyQt and mabye some PySide versions return value
+            path = result  # PyQt and mabye some PyQt5 versions return value
         if not path:
             return
         self._input_path = path

@@ -4,7 +4,7 @@ import tempfile
 from os import path
 from unittest import TestCase
 
-from PySide.QtGui import QApplication
+from PyQt5.QtGui import QApplication
 
 from qtlayoutbuilder.api.build import build_from_file, \
     build_from_multi_line_string
