@@ -7,7 +7,7 @@ setup(
   author = 'Peter Howard',
   author_email = 'peterhoward42@gmail.com',
   url = 'https://github.com/peterhoward42/qtlayoutbuilder',
-  download_url = 'https://github.com/peterhoward42/qtlayoutbuilder/archive/0.1.tar.gz',
+  download_url = 'https://github.com/peterhoward42/qt-layout-gen/archive/0.1.tar.gz',
   keywords = ['PySide', 'Layouts'],
   classifiers = [],
 )
