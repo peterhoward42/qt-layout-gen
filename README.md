@@ -2,17 +2,17 @@
 
 ### Quick Summary
 
-A python library that works with PyQt or PySide to make it **very**
+A python library that works with **PySide** to make it **VERY**
 much quicker and easier to develop (and evolve) GUIs.
 
 ##### Key Goals:
-- Fast workflow for the developer
-- Simple and easy to use
-- Instant feedback
+- Faster workflow for the developer (than existing choices)
+- Simple
+- Instant feedback during development
 - Make layouts easier to change
 - Operate at runtime; no compile+integrate steps
 - Direct, programmatic access to all objects created
-- Practical to introduce to existing code, step by step
+- Practical to introduce piecemeal to existing code
 - No interference with standard Qt workings
 
 #### Making a Real Simple GUI

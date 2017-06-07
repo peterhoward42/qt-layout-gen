@@ -18,13 +18,12 @@
 ## Getting Started
 
 ### Prerequisites
-This manual assumes that you know the basics of PyQt or PySide, 
+This manual assumes that you know the basics of PySide, 
 and have previously created layouts either using *QtDesigner* or
 by coding them programmatically.
 
 The *qtlayoutbuilder* package is of course dependent on you 
-already having a viable *PyQt* or *PySide* development 
-environment.
+already having a viable *PySide* development environment.
 
 ### Installation
 
@@ -38,7 +37,7 @@ environment.
     from PySide.QtGui import QApplication
     from qtlayoutbuilder.api import Builder
     
-    Builder.build_from_multi_line_string("""
+    layouts = Builder.build_from_multi_line_string("""
     top_widget            QWidget
       rows                QVBoxLayout
         greeting          QLabel(Welcome to QtBuilder)
