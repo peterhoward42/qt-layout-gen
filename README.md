@@ -1,2 +1,2 @@
-See the real README [here](../README.md)
+See the real README [here](../src/README.md)
 
