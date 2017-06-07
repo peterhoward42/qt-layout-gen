@@ -6,7 +6,7 @@ setup(
   description = 'A library to make PySide layouts quickly and easily',
   author = 'Peter Howard',
   author_email = 'peterhoward42@gmail.com',
-  url = 'https://github.com/peterhoward42/qtlayoutbuilder',
+  url = 'https://github.com/peterhoward42/qt-layout-gen',
   download_url = 'https://github.com/peterhoward42/qt-layout-gen/archive/0.1.tar.gz',
   keywords = ['PySide', 'Layouts'],
   classifiers = [],
