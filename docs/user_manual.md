@@ -1,6 +1,6 @@
 # Qt Layout Builder - User Manual
 
-- [Getting Started](#getting-started-example)
+- [Getting Started](#getting-started)
 - [The Input Text](#anatomy-of-the-input-text)
 - [Parent Child Relationships Supported](#parent--child-relationships-supported)
 - [Setting the Text on Things](#setting-the-text-on-things)

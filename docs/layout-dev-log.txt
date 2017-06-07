@@ -4,12 +4,12 @@
 *  put scope and asiration in manual
 *  Rationalise tests and example files
 *  Licence and copyright
-o  Viable to put on PyPi?
-    o  Just try and see what happens on trial pipi site
-        o  Capture instructions
-
-        o  Make sure instruction in manual work for install
-
+*  Viable to put on PyPi? - give up
+o  Test out manual install instructions
+    o  You only need the 'src' dir from the repo, and to add that dir to your
+       python path.
+    o  Can get clone or downlaod copy of repo from https://github.com/peterhoward42/qt-layout-gen
+o  Add to manual
 
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
