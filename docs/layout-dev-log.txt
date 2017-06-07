@@ -1,9 +1,31 @@
 o  Portability
     o  Constraints
-        o  Py Side does not support beyond Qt4
-        o  Py Side does not support latest Python3, which is Python3.6
+        o  Py Side supports only Qt4 (not Qt5)
+        o  Py Side Python 3 support is behind Python releases (no 3.6)
+        o  PyQt5 (Python 3) crashes on Windows 10
 
-    o  Explore use in Python2.7 and Python3.6
+    o  Results
+        o  PySide Python2.7 Qt4 Windows = yes
+        o  PySide Python2.7 Qt4 Linux   = ?
+        o  PySide Python3               = no (support lags at 3.4)
+
+    o  Try Pyside 2.7 on linux
+        o  Checkout main (not branch)
+        o  Make sure got python 2.7
+        o  Install pyside
+        o  Clear pycs
+        o  Try tests
+
+    o  Take stock - leave it as pyside?
+
+    o  Portability notes?
+
+    o  Try PyQt python 3 on Linux (we know struggles on Windows)
+        o  Install pyqt5 on linux vm
+        o  Attempt tests with branch
+
+
+
         o  Works with Py Side in Python 2.7 - brings in Qt4.6
         o  Try in Python3.6 with Py Qt5 - brings in Qt5.8
             *  Do branch to experiment with
@@ -13,8 +35,9 @@ o  Portability
                 *  Delibarate unicode errors must be rawed
                 *  Some file io (write) needs bytes-like object not string
 
-                o  Some wierd abnormal exit codes
-                    o  builder and widgetandlayoutfinder
+                o  Access violation if instantiate QLabel
+                    o  Is qt installed in its own right?
+                    o  Reinstall pyqt5
 
             o  Now api tests
             o  And helper
@@ -22,6 +45,7 @@ o  Portability
         o  Recipe for coping with both with duplicate imports or similar?
 
     o  Regression in Python2.7 for all remedies
+    o  Now check Linux
 
 
 o  ditch _ classes convention

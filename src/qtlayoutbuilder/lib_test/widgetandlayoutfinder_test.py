@@ -16,7 +16,9 @@ class HasLabel(object):
     """ The tests search for the QLabel inside instances of these. """
 
     def __init__(self):
-        self.fibble = QLabel()
+        a = 1
+        self.not_fibble = QLabel()
+        b = 2
 
 
 class TestWidgetAndLayoutFinder(TestCase):
@@ -37,12 +39,14 @@ class TestWidgetAndLayoutFinder(TestCase):
         # Both of the classes instantiated here have an attribute 'fibble' which
         # points to a QLayout or a QWidget, but only one should satisfy our
         # search because they embed different types of QObject.
+        a = 1
+        thing = QLabel()
+        b = 2
+        target_a = HasBox()
         target_b = HasLabel()
-        return
-        #target_a = HasBox()
 
-        #finder = WidgetAndLayoutFinder()
-        #found = finder.find('QLabel', 'fibble')
-        #self.assertEquals(len(found), 1)
-        #found_object = found[0]
-        #self.assertEquals(found_object, target_b.fibble)
+        finder = WidgetAndLayoutFinder()
+        found = finder.find('QLabel', 'fibble')
+        self.assertEquals(len(found), 1)
+        found_object = found[0]
+        self.assertEquals(found_object, target_b.fibble)

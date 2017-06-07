@@ -12,7 +12,7 @@ Usage: Just run helper_gui.py
 import os
 
 from PyQt5.QtCore import QObject, QPoint, QSettings, QTimer
-from PyQt5.QtGui import QApplication, QFileDialog, QLayout, QMessageBox, \
+from PyQt5.QtWidgets import QApplication, QFileDialog, QLayout, QMessageBox, \
     QWidget, qApp
 
 from qtlayoutbuilder.api.build import build_from_file, \
