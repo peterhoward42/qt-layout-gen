@@ -11,6 +11,7 @@ o  Portability
 
     o  Try Pyside 2.7 on linux
         o  Checkout main (not branch)
+        o  Regression test fix up on windows
         o  Make sure got python 2.7
         o  Install pyside
         o  Clear pycs
