@@ -3,9 +3,12 @@
     *  put note in manual
 *  put scope and asiration in manual
 *  Rationalise tests and example files
-o  Licence and copyright
-    o  Research possibilities
+*  Licence and copyright
 o  Viable to put on PyPi?
+    o  Just try and see what happens on trial pipi site
+        o  Capture instructions
+
+        o  Make sure instruction in manual work for install
 
 
 ------------------------------------------------------------------------
