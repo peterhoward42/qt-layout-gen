@@ -6,10 +6,19 @@
 *  Licence and copyright
 *  Viable to put on PyPi? - give up
 o  Test out manual install instructions
-    o  You only need the 'src' dir from the repo, and to add that dir to your
-       python path.
-    o  Can get clone or downlaod copy of repo from https://github.com/peterhoward42/qt-layout-gen
+
+    o  Get a copy of the repo with git clone blah, or download from github website
+
+    o  Copy the qtlayoutbuilder dir into a dir that is declared
+       in your PYTHONPATH. (You'll find it in the repo src dir)
+
+       I.e. So that an import like this is satisfied:
+       from qtlayoutbuilder.api.build import build_from_file
+
+   o  Fix up getting started example to actually work!!!
+
 o  Add to manual
+o  Add invitation to dev to manual
 
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------

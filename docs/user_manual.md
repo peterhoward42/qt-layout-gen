@@ -35,21 +35,22 @@ already having a viable *PySide* development environment.
 ### First Example
 
     from PySide.QtGui import QApplication
-    from qtlayoutbuilder.api import Builder
-    
-    layouts = Builder.build_from_multi_line_string("""
-    top_widget            QWidget
-      rows                QVBoxLayout
-        greeting          QLabel(Welcome to QtBuilder)
-        some_buttons      QHBoxLayout
-          button_a        QPushButton(Hello)
-          button_b        QPushButton(World)
+    from qtlayoutbuilder.api.build import build_from_multi_line_string 
+
+    app = QApplication([])
+
+    layouts = build_from_multi_line_string("""
+        top_widget            QWidget
+          rows                QVBoxLayout
+            greeting          QLabel(Welcome to QtBuilder)
+            some_buttons      QHBoxLayout
+              button_a        QPushButton(Hello)
+              button_b        QPushButton(World)
     """)
-    
+
     # Access the objects created like this...
     hello = layouts.at('button_a')
-    
-    app = QApplication()
+
     layouts.at('top_widget').show()
     app.exec_()
     
@@ -231,7 +232,8 @@ Or of course, you can do it programmatically afterwards by calling
    
 ## Taking the Input From a File
 
-    layouts = Builder.from_file(file_path)
+    from qtlayoutbuilder.api.build import build_from_file 
+    layouts = build_from_file(file_path)
     
 ## Auto Formatting
 When you use the build-from-file option, the builder will automatically 
@@ -241,14 +243,14 @@ each time - and adds a comment to the file about where the backups are saved.
 
 To turn this behaviour off:
 
-    layouts = Builder.from_file(file_path, auto_format_and_overwrite=False)
+    layouts = build_from_file(file_path, auto_format_and_overwrite=False)
     
 Auto formatting is not turned on by default for the multiline string variant of 
 the API call; largely because there is nowhere obvious for the builder to 
 write the reformatted version to. You can turn it on however by specifying a 
 file it should write to:
 
-    Builder.build_from_multi_line_string(
+    build_from_multi_line_string(
         'the string', auto_format_and_write_to='my_file.txt')
     
 ## Error Handling
@@ -256,7 +258,7 @@ The builder handles all errors by raising an api.LayoutError which contains
 an explanation, and the offending line number from the input.
 
     try:
-        Builder.xxx()
+        build_from_xxx()
     except LayoutError as e:
         print str(e)
 
@@ -266,7 +268,7 @@ A comment line is a line in which the first non-space character is a hash.
 The whole of that line will be ignored by the builder. 
 
     # I am a comment
-    layouts = Builder.build_from_multiline_string("""
+    layouts = build_from_multiline_string("""
         my_page             QWidget
                             # I am a comment also
           layout            hbox
@@ -308,7 +310,7 @@ because it includes an item that the builder cannot add children to. (Like
 QGridLayout for example.) You can create separate hierarchies for the 
 children and then add them manually afterwards. E.g.
 
-    layouts = Builder.build_from_multiline_string("""
+    layouts = build_from_multiline_string("""
         page1       QWidget
           layout    QGridLayout
           # Cannot go any further because need row/column to add children :-(
