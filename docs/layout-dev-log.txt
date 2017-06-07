@@ -1,13 +1,12 @@
-o  ditch portability aspirations
+*  ditch portability aspirations
     *  double check regression and gui use on windows
-    o  put note in manual
-o  put scope and asiration in manual
-o  ditch _ classes convention
-o  Rationalise tests and example files
+    *  put note in manual
+*  put scope and asiration in manual
+*  Rationalise tests and example files
 o  Licence and copyright
-o  Version contract product versions like pycharm eg 2017.1
-o  Portability incl PyQt support
+    o  Research possibilities
 o  Viable to put on PyPi?
+
 
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------

@@ -15,6 +15,9 @@ much quicker and easier to develop (and evolve) GUIs.
 - Practical to introduce piecemeal to existing code
 - No interference with standard Qt workings
 
+#####Licence
+This project is licensed under the terms of the MIT license.
+
 #### Making a Real Simple GUI
 ![](docs/media/simple_example.png)
 
