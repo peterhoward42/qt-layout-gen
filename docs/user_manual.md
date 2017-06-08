@@ -18,19 +18,36 @@
 ## Getting Started
 
 ### Prerequisites
-This manual assumes that you know the basics of PySide, 
-and have previously created layouts either using *QtDesigner* or
-by coding them programmatically.
 
-The *qtlayoutbuilder* package is of course dependent on you 
-already having a viable *PySide* development environment.
+- You know how to use PySide conventionally, either creating layouts 
+programmatically, or by using Qt Designer.
+- You already have a viable PySide development environment for your Application.
 
-### Installation
+### Adding qtlayoutbuilder to your Application
 
-    pip install qtlayoutbuilder
+You need only get a copy of the *qtlayoutbuilder* source directory and put it
+somewhere where it will be encountered by your *PYTHONPATH*. In other 
+words, put it somewhere that will satisfy the following import statement:
+
+    from qtlayoutbuilder.api.build import build_from_multi_line_string
     
-> (Or just grab the files from GitHub and copy them into 
-> your project).
+You can get a copy of the repository from *Github* with:
+
+    git clone https://github.com/peterhoward42/qt-layout-gen.git
+    
+Or, by visiting
+
+    https://github.com/peterhoward42/qt-layout-gen
+    
+with your browser, and selecting the *download* button.
+
+You will find the *qtlayoutbuilder* directory you need to copy insider the
+*src* sub directory.
+    
+    
+
+
+
     
 ### First Example
 

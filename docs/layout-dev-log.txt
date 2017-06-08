@@ -1,24 +1,7 @@
-*  ditch portability aspirations
-    *  double check regression and gui use on windows
-    *  put note in manual
-*  put scope and asiration in manual
-*  Rationalise tests and example files
-*  Licence and copyright
-*  Viable to put on PyPi? - give up
-o  Test out manual install instructions
-
-    o  Get a copy of the repo with git clone blah, or download from github website
-
-    o  Copy the qtlayoutbuilder dir into a dir that is declared
-       in your PYTHONPATH. (You'll find it in the repo src dir)
-
-       I.e. So that an import like this is satisfied:
-       from qtlayoutbuilder.api.build import build_from_file
-
-   o  Fix up getting started example to actually work!!!
-
-o  Add to manual
-o  Add invitation to dev to manual
+o  Write final install / getting started section in manual
+    o  Test it and other bits from manual
+o  Xfer log somewhere to pub on linked in and pers web page
+o  Ditch this file from repo
 
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
