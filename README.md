@@ -8,7 +8,7 @@ much quicker and easier to develop (and evolve) GUIs.
 ##### Key Goals:
 - Faster workflow for the developer (than existing choices)
 - Simple
-- Instant feedback during development
+- Instant visual feedback of your GUI during development
 - Make layouts easier to change
 - Operate at runtime; no compile+integrate steps
 - Direct, programmatic access to all objects created
