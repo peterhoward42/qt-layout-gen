@@ -1,7 +1,0 @@
-o  Write final install / getting started section in manual
-    o  Test it and other bits from manual
-o  Xfer log somewhere to pub on linked in and pers web page
-o  Ditch this file from repo
-
-------------------------------------------------------------------------
-------------------------------------------------------------------------
